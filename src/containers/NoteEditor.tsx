@@ -19,10 +19,6 @@ interface NoteProps {
   updateNote: Function
 }
 
-interface NoteState {
-  note: NoteObject
-}
-
 const NoteEditor = (props: NoteProps) => {
   const { note, updateNote } = props
 

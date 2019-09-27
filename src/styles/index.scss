@@ -11,17 +11,25 @@ code {
 }
 
 .app {
+  display: grid;
+  grid-template-areas:
+    'nav nav nav'
+    'sidebar editor editor';
+  grid-template-columns: 250px auto;
+  grid-template-rows: 25px auto;
   min-height: 100vh;
-  max-width: 900px;
-  margin: 0 auto;
-  display: flex;
   border-left: 2px solid #dedede;
   border-right: 2px solid #dedede;
 }
 
+.navigation {
+  grid-area: nav;
+  background: #ccc;
+}
+
 .sidebar {
+  grid-area: sidebar;
   background: #efefef;
-  width: 350px;
 }
 
 .note-list {
@@ -36,7 +44,7 @@ code {
 }
 
 .editor {
-  width: 100%;
+  grid-area: editor;
 
   .CodeMirror {
     -webkit-font-smoothing: subpixel-antialiased;
