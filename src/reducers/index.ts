@@ -1,8 +1,6 @@
 import { combineReducers } from 'redux'
-import notes from 'reducers/noteReducer'
-import active from 'reducers/activeReducer'
+import noteState from 'reducers/noteReducer'
 
 export default combineReducers({
-  notes,
-  active,
+  noteState,
 } as any)

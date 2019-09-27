@@ -35,7 +35,7 @@ const NoteList: React.FC<NoteListProps> = ({ notes, swapNote }) => (
 )
 
 const mapStateToProps = state => ({
-  notes: state.notes,
+  notes: state.noteState.data,
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
