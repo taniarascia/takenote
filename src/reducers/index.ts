@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
-import notes from './noteReducer'
-import active from './activeReducer'
+import notes from 'reducers/noteReducer'
+import active from 'reducers/activeReducer'
 
 export default combineReducers({
   notes,

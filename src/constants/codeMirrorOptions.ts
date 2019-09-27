@@ -1,1 +1,6 @@
-export default { mode: 'gfm', theme: 'base16-light', lineNumbers: true, lineWrapping: 'wrap' }
+export default {
+  mode: 'gfm',
+  theme: 'base16-light',
+  lineNumbers: false,
+  lineWrapping: 'wrap',
+}

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
-import { addNote, swapNote } from '../actions'
+import { addNote, swapNote } from 'actions'
 import uuid from 'uuid/v4'
 
 const Navigation = props => {

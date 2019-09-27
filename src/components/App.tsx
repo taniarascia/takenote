@@ -1,7 +1,7 @@
 import React from 'react'
-import Navigation from '../containers/Navigation'
-import NoteList from '../containers/NoteList'
-import NoteEditor from '../containers/NoteEditor'
+import Navigation from 'containers/Navigation'
+import NoteList from 'containers/NoteList'
+import NoteEditor from 'containers/NoteEditor'
 
 const App: React.FC = () => {
   return (

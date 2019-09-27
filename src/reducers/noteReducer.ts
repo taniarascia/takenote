@@ -1,5 +1,5 @@
-import { ADD_NOTE, UPDATE_NOTE } from '../constants/actionTypes'
-import { initialState } from '../constants/fakeState'
+import { ADD_NOTE, UPDATE_NOTE } from 'constants/actionTypes'
+import { initialState } from 'constants/fakeState'
 
 const noteReducer = (state = initialState, action) => {
   switch (action.type) {

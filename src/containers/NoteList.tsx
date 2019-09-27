@@ -1,7 +1,7 @@
 import React from 'react'
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
-import { swapNote } from '../actions'
+import { swapNote } from 'actions'
 
 const NoteList = ({ notes, swapNote }) => (
   <aside className="sidebar">
