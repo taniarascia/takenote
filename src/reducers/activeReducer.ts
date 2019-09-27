@@ -1,4 +1,4 @@
-import { ActionType } from 'constants/actionType'
+import { ActionType } from 'constants/enums'
 import { initialState } from 'constants/fakeState'
 
 const activeReducer = (state = initialState[0].id, action) => {
