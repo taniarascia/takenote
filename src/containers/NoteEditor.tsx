@@ -3,25 +3,19 @@ import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
 import { Controlled as CodeMirror } from 'react-codemirror2'
 import { updateNote } from 'actions'
+import { NoteItem } from 'types'
 
 import options from 'constants/codeMirrorOptions'
 import 'codemirror/lib/codemirror.css'
 import 'codemirror/theme/base16-light.css'
 import 'codemirror/mode/gfm/gfm.js'
 
-interface NoteObject {
-  id: string
-  text: string
-}
-
-interface NoteProps {
-  note: NoteObject
+interface NoteEditorProps {
+  note: NoteItem
   updateNote: Function
 }
 
-const NoteEditor = (props: NoteProps) => {
-  const { note, updateNote } = props
-
+const NoteEditor: React.FC<NoteEditorProps> = ({ note, updateNote }) => {
   return (
     <CodeMirror
       className="editor"

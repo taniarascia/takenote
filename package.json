@@ -18,6 +18,7 @@
     "react-router-dom": "^5.1.0",
     "react-scripts": "3.1.2",
     "redux": "^4.0.4",
+    "redux-saga": "^1.1.1",
     "typescript": "3.6.3",
     "uuid": "^3.3.3"
   },

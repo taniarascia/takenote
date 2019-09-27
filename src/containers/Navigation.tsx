@@ -4,9 +4,12 @@ import { connect } from 'react-redux'
 import { addNote, swapNote } from 'actions'
 import uuid from 'uuid/v4'
 
-const Navigation = props => {
-  const { addNote, swapNote } = props
+interface NavigationProps {
+  addNote: Function
+  swapNote: Function
+}
 
+const Navigation: React.FC<NavigationProps> = ({ addNote, swapNote }) => {
   return (
     <nav className="navigation">
       <button

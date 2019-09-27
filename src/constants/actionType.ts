@@ -1,0 +1,6 @@
+export enum ActionType {
+  ADD_NOTE = 'ADD_NOTE',
+  SWAP_NOTE = 'SWAP_NOTE',
+  UPDATE_NOTE = 'UPDATE_NOTE',
+  DELETE_NOTE = 'DELETE_NOTE',
+}

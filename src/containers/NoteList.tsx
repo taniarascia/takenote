@@ -2,12 +2,17 @@ import React from 'react'
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
 import { swapNote } from 'actions'
+import { NoteItem } from 'types'
 
-const NoteList = ({ notes, swapNote }) => (
+interface NoteListProps {
+  notes: NoteItem[]
+  swapNote: Function
+}
+
+const NoteList: React.FC<NoteListProps> = ({ notes, swapNote }) => (
   <aside className="sidebar">
     <div className="note-list">
       {notes.map(note => {
-        // if the note has no newline, just cut to 50 characters
         const noteTitle =
           note.text.indexOf('\n') !== -1
             ? note.text.slice(0, note.text.indexOf('\n'))

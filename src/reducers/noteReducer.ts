@@ -1,11 +1,11 @@
-import { ADD_NOTE, UPDATE_NOTE } from 'constants/actionTypes'
+import { ActionType } from 'constants/actionType'
 import { initialState } from 'constants/fakeState'
 
 const noteReducer = (state = initialState, action) => {
   switch (action.type) {
-    case ADD_NOTE:
+    case ActionType.ADD_NOTE:
       return [...state, action.payload]
-    case UPDATE_NOTE:
+    case ActionType.UPDATE_NOTE:
       return state.map(note =>
         note.id === action.payload.id
           ? {
