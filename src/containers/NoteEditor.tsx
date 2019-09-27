@@ -1,44 +1,42 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
 import { Controlled as CodeMirror } from 'react-codemirror2'
-import { updateNote, swapNote } from '../actions'
+import { updateNote } from '../actions'
+
 import options from '../constants/codeMirrorOptions'
 import 'codemirror/lib/codemirror.css'
 import 'codemirror/theme/base16-light.css'
 import 'codemirror/mode/gfm/gfm.js'
 
 interface NoteObject {
-  uuid: string
+  id: string
   text: string
 }
 
 interface NoteProps {
   note: NoteObject
   updateNote: Function
-  swapNote: Function
 }
 
-class NoteEditor extends Component<NoteProps> {
-  state = {
-    value: '',
-  }
+interface NoteState {
+  note: NoteObject
+}
 
-  render() {
-    const { note, updateNote, swapNote } = this.props
+const NoteEditor = (props: NoteProps) => {
+  const { note, updateNote } = props
 
-    return (
-      <CodeMirror
-        className="editor"
-        value={note.text}
-        options={options}
-        onBeforeChange={(editor, data, value) => {
-          updateNote(note.text)
-        }}
-        onChange={(editor, data, value) => {}}
-      />
-    )
-  }
+  return (
+    <CodeMirror
+      className="editor"
+      value={note.text}
+      options={options}
+      onBeforeChange={(editor, data, value) => {
+        updateNote({ id: note.id, text: value })
+      }}
+      onChange={(editor, data, value) => {}}
+    />
+  )
 }
 
 const mapStateToProps = state => ({
@@ -47,7 +45,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   updateNote: note => dispatch(updateNote(note)),
-  swapNote: id => dispatch(swapNote(id)),
 })
 
 export default connect(

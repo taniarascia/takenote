@@ -10,7 +10,7 @@ export const updateNote = note => ({
   payload: note,
 })
 
-export const swapNote = note => ({
+export const swapNote = noteId => ({
   type: SWAP_NOTE,
-  payload: note.id,
+  payload: noteId,
 })

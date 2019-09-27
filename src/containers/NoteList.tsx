@@ -1,7 +1,9 @@
 import React from 'react'
+import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
+import { swapNote } from '../actions'
 
-const NoteList = ({ notes }) => (
+const NoteList = ({ notes, swapNote }) => (
   <aside className="sidebar">
     <div className="note-list">
       {notes.map(note => {
@@ -12,7 +14,13 @@ const NoteList = ({ notes }) => (
             : note.text.slice(0, 50)
 
         return (
-          <div className="note-title" key={note.id}>
+          <div
+            className="note-title"
+            key={note.id}
+            onClick={() => {
+              swapNote(note.id)
+            }}
+          >
             {noteTitle}
           </div>
         )
@@ -25,4 +33,11 @@ const mapStateToProps = state => ({
   notes: state.notes,
 })
 
-export default connect(mapStateToProps)(NoteList)
+const mapDispatchToProps = (dispatch: Dispatch) => ({
+  swapNote: noteId => dispatch(swapNote(noteId)),
+})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(NoteList)
