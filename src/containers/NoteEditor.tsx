@@ -24,7 +24,7 @@ const NoteEditor: React.FC<NoteEditorProps> = ({ loading, note, updateNote, load
   }, [loadNotes])
 
   if (loading) {
-    return <div>Loading...</div>
+    return <div className="editor" />
   } else {
     return (
       <CodeMirror

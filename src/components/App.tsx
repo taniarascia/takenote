@@ -6,9 +6,9 @@ import NoteEditor from 'containers/NoteEditor'
 const App: React.FC = () => {
   return (
     <div className="app">
-      <Navigation />
       <NoteList />
       <NoteEditor />
+      <Navigation />
     </div>
   )
 }

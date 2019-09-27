@@ -49,6 +49,12 @@ const noteReducer = (state = initialState, action) => {
             : note
         ),
       }
+    case ActionType.DELETE_NOTE:
+      return {
+        ...state,
+        data: state.data.filter(note => note.id !== action.payload),
+        active: state.data[0].id,
+      }
     default:
       return state
   }

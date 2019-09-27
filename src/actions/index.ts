@@ -11,6 +11,11 @@ export const updateNote = (note: NoteItem) => ({
   payload: note,
 })
 
+export const deleteNote = (noteId: string) => ({
+  type: ActionType.DELETE_NOTE,
+  payload: noteId,
+})
+
 export const swapNote = (noteId: string) => ({
   type: ActionType.SWAP_NOTE,
   payload: noteId,

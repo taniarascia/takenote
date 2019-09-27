@@ -1,3 +1,6 @@
+$background: #dedede;
+$hover: #ccc;
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
@@ -13,32 +16,45 @@ code {
 .app {
   display: grid;
   grid-template-areas:
-    'nav nav nav'
-    'sidebar editor editor';
+    'sidebar editor editor'
+    'nav nav nav';
   grid-template-columns: 250px auto;
-  grid-template-rows: 25px auto;
+  grid-template-rows: auto 25px;
   min-height: 100vh;
-  border-left: 2px solid #dedede;
-  border-right: 2px solid #dedede;
+  border-left: 2px solid $hover;
+  border-right: 2px solid $hover;
 }
 
 .navigation {
   grid-area: nav;
   background: #ccc;
+  display: flex;
+  .nav-button {
+    -webkit-display: none;
+    display: block;
+    cursor: pointer;
+    background: transparent;
+    font-weight: 600;
+    border: none;
+    font-size: 1rem;
+    &:hover {
+      background: rgba(0, 0, 0, 0.1);
+    }
+  }
 }
 
 .sidebar {
   grid-area: sidebar;
-  background: #efefef;
+  background: $background;
 }
 
 .note-list {
   .note-title {
     cursor: pointer;
-    padding: 1rem;
-    border-bottom: 2px solid #dedede;
+    padding: 0.5rem;
+    border-bottom: 2px solid $hover;
     &:hover {
-      background: #dedede;
+      background: $hover;
     }
   }
 }
