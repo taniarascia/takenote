@@ -3,13 +3,15 @@ import { ActionType } from 'constants/enums'
 import { requestNotes } from 'api'
 
 async function fetchAsync(endpoint) {
-  const response = await fetch(endpoint)
+  const response = await endpoint()
 
-  if (response.ok) {
-    return await response.json()
-  }
+  return JSON.parse(response)
 
-  throw new Error('Unexpected error')
+  // if (response.ok) {
+  //   return await response.json()
+  // }
+
+  // throw new Error('Unexpected error')
 }
 
 function* fetchNotes() {
