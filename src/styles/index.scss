@@ -53,6 +53,9 @@ code {
     cursor: pointer;
     padding: 0.5rem;
     border-bottom: 2px solid $hover;
+    &.active {
+      background: #bbb;
+    }
     &:hover {
       background: $hover;
     }

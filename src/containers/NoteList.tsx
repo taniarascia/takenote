@@ -5,11 +5,12 @@ import { swapNote } from 'actions'
 import { NoteItem } from 'types'
 
 interface NoteListProps {
+  active: string
   notes: NoteItem[]
   swapNote: Function
 }
 
-const NoteList: React.FC<NoteListProps> = ({ notes, swapNote }) => (
+const NoteList: React.FC<NoteListProps> = ({ active, notes, swapNote }) => (
   <aside className="sidebar">
     <div className="note-list">
       {notes.map(note => {
@@ -20,7 +21,7 @@ const NoteList: React.FC<NoteListProps> = ({ notes, swapNote }) => (
 
         return (
           <div
-            className="note-title"
+            className={note.id === active ? 'note-title active' : 'note-title'}
             key={note.id}
             onClick={() => {
               swapNote(note.id)
@@ -36,6 +37,7 @@ const NoteList: React.FC<NoteListProps> = ({ notes, swapNote }) => (
 
 const mapStateToProps = state => ({
   notes: state.noteState.data,
+  active: state.noteState.active,
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

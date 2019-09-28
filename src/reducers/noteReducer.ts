@@ -50,10 +50,13 @@ const noteReducer = (state = initialState, action) => {
         ),
       }
     case ActionType.DELETE_NOTE:
+      const noteIndex = state.data.findIndex(note => note.id === action.payload)
+      const newActiveNoteId = state.data[noteIndex - 1] ? state.data[noteIndex - 1].id : null
+
       return {
         ...state,
         data: state.data.filter(note => note.id !== action.payload),
-        active: state.data[0].id,
+        active: newActiveNoteId,
       }
     default:
       return state
