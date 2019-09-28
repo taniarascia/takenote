@@ -51,8 +51,8 @@ const NoteEditor: React.FC<NoteEditorProps> = ({ loading, activeNote, updateNote
 
 const mapStateToProps = state => ({
   loading: state.noteState.loading,
-  activeNote: state.noteState.data.find(note => note.id === state.noteState.active),
-  notes: state.noteState.data,
+  activeNote: state.noteState.notes.find(note => note.id === state.noteState.active),
+  notes: state.noteState.notes,
   active: state.noteState.active,
 })
 

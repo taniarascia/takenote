@@ -6,7 +6,7 @@ export interface NoteItem {
 }
 
 export interface NoteState {
-  data: NoteItem[]
+  notes: NoteItem[]
   loading: boolean
   active: string
   error: string

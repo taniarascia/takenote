@@ -45,7 +45,7 @@ const NoteList: React.FC<NoteListProps> = ({ active, notes, swapNote, pruneNotes
 )
 
 const mapStateToProps = state => ({
-  notes: state.noteState.data,
+  notes: state.noteState.notes,
   active: state.noteState.active,
 })
 

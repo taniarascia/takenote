@@ -43,7 +43,7 @@ const Navigation: React.FC<NavigationProps> = ({ activeNote, addNote, swapNote, 
 }
 
 const mapStateToProps = state => ({
-  activeNote: state.noteState.data.find(note => note.id === state.noteState.active),
+  activeNote: state.noteState.notes.find(note => note.id === state.noteState.active),
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
