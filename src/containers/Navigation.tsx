@@ -20,7 +20,7 @@ const Navigation: React.FC<NavigationProps> = ({ activeNote, addNote, swapNote, 
         onClick={() => {
           const note = { id: uuid(), text: '', created: '', lastUpdated: '' }
 
-          if (activeNote.text !== '') {
+          if ((activeNote && activeNote.text !== '') || !activeNote) {
             addNote(note)
             swapNote(note.id)
           }

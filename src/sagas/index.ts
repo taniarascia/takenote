@@ -14,7 +14,7 @@ async function fetchAsync(endpoint) {
 function* fetchNotes() {
   try {
     const data = yield fetchAsync(
-      'https://gist.githubusercontent.com/taniarascia/d0283d793979f63c7169210215d7922d/raw/5ca89530e7abe29a9eb7d8f2f915b5edf450f4c5/fakeNotes.json'
+      'https://gist.githubusercontent.com/taniarascia/d0283d793979f63c7169210215d7922d/raw/220917fa93284dbcd30654121a6ca498edc7d6bf/fakeNotes.json'
     )
     yield put({ type: ActionType.LOAD_NOTES_SUCCESS, payload: data })
   } catch (error) {
