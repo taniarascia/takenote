@@ -4,3 +4,10 @@ export interface NoteItem {
   created: string
   lastUpdated: string
 }
+
+export interface NoteState {
+  data: NoteItem[]
+  loading: boolean
+  active: string
+  error: string
+}

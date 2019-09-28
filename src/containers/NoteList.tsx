@@ -1,23 +1,29 @@
 import React from 'react'
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
-import { swapNote } from 'actions'
+import { swapNote, pruneNotes } from 'actions'
 import { NoteItem } from 'types'
 
 interface NoteListProps {
   active: string
   notes: NoteItem[]
   swapNote: Function
+  pruneNotes: Function
 }
 
-const NoteList: React.FC<NoteListProps> = ({ active, notes, swapNote }) => (
+const NoteList: React.FC<NoteListProps> = ({ active, notes, swapNote, pruneNotes }) => (
   <aside className="sidebar">
     <div className="note-list">
       {notes.map(note => {
-        const noteTitle =
-          note.text.indexOf('\n') !== -1
-            ? note.text.slice(0, note.text.indexOf('\n'))
-            : note.text.slice(0, 50)
+        let noteTitle: string
+
+        if (!note.text) {
+          noteTitle = 'New Note'
+        } else if (note.text.indexOf('\n') !== -1) {
+          noteTitle = note.text.slice(0, note.text.indexOf('\n'))
+        } else {
+          noteTitle = note.text.slice(0, 50)
+        }
 
         return (
           <div
@@ -25,6 +31,7 @@ const NoteList: React.FC<NoteListProps> = ({ active, notes, swapNote }) => (
             key={note.id}
             onClick={() => {
               swapNote(note.id)
+              pruneNotes()
             }}
           >
             {noteTitle}
@@ -42,6 +49,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   swapNote: noteId => dispatch(swapNote(noteId)),
+  pruneNotes: () => dispatch(pruneNotes()),
 })
 
 export default connect(
