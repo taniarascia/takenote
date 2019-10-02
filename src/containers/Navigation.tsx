@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import { addNote, swapNote, deleteNote } from 'actions'
 import uuid from 'uuid/v4'
 import { NoteItem } from 'types'
+import { getNoteTitle } from 'helpers'
 
 interface NavigationProps {
   addNote: Function
@@ -13,6 +14,20 @@ interface NavigationProps {
 }
 
 const Navigation: React.FC<NavigationProps> = ({ activeNote, addNote, swapNote, deleteNote }) => {
+  function downloadNote(filename, text) {
+    var pom = document.createElement('a')
+    pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text))
+    pom.setAttribute('download', `${filename}.md`)
+
+    if (document.createEvent) {
+      var event = document.createEvent('MouseEvents')
+      event.initEvent('click', true, true)
+      pom.dispatchEvent(event)
+    } else {
+      pom.click()
+    }
+  }
+
   return (
     <nav className="navigation">
       <button
@@ -37,6 +52,16 @@ const Navigation: React.FC<NavigationProps> = ({ activeNote, addNote, swapNote, 
         }}
       >
         X Delete Note
+      </button>
+      <button
+        className="nav-button"
+        onClick={() => {
+          if (activeNote) {
+            downloadNote(getNoteTitle(activeNote.text), activeNote.text)
+          }
+        }}
+      >
+        ^ Download Note
       </button>
     </nav>
   )
