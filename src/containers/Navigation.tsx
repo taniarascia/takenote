@@ -4,7 +4,8 @@ import { connect } from 'react-redux'
 import { addNote, swapNote, deleteNote, syncState } from 'actions'
 import uuid from 'uuid/v4'
 import { NoteItem } from 'types'
-import { getNoteTitle } from 'helpers'
+import { getNoteTitle, downloadNote } from 'helpers'
+// import { useInterval } from 'helpers/hooks'
 
 interface NavigationProps {
   addNote: Function
@@ -25,19 +26,9 @@ const Navigation: React.FC<NavigationProps> = ({
   notes,
   syncing,
 }) => {
-  function downloadNote(filename, text) {
-    var pom = document.createElement('a')
-    pom.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text))
-    pom.setAttribute('download', `${filename}.md`)
-
-    if (document.createEvent) {
-      var event = document.createEvent('MouseEvents')
-      event.initEvent('click', true, true)
-      pom.dispatchEvent(event)
-    } else {
-      pom.click()
-    }
-  }
+  // useInterval(() => {
+  //   syncState(notes)
+  // }, 30000)
 
   return (
     <nav className="navigation">

@@ -34,7 +34,7 @@ const noteReducer = (state = initialState, action): NoteState => {
     case ActionType.PRUNE_NOTES:
       return {
         ...state,
-        notes: state.notes.filter(note => note.text !== ''),
+        notes: state.notes.filter(note => note.text !== '' || note.id === state.active),
       }
     case ActionType.ADD_NOTE:
       return {
