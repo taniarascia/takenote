@@ -6,7 +6,6 @@ const initialState: NoteState = {
   active: '',
   error: '',
   loading: true,
-  syncing: false,
 }
 
 const noteReducer = (state = initialState, action): NoteState => {
@@ -25,16 +24,6 @@ const noteReducer = (state = initialState, action): NoteState => {
         ...state,
         loading: false,
         error: action.payload,
-      }
-    case ActionType.SWAP_NOTE:
-      return {
-        ...state,
-        active: action.payload,
-      }
-    case ActionType.PRUNE_NOTES:
-      return {
-        ...state,
-        notes: state.notes.filter(note => note.text !== '' || note.id === state.active),
       }
     case ActionType.ADD_NOTE:
       return {
@@ -70,21 +59,15 @@ const noteReducer = (state = initialState, action): NoteState => {
         notes: state.notes.filter(note => note.id !== action.payload),
         active: newActiveNoteId,
       }
-    case ActionType.SYNC_STATE:
+    case ActionType.SWAP_NOTE:
       return {
         ...state,
-        syncing: true,
+        active: action.payload,
       }
-    case ActionType.SYNC_STATE_SUCCESS:
+    case ActionType.PRUNE_NOTES:
       return {
         ...state,
-        syncing: false,
-      }
-    case ActionType.SYNC_STATE_ERROR:
-      return {
-        ...state,
-        syncing: false,
-        error: action.payload,
+        notes: state.notes.filter(note => note.text !== '' || note.id === state.active),
       }
     default:
       return state

@@ -1,5 +1,5 @@
 import { ActionType } from 'constants/enums'
-import { NoteItem } from 'types'
+import { NoteItem, CategoryItem } from 'types'
 
 export const addNote = (note: NoteItem) => ({
   type: ActionType.ADD_NOTE,
@@ -29,7 +29,7 @@ export const loadNotes = () => ({
   type: ActionType.LOAD_NOTES,
 })
 
-export const syncState = (notes: NoteItem[]) => ({
+export const syncState = (notes: NoteItem[], categories: CategoryItem[]) => ({
   type: ActionType.SYNC_STATE,
-  payload: notes,
+  payload: { notes, categories },
 })

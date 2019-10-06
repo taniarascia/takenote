@@ -2,8 +2,9 @@ import React from 'react'
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
 
-const CategoryList: React.FC = () => (
-  <aside className="category-sidebar">
+const AppSidebar: React.FC = () => (
+  <aside className="app-sidebar">
+    <div>All notes</div>
     <div className="category-list">
       {[1, 2, 3].map(category => {
         return (
@@ -13,6 +14,7 @@ const CategoryList: React.FC = () => (
         )
       })}
     </div>
+    <div>Add Category</div>
   </aside>
 )
 
@@ -23,4 +25,4 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({})
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(CategoryList)
+)(AppSidebar)

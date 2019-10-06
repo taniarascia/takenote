@@ -16,7 +16,7 @@ code {
 .app {
   display: grid;
   grid-template-areas:
-    'category-sidebar note-sidebar editor editor'
+    'app-sidebar note-sidebar editor editor'
     'nav nav nav nav';
   grid-template-columns: 150px 250px auto;
   grid-template-rows: auto 25px;
@@ -64,12 +64,13 @@ code {
   }
 }
 
-.category-sidebar {
-  grid-area: category-sidebar;
+.app-sidebar {
+  grid-area: app-sidebar;
   background: #333;
 
   .category-list {
     .category-each {
+      color: rgba(255, 255, 255, 0.8);
       cursor: pointer;
       padding: 0.5rem;
       border-bottom: 2px solid #222;

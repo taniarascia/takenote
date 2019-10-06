@@ -1,9 +1,9 @@
 import React from 'react'
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
-import { addNote, swapNote, deleteNote, syncState } from 'actions'
 import uuid from 'uuid/v4'
-import { NoteItem } from 'types'
+import { addNote, swapNote, deleteNote, syncState } from 'actions'
+import { NoteItem, CategoryItem } from 'types'
 import { getNoteTitle, downloadNote } from 'helpers'
 // import { useInterval } from 'helpers/hooks'
 import { useKey } from 'helpers/hooks'
@@ -15,6 +15,7 @@ interface NavigationProps {
   syncState: Function
   activeNote: NoteItem
   notes: NoteItem[]
+  categories: CategoryItem[]
   syncing: boolean
 }
 
@@ -25,10 +26,11 @@ const Navigation: React.FC<NavigationProps> = ({
   deleteNote,
   syncState,
   notes,
+  categories,
   syncing,
 }) => {
   // useInterval(() => {
-  //   syncState(notes)
+  //   syncState
   // }, 30000)
 
   const newNoteHandler = () => {
@@ -47,7 +49,7 @@ const Navigation: React.FC<NavigationProps> = ({
   }
 
   const syncNotesHandler = () => {
-    syncState(notes)
+    syncState(notes, categories)
   }
 
   const downloadNoteHandler = () => {
@@ -92,8 +94,9 @@ const Navigation: React.FC<NavigationProps> = ({
 }
 
 const mapStateToProps = state => ({
-  syncing: state.noteState.syncing,
+  syncing: state.syncState.syncing,
   notes: state.noteState.notes,
+  categories: state.categoryState.categories,
   activeNote: state.noteState.notes.find(note => note.id === state.noteState.active),
 })
 
@@ -101,7 +104,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   addNote: note => dispatch(addNote(note)),
   swapNote: noteId => dispatch(swapNote(noteId)),
   deleteNote: noteId => dispatch(deleteNote(noteId)),
-  syncState: notes => dispatch(syncState(notes)),
+  syncState: (notes, categories) => dispatch(syncState(notes, categories)),
 })
 
 export default connect(
