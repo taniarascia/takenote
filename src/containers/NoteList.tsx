@@ -13,14 +13,14 @@ interface NoteListProps {
 }
 
 const NoteList: React.FC<NoteListProps> = ({ active, notes, swapNote, pruneNotes }) => (
-  <aside className="sidebar">
+  <aside className="note-sidebar">
     <div className="note-list">
       {notes.map(note => {
         const noteTitle: string = getNoteTitle(note.text)
 
         return (
           <div
-            className={note.id === active ? 'note-title active' : 'note-title'}
+            className={note.id === active ? 'note-each active' : 'note-each'}
             key={note.id}
             onClick={() => {
               if (note.id !== active) {

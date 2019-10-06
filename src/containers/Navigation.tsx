@@ -6,6 +6,7 @@ import uuid from 'uuid/v4'
 import { NoteItem } from 'types'
 import { getNoteTitle, downloadNote } from 'helpers'
 // import { useInterval } from 'helpers/hooks'
+import { useKey } from 'helpers/hooks'
 
 interface NavigationProps {
   addNote: Function
@@ -30,47 +31,59 @@ const Navigation: React.FC<NavigationProps> = ({
   //   syncState(notes)
   // }, 30000)
 
+  const newNoteHandler = () => {
+    const note = { id: uuid(), text: '', created: '', lastUpdated: '' }
+
+    if ((activeNote && activeNote.text !== '') || !activeNote) {
+      addNote(note)
+      swapNote(note.id)
+    }
+  }
+
+  const deleteNoteHandler = () => {
+    if (activeNote) {
+      deleteNote(activeNote.id)
+    }
+  }
+
+  const syncNotesHandler = () => {
+    syncState(notes)
+  }
+
+  const downloadNoteHandler = () => {
+    if (activeNote) {
+      downloadNote(getNoteTitle(activeNote.text), activeNote.text)
+    }
+  }
+
+  useKey('ctrl+n', () => {
+    newNoteHandler()
+  })
+
+  useKey('ctrl+backspace', () => {
+    deleteNoteHandler()
+  })
+
+  useKey('ctrl+s', () => {
+    syncNotesHandler()
+  })
+
+  // useKey('ctrl+up', () => {
+  //   swapNote()
+  // })
+
   return (
     <nav className="navigation">
-      <button
-        className="nav-button"
-        onClick={async () => {
-          const note = { id: uuid(), text: '', created: '', lastUpdated: '' }
-
-          if ((activeNote && activeNote.text !== '') || !activeNote) {
-            await addNote(note)
-            swapNote(note.id)
-          }
-        }}
-      >
+      <button className="nav-button" onClick={newNoteHandler}>
         + New Note
       </button>
-      <button
-        className="nav-button"
-        onClick={() => {
-          if (activeNote) {
-            deleteNote(activeNote.id)
-          }
-        }}
-      >
+      <button className="nav-button" onClick={deleteNoteHandler}>
         X Delete Note
       </button>
-      <button
-        className="nav-button"
-        onClick={() => {
-          if (activeNote) {
-            downloadNote(getNoteTitle(activeNote.text), activeNote.text)
-          }
-        }}
-      >
+      <button className="nav-button" onClick={downloadNoteHandler}>
         ^ Download Note
       </button>
-      <button
-        className="nav-button"
-        onClick={() => {
-          syncState(notes)
-        }}
-      >
+      <button className="nav-button" onClick={syncNotesHandler}>
         Sync notes
         {syncing && 'Syncing...'}
       </button>

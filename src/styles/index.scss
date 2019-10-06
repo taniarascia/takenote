@@ -16,19 +16,18 @@ code {
 .app {
   display: grid;
   grid-template-areas:
-    'sidebar editor editor'
-    'nav nav nav';
-  grid-template-columns: 250px auto;
+    'category-sidebar note-sidebar editor editor'
+    'nav nav nav nav';
+  grid-template-columns: 150px 250px auto;
   grid-template-rows: auto 25px;
   min-height: 100vh;
-  border-left: 2px solid $hover;
-  border-right: 2px solid $hover;
 }
 
 .navigation {
   grid-area: nav;
   background: #ccc;
   display: flex;
+
   .nav-button {
     -webkit-display: none;
     display: block;
@@ -37,27 +36,51 @@ code {
     font-weight: 600;
     border: none;
     font-size: 1rem;
+
     &:hover {
       background: rgba(0, 0, 0, 0.1);
     }
   }
 }
 
-.sidebar {
-  grid-area: sidebar;
+.note-sidebar {
+  grid-area: note-sidebar;
   background: $background;
+
+  .note-list {
+    .note-each {
+      cursor: pointer;
+      padding: 0.5rem;
+      border-bottom: 2px solid $hover;
+
+      &.active {
+        background: #bbb;
+      }
+
+      &:hover {
+        background: $hover;
+      }
+    }
+  }
 }
 
-.note-list {
-  .note-title {
-    cursor: pointer;
-    padding: 0.5rem;
-    border-bottom: 2px solid $hover;
-    &.active {
-      background: #bbb;
-    }
-    &:hover {
-      background: $hover;
+.category-sidebar {
+  grid-area: category-sidebar;
+  background: #333;
+
+  .category-list {
+    .category-each {
+      cursor: pointer;
+      padding: 0.5rem;
+      border-bottom: 2px solid #222;
+
+      &.active {
+        background: #222;
+      }
+
+      &:hover {
+        background: #444;
+      }
     }
   }
 }
@@ -79,6 +102,7 @@ code {
     font-size: 15px;
     line-height: 1.5;
   }
+
   .CodeMirror-activeline-background {
     background: rgba(0, 0, 0, 0.05) !important;
   }
