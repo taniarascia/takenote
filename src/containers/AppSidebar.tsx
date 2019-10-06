@@ -3,7 +3,6 @@ import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
 import { CategoryItem } from 'types'
 import { addCategory } from 'actions'
-import { useKey } from 'helpers/hooks'
 import kebabCase from 'lodash/kebabCase'
 
 interface AppProps {
