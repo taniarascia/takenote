@@ -158,6 +158,8 @@ code {
 
 .editor {
   grid-area: editor;
+  max-height: calc(100vh - 25px);
+  overflow-y: auto;
 
   .CodeMirror {
     -webkit-font-smoothing: subpixel-antialiased;
