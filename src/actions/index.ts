@@ -29,6 +29,15 @@ export const loadNotes = () => ({
   type: ActionType.LOAD_NOTES,
 })
 
+export const addCategory = (category: CategoryItem) => ({
+  type: ActionType.ADD_CATEGORY,
+  payload: category,
+})
+
+export const loadCategories = () => ({
+  type: ActionType.LOAD_CATEGORIES,
+})
+
 export const syncState = (notes: NoteItem[], categories: CategoryItem[]) => ({
   type: ActionType.SYNC_STATE,
   payload: { notes, categories },

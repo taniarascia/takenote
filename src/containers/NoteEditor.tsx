@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
 import { Controlled as CodeMirror } from 'react-codemirror2'
-import { updateNote, loadNotes } from 'actions'
+import { updateNote } from 'actions'
 import { NoteItem } from 'types'
 
 import options from 'constants/codeMirrorOptions'
@@ -15,14 +15,9 @@ interface NoteEditorProps {
   loading: boolean
   activeNote: NoteItem
   updateNote: Function
-  loadNotes: Function
 }
 
-const NoteEditor: React.FC<NoteEditorProps> = ({ loading, activeNote, updateNote, loadNotes }) => {
-  useEffect(() => {
-    loadNotes()
-  }, [loadNotes])
-
+const NoteEditor: React.FC<NoteEditorProps> = ({ loading, activeNote, updateNote }) => {
   if (loading) {
     return <div className="empty-editor" />
   } else if (!activeNote) {
@@ -57,7 +52,6 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  loadNotes: () => dispatch(loadNotes()),
   updateNote: note => dispatch(updateNote(note)),
 })
 

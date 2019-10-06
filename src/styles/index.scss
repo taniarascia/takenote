@@ -67,13 +67,21 @@ code {
 .app-sidebar {
   grid-area: app-sidebar;
   background: #333;
+  color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  flex-direction: column;
 
   .category-list {
+    font-size: 0.9rem;
+
     .category-each {
-      color: rgba(255, 255, 255, 0.8);
       cursor: pointer;
       padding: 0.5rem;
       border-bottom: 2px solid #222;
+
+      &:last-of-type {
+        border-bottom: none;
+      }
 
       &.active {
         background: #222;
@@ -82,6 +90,62 @@ code {
       &:hover {
         background: #444;
       }
+    }
+  }
+}
+
+.add-category-form {
+  input {
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid #888;
+    padding: 0.5rem;
+    font-size: 0.9rem;
+    -webkit-appearance: none;
+    color: #eee;
+  }
+}
+
+#app-sidebar-main {
+  flex: 1;
+
+  h1 {
+    font-size: 1.3rem;
+    padding: 0.5rem;
+    margin: 0;
+  }
+
+  p {
+    padding: 0 0.5rem;
+  }
+
+  h2 {
+    margin: 2rem 0 0;
+    color: #888;
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    padding: 0.5rem;
+  }
+}
+
+#app-sidebar-button {
+  width: 100%;
+  align-self: flex-end;
+
+  button {
+    -webkit-display: none;
+    display: block;
+    cursor: pointer;
+    background: transparent;
+    font-weight: 600;
+    border: none;
+    font-size: 1rem;
+    color: white;
+    width: 100%;
+    text-align: center;
+    padding: 1rem;
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.2);
     }
   }
 }

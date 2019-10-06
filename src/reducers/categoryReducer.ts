@@ -42,7 +42,7 @@ const categoryReducer = (state = initialState, action): CategoryState => {
           category.id === action.payload.id
             ? {
                 id: category.id,
-                name: action.payload.title,
+                name: action.payload.name,
               }
             : category
         ),

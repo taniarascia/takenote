@@ -5,7 +5,6 @@ import uuid from 'uuid/v4'
 import { addNote, swapNote, deleteNote, syncState } from 'actions'
 import { NoteItem, CategoryItem } from 'types'
 import { getNoteTitle, downloadNote } from 'helpers'
-// import { useInterval } from 'helpers/hooks'
 import { useKey } from 'helpers/hooks'
 
 interface NavigationProps {
@@ -29,10 +28,6 @@ const Navigation: React.FC<NavigationProps> = ({
   categories,
   syncing,
 }) => {
-  // useInterval(() => {
-  //   syncState
-  // }, 30000)
-
   const newNoteHandler = () => {
     const note = { id: uuid(), text: '', created: '', lastUpdated: '' }
 
