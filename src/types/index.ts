@@ -7,7 +7,8 @@ export interface NoteItem {
 
 export interface NoteState {
   notes: NoteItem[]
-  loading: boolean
   active: string
   error: string
+  loading: boolean
+  syncing: boolean
 }
