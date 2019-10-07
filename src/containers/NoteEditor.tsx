@@ -11,10 +11,15 @@ import 'codemirror/theme/base16-light.css'
 import 'codemirror/mode/gfm/gfm.js'
 import 'codemirror/addon/selection/active-line.js'
 
+interface UpdateNoteParams {
+  id: string
+  text: string
+}
+
 interface NoteEditorProps {
   loading: boolean
   activeNote: NoteItem
-  updateNote: Function
+  updateNote: (params: UpdateNoteParams) => void
 }
 
 const NoteEditor: React.FC<NoteEditorProps> = ({ loading, activeNote, updateNote }) => {
@@ -30,15 +35,11 @@ const NoteEditor: React.FC<NoteEditorProps> = ({ loading, activeNote, updateNote
         options={options}
         editorDidMount={editor => {
           editor.focus()
-          editor.setCursor(editor.lineCount(), 0)
         }}
         onBeforeChange={(editor, data, value) => {
           updateNote({ id: activeNote.id, text: value })
         }}
-        onChange={(editor, data, value) => {
-          // editor.focus()
-          // editor.setCursor(editor.lineCount(), 0)
-        }}
+        onChange={(editor, data, value) => {}}
       />
     )
   }

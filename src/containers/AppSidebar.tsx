@@ -6,7 +6,7 @@ import { addCategory } from 'actions'
 import kebabCase from 'lodash/kebabCase'
 
 interface AppProps {
-  addCategory: Function
+  addCategory: (categoryName: CategoryItem) => void
   categories: CategoryItem[]
 }
 

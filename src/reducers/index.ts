@@ -7,7 +7,7 @@ const rootReducer = combineReducers({
   noteState: noteReducer,
   categoryState: categoryReducer,
   syncState: syncReducer,
-} as any)
+})
 
 export type AppState = ReturnType<typeof rootReducer>
 

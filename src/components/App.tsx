@@ -8,8 +8,8 @@ import NoteEditor from 'containers/NoteEditor'
 import { loadNotes, loadCategories } from 'actions'
 
 interface AppProps {
-  loadNotes: Function
-  loadCategories: Function
+  loadNotes: () => void
+  loadCategories: () => void
 }
 
 const App: React.FC<AppProps> = ({ loadNotes, loadCategories }) => {
