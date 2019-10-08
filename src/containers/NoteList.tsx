@@ -28,11 +28,13 @@ const NoteList: React.FC<NoteListProps> = ({
   pruneNotes,
   addCategoryToNote,
 }) => {
+  const initialSearchResults: NoteItem[] = filteredNotes
+
   const [noteOptionsId, setNoteOptionsId] = useState('')
   const node = useRef<HTMLDivElement>(null)
 
   const handleNoteOptionsClick = (
-    event: MouseEvent | React.MouseEvent<HTMLDivElement>,
+    event: MouseEvent | React.MouseEvent<HTMLDivElement> | React.ChangeEvent<HTMLSelectElement>,
     noteId: string = ''
   ) => {
     event.stopPropagation()
@@ -50,6 +52,12 @@ const NoteList: React.FC<NoteListProps> = ({
     }
   }
 
+  const searchNotes = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const filteredResults = filteredNotes.filter(
+      note => note.text.toLowerCase().search(event.target.value.toLowerCase()) !== -1
+    )
+  }
+
   useEffect(() => {
     // add when mounted
     document.addEventListener('mousedown', handleNoteOptionsClick)
@@ -61,6 +69,12 @@ const NoteList: React.FC<NoteListProps> = ({
 
   return (
     <aside className="note-sidebar">
+      {/* <input
+        type="search"
+        placeholder="Search notes"
+        onChange={searchNotes}
+        className="searchbar"
+      /> */}
       <div className="note-list">
         {filteredNotes.map(note => {
           const noteTitle: string = getNoteTitle(note.text)
@@ -106,6 +120,7 @@ const NoteList: React.FC<NoteListProps> = ({
                         swapCategory(event.target.value)
                         swapNote(newNoteId)
                       }
+                      handleNoteOptionsClick(event)
                     }}
                   >
                     <option disabled value="">

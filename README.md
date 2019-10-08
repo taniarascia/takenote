@@ -1,4 +1,4 @@
-# vNote
+# TakeNote
 
 ## Installation
 
@@ -101,7 +101,7 @@ case Actions.ADD_CATEGORY_TO_NOTE:
 import { addCategoryToNote } from 'actions'
 ```
 
-### Add to container props
+#### Add to container props
 
 ```tsx
 // containers/Component.tsx
