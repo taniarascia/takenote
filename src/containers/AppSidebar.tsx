@@ -1,13 +1,15 @@
 import React, { useState } from 'react'
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
-import { CategoryItem, ApplicationState } from 'types'
-import { addCategory, swapCategory } from 'actions'
+import { CategoryItem, NoteItem, ApplicationState } from 'types'
+import { addCategory, swapCategory, swapNote } from 'actions'
 import kebabCase from 'lodash/kebabCase'
 
 interface AppProps {
   addCategory: (category: CategoryItem) => void
   swapCategory: (categoryId: string) => void
+  swapNote: (swapNote: string) => void
+  notes: NoteItem[]
   categories: CategoryItem[]
   activeCategoryId: string
 }
@@ -15,6 +17,8 @@ interface AppProps {
 const AppSidebar: React.FC<AppProps> = ({
   addCategory,
   swapCategory,
+  swapNote,
+  notes,
   categories,
   activeCategoryId,
 }) => {
@@ -42,7 +46,9 @@ const AppSidebar: React.FC<AppProps> = ({
         <div
           className="app-sidebar-link"
           onClick={() => {
+            const newNoteId = notes.length > 0 ? notes[0].id : ''
             swapCategory('')
+            swapNote(newNoteId)
           }}
         >
           Notes
@@ -58,8 +64,11 @@ const AppSidebar: React.FC<AppProps> = ({
                 }
                 key={category.id}
                 onClick={() => {
+                  const notesForNewCategory = notes.filter(note => note.category === category.id)
+                  const newNoteId = notesForNewCategory.length > 0 ? notesForNewCategory[0].id : ''
                   if (category.id !== activeCategoryId) {
                     swapCategory(category.id)
+                    swapNote(newNoteId)
                   }
                 }}
               >
@@ -97,9 +106,11 @@ const AppSidebar: React.FC<AppProps> = ({
 const mapStateToProps = (state: ApplicationState) => ({
   activeCategoryId: state.categoryState.activeCategoryId,
   categories: state.categoryState.categories,
+  notes: state.noteState.notes,
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
+  swapNote: (noteId: string) => dispatch(swapNote(noteId)),
   swapCategory: (categoryId: string) => dispatch(swapCategory(categoryId)),
   addCategory: (category: CategoryItem) => dispatch(addCategory(category)),
 })

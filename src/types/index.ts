@@ -54,7 +54,10 @@ export interface SyncState {
 
 export interface SyncStateAction {
   type: typeof Actions.SYNC_STATE
-  payload: Storage
+  payload: {
+    categories: CategoryItem[]
+    notes: NoteItem[]
+  }
 }
 
 export interface SyncStateSuccessAction {
@@ -109,6 +112,14 @@ export interface PruneNotesAction {
   payload: string
 }
 
+export interface AddCategoryToNoteAction {
+  type: typeof Actions.ADD_CATEGORY_TO_NOTE
+  payload: {
+    categoryId: string
+    noteId: string
+  }
+}
+
 export type NotesActionTypes =
   | LoadNotesAction
   | LoadNotesSuccessAction
@@ -118,6 +129,7 @@ export type NotesActionTypes =
   | UpdateNoteAction
   | SwapNoteAction
   | PruneNotesAction
+  | AddCategoryToNoteAction
 
 /* Categories */
 
