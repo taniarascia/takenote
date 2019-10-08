@@ -69,6 +69,21 @@ const noteReducer = (state = initialState, action: NotesActionTypes): NoteState 
         ...state,
         notes: state.notes.filter(note => note.text !== '' || note.id === state.activeNoteId),
       }
+    case Actions.PRUNE_CATEGORY_FROM_NOTES:
+      return {
+        ...state,
+        notes: state.notes.map(note =>
+          note.category === action.payload
+            ? {
+                id: note.id,
+                text: note.text,
+                created: note.created,
+                lastUpdated: note.lastUpdated,
+                category: undefined,
+              }
+            : note
+        ),
+      }
     case Actions.ADD_CATEGORY_TO_NOTE:
       return {
         ...state,

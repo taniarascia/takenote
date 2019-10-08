@@ -22,7 +22,7 @@ const NoteEditor: React.FC<NoteEditorProps> = ({ loading, activeNote, updateNote
   if (loading) {
     return <div className="empty-editor vcenter">Loading...</div>
   } else if (!activeNote) {
-    return <div className="empty-editor vcenter">Create your first note!</div>
+    return <div className="empty-editor vcenter">Create a note!</div>
   } else {
     return (
       <CodeMirror

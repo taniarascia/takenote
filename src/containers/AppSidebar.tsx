@@ -2,11 +2,19 @@ import React, { useState } from 'react'
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
 import { CategoryItem, NoteItem, ApplicationState } from 'types'
-import { addCategory, swapCategory, swapNote } from 'actions'
+import {
+  addCategory,
+  deleteCategory,
+  pruneCategoryFromNotes,
+  swapCategory,
+  swapNote,
+} from 'actions'
 import kebabCase from 'lodash/kebabCase'
 
 interface AppProps {
   addCategory: (category: CategoryItem) => void
+  deleteCategory: (categoryId: string) => void
+  pruneCategoryFromNotes: (categoryId: string) => void
   swapCategory: (categoryId: string) => void
   swapNote: (swapNote: string) => void
   notes: NoteItem[]
@@ -16,6 +24,8 @@ interface AppProps {
 
 const AppSidebar: React.FC<AppProps> = ({
   addCategory,
+  deleteCategory,
+  pruneCategoryFromNotes,
   swapCategory,
   swapNote,
   notes,
@@ -74,7 +84,16 @@ const AppSidebar: React.FC<AppProps> = ({
                   }
                 }}
               >
-                {category.name}
+                <div>{category.name}</div>
+                <div
+                  className="category-options"
+                  onClick={() => {
+                    deleteCategory(category.id)
+                    pruneCategoryFromNotes(category.id)
+                  }}
+                >
+                  X
+                </div>
               </div>
             )
           })}
@@ -115,6 +134,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   swapNote: (noteId: string) => dispatch(swapNote(noteId)),
   swapCategory: (categoryId: string) => dispatch(swapCategory(categoryId)),
   addCategory: (category: CategoryItem) => dispatch(addCategory(category)),
+  deleteCategory: (categoryId: string) => dispatch(deleteCategory(categoryId)),
+  pruneCategoryFromNotes: (categoryId: string) => dispatch(pruneCategoryFromNotes(categoryId)),
 })
 
 export default connect(

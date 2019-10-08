@@ -43,6 +43,11 @@ export const pruneNotes = () => ({
   type: Actions.PRUNE_NOTES,
 })
 
+export const pruneCategoryFromNotes = (categoryId: string) => ({
+  type: Actions.PRUNE_CATEGORY_FROM_NOTES,
+  payload: categoryId,
+})
+
 export const addCategoryToNote = (categoryId: string, noteId: string) => ({
   type: Actions.ADD_CATEGORY_TO_NOTE,
   payload: { categoryId, noteId },
@@ -55,6 +60,11 @@ export const addCategoryToNote = (categoryId: string, noteId: string) => ({
 export const addCategory = (category: CategoryItem) => ({
   type: Actions.ADD_CATEGORY,
   payload: category,
+})
+
+export const deleteCategory = (categoryId: string) => ({
+  type: Actions.DELETE_CATEGORY,
+  payload: categoryId,
 })
 
 export const loadCategories = () => ({
