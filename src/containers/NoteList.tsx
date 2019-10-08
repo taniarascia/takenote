@@ -2,7 +2,7 @@ import React from 'react'
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
 import { swapNote, pruneNotes } from 'actions'
-import { NoteItem } from 'types'
+import { NoteItem, ApplicationState } from 'types'
 import { getNoteTitle } from 'helpers'
 
 interface NoteListProps {
@@ -37,13 +37,13 @@ const NoteList: React.FC<NoteListProps> = ({ active, notes, swapNote, pruneNotes
   </aside>
 )
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state: ApplicationState) => ({
   notes: state.noteState.notes,
   active: state.noteState.active,
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  swapNote: noteId => dispatch(swapNote(noteId)),
+  swapNote: (noteId: string) => dispatch(swapNote(noteId)),
   pruneNotes: () => dispatch(pruneNotes()),
 })
 

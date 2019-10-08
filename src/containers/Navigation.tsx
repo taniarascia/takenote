@@ -3,7 +3,7 @@ import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
 import uuid from 'uuid/v4'
 import { addNote, swapNote, deleteNote, syncState } from 'actions'
-import { NoteItem, CategoryItem } from 'types'
+import { NoteItem, CategoryItem, ApplicationState } from 'types'
 import { getNoteTitle, downloadNote } from 'helpers'
 import { useKey } from 'helpers/hooks'
 
@@ -12,7 +12,7 @@ interface NavigationProps {
   swapNote: (noteId: string) => void
   deleteNote: (noteId: string) => void
   syncState: (notes: NoteItem[], categories: CategoryItem[]) => void
-  activeNote: NoteItem
+  activeNote?: NoteItem
   notes: NoteItem[]
   categories: CategoryItem[]
   syncing: boolean
@@ -92,7 +92,7 @@ const Navigation: React.FC<NavigationProps> = ({
   )
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state: ApplicationState) => ({
   syncing: state.syncState.syncing,
   notes: state.noteState.notes,
   categories: state.categoryState.categories,
@@ -100,10 +100,11 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  addNote: note => dispatch(addNote(note)),
-  swapNote: noteId => dispatch(swapNote(noteId)),
-  deleteNote: noteId => dispatch(deleteNote(noteId)),
-  syncState: (notes, categories) => dispatch(syncState(notes, categories)),
+  addNote: (note: NoteItem) => dispatch(addNote(note)),
+  swapNote: (noteId: string) => dispatch(swapNote(noteId)),
+  deleteNote: (noteId: string) => dispatch(deleteNote(noteId)),
+  syncState: (notes: NoteItem[], categories: CategoryItem[]) =>
+    dispatch(syncState(notes, categories)),
 })
 
 export default connect(

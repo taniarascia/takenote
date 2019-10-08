@@ -1,11 +1,3 @@
-// eslint-ignore
-export const logger = store => next => action => {
-  console.log('dispatching', action)
-  let result = next(action)
-  console.log('next state', store.getState())
-  return result
-}
-
 export function getNoteTitle(text: string): string {
   let noteTitle: string
 

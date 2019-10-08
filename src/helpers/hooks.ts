@@ -23,9 +23,9 @@ export function useInterval(callback: () => void, delay: number | null) {
   }, [delay])
 }
 
-export function useKey(key: string, handlerCallback: () => void) {
+export function useKey(key: string, action: () => void) {
   let actionRef = useRef(noop)
-  actionRef.current = handlerCallback
+  actionRef.current = action
 
   useEffect(() => {
     mousetrap.bindGlobal(key, () => {

@@ -1,12 +1,12 @@
 import React, { useState } from 'react'
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
-import { CategoryItem } from 'types'
+import { CategoryItem, ApplicationState } from 'types'
 import { addCategory } from 'actions'
 import kebabCase from 'lodash/kebabCase'
 
 interface AppProps {
-  addCategory: (categoryName: CategoryItem) => void
+  addCategory: (category: CategoryItem) => void
   categories: CategoryItem[]
 }
 
@@ -68,12 +68,12 @@ const AppSidebar: React.FC<AppProps> = ({ addCategory, categories }) => {
   )
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state: ApplicationState) => ({
   categories: state.categoryState.categories,
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  addCategory: category => dispatch(addCategory(category)),
+  addCategory: (category: CategoryItem) => dispatch(addCategory(category)),
 })
 
 export default connect(

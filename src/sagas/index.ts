@@ -1,42 +1,51 @@
 import { put, all, takeLatest } from 'redux-saga/effects'
-import { ActionType } from 'constants/enums'
+import { Actions } from 'constants/enums'
+import {
+  loadNotesSuccess,
+  loadNotesError,
+  loadCategoriesSuccess,
+  loadCategoriesError,
+  syncStateSuccess,
+  syncStateError,
+} from 'actions'
+import { SyncStateAction } from 'types'
 import { requestNotes, requestCategories, saveState } from 'api'
 
 function* fetchNotes() {
   try {
-    const data = yield requestNotes()
+    const notes = yield requestNotes()
 
-    yield put({ type: ActionType.LOAD_NOTES_SUCCESS, payload: data })
+    yield put(loadNotesSuccess(notes))
   } catch (error) {
-    yield put({ type: ActionType.LOAD_NOTES_ERROR, payload: error.message })
+    yield put(loadNotesError(error.message))
   }
 }
 
 function* fetchCategories() {
   try {
-    const data = yield requestCategories()
+    const categories = yield requestCategories()
 
-    yield put({ type: ActionType.LOAD_CATEGORIES_SUCCESS, payload: data })
+    yield put(loadCategoriesSuccess(categories))
   } catch (error) {
-    yield put({ type: ActionType.LOAD_CATEGORIES_ERROR, payload: error.message })
+    yield put(loadCategoriesError(error.message))
   }
 }
 
-function* syncState(state) {
+function* postState({ payload: { notes, categories } }: SyncStateAction) {
   try {
-    yield saveState(state)
+    yield saveState(notes, categories)
 
-    yield put({ type: ActionType.SYNC_STATE_SUCCESS })
+    yield put(syncStateSuccess())
   } catch (error) {
-    yield put({ type: ActionType.SYNC_STATE_ERROR, payload: error.message })
+    yield put(syncStateError(error.message))
   }
 }
 
 export function* allSagas() {
   yield all([
-    takeLatest(ActionType.LOAD_NOTES, fetchNotes),
-    takeLatest(ActionType.LOAD_CATEGORIES, fetchCategories),
-    takeLatest(ActionType.SYNC_STATE, syncState),
+    takeLatest(Actions.LOAD_NOTES, fetchNotes),
+    takeLatest(Actions.LOAD_CATEGORIES, fetchCategories),
+    takeLatest(Actions.SYNC_STATE, postState),
   ])
 }
 
