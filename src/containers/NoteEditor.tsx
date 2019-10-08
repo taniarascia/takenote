@@ -2,6 +2,7 @@ import React from 'react'
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
 import { Controlled as CodeMirror } from 'react-codemirror2'
+import moment from 'moment'
 import { updateNote } from 'actions'
 import { NoteItem, ApplicationState } from 'types'
 
@@ -32,7 +33,12 @@ const NoteEditor: React.FC<NoteEditorProps> = ({ loading, activeNote, updateNote
           editor.focus()
         }}
         onBeforeChange={(editor, data, value) => {
-          updateNote({ id: activeNote.id, text: value, created: '', lastUpdated: '' })
+          updateNote({
+            id: activeNote.id,
+            text: value,
+            created: activeNote.created,
+            lastUpdated: moment().format(),
+          })
         }}
         onChange={(editor, data, value) => {}}
       />
@@ -42,7 +48,7 @@ const NoteEditor: React.FC<NoteEditorProps> = ({ loading, activeNote, updateNote
 
 const mapStateToProps = (state: ApplicationState) => ({
   loading: state.noteState.loading,
-  activeNote: state.noteState.notes.find(note => note.id === state.noteState.active),
+  activeNote: state.noteState.notes.find(note => note.id === state.noteState.activeNoteId),
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

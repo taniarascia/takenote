@@ -56,6 +56,11 @@ export const loadCategories = () => ({
   type: Actions.LOAD_CATEGORIES,
 })
 
+export const swapCategory = (categoryId: string) => ({
+  type: Actions.SWAP_CATEGORY,
+  payload: categoryId,
+})
+
 export const loadCategoriesSuccess = (categories: CategoryItem[]) => ({
   type: Actions.LOAD_CATEGORIES_SUCCESS,
   payload: categories,

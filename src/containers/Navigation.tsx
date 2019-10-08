@@ -6,6 +6,7 @@ import { addNote, swapNote, deleteNote, syncState } from 'actions'
 import { NoteItem, CategoryItem, ApplicationState } from 'types'
 import { getNoteTitle, downloadNote } from 'helpers'
 import { useKey } from 'helpers/hooks'
+import moment from 'moment'
 
 interface NavigationProps {
   addNote: (note: NoteItem) => void
@@ -29,7 +30,12 @@ const Navigation: React.FC<NavigationProps> = ({
   syncing,
 }) => {
   const newNoteHandler = () => {
-    const note: NoteItem = { id: uuid(), text: '', created: '', lastUpdated: '' }
+    const note: NoteItem = {
+      id: uuid(),
+      text: '',
+      created: moment().format(),
+      lastUpdated: moment().format(),
+    }
 
     if ((activeNote && activeNote.text !== '') || !activeNote) {
       addNote(note)
@@ -96,7 +102,7 @@ const mapStateToProps = (state: ApplicationState) => ({
   syncing: state.syncState.syncing,
   notes: state.noteState.notes,
   categories: state.categoryState.categories,
-  activeNote: state.noteState.notes.find(note => note.id === state.noteState.active),
+  activeNote: state.noteState.notes.find(note => note.id === state.noteState.activeNoteId),
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

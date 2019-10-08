@@ -26,15 +26,17 @@ export interface ApplicationState {
   categoryState: CategoryState
   syncState: SyncState
 }
+
 export interface NoteState {
   notes: NoteItem[]
-  active: string
+  activeNoteId: string
   error: string
   loading: boolean
 }
+
 export interface CategoryState {
   categories: CategoryItem[]
-  active: string
+  activeCategoryId: string
   error: string
   loading: boolean
 }

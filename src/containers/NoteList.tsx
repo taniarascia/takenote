@@ -6,13 +6,13 @@ import { NoteItem, ApplicationState } from 'types'
 import { getNoteTitle } from 'helpers'
 
 interface NoteListProps {
-  active: string
+  activeNoteId: string
   notes: NoteItem[]
   swapNote: Function
   pruneNotes: Function
 }
 
-const NoteList: React.FC<NoteListProps> = ({ active, notes, swapNote, pruneNotes }) => (
+const NoteList: React.FC<NoteListProps> = ({ activeNoteId, notes, swapNote, pruneNotes }) => (
   <aside className="note-sidebar">
     <div className="note-list">
       {notes.map(note => {
@@ -20,10 +20,10 @@ const NoteList: React.FC<NoteListProps> = ({ active, notes, swapNote, pruneNotes
 
         return (
           <div
-            className={note.id === active ? 'note-each active' : 'note-each'}
+            className={note.id === activeNoteId ? 'note-each active' : 'note-each'}
             key={note.id}
             onClick={() => {
-              if (note.id !== active) {
+              if (note.id !== activeNoteId) {
                 swapNote(note.id)
                 pruneNotes()
               }
@@ -39,7 +39,7 @@ const NoteList: React.FC<NoteListProps> = ({ active, notes, swapNote, pruneNotes
 
 const mapStateToProps = (state: ApplicationState) => ({
   notes: state.noteState.notes,
-  active: state.noteState.active,
+  activeNoteId: state.noteState.activeNoteId,
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

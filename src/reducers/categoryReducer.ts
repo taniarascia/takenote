@@ -3,7 +3,7 @@ import { CategoryState, CategoryActionTypes } from 'types'
 
 const initialState: CategoryState = {
   categories: [],
-  active: '',
+  activeCategoryId: '',
   error: '',
   loading: true,
 }
@@ -16,7 +16,7 @@ const categoryReducer = (state = initialState, action: CategoryActionTypes): Cat
       return {
         ...state,
         categories: action.payload,
-        active: '',
+        activeCategoryId: '',
         loading: false,
       }
     case Actions.LOAD_CATEGORIES_ERROR:
@@ -28,7 +28,7 @@ const categoryReducer = (state = initialState, action: CategoryActionTypes): Cat
     case Actions.SWAP_CATEGORY:
       return {
         ...state,
-        active: action.payload,
+        activeCategoryId: action.payload,
       }
     case Actions.ADD_CATEGORY:
       return {
@@ -62,7 +62,7 @@ const categoryReducer = (state = initialState, action: CategoryActionTypes): Cat
       return {
         ...state,
         categories: state.categories.filter(category => category.id !== action.payload),
-        active: newActiveCategoryId,
+        activeCategoryId: newActiveCategoryId,
       }
     default:
       return state
