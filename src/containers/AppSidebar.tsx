@@ -25,13 +25,30 @@ const AppSidebar: React.FC<AppProps> = ({
     !addingTempCategory && setAddingTempCategory(true)
   }
 
+  const onSubmit = event => {
+    event.preventDefault()
+
+    const category = { id: kebabCase(tempCategory), name: tempCategory }
+
+    addCategory(category)
+
+    setTempCategory('')
+    setAddingTempCategory(false)
+  }
+
   return (
     <aside className="app-sidebar">
       <section id="app-sidebar-main">
-        <h1>vNote</h1>
-        <p>All Notes</p>
-        <h2>Categories</h2>
+        <div
+          className="app-sidebar-link"
+          onClick={() => {
+            swapCategory('')
+          }}
+        >
+          Notes
+        </div>
 
+        <h2>Categories</h2>
         <div className="category-list">
           {categories.map(category => {
             return (
@@ -52,24 +69,19 @@ const AppSidebar: React.FC<AppProps> = ({
           })}
         </div>
         {addingTempCategory && (
-          <form
-            className="add-category-form"
-            onSubmit={event => {
-              event.preventDefault()
-
-              const category = { id: kebabCase(tempCategory), name: tempCategory }
-
-              addCategory(category)
-
-              setTempCategory('')
-              setAddingTempCategory(false)
-            }}
-          >
+          <form className="add-category-form" onSubmit={onSubmit}>
             <input
               autoFocus
               placeholder="New category..."
               onChange={event => {
                 setTempCategory(event.target.value)
+              }}
+              onBlur={event => {
+                if (!tempCategory) {
+                  setAddingTempCategory(false)
+                } else {
+                  onSubmit(event)
+                }
               }}
             />
           </form>

@@ -18,7 +18,7 @@ code {
   grid-template-areas:
     'app-sidebar note-sidebar editor editor'
     'nav nav nav nav';
-  grid-template-columns: 150px 250px auto;
+  grid-template-columns: 175px 250px auto;
   grid-template-rows: auto 25px;
   min-height: 100vh;
 }
@@ -49,27 +49,77 @@ code {
 
   .note-list {
     .note-each {
+      position: relative;
       cursor: pointer;
-      padding: 0.5rem;
+      padding: 0 0.5rem;
       border-bottom: 2px solid $hover;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      &:hover {
+        background: $hover;
+
+        .note-options {
+          color: #333;
+        }
+      }
 
       &.active {
         background: #bbb;
       }
 
-      &:hover {
-        background: $hover;
+      .note-options {
+        color: transparent;
+        padding: 0.5rem;
+        z-index: 1;
+        cursor: pointer;
+
+        &.active {
+          color: #333;
+        }
+      }
+
+      .note-options-context {
+        cursor: default;
+        position: absolute;
+        color: #333;
+        top: 32px;
+        left: 200px;
+        min-width: 150px;
+        padding: 1rem;
+        background: white;
+        border: 1px solid #eee;
+        z-index: 3;
+        box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.1);
+
+        h2 {
+          margin-top: 0;
+          font-size: 1rem;
+        }
       }
     }
   }
 }
 
 .app-sidebar {
+  padding: 1rem 0;
   grid-area: app-sidebar;
   background: #333;
   color: rgba(255, 255, 255, 0.8);
   display: flex;
   flex-direction: column;
+
+  .app-sidebar-link {
+    padding: 0.5rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+
+    &:hover {
+      background: #444;
+    }
+  }
 
   .category-list {
     font-size: 0.9rem;
@@ -77,18 +127,17 @@ code {
     .category-each {
       cursor: pointer;
       padding: 0.5rem;
-      border-bottom: 2px solid #222;
 
       &:last-of-type {
         border-bottom: none;
       }
 
-      &.active {
-        background: #222;
-      }
-
       &:hover {
         background: #444;
+      }
+
+      &.active {
+        background: #222 !important;
       }
     }
   }
@@ -119,7 +168,7 @@ code {
   }
 
   h2 {
-    margin: 2rem 0 0;
+    margin: 1rem 0 0;
     color: #888;
     text-transform: uppercase;
     font-size: 0.7rem;
