@@ -31,11 +31,14 @@ const NoteList: React.FC<NoteListProps> = ({
   const [noteOptionsId, setNoteOptionsId] = useState('')
   const node = useRef<HTMLDivElement>(null)
 
-  const handleNoteOptionsClick = (event, noteId: string = '') => {
+  const handleNoteOptionsClick = (
+    event: MouseEvent | React.MouseEvent<HTMLDivElement>,
+    noteId: string = ''
+  ) => {
     event.stopPropagation()
 
     if (node.current) {
-      if (node.current.contains(event.target)) return
+      if (node.current.contains(event.target as HTMLDivElement)) return
     }
 
     if (!noteOptionsId) {
