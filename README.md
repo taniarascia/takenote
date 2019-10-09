@@ -36,6 +36,7 @@ npm start
 - [ ] Add authentication (GitHub 0Auth)
 - [ ] Hook up Gist API for storage
 - [ ] Style app
+- [ ] Tabs for notes? 
 
 ## Bugs
 
@@ -44,7 +45,7 @@ npm start
 - [x] Do not view trash notes after deleting in categories
 - [ ] Can't restore deleted note
 - [ ] Can't permanently delete note
-- [ ] Note not focused if new note keybind event outside of editor
+- [x] Note not focused if new note keybind event outside of editor
 
 ## Redux
 

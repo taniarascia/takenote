@@ -76,7 +76,7 @@ const NoteList: React.FC<NoteListProps> = ({
       /> */}
       <div className="note-list">
         {filteredNotes.map(note => {
-          const noteTitle: string = getNoteTitle(note.text)
+          const noteTitle = getNoteTitle(note.text)
 
           return (
             <div

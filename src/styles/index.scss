@@ -18,7 +18,7 @@ code {
   grid-template-areas:
     'app-sidebar note-sidebar editor editor'
     'nav nav nav nav';
-  grid-template-columns: 175px 250px auto;
+  grid-template-columns: 175px 300px auto;
   grid-template-rows: auto 25px;
   min-height: 100vh;
 }
