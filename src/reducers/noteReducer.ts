@@ -56,12 +56,14 @@ const noteReducer = (state = initialState, action: NotesActionTypes): NoteState 
               }
             : note
         ),
+        activeNoteId: getNewNoteId(state.notes, action.payload, state.activeCategoryId),
       }
+
     case Actions.DELETE_NOTE:
       return {
         ...state,
         notes: state.notes.filter(note => note.id !== action.payload),
-        activeNoteId: getNewNoteId(state.notes, action.payload),
+        activeNoteId: getNewNoteId(state.notes, action.payload, state.activeCategoryId),
       }
     case Actions.SWAP_NOTE:
       return {
@@ -120,13 +122,15 @@ const noteReducer = (state = initialState, action: NotesActionTypes): NoteState 
 export default noteReducer
 
 export function getFirstNote(folder: string, notes: NoteItem[], categoryId?: string): string {
+  const notesNotTrash = notes.filter(note => !note.trash)
+
   switch (folder) {
     case Folders.CATEGORY:
-      return notes.find(note => note.category === categoryId)
-        ? notes.find(note => note.category === categoryId)!.id
+      return notesNotTrash.find(note => note.category === categoryId)
+        ? notesNotTrash.find(note => note.category === categoryId)!.id
         : ''
     case Folders.ALL:
-      return notes.length > 0 ? notes[0].id : ''
+      return notesNotTrash.length > 0 ? notesNotTrash[0].id : ''
     case Folders.TRASH:
       return notes.find(note => note.trash) ? notes.find(note => note.trash)!.id : ''
     default:
@@ -134,14 +138,17 @@ export function getFirstNote(folder: string, notes: NoteItem[], categoryId?: str
   }
 }
 
-function getNewNoteId(notes: NoteItem[], payload: string): string {
-  const deletedNoteIndex = notes.findIndex(note => note.id === payload)
-  let newActiveNoteId = ''
+function getNewNoteId(notes: NoteItem[], oldNoteId: string, activeCategoryId: string): string {
+  const notesNotTrash = activeCategoryId
+    ? notes.filter(note => !note.trash && note.category === activeCategoryId)
+    : notes.filter(note => !note.trash)
+  const deletedNoteIndex = notesNotTrash.findIndex(note => note.id === oldNoteId)
 
-  if (deletedNoteIndex === 0 && notes[1]) {
-    newActiveNoteId = notes[deletedNoteIndex + 1].id
-  } else if (notes[deletedNoteIndex - 1]) {
-    newActiveNoteId = notes[deletedNoteIndex - 1].id
+  let newActiveNoteId = ''
+  if (deletedNoteIndex === 0 && notesNotTrash[1]) {
+    newActiveNoteId = notesNotTrash[deletedNoteIndex + 1].id
+  } else if (notesNotTrash[deletedNoteIndex - 1]) {
+    newActiveNoteId = notesNotTrash[deletedNoteIndex - 1].id
   }
 
   return newActiveNoteId

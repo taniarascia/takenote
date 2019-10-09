@@ -44,7 +44,7 @@ const Navigation: React.FC<NavigationProps> = ({
   }
 
   const trashNoteHandler = () => {
-    if (activeNote) {
+    if (activeNote && !activeNote.trash) {
       sendNoteToTrash(activeNote.id)
     }
   }
@@ -61,10 +61,6 @@ const Navigation: React.FC<NavigationProps> = ({
 
   useKey('ctrl+n', () => {
     newNoteHandler()
-  })
-
-  useKey('ctrl+backspace', () => {
-    trashNoteHandler()
   })
 
   useKey('ctrl+w', () => {

@@ -110,15 +110,9 @@ const NoteList: React.FC<NoteListProps> = ({
                     className="select-element"
                     onChange={event => {
                       addCategoryToNote(event.target.value, note.id)
-                      const notesForNewCategory = notes.filter(
-                        note => note.category === event.target.value
-                      )
-                      const newNoteId =
-                        notesForNewCategory.length > 0 ? notesForNewCategory[0].id : ''
-
                       if (event.target.value !== activeCategoryId) {
                         swapCategory(event.target.value)
-                        swapNote(newNoteId)
+                        swapNote(note.id)
                       }
                       handleNoteOptionsClick(event)
                     }}
@@ -126,11 +120,13 @@ const NoteList: React.FC<NoteListProps> = ({
                     <option disabled value="">
                       Select category
                     </option>
-                    {filteredCategories.map(category => (
-                      <option key={category.id} value={category.id}>
-                        {category.name}
-                      </option>
-                    ))}
+                    {filteredCategories
+                      .filter(category => category.id !== note.category)
+                      .map(category => (
+                        <option key={category.id} value={category.id}>
+                          {category.name}
+                        </option>
+                      ))}
                     {note.category && (
                       <option key="none" value="">
                         Remove category
@@ -153,7 +149,9 @@ const mapStateToProps = (state: ApplicationState) => {
   let filteredNotes: NoteItem[] = []
 
   if (noteState.activeFolder === Folders.CATEGORY) {
-    filteredNotes = noteState.notes.filter(note => note.category === noteState.activeCategoryId)
+    filteredNotes = noteState.notes.filter(
+      note => !note.trash && note.category === noteState.activeCategoryId
+    )
   } else if (noteState.activeFolder === Folders.TRASH) {
     filteredNotes = noteState.notes.filter(note => note.trash)
   } else {

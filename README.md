@@ -26,6 +26,7 @@ npm start
 - [x] Add frontmatter to md files
 - [x] Delete notes to trash first
 - [x] Add "all" and "trash" folders
+- [x] Put all options in note dropdown options
 - [ ] Search notes
 - [ ] Drag and drop notes into categories
 - [ ] Add syntax highlighting for multi-language support
@@ -35,6 +36,15 @@ npm start
 - [ ] Add authentication (GitHub 0Auth)
 - [ ] Hook up Gist API for storage
 - [ ] Style app
+
+## Bugs
+
+- [x] Note options in "all notes" displays category its already in
+- [x] Moving note to category does not swap to proper note
+- [x] Do not view trash notes after deleting in categories
+- [ ] Can't restore deleted note
+- [ ] Can't permanently delete note
+- [ ] Note not focused if new note keybind event outside of editor
 
 ## Redux
 
