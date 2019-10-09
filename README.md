@@ -28,7 +28,8 @@ npm start
 - [x] Add frontmatter to md files
 - [x] Delete notes to trash first
 - [x] Add "all" and "trash" folders
-- [x] Put all options in note dropdown options
+- [ ] Put all options in note dropdown options
+- [ ] Add Favorites 
 - [ ] Search notes
 - [ ] Drag and drop notes into categories
 - [ ] Add syntax highlighting for multi-language support
