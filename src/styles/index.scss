@@ -29,13 +29,20 @@ code {
   display: flex;
 
   .nav-button {
-    -webkit-display: none;
-    display: block;
     cursor: pointer;
+    display: flex;
+    align-items: center;
     background: transparent;
     font-weight: 600;
     border: none;
     font-size: 1rem;
+    padding: 0 0.5rem;
+
+    svg {
+      height: 18px;
+      width: 18px;
+      margin-right: 0.3rem;
+    }
 
     &:hover {
       background: rgba(0, 0, 0, 0.1);
@@ -111,6 +118,8 @@ code {
   flex-direction: column;
 
   .app-sidebar-link {
+    display: flex;
+    align-items: center;
     padding: 0.5rem;
     cursor: pointer;
     font-size: 0.9rem;
@@ -145,6 +154,11 @@ code {
         .category-options {
           color: #bbb;
         }
+      }
+
+      .category-each-name {
+        display: flex;
+        align-items: center;
       }
 
       .category-options {

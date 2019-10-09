@@ -2,11 +2,12 @@ import React from 'react'
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
 import uuid from 'uuid/v4'
+import moment from 'moment'
+import { Download, X, Plus, Cloud } from 'react-feather'
 import { addNote, swapNote, sendNoteToTrash, syncState } from 'actions'
 import { NoteItem, CategoryItem, ApplicationState } from 'types'
 import { getNoteTitle, downloadNote } from 'helpers'
 import { useKey } from 'helpers/hooks'
-import moment from 'moment'
 
 interface NavigationProps {
   addNote: (note: NoteItem) => void
@@ -14,6 +15,7 @@ interface NavigationProps {
   sendNoteToTrash: (noteId: string) => void
   syncState: (notes: NoteItem[], categories: CategoryItem[]) => void
   activeNote?: NoteItem
+  activeCategoryId: string
   notes: NoteItem[]
   categories: CategoryItem[]
   syncing: boolean
@@ -21,6 +23,7 @@ interface NavigationProps {
 
 const Navigation: React.FC<NavigationProps> = ({
   activeNote,
+  activeCategoryId,
   addNote,
   swapNote,
   sendNoteToTrash,
@@ -35,6 +38,7 @@ const Navigation: React.FC<NavigationProps> = ({
       text: '',
       created: moment().format(),
       lastUpdated: moment().format(),
+      category: activeCategoryId ? activeCategoryId : undefined,
     }
 
     if ((activeNote && activeNote.text !== '') || !activeNote) {
@@ -73,19 +77,21 @@ const Navigation: React.FC<NavigationProps> = ({
 
   return (
     <nav className="navigation">
-      <button className="nav-button" onClick={newNoteHandler}>
-        + New Note
-      </button>
-      <button className="nav-button" onClick={trashNoteHandler}>
-        X Delete Note
-      </button>
-      <button className="nav-button" onClick={downloadNoteHandler}>
-        ^ Download Note
-      </button>
-      <button className="nav-button" onClick={syncNotesHandler}>
+      <div className="nav-button" onClick={newNoteHandler}>
+        <Plus /> New Note
+      </div>
+      <div className="nav-button" onClick={trashNoteHandler}>
+        <X />
+        Delete Note
+      </div>
+      <div className="nav-button" onClick={downloadNoteHandler}>
+        <Download />
+        Download Note
+      </div>
+      <div className="nav-button" onClick={syncNotesHandler}>
+        <Cloud />
         Sync notes
-        {syncing && 'Syncing...'}
-      </button>
+      </div>
     </nav>
   )
 }
@@ -95,6 +101,7 @@ const mapStateToProps = (state: ApplicationState) => ({
   notes: state.noteState.notes,
   categories: state.categoryState.categories,
   activeNote: state.noteState.notes.find(note => note.id === state.noteState.activeNoteId),
+  activeCategoryId: state.noteState.activeCategoryId,
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

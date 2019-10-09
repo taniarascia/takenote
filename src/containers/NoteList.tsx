@@ -110,11 +110,13 @@ const NoteList: React.FC<NoteListProps> = ({
                     className="select-element"
                     onChange={event => {
                       addCategoryToNote(event.target.value, note.id)
+
                       if (event.target.value !== activeCategoryId) {
                         swapCategory(event.target.value)
                         swapNote(note.id)
                       }
-                      handleNoteOptionsClick(event)
+
+                      setNoteOptionsId('')
                     }}
                   >
                     <option disabled value="">
