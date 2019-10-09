@@ -119,6 +119,10 @@ code {
     &:hover {
       background: #444;
     }
+
+    &.active {
+      background: #222;
+    }
   }
 
   .category-list {
@@ -259,6 +263,21 @@ code {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.add-button {
+  cursor: pointer;
+  -webkit-appearance: none;
+  padding: 0.25rem 0.5rem;
+  color: rgba(255, 255, 255, 0.8);
+  background: transparent;
+  font-size: 1rem;
+  border: none;
+  line-height: 1;
+
+  &:hover {
+    background: #111;
+  }
 }
 
 .select-element {

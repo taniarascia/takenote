@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
+import { Folders } from 'constants/enums'
 import { swapNote, swapCategory, pruneNotes, addCategoryToNote } from 'actions'
 import { NoteItem, CategoryItem, ApplicationState } from 'types'
 import { getNoteTitle } from 'helpers'
@@ -28,8 +29,6 @@ const NoteList: React.FC<NoteListProps> = ({
   pruneNotes,
   addCategoryToNote,
 }) => {
-  const initialSearchResults: NoteItem[] = filteredNotes
-
   const [noteOptionsId, setNoteOptionsId] = useState('')
   const node = useRef<HTMLDivElement>(null)
 
@@ -116,6 +115,7 @@ const NoteList: React.FC<NoteListProps> = ({
                       )
                       const newNoteId =
                         notesForNewCategory.length > 0 ? notesForNewCategory[0].id : ''
+
                       if (event.target.value !== activeCategoryId) {
                         swapCategory(event.target.value)
                         swapNote(newNoteId)
@@ -131,6 +131,9 @@ const NoteList: React.FC<NoteListProps> = ({
                         {category.name}
                       </option>
                     ))}
+                    <option key="none" value="">
+                      Remove category
+                    </option>
                   </select>
                 </div>
               )}
@@ -142,17 +145,29 @@ const NoteList: React.FC<NoteListProps> = ({
   )
 }
 
-const mapStateToProps = (state: ApplicationState) => ({
-  activeCategoryId: state.categoryState.activeCategoryId,
-  activeNoteId: state.noteState.activeNoteId,
-  notes: state.noteState.notes,
-  filteredNotes: state.categoryState.activeCategoryId
-    ? state.noteState.notes.filter(note => note.category === state.categoryState.activeCategoryId)
-    : state.noteState.notes,
-  filteredCategories: state.categoryState.categories.filter(
-    category => category.id !== state.categoryState.activeCategoryId
-  ),
-})
+const mapStateToProps = (state: ApplicationState) => {
+  const { noteState, categoryState } = state
+
+  let filteredNotes: NoteItem[] = []
+
+  if (noteState.activeCategoryId) {
+    filteredNotes = noteState.notes.filter(note => note.category === noteState.activeCategoryId)
+  } else if (noteState.activeFolder === Folders.TRASH) {
+    filteredNotes = noteState.notes.filter(note => note.trash)
+  } else {
+    filteredNotes = noteState.notes.filter(note => !note.trash)
+  }
+
+  return {
+    activeCategoryId: noteState.activeCategoryId,
+    activeNoteId: noteState.activeNoteId,
+    notes: noteState.notes,
+    filteredNotes,
+    filteredCategories: categoryState.categories.filter(
+      category => category.id !== noteState.activeCategoryId
+    ),
+  }
+}
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   swapNote: (noteId: string) => dispatch(swapNote(noteId)),

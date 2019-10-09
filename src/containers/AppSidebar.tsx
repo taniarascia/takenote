@@ -1,21 +1,24 @@
 import React, { useState } from 'react'
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
+import kebabCase from 'lodash/kebabCase'
+import { Folders } from 'constants/enums'
 import { CategoryItem, NoteItem, ApplicationState } from 'types'
 import {
   addCategory,
   deleteCategory,
   pruneCategoryFromNotes,
   swapCategory,
+  swapFolder,
   swapNote,
 } from 'actions'
-import kebabCase from 'lodash/kebabCase'
 
 interface AppProps {
   addCategory: (category: CategoryItem) => void
   deleteCategory: (categoryId: string) => void
   pruneCategoryFromNotes: (categoryId: string) => void
   swapCategory: (categoryId: string) => void
+  swapFolder: (folder: string) => void
   swapNote: (swapNote: string) => void
   notes: NoteItem[]
   categories: CategoryItem[]
@@ -27,6 +30,7 @@ const AppSidebar: React.FC<AppProps> = ({
   deleteCategory,
   pruneCategoryFromNotes,
   swapCategory,
+  swapFolder,
   swapNote,
   notes,
   categories,
@@ -60,12 +64,18 @@ const AppSidebar: React.FC<AppProps> = ({
         <div
           className="app-sidebar-link"
           onClick={() => {
-            const newNoteId = notes.length > 0 ? notes[0].id : ''
-            swapCategory('')
-            swapNote(newNoteId)
+            swapFolder(Folders.ALL)
           }}
         >
           Notes
+        </div>
+        <div
+          className="app-sidebar-link"
+          onClick={() => {
+            swapFolder(Folders.TRASH)
+          }}
+        >
+          Trash
         </div>
 
         <div className="category-title vbetween">
@@ -99,6 +109,7 @@ const AppSidebar: React.FC<AppProps> = ({
                     deleteCategory(category.id)
                     pruneCategoryFromNotes(category.id)
                     swapCategory('')
+                    swapFolder(Folders.ALL)
                     swapNote(newNoteId)
                   }}
                 >
@@ -132,7 +143,7 @@ const AppSidebar: React.FC<AppProps> = ({
 }
 
 const mapStateToProps = (state: ApplicationState) => ({
-  activeCategoryId: state.categoryState.activeCategoryId,
+  activeCategoryId: state.noteState.activeCategoryId,
   categories: state.categoryState.categories,
   notes: state.noteState.notes,
 })
@@ -140,6 +151,7 @@ const mapStateToProps = (state: ApplicationState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   swapNote: (noteId: string) => dispatch(swapNote(noteId)),
   swapCategory: (categoryId: string) => dispatch(swapCategory(categoryId)),
+  swapFolder: (folder: string) => dispatch(swapFolder(folder)),
   addCategory: (category: CategoryItem) => dispatch(addCategory(category)),
   deleteCategory: (categoryId: string) => dispatch(deleteCategory(categoryId)),
   pruneCategoryFromNotes: (categoryId: string) => dispatch(pruneCategoryFromNotes(categoryId)),

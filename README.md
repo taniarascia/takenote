@@ -23,15 +23,18 @@ npm start
 - [x] Add note to category
 - [x] Sync (save) notes and categories to local storage
 - [x] Keybindings for add, delete, download, sync
-- [ ] Drag and drop notes into categories
+- [x] Add frontmatter to md files
+- [x] Delete notes to trash first
+- [x] Add "all" and "trash" folders
 - [ ] Search notes
-- [ ] Add authentication (GitHub 0Auth)
-- [ ] Hook up Gist API for storage
-- [ ] Add frontmatter to md files
+- [ ] Drag and drop notes into categories
 - [ ] Add syntax highlighting for multi-language support
 - [ ] Basic settings
   - [ ] Light/dark mode
   - [ ] Frequency of polling for sync (polling or inactivity?)
+- [ ] Add authentication (GitHub 0Auth)
+- [ ] Hook up Gist API for storage
+- [ ] Style app
 
 ## Redux
 

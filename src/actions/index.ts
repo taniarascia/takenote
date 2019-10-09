@@ -34,9 +34,19 @@ export const deleteNote = (noteId: string) => ({
   payload: noteId,
 })
 
+export const sendNoteToTrash = (noteId: string) => ({
+  type: Actions.SEND_NOTE_TO_TRASH,
+  payload: noteId,
+})
+
 export const swapNote = (noteId: string) => ({
   type: Actions.SWAP_NOTE,
   payload: noteId,
+})
+
+export const swapCategory = (categoryId: string) => ({
+  type: Actions.SWAP_CATEGORY,
+  payload: categoryId,
 })
 
 export const pruneNotes = () => ({
@@ -51,6 +61,11 @@ export const pruneCategoryFromNotes = (categoryId: string) => ({
 export const addCategoryToNote = (categoryId: string, noteId: string) => ({
   type: Actions.ADD_CATEGORY_TO_NOTE,
   payload: { categoryId, noteId },
+})
+
+export const swapFolder = (folder: string) => ({
+  type: Actions.SWAP_FOLDER,
+  payload: folder,
 })
 
 //==============================================================================
@@ -69,11 +84,6 @@ export const deleteCategory = (categoryId: string) => ({
 
 export const loadCategories = () => ({
   type: Actions.LOAD_CATEGORIES,
-})
-
-export const swapCategory = (categoryId: string) => ({
-  type: Actions.SWAP_CATEGORY,
-  payload: categoryId,
 })
 
 export const loadCategoriesSuccess = (categories: CategoryItem[]) => ({
