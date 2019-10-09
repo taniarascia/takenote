@@ -2,8 +2,10 @@
 
 ## Installation
 
+> Redux DevTools Chrome extension is required for development!
+
 ```bash
-git clone git@github.com:taniarascia/vnote
+git clone git@github.com:taniarascia/takenote
 cd vnote
 npm i
 npm start
