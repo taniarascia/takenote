@@ -131,9 +131,11 @@ const NoteList: React.FC<NoteListProps> = ({
                         {category.name}
                       </option>
                     ))}
-                    <option key="none" value="">
-                      Remove category
-                    </option>
+                    {note.category && (
+                      <option key="none" value="">
+                        Remove category
+                      </option>
+                    )}
                   </select>
                 </div>
               )}
@@ -150,7 +152,7 @@ const mapStateToProps = (state: ApplicationState) => {
 
   let filteredNotes: NoteItem[] = []
 
-  if (noteState.activeCategoryId) {
+  if (noteState.activeFolder === Folders.CATEGORY) {
     filteredNotes = noteState.notes.filter(note => note.category === noteState.activeCategoryId)
   } else if (noteState.activeFolder === Folders.TRASH) {
     filteredNotes = noteState.notes.filter(note => note.trash)

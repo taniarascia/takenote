@@ -23,6 +23,7 @@ interface AppProps {
   notes: NoteItem[]
   categories: CategoryItem[]
   activeCategoryId: string
+  activeFolder: string
 }
 
 const AppSidebar: React.FC<AppProps> = ({
@@ -35,6 +36,7 @@ const AppSidebar: React.FC<AppProps> = ({
   notes,
   categories,
   activeCategoryId,
+  activeFolder,
 }) => {
   const [addingTempCategory, setAddingTempCategory] = useState(false)
   const [tempCategory, setTempCategory] = useState('')
@@ -62,7 +64,7 @@ const AppSidebar: React.FC<AppProps> = ({
     <aside className="app-sidebar">
       <section id="app-sidebar-main">
         <div
-          className="app-sidebar-link"
+          className={activeFolder === Folders.ALL ? 'app-sidebar-link active' : 'app-sidebar-link'}
           onClick={() => {
             swapFolder(Folders.ALL)
           }}
@@ -70,7 +72,9 @@ const AppSidebar: React.FC<AppProps> = ({
           Notes
         </div>
         <div
-          className="app-sidebar-link"
+          className={
+            activeFolder === Folders.TRASH ? 'app-sidebar-link active' : 'app-sidebar-link'
+          }
           onClick={() => {
             swapFolder(Folders.TRASH)
           }}
@@ -88,10 +92,10 @@ const AppSidebar: React.FC<AppProps> = ({
           {categories.map(category => {
             return (
               <div
+                key={category.id}
                 className={
                   category.id === activeCategoryId ? 'category-each active' : 'category-each'
                 }
-                key={category.id}
                 onClick={() => {
                   const notesForNewCategory = notes.filter(note => note.category === category.id)
                   const newNoteId = notesForNewCategory.length > 0 ? notesForNewCategory[0].id : ''
@@ -109,7 +113,6 @@ const AppSidebar: React.FC<AppProps> = ({
                     deleteCategory(category.id)
                     pruneCategoryFromNotes(category.id)
                     swapCategory('')
-                    swapFolder(Folders.ALL)
                     swapNote(newNoteId)
                   }}
                 >
@@ -143,6 +146,7 @@ const AppSidebar: React.FC<AppProps> = ({
 }
 
 const mapStateToProps = (state: ApplicationState) => ({
+  activeFolder: state.noteState.activeFolder,
   activeCategoryId: state.noteState.activeCategoryId,
   categories: state.categoryState.categories,
   notes: state.noteState.notes,

@@ -147,18 +147,10 @@ code {
         }
       }
 
-      &.active {
-        background: #bbb;
-      }
-
       .category-options {
         color: transparent;
         z-index: 1;
         cursor: pointer;
-
-        &.active {
-          color: #bbb;
-        }
       }
 
       &.active {

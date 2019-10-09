@@ -56,7 +56,6 @@ const noteReducer = (state = initialState, action: NotesActionTypes): NoteState 
               }
             : note
         ),
-        activeNoteId: getNewNoteId(state.notes, action.payload),
       }
     case Actions.DELETE_NOTE:
       return {
@@ -73,8 +72,8 @@ const noteReducer = (state = initialState, action: NotesActionTypes): NoteState 
       return {
         ...state,
         activeCategoryId: action.payload,
-        activeFolder: Folders.NONE,
-        activeNoteId: getFirstNote(Folders.NONE, state.notes, action.payload),
+        activeFolder: Folders.CATEGORY,
+        activeNoteId: getFirstNote(Folders.CATEGORY, state.notes, action.payload),
       }
     case Actions.SWAP_FOLDER:
       return {
@@ -122,7 +121,7 @@ export default noteReducer
 
 export function getFirstNote(folder: string, notes: NoteItem[], categoryId?: string): string {
   switch (folder) {
-    case Folders.NONE:
+    case Folders.CATEGORY:
       return notes.find(note => note.category === categoryId)
         ? notes.find(note => note.category === categoryId)!.id
         : ''
