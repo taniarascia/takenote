@@ -29,7 +29,6 @@ const KeyboardShortcuts: React.FC<KeyboardShortcutsProps> = ({
   syncState,
   notes,
   categories,
-  syncing,
 }) => {
   const newNoteHandler = () => {
     const note: NoteItem = {

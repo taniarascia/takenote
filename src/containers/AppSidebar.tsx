@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import kebabCase from 'lodash/kebabCase'
 import uuid from 'uuid/v4'
 import moment from 'moment'
-import { Trash2, Book, Folder, X, Cloud, PlusCircle } from 'react-feather'
+import { Trash2, Book, Folder, X, UploadCloud, Plus, Settings } from 'react-feather'
 import { Folders } from 'constants/enums'
 import { CategoryItem, NoteItem, ApplicationState } from 'types'
 import {
@@ -18,7 +18,7 @@ import {
   syncState,
 } from 'actions'
 
-const iconColor = 'rgba(255, 255, 255, 0.4)'
+const iconColor = 'rgba(255, 255, 255, 0.2)'
 
 interface AppProps {
   addNote: (note: NoteItem) => void
@@ -95,10 +95,6 @@ const AppSidebar: React.FC<AppProps> = ({
   return (
     <aside className="app-sidebar">
       <section id="app-sidebar-main">
-        <div className="app-sidebar-link" onClick={newNoteHandler}>
-          <PlusCircle size={15} style={{ marginRight: '.5rem' }} color={iconColor} />
-          Add Note
-        </div>
         <div
           className={activeFolder === Folders.ALL ? 'app-sidebar-link active' : 'app-sidebar-link'}
           onClick={() => {
@@ -106,7 +102,7 @@ const AppSidebar: React.FC<AppProps> = ({
           }}
         >
           <Book size={15} style={{ marginRight: '.5rem' }} color={iconColor} />
-          Notes
+          All Notes
         </div>
         <div
           className={
@@ -122,8 +118,8 @@ const AppSidebar: React.FC<AppProps> = ({
 
         <div className="category-title vbetween">
           <h2>Categories</h2>
-          <button className="add-button" onClick={newTempCategoryHandler}>
-            <PlusCircle size={15} color={iconColor} />
+          <button className="add-category-button" onClick={newTempCategoryHandler}>
+            <Plus size={15} color={iconColor} />
           </button>
         </div>
         <div className="category-list">
@@ -185,8 +181,15 @@ const AppSidebar: React.FC<AppProps> = ({
         )}
       </section>
       <section>
-        <div className="app-sidebar-link" onClick={syncNotesHandler}>
-          <Cloud size={15} style={{ marginRight: '.5rem' }} color={iconColor} /> Sync
+        <div className="app-sidebar-actions">
+          <Plus className="action-button" size={18} color={iconColor} onClick={newNoteHandler} />
+          <UploadCloud
+            size={18}
+            className="action-button"
+            color={iconColor}
+            onClick={syncNotesHandler}
+          />
+          <Settings size={18} className="action-button" color={iconColor} />
         </div>
       </section>
     </aside>

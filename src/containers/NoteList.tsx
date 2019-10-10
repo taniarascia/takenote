@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
+import { MoreHorizontal } from 'react-feather'
 import { Folders } from 'constants/enums'
 import { swapNote, swapCategory, pruneNotes, addCategoryToNote } from 'actions'
 import { NoteItem, CategoryItem, ApplicationState } from 'types'
@@ -95,7 +96,7 @@ const NoteList: React.FC<NoteListProps> = ({
                 className={noteOptionsId === note.id ? 'note-options active ' : 'note-options'}
                 onClick={event => handleNoteOptionsClick(event, note.id)}
               >
-                ...
+                <MoreHorizontal size={15} />
               </div>
               {noteOptionsId === note.id && (
                 <div
