@@ -3,7 +3,7 @@ import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
 import uuid from 'uuid/v4'
 import moment from 'moment'
-import { Download, X } from 'react-feather'
+import { Download, Trash } from 'react-feather'
 import { addNote, swapNote, sendNoteToTrash, syncState } from 'actions'
 import { NoteItem, CategoryItem, ApplicationState } from 'types'
 import { getNoteTitle, downloadNote } from 'helpers'
@@ -72,12 +72,12 @@ const NoteOptions: React.FC<NoteOptionsProps> = ({
   return (
     <nav className="note-options-nav">
       <div className="nav-button" onClick={trashNoteHandler}>
-        <X size={15} />
-        Delete Note
+        <Trash size={15} />
+        Delete note
       </div>
       <div className="nav-button" onClick={downloadNoteHandler}>
         <Download size={15} />
-        Download Note
+        Download note
       </div>
     </nav>
   )

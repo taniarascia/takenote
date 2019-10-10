@@ -20,7 +20,6 @@ npm start
 - [x] Delete note
 - [x] Download note
 - [x] Add category
-- [ ] Update category
 - [x] Delete category -> prune notes of deleted category
 - [x] Add note to category
 - [x] Sync (save) notes and categories to local storage
@@ -28,8 +27,10 @@ npm start
 - [x] Add frontmatter to md files
 - [x] Delete notes to trash first
 - [x] Add "all" and "trash" folders
-- [ ] Put all options in note dropdown options
-- [ ] Add Favorites
+- [x] Put all options in note dropdown options
+- [x] App sidebar link for add link
+- [ ] Permanent scratchpad
+- [ ] Add favorites folder
 - [ ] Search notes
 - [ ] Drag and drop notes into categories
 - [ ] Add syntax highlighting for multi-language support
