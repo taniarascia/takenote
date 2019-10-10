@@ -8,7 +8,7 @@ import createSagaMiddleware from 'redux-saga'
 import rootReducer from 'reducers'
 import rootSaga from 'sagas'
 
-import App from 'components/App'
+import App from 'containers/App'
 import './styles/index.scss'
 
 const sagaMiddleware = createSagaMiddleware()

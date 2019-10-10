@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
 import kebabCase from 'lodash/kebabCase'
-import { Trash2, Book, Folder } from 'react-feather'
+import { Trash2, Book, Folder, X } from 'react-feather'
 import { Folders } from 'constants/enums'
 import { CategoryItem, NoteItem, ApplicationState } from 'types'
 import {
@@ -124,7 +124,7 @@ const AppSidebar: React.FC<AppProps> = ({
                     swapNote(newNoteId)
                   }}
                 >
-                  X
+                  <X size={12} />
                 </div>
               </div>
             )

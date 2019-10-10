@@ -15,11 +15,8 @@ code {
 
 .app {
   display: grid;
-  grid-template-areas:
-    'app-sidebar note-sidebar editor editor'
-    'nav nav nav nav';
+  grid-template-areas: 'app-sidebar note-sidebar editor editor';
   grid-template-columns: 175px 300px auto;
-  grid-template-rows: auto 25px;
   min-height: 100vh;
 }
 
@@ -58,8 +55,8 @@ code {
     .note-each {
       position: relative;
       cursor: pointer;
-      padding: 0 0.5rem;
-      border-bottom: 2px solid $hover;
+      padding: 0.5rem;
+      border-bottom: 1px solid $hover;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -106,6 +103,27 @@ code {
         }
       }
     }
+  }
+}
+
+.add-note {
+  display: flex;
+  justify-content: flex-end;
+  padding: 1rem;
+}
+
+.note-options-nav {
+  margin-top: 1rem;
+
+  div {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0;
+  }
+
+  svg {
+    margin-right: 0.5rem;
   }
 }
 
@@ -164,6 +182,7 @@ code {
       .category-options {
         color: transparent;
         z-index: 1;
+        display: flex;
         cursor: pointer;
       }
 
@@ -242,7 +261,7 @@ code {
 
 .editor {
   grid-area: editor;
-  max-height: calc(100vh - 25px);
+  max-height: calc(100vh);
   overflow-y: auto;
 
   .CodeMirror {

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
-import Navigation from 'containers/Navigation'
+import KeyboardShortcuts from 'containers/KeyboardShortcuts'
 import AppSidebar from 'containers/AppSidebar'
 import NoteList from 'containers/NoteList'
 import NoteEditor from 'containers/NoteEditor'
@@ -23,10 +23,10 @@ const App: React.FC<AppProps> = ({ loadNotes, loadCategories }) => {
 
   return (
     <div className="app">
-      <Navigation />
       <AppSidebar />
       <NoteList />
       <NoteEditor />
+      <KeyboardShortcuts />
     </div>
   )
 }
