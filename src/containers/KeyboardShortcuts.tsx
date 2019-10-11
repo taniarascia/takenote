@@ -1,11 +1,9 @@
 import React from 'react'
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
-import uuid from 'uuid/v4'
-import moment from 'moment'
 import { addNote, swapNote, sendNoteToTrash, syncState } from 'actions'
 import { NoteItem, CategoryItem, ApplicationState } from 'types'
-import { getNoteTitle, downloadNote } from 'helpers'
+import { newNote, getNoteTitle, downloadNote } from 'helpers'
 import { useKey } from 'helpers/hooks'
 
 interface KeyboardShortcutsProps {
@@ -15,6 +13,7 @@ interface KeyboardShortcutsProps {
   syncState: (notes: NoteItem[], categories: CategoryItem[]) => void
   activeNote?: NoteItem
   activeCategoryId: string
+  activeFolder: string
   notes: NoteItem[]
   categories: CategoryItem[]
   syncing: boolean
@@ -23,6 +22,7 @@ interface KeyboardShortcutsProps {
 const KeyboardShortcuts: React.FC<KeyboardShortcutsProps> = ({
   activeNote,
   activeCategoryId,
+  activeFolder,
   addNote,
   swapNote,
   sendNoteToTrash,
@@ -31,13 +31,7 @@ const KeyboardShortcuts: React.FC<KeyboardShortcutsProps> = ({
   categories,
 }) => {
   const newNoteHandler = () => {
-    const note: NoteItem = {
-      id: uuid(),
-      text: '',
-      created: moment().format(),
-      lastUpdated: moment().format(),
-      category: activeCategoryId ? activeCategoryId : undefined,
-    }
+    const note = newNote(activeCategoryId, activeFolder)
 
     if ((activeNote && activeNote.text !== '') || !activeNote) {
       addNote(note)
@@ -83,6 +77,7 @@ const KeyboardShortcuts: React.FC<KeyboardShortcutsProps> = ({
 const mapStateToProps = (state: ApplicationState) => ({
   syncing: state.syncState.syncing,
   notes: state.noteState.notes,
+  activeFolder: state.noteState.activeFolder,
   categories: state.categoryState.categories,
   activeNote: state.noteState.notes.find(note => note.id === state.noteState.activeNoteId),
   activeCategoryId: state.noteState.activeCategoryId,

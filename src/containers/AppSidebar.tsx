@@ -2,8 +2,6 @@ import React, { useState } from 'react'
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
 import kebabCase from 'lodash/kebabCase'
-import uuid from 'uuid/v4'
-import moment from 'moment'
 import { Trash2, Book, Folder, X, UploadCloud, Plus, Settings, Bookmark } from 'react-feather'
 import { Folders } from 'constants/enums'
 import { CategoryItem, NoteItem, ApplicationState } from 'types'
@@ -17,6 +15,7 @@ import {
   swapNote,
   syncState,
 } from 'actions'
+import { newNote } from 'helpers'
 
 const iconColor = 'rgba(255, 255, 255, 0.3)'
 
@@ -59,15 +58,9 @@ const AppSidebar: React.FC<AppProps> = ({
   }
 
   const newNoteHandler = () => {
-    const note: NoteItem = {
-      id: uuid(),
-      text: '',
-      created: moment().format(),
-      lastUpdated: moment().format(),
-      category: activeCategoryId ? activeCategoryId : undefined,
-    }
-
     if ((activeNote && activeNote.text !== '') || !activeNote) {
+      const note = newNote(activeCategoryId, activeFolder)
+
       addNote(note)
       swapNote(note.id)
     }
