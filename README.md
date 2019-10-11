@@ -33,7 +33,7 @@ Thanks goes to these wonderful people:
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
-This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. ([key](https://allcontributors.org/docs/en/emoji-key)) Contributions of any kind welcome!
+Contributions of any kind welcome!
 
 ## Author
 
