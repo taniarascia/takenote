@@ -52,6 +52,14 @@ code {
   background: $background;
   border-right: 1px solid $hover;
 
+  .note-sidebar-header {
+    padding: 0.5rem;
+    background: rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid #bbb;
+    text-align: center;
+    font-weight: 700;
+  }
+
   .note-list {
     .note-each {
       position: relative;
@@ -61,9 +69,11 @@ code {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      font-weight: 500;
+      color: #555;
 
       &:hover {
-        background: #ccc;
+        background: darken($background, 4%);
 
         .note-options {
           color: #333;
@@ -71,8 +81,8 @@ code {
       }
 
       &.active {
-        font-weight: 600;
         background: #eee;
+        color: #222;
       }
 
       .note-options {
@@ -265,13 +275,17 @@ code {
   overflow-y: auto;
 
   .CodeMirror {
-    padding-left: 0.5rem;
+    padding: 0;
     -webkit-font-smoothing: subpixel-antialiased;
     height: 100%;
     font-family: Menlo, Monaco, monospace;
     font-weight: 500;
     font-size: 15px;
     line-height: 1.5;
+  }
+
+  .CodeMirror-lines {
+    padding: 0;
   }
 
   .CodeMirror-activeline-background {
