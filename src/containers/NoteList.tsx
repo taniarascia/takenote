@@ -137,7 +137,7 @@ const NoteList: React.FC<NoteListProps> = ({
                       </option>
                     )}
                   </select>
-                  <NoteOptions />
+                  <NoteOptions clickedNote={note} />
                 </div>
               )}
             </div>
@@ -157,6 +157,8 @@ const mapStateToProps = (state: ApplicationState) => {
     filteredNotes = noteState.notes.filter(
       note => !note.trash && note.category === noteState.activeCategoryId
     )
+  } else if (noteState.activeFolder === Folders.FAVORITES) {
+    filteredNotes = noteState.notes.filter(note => !note.trash && note.favorite)
   } else if (noteState.activeFolder === Folders.TRASH) {
     filteredNotes = noteState.notes.filter(note => note.trash)
   } else {
