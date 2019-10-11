@@ -6,7 +6,7 @@ import { folderMap } from 'constants/index'
 import { Folders } from 'constants/enums'
 import { swapNote, swapCategory, pruneNotes, addCategoryToNote } from 'actions'
 import { NoteItem, CategoryItem, ApplicationState } from 'types'
-import { getNoteTitle } from 'helpers'
+import { getNoteTitle, sortByLastUpdated } from 'helpers'
 import NoteOptions from 'containers/NoteOptions'
 
 interface NoteListProps {
@@ -159,11 +159,7 @@ const mapStateToProps = (state: ApplicationState) => {
     filteredNotes = noteState.notes.filter(note => !note.trash)
   }
 
-  filteredNotes.sort(function(a, b) {
-    let dateA = new Date(a.lastUpdated)
-    let dateB = new Date(b.lastUpdated)
-    return dateA > dateB ? -1 : dateA < dateB ? 1 : 0
-  })
+  filteredNotes.sort(sortByLastUpdated)
 
   return {
     activeFolder: noteState.activeFolder,
