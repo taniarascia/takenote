@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import kebabCase from 'lodash/kebabCase'
 import uuid from 'uuid/v4'
 import moment from 'moment'
-import { Trash2, Book, Folder, X, UploadCloud, Plus, Settings } from 'react-feather'
+import { Trash2, Book, Folder, X, UploadCloud, Plus, Settings, Bookmark } from 'react-feather'
 import { Folders } from 'constants/enums'
 import { CategoryItem, NoteItem, ApplicationState } from 'types'
 import {
@@ -103,6 +103,17 @@ const AppSidebar: React.FC<AppProps> = ({
         >
           <Book size={15} style={{ marginRight: '.5rem' }} color={iconColor} />
           All Notes
+        </div>
+        <div
+          className={
+            activeFolder === Folders.FAVORITES ? 'app-sidebar-link active' : 'app-sidebar-link'
+          }
+          onClick={() => {
+            swapFolder(Folders.FAVORITES)
+          }}
+        >
+          <Bookmark size={15} style={{ marginRight: '.5rem' }} color={iconColor} />
+          Favorites
         </div>
         <div
           className={

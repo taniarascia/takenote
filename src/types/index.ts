@@ -11,6 +11,7 @@ export interface NoteItem {
   lastUpdated: string
   category?: string
   trash?: boolean
+  favorite?: boolean
 }
 
 export interface CategoryItem {
@@ -104,6 +105,11 @@ export interface SendNoteToTrashAction {
   payload: string
 }
 
+export interface ToggleFavoriteNoteAction {
+  type: typeof Actions.TOGGLE_FAVORITE_NOTE
+  payload: string
+}
+
 export interface UpdateNoteAction {
   type: typeof Actions.UPDATE_NOTE
   payload: NoteItem
@@ -148,6 +154,7 @@ export type NotesActionTypes =
   | LoadNotesErrorAction
   | AddNoteAction
   | SendNoteToTrashAction
+  | ToggleFavoriteNoteAction
   | DeleteNoteAction
   | UpdateNoteAction
   | SwapNoteAction

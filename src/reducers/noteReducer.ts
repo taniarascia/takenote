@@ -45,6 +45,18 @@ const noteReducer = (state = initialState, action: NotesActionTypes): NoteState 
             : note
         ),
       }
+    case Actions.TOGGLE_FAVORITE_NOTE:
+      return {
+        ...state,
+        notes: state.notes.map(note =>
+          note.id === action.payload
+            ? {
+                ...note,
+                favorite: !note.favorite,
+              }
+            : note
+        ),
+      }
     case Actions.SEND_NOTE_TO_TRASH:
       return {
         ...state,
