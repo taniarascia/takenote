@@ -10,7 +10,7 @@ A note-taking app for developers with GitHub sync and Markdown support. (WIP)
 
 ```bash
 git clone git@github.com:taniarascia/takenote
-cd vnote
+cd takenote
 npm i
 npm start
 ```
