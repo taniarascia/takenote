@@ -136,20 +136,19 @@ export default noteReducer
 
 export function getFirstNote(folder: string, notes: NoteItem[], categoryId?: string): string {
   const notesNotTrash = notes.filter(note => !note.trash).sort(sortByLastUpdated)
+  const firstNoteCategory = notesNotTrash.find(note => note.category === categoryId)
+  const firstNoteFavorite = notesNotTrash.find(note => note.favorite)
+  const firstNoteTrash = notes.find(note => note.trash)
 
   switch (folder) {
     case Folders.CATEGORY:
-      return notesNotTrash.find(note => note.category === categoryId)
-        ? notesNotTrash.find(note => note.category === categoryId)!.id
-        : ''
+      return firstNoteCategory ? firstNoteCategory.id : ''
     case Folders.FAVORITES:
-      return notesNotTrash.find(note => note.favorite)
-        ? notesNotTrash.find(note => note.favorite)!.id
-        : ''
+      return firstNoteFavorite ? firstNoteFavorite.id : ''
+    case Folders.TRASH:
+      return firstNoteTrash ? firstNoteTrash.id : ''
     case Folders.ALL:
       return notesNotTrash.length > 0 ? notesNotTrash[0].id : ''
-    case Folders.TRASH:
-      return notes.find(note => note.trash) ? notes.find(note => note.trash)!.id : ''
     default:
       return ''
   }
