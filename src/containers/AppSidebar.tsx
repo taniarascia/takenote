@@ -87,6 +87,7 @@ const AppSidebar: React.FC<AppProps> = ({
 
   const numberOfActiveNotes = notes.filter(note => !note.trash).length
   const numberOfTrashedNotes = notes.length - numberOfActiveNotes
+  const numberOfFavoriteNotes = notes.filter(note => !note.trash && note.favorite).length
 
   const categorisedNotes = notes.reduce((all: { [key: string]: number }, note: NoteItem) => {
     if (note.category && !note.trash) {
@@ -120,8 +121,13 @@ const AppSidebar: React.FC<AppProps> = ({
             swapFolder(Folders.FAVORITES)
           }}
         >
-          <Bookmark size={15} style={{ marginRight: '.5rem' }} color={iconColor} />
-          Favorites
+          <div>
+            <Bookmark size={15} style={{ marginRight: '.5rem' }} color={iconColor} />
+            Favorites
+          </div>
+          {numberOfFavoriteNotes ? (
+            <span className="app-sidebar__count">{numberOfFavoriteNotes}</span>
+          ) : null}
         </div>
         <div
           className={
