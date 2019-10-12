@@ -15,6 +15,16 @@ npm i
 npm start
 ```
 
+## Features
+
+- [x] Plaintext notes with markdown highlighting and frontmatter metadata
+- [x] Add, update, trash, download, and delete notes
+- [x] Add, update, delete categories
+- [x] Add notes to categories or mark as favorite
+- [x] Keybinding shortcuts
+- [ ] Sync and backup notes to GitHub gist (currently local storage)
+- [ ] Settings
+
 ## Contributors
 
 Thanks goes to these wonderful people:
