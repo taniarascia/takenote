@@ -144,10 +144,16 @@ code {
   .app-sidebar-link {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     padding: 0.5rem;
     cursor: pointer;
     font-size: 0.9rem;
     font-weight: 600;
+    // To make room for a count badge, set a bit higher fixed height so the link stays the
+    // same height and doesn't grow and shrink with the count badge
+    height: 40px;
+    // Make sure that 40px high actually means 40px high
+    box-sizing: border-box;
 
     &:hover {
       background: #444;
@@ -156,6 +162,21 @@ code {
     &.active {
       background: #292929;
     }
+  }
+
+  .app-sidebar__count {
+    border-radius: 50%;
+    color: #fff;
+    background: #666;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 7px;
+    height: 7px;
+    padding: 7px;
+    font-size: 75%;
+    // To align the count badges for All Notes/Trash with the Categories (12px svg icon + 5px margin = 17px)
+    margin-right: 17px;
   }
 
   .category-list {
@@ -167,6 +188,11 @@ code {
       display: flex;
       align-items: center;
       justify-content: space-between;
+      // To make room for a count badge, set a bit higher fixed height so the link stays the
+      // same height and doesn't grow and shrink with the count badge
+      height: 40px;
+      // Make sure that 40px high actually means 40px high
+      box-sizing: border-box;
 
       &:last-of-type {
         border-bottom: none;
@@ -183,6 +209,12 @@ code {
       .category-each-name {
         display: flex;
         align-items: center;
+        justify-content: space-between;
+        flex-grow: 1;
+
+        .app-sidebar__count {
+          margin-right: 0;
+        }
       }
 
       .category-options {
@@ -190,6 +222,8 @@ code {
         z-index: 1;
         display: flex;
         cursor: pointer;
+        // Allow some space next to the badge count
+        margin-left: 5px;
       }
 
       &.active {
