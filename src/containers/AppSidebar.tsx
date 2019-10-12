@@ -2,9 +2,7 @@ import React, { useState } from 'react'
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
 import kebabCase from 'lodash/kebabCase'
-import uuid from 'uuid/v4'
-import moment from 'moment'
-import { Trash2, Book, Folder, X, UploadCloud, Plus, Settings } from 'react-feather'
+import { Trash2, Book, Folder, X, UploadCloud, Plus, Settings, Bookmark } from 'react-feather'
 import { Folders } from 'constants/enums'
 import { CategoryItem, NoteItem, ApplicationState } from 'types'
 import {
@@ -17,8 +15,9 @@ import {
   swapNote,
   syncState,
 } from 'actions'
+import { newNote } from 'helpers'
 
-const iconColor = 'rgba(255, 255, 255, 0.2)'
+const iconColor = 'rgba(255, 255, 255, 0.3)'
 
 interface AppProps {
   addNote: (note: NoteItem) => void
@@ -59,15 +58,9 @@ const AppSidebar: React.FC<AppProps> = ({
   }
 
   const newNoteHandler = () => {
-    const note: NoteItem = {
-      id: uuid(),
-      text: '',
-      created: moment().format(),
-      lastUpdated: moment().format(),
-      category: activeCategoryId ? activeCategoryId : undefined,
-    }
-
     if ((activeNote && activeNote.text !== '') || !activeNote) {
+      const note = newNote(activeCategoryId, activeFolder)
+
       addNote(note)
       swapNote(note.id)
     }
@@ -118,6 +111,17 @@ const AppSidebar: React.FC<AppProps> = ({
           {numberOfActiveNotes ? (
             <span className="app-sidebar__count">{numberOfActiveNotes}</span>
           ) : null}
+        </div>
+        <div
+          className={
+            activeFolder === Folders.FAVORITES ? 'app-sidebar-link active' : 'app-sidebar-link'
+          }
+          onClick={() => {
+            swapFolder(Folders.FAVORITES)
+          }}
+        >
+          <Bookmark size={15} style={{ marginRight: '.5rem' }} color={iconColor} />
+          Favorites
         </div>
         <div
           className={

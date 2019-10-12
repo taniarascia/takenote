@@ -12,6 +12,7 @@
     "@types/react-redux": "^7.1.4",
     "@types/react-router-dom": "^5.1.0",
     "@types/uuid": "^3.4.5",
+    "all-contributors-cli": "^6.9.1",
     "codemirror": "^5.49.0",
     "husky": "^3.0.5",
     "lint-staged": "^9.4.0",

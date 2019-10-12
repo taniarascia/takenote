@@ -1,76 +1,46 @@
 import React from 'react'
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
-import uuid from 'uuid/v4'
-import moment from 'moment'
-import { Download, Trash } from 'react-feather'
-import { addNote, swapNote, sendNoteToTrash, syncState } from 'actions'
-import { NoteItem, CategoryItem, ApplicationState } from 'types'
+import { Bookmark, Download, Trash } from 'react-feather'
+import { sendNoteToTrash, toggleFavoriteNote } from 'actions'
+import { NoteItem, ApplicationState } from 'types'
 import { getNoteTitle, downloadNote } from 'helpers'
-import { useKey } from 'helpers/hooks'
 
 interface NoteOptionsProps {
-  swapNote: (noteId: string) => void
   sendNoteToTrash: (noteId: string) => void
-  activeNote?: NoteItem
-  activeCategoryId: string
-  notes: NoteItem[]
-  categories: CategoryItem[]
+  toggleFavoriteNote: (noteId: string) => void
+  clickedNote: NoteItem
 }
 
 const NoteOptions: React.FC<NoteOptionsProps> = ({
-  activeNote,
-  activeCategoryId,
-  swapNote,
   sendNoteToTrash,
-  notes,
-  categories,
+  toggleFavoriteNote,
+  clickedNote,
 }) => {
-  const newNoteHandler = () => {
-    const note: NoteItem = {
-      id: uuid(),
-      text: '',
-      created: moment().format(),
-      lastUpdated: moment().format(),
-      category: activeCategoryId ? activeCategoryId : undefined,
-    }
-
-    if ((activeNote && activeNote.text !== '') || !activeNote) {
-      addNote(note)
-      swapNote(note.id)
-    }
-  }
-
   const trashNoteHandler = () => {
-    if (activeNote && !activeNote.trash) {
-      sendNoteToTrash(activeNote.id)
+    if (clickedNote && !clickedNote.trash) {
+      sendNoteToTrash(clickedNote.id)
     }
   }
 
-  const syncNotesHandler = () => {
-    syncState(notes, categories)
+  const favoriteNoteHandler = () => {
+    toggleFavoriteNote(clickedNote.id)
   }
 
   const downloadNoteHandler = () => {
-    if (activeNote) {
-      downloadNote(getNoteTitle(activeNote.text), activeNote)
+    if (clickedNote) {
+      downloadNote(getNoteTitle(clickedNote.text), clickedNote)
     }
   }
 
-  useKey('ctrl+n', () => {
-    newNoteHandler()
-  })
-
-  useKey('ctrl+w', () => {
-    trashNoteHandler()
-  })
-
-  useKey('ctrl+s', () => {
-    syncNotesHandler()
-  })
-
   return (
     <nav className="note-options-nav">
+      {!clickedNote.trash && (
+        <div className="nav-button" onClick={favoriteNoteHandler}>
+          <Bookmark size={15} />
+          {clickedNote.favorite ? 'Remove Favorite' : 'Mark as Favorite'}
+        </div>
+      )}
       <div className="nav-button" onClick={trashNoteHandler}>
         <Trash size={15} />
         Delete note
@@ -84,15 +54,12 @@ const NoteOptions: React.FC<NoteOptionsProps> = ({
 }
 
 const mapStateToProps = (state: ApplicationState) => ({
-  notes: state.noteState.notes,
-  categories: state.categoryState.categories,
-  activeNote: state.noteState.notes.find(note => note.id === state.noteState.activeNoteId),
   activeCategoryId: state.noteState.activeCategoryId,
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  swapNote: (noteId: string) => dispatch(swapNote(noteId)),
   sendNoteToTrash: (noteId: string) => dispatch(sendNoteToTrash(noteId)),
+  toggleFavoriteNote: (noteId: string) => dispatch(toggleFavoriteNote(noteId)),
 })
 
 export default connect(

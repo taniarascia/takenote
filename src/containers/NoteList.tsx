@@ -2,16 +2,18 @@ import React, { useState, useEffect, useRef } from 'react'
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
 import { MoreHorizontal } from 'react-feather'
+import { folderMap } from 'constants/index'
 import { Folders } from 'constants/enums'
 import { swapNote, swapCategory, pruneNotes, addCategoryToNote } from 'actions'
 import { NoteItem, CategoryItem, ApplicationState } from 'types'
-import { getNoteTitle } from 'helpers'
+import { getNoteTitle, sortByLastUpdated } from 'helpers'
 import NoteOptions from 'containers/NoteOptions'
 
 interface NoteListProps {
+  activeFolder: string
   activeCategoryId: string
+  activeCategory?: CategoryItem
   activeNoteId: string
-  notes: NoteItem[]
   filteredNotes: NoteItem[]
   filteredCategories: CategoryItem[]
   swapNote: (noteId: string) => void
@@ -21,9 +23,10 @@ interface NoteListProps {
 }
 
 const NoteList: React.FC<NoteListProps> = ({
+  activeFolder,
   activeCategoryId,
+  activeCategory,
   activeNoteId,
-  notes,
   filteredNotes,
   filteredCategories,
   swapNote,
@@ -53,12 +56,6 @@ const NoteList: React.FC<NoteListProps> = ({
     }
   }
 
-  const searchNotes = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const filteredResults = filteredNotes.filter(
-      note => note.text.toLowerCase().search(event.target.value.toLowerCase()) !== -1
-    )
-  }
-
   useEffect(() => {
     // add when mounted
     document.addEventListener('mousedown', handleNoteOptionsClick)
@@ -66,16 +63,13 @@ const NoteList: React.FC<NoteListProps> = ({
     return () => {
       document.removeEventListener('mousedown', handleNoteOptionsClick)
     }
-  }, [])
+  })
 
   return (
     <aside className="note-sidebar">
-      {/* <input
-        type="search"
-        placeholder="Search notes"
-        onChange={searchNotes}
-        className="searchbar"
-      /> */}
+      <div className="note-sidebar-header">
+        {activeFolder === 'CATEGORY' ? activeCategory!.name : folderMap[activeFolder]}
+      </div>
       <div className="note-list">
         {filteredNotes.map(note => {
           const noteTitle = getNoteTitle(note.text)
@@ -137,7 +131,7 @@ const NoteList: React.FC<NoteListProps> = ({
                       </option>
                     )}
                   </select>
-                  <NoteOptions />
+                  <NoteOptions clickedNote={note} />
                 </div>
               )}
             </div>
@@ -157,20 +151,22 @@ const mapStateToProps = (state: ApplicationState) => {
     filteredNotes = noteState.notes.filter(
       note => !note.trash && note.category === noteState.activeCategoryId
     )
+  } else if (noteState.activeFolder === Folders.FAVORITES) {
+    filteredNotes = noteState.notes.filter(note => !note.trash && note.favorite)
   } else if (noteState.activeFolder === Folders.TRASH) {
     filteredNotes = noteState.notes.filter(note => note.trash)
   } else {
     filteredNotes = noteState.notes.filter(note => !note.trash)
   }
 
-  filteredNotes.sort(function(a, b) {
-    let dateA = new Date(a.lastUpdated)
-    let dateB = new Date(b.lastUpdated)
-    return dateA > dateB ? -1 : dateA < dateB ? 1 : 0
-  })
+  filteredNotes.sort(sortByLastUpdated)
 
   return {
+    activeFolder: noteState.activeFolder,
     activeCategoryId: noteState.activeCategoryId,
+    activeCategory: categoryState.categories.find(
+      category => category.id === noteState.activeCategoryId
+    ),
     activeNoteId: noteState.activeNoteId,
     notes: noteState.notes,
     filteredNotes,
