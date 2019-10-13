@@ -85,6 +85,17 @@ const AppSidebar: React.FC<AppProps> = ({
     syncState(notes, categories)
   }
 
+  const numberOfActiveNotes = notes.filter(note => !note.trash).length
+  const numberOfTrashedNotes = notes.length - numberOfActiveNotes
+  const numberOfFavoriteNotes = notes.filter(note => !note.trash && note.favorite).length
+
+  const categorisedNotes = notes.reduce((all: { [key: string]: number }, note: NoteItem) => {
+    if (note.category && !note.trash) {
+      all[note.category] = all[note.category] ? all[note.category] + 1 : 1
+    }
+    return all
+  }, {})
+
   return (
     <aside className="app-sidebar">
       <section id="app-sidebar-main">
@@ -94,8 +105,13 @@ const AppSidebar: React.FC<AppProps> = ({
             swapFolder(Folders.ALL)
           }}
         >
-          <Book size={15} style={{ marginRight: '.5rem' }} color={iconColor} />
-          All Notes
+          <div>
+            <Book size={15} style={{ marginRight: '.5rem' }} color={iconColor} />
+            All Notes
+          </div>
+          {numberOfActiveNotes ? (
+            <span className="app-sidebar__count">{numberOfActiveNotes}</span>
+          ) : null}
         </div>
         <div
           className={
@@ -105,8 +121,13 @@ const AppSidebar: React.FC<AppProps> = ({
             swapFolder(Folders.FAVORITES)
           }}
         >
-          <Bookmark size={15} style={{ marginRight: '.5rem' }} color={iconColor} />
-          Favorites
+          <div>
+            <Bookmark size={15} style={{ marginRight: '.5rem' }} color={iconColor} />
+            Favorites
+          </div>
+          {numberOfFavoriteNotes ? (
+            <span className="app-sidebar__count">{numberOfFavoriteNotes}</span>
+          ) : null}
         </div>
         <div
           className={
@@ -116,8 +137,13 @@ const AppSidebar: React.FC<AppProps> = ({
             swapFolder(Folders.TRASH)
           }}
         >
-          <Trash2 size={15} style={{ marginRight: '.5rem' }} color={iconColor} />
-          Trash
+          <div>
+            <Trash2 size={15} style={{ marginRight: '.5rem' }} color={iconColor} />
+            Trash
+          </div>
+          {numberOfTrashedNotes ? (
+            <span className="app-sidebar__count">{numberOfTrashedNotes}</span>
+          ) : null}
         </div>
 
         <div className="category-title vbetween">
@@ -146,8 +172,13 @@ const AppSidebar: React.FC<AppProps> = ({
                 }}
               >
                 <div className="category-each-name">
-                  <Folder size={15} style={{ marginRight: '.5rem' }} color={iconColor} />
-                  {category.name}
+                  <div>
+                    <Folder size={15} style={{ marginRight: '.5rem' }} color={iconColor} />
+                    {category.name}
+                  </div>
+                  {categorisedNotes[category.id] && (
+                    <span className="app-sidebar__count">{categorisedNotes[category.id]}</span>
+                  )}
                 </div>
                 <div
                   className="category-options"
