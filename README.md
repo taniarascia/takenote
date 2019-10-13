@@ -1,8 +1,8 @@
-# TakeNote
+# 📝 TakeNote
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT) [![Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
 
-A note-taking app for developers with GitHub sync and Markdown support. (WIP)
+A web-based note-taking app with GitHub sync and Markdown support. (WIP)
 
 ## Installation
 
