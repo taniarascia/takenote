@@ -6,7 +6,7 @@ import { sendNoteToTrash, toggleFavoriteNote } from 'actions'
 import { NoteItem, ApplicationState } from 'types'
 import { getNoteTitle, downloadNote } from 'helpers'
 
-interface NoteOptionsProps {
+export interface NoteOptionsProps {
   sendNoteToTrash: (noteId: string) => void
   toggleFavoriteNote: (noteId: string) => void
   clickedNote: NoteItem
@@ -34,7 +34,7 @@ const NoteOptions: React.FC<NoteOptionsProps> = ({
   }
 
   return (
-    <nav className="note-options-nav">
+    <nav className="note-options-nav" data-testid="note-options-nav">
       {!clickedNote.trash && (
         <div className="nav-button" onClick={favoriteNoteHandler}>
           <Bookmark size={15} />

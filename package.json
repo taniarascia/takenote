@@ -76,5 +76,11 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^4.1.2",
+    "@testing-library/react": "^9.3.0",
+    "jest": "^24.9.0",
+    "ts-jest": "^24.1.0"
   }
 }
