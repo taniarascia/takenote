@@ -11,10 +11,48 @@
   "commitConvention": "none",
   "contributors": [
     {
+      "login": "taniarascia",
+      "name": "Tania Rascia",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/11951801?v=4",
+      "profile": "https://www.taniarascia.com",
+      "contributions": [
+        "code",
+        "ideas"
+      ]
+    },
+    {
       "login": "hankolsen",
       "name": "hankolsen",
       "avatar_url": "https://avatars3.githubusercontent.com/u/1008390?v=4",
       "profile": "https://github.com/hankolsen",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "joseph-perez",
+      "name": "Joseph Perez",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/7772649?v=4",
+      "profile": "https://github.com/joseph-perez",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "dagda1",
+      "name": "Paul",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/118328?v=4",
+      "profile": "https://cutting.scot",
+      "contributions": [
+        "code",
+        "test"
+      ]
+    },
+    {
+      "login": "MartinRosenberg",
+      "name": "Martin Rosenberg",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/2382147?v=4",
+      "profile": "https://martinbrosenberg.com/",
       "contributions": [
         "code"
       ]

@@ -1,0 +1,29 @@
+.empty-editor {
+  grid-area: editor;
+  background: #f5f5f5;
+  width: 100%;
+}
+
+.editor {
+  grid-area: editor;
+  max-height: calc(100vh);
+  overflow-y: auto;
+
+  .CodeMirror {
+    padding: 0;
+    -webkit-font-smoothing: subpixel-antialiased;
+    height: 100%;
+    font-family: Menlo, Monaco, monospace;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  .CodeMirror-lines {
+    padding: 0;
+  }
+
+  .CodeMirror-activeline-background {
+    background: rgba(0, 0, 0, 0.05) !important;
+  }
+}

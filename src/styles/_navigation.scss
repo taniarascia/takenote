@@ -1,0 +1,26 @@
+.navigation {
+  grid-area: nav;
+  background: #ccc;
+  display: flex;
+
+  .nav-button {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    background: transparent;
+    font-weight: 600;
+    border: none;
+    font-size: 1rem;
+    padding: 0 0.5rem;
+
+    svg {
+      height: 18px;
+      width: 18px;
+      margin-right: 0.3rem;
+    }
+
+    &:hover {
+      background: rgba(0, 0, 0, 0.1);
+    }
+  }
+}
