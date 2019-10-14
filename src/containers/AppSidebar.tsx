@@ -88,7 +88,7 @@ const AppSidebar: React.FC<AppProps> = ({
 
   return (
     <aside className="app-sidebar">
-      <section id="app-sidebar-main">
+      <section className="app-sidebar-main">
         <div
           className={activeFolder === Folders.ALL ? 'app-sidebar-link active' : 'app-sidebar-link'}
           onClick={() => {
@@ -187,8 +187,8 @@ const AppSidebar: React.FC<AppProps> = ({
           </form>
         )}
       </section>
-      <section>
-        <div className="app-sidebar-actions">
+      <section className="app-sidebar-actions">
+        <div>
           <Plus className="action-button" size={18} color={iconColor} onClick={newNoteHandler} />
           <UploadCloud
             size={18}
