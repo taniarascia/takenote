@@ -2,7 +2,9 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT) [![Contributors](https://img.shields.io/badge/all_contributors-5-orange.svg?style=flat-square)](#contributors-) [![Build Status](https://travis-ci.org/taniarascia/takenote.svg?branch=master)](https://travis-ci.org/taniarascia/takenote) [![Coverage Status](https://coveralls.io/repos/github/taniarascia/takenote/badge.svg?branch=master)](https://coveralls.io/github/taniarascia/takenote?branch=master)
 
-A web-based note-taking app with GitHub sync and Markdown support. (WIP)
+> Work in progress
+
+A web-based note-taking app with GitHub sync and Markdown support.
 
 ## Installation
 
@@ -22,6 +24,16 @@ npm start
 - [x] Keybinding shortcuts for common actions
 - [ ] Settings for light/dark mode, sync frequency, and Vim mode
 - [ ] Sync and store notes in GitHub gist (currently local storage)
+
+## Contrubuting
+
+TakeNote is an open source project, and contributions of any kind are welcome! Open issues, bugs, and enhancements are all listed on the [issues](/issues) tab and labeled accordingly. Feel free to open bug tickets and make feature requests. Easy bugs and features will be tagged with the `good first issue` label.
+
+The project is written in TypeScript, React and Redux. TypeScript is set to strict mode, with no implicit any allowed. The formatting style for the project is set by Prettier.
+
+### Data Seed
+
+To seed the app with some test data, paste the contents of `seed.js` into your browser console and refresh.
 
 ## Contributors
 
@@ -44,8 +56,6 @@ Thanks goes to these wonderful people:
 <!-- prettier-ignore-end -->
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
-
-Contributions of any kind welcome!
 
 ## Author
 
