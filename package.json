@@ -22,7 +22,6 @@
     "mousetrap-global-bind": "^1.1.0",
     "node-sass": "^4.12.0",
     "patch-package": "^6.2.0",
-    "prettier": "^1.18.2",
     "react": "^16.9.0",
     "react-codemirror2": "^6.0.0",
     "react-dom": "^16.9.0",
@@ -83,6 +82,7 @@
     "@testing-library/react": "^9.3.0",
     "coveralls": "^3.0.7",
     "jest": "^24.9.0",
+    "prettier": "^1.18.2",
     "ts-jest": "^24.1.0"
   }
 }
