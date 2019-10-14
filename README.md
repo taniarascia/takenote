@@ -6,8 +6,6 @@ A web-based note-taking app with GitHub sync and Markdown support. (WIP)
 
 ## Installation
 
-> Redux DevTools Chrome extension is required for development!
-
 ```bash
 git clone git@github.com:taniarascia/takenote
 cd takenote
