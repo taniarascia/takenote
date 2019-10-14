@@ -43,17 +43,8 @@ const NoteList: React.FC<NoteListProps> = ({
   ) => {
     event.stopPropagation()
 
-    if (node.current) {
-      if (node.current.contains(event.target as HTMLDivElement)) return
-    }
-
-    if (!noteOptionsId) {
-      setNoteOptionsId(noteId)
-    } else if (noteOptionsId !== noteId) {
-      setNoteOptionsId(noteId)
-    } else {
-      setNoteOptionsId('')
-    }
+    if (node.current && node.current.contains(event.target as HTMLDivElement)) return
+    setNoteOptionsId(!noteOptionsId || noteOptionsId !== noteId ? noteId : '')
   }
 
   useEffect(() => {
