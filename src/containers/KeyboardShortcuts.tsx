@@ -1,7 +1,7 @@
 import React from 'react'
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
-import { addNote, swapNote, sendNoteToTrash, syncState } from 'actions'
+import { addNote, swapNote, toggleTrashedNote, syncState } from 'actions'
 import { NoteItem, CategoryItem, ApplicationState } from 'types'
 import { newNote, getNoteTitle, downloadNote } from 'helpers'
 import { useKey } from 'helpers/hooks'
@@ -10,7 +10,7 @@ import { useKeyboard } from '../contexts/KeyboardContext'
 interface KeyboardShortcutsProps {
   addNote: (note: NoteItem) => void
   swapNote: (noteId: string) => void
-  sendNoteToTrash: (noteId: string) => void
+  toggleTrashedNote: (noteId: string) => void
   syncState: (notes: NoteItem[], categories: CategoryItem[]) => void
   activeNote?: NoteItem
   activeCategoryId: string
@@ -26,7 +26,7 @@ const KeyboardShortcuts: React.FC<KeyboardShortcutsProps> = ({
   activeFolder,
   addNote,
   swapNote,
-  sendNoteToTrash,
+  toggleTrashedNote,
   syncState,
   notes,
   categories,
@@ -46,8 +46,8 @@ const KeyboardShortcuts: React.FC<KeyboardShortcutsProps> = ({
   }
 
   const trashNoteHandler = () => {
-    if (activeNote && !activeNote.trash) {
-      sendNoteToTrash(activeNote.id)
+    if (activeNote) {
+      toggleTrashedNote(activeNote.id)
     }
   }
 
@@ -96,7 +96,7 @@ const mapStateToProps = (state: ApplicationState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   addNote: (note: NoteItem) => dispatch(addNote(note)),
   swapNote: (noteId: string) => dispatch(swapNote(noteId)),
-  sendNoteToTrash: (noteId: string) => dispatch(sendNoteToTrash(noteId)),
+  toggleTrashedNote: (noteId: string) => dispatch(toggleTrashedNote(noteId)),
   syncState: (notes: NoteItem[], categories: CategoryItem[]) =>
     dispatch(syncState(notes, categories)),
 })
