@@ -1,6 +1,6 @@
 # 📝 TakeNote
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT) [![Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors-)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT) [![Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors-) [![Build Status](https://travis-ci.org/taniarascia/takenote.svg?branch=master)](https://travis-ci.org/taniarascia/takenote) [![Coverage Status](https://coveralls.io/repos/github/taniarascia/takenote/badge.svg?branch=master)](https://coveralls.io/github/taniarascia/takenote?branch=master)
 
 A web-based note-taking app with GitHub sync and Markdown support. (WIP)
 
@@ -22,8 +22,9 @@ npm start
 - [x] Add, update, delete categories
 - [x] Add notes to categories or mark as favorite
 - [x] Keybinding shortcuts
-- [ ] Sync and backup notes to GitHub gist (currently local storage)
 - [ ] Settings
+- [ ] Sync and backup notes to GitHub gist (currently local storage)
+
 
 ## Contributors
 
@@ -37,6 +38,7 @@ Thanks goes to these wonderful people:
     <td align="center"><a href="https://github.com/hankolsen"><img src="https://avatars3.githubusercontent.com/u/1008390?v=4" width="50px;" alt="hankolsen"/><br /><sub><b>hankolsen</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=hankolsen" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/joseph-perez"><img src="https://avatars0.githubusercontent.com/u/7772649?v=4" width="50px;" alt="Joseph Perez"/><br /><sub><b>Joseph Perez</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=joseph-perez" title="Code">💻</a></td>
     <td align="center"><a href="https://cutting.scot"><img src="https://avatars0.githubusercontent.com/u/118328?v=4" width="50px;" alt="Paul"/><br /><sub><b>Paul</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=dagda1" title="Code">💻</a></td>
+    <td align="center"><a href="https://www.taniarascia.com"><img src="https://avatars3.githubusercontent.com/u/11951801?v=4" width="50px;" alt="Tania Rascia"/><br /><sub><b>Tania Rascia</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=taniarascia" title="Code">💻</a> <a href="#ideas-taniarascia" title="Ideas, Planning, & Feedback">🤔</a></td>
   </tr>
 </table>
 
