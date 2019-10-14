@@ -1,7 +1,7 @@
 {
   "name": "takenote",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "dependencies": {
     "@types/codemirror": "0.0.78",
     "@types/jest": "24.0.18",
@@ -41,7 +41,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "postinstall": "patch-package"
+    "postinstall": "patch-package",
+    "coveralls": "react-scripts test --ci --coverage --watchAll=false && cat ./coverage/lcov.info | coveralls"
   },
   "husky": {
     "hooks": {
