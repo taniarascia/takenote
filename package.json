@@ -81,6 +81,7 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^4.1.2",
     "@testing-library/react": "^9.3.0",
+    "coveralls": "^3.0.7",
     "jest": "^24.9.0",
     "ts-jest": "^24.1.0"
   }
