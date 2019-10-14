@@ -1,17 +1,17 @@
 // eslint-disable-next-line import/named
-import { put, all, takeLatest } from 'redux-saga/effects'
+import { all, put, takeLatest } from 'redux-saga/effects'
 
 import { Actions } from 'constants/enums'
 import {
-  loadNotesSuccess,
-  loadNotesError,
-  loadCategoriesSuccess,
   loadCategoriesError,
-  syncStateSuccess,
+  loadCategoriesSuccess,
+  loadNotesError,
+  loadNotesSuccess,
   syncStateError,
+  syncStateSuccess,
 } from 'actions'
 import { SyncStateAction } from 'types'
-import { requestNotes, requestCategories, saveState } from 'api'
+import { requestCategories, requestNotes, saveState } from 'api'
 
 function* fetchNotes() {
   try {
