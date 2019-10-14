@@ -1,6 +1,8 @@
-import 'mousetrap-global-bind'
-
+/* eslint-disable */
 import mousetrap from 'mousetrap'
+import 'mousetrap-global-bind'
+/* eslint-enable */
+
 import { useEffect, useRef } from 'react'
 
 const noop = () => {}
