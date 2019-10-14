@@ -15,13 +15,13 @@ npm start
 
 ## Features
 
-- [x] Plaintext notes with markdown highlighting and frontmatter metadata
-- [x] Add, update, trash, download, and delete notes
-- [x] Add, update, delete categories
-- [x] Add notes to categories or mark as favorite
-- [x] Keybinding shortcuts
-- [ ] Settings
-- [ ] Sync and backup notes to GitHub gist (currently local storage)
+- [x] Plain text notes with Markdown highlighting and frontmatter metadata
+- [x] Add, update, download, temporarily delete and delete notes
+- [x] Add, update, and delete categories
+- [x] Add notes to categories or mark note as favorite
+- [x] Keybinding shortcuts for common actions
+- [ ] Settings for light/dark mode, sync frequency, and Vim mode
+- [ ] Sync and store notes in GitHub gist (currently local storage)
 
 ## Contributors
 
