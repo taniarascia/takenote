@@ -14,8 +14,6 @@
     "@types/uuid": "^3.4.5",
     "all-contributors-cli": "^6.9.1",
     "codemirror": "^5.49.0",
-    "husky": "^3.0.5",
-    "lint-staged": "^9.4.0",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "mousetrap": "^1.6.3",
@@ -52,6 +50,10 @@
     "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
       "prettier --single-quote --trailing-comma es5 --print-width 100 --tab-width 2 --no-semi --write",
       "git add"
+    ],
+    "*.{js,css,json,md}": [
+      "prettier --write",
+      "git add"
     ]
   },
   "prettier": {
@@ -81,8 +83,11 @@
     "@testing-library/jest-dom": "^4.1.2",
     "@testing-library/react": "^9.3.0",
     "coveralls": "^3.0.7",
+    "husky": "^3.0.9",
     "jest": "^24.9.0",
+    "lint-staged": "^9.4.2",
     "prettier": "^1.18.2",
+    "pretty-quick": "^2.0.0",
     "ts-jest": "^24.1.0"
   }
 }
