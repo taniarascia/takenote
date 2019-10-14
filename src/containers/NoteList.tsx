@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
 import { MoreHorizontal } from 'react-feather'
+
 import { folderMap } from 'constants/index'
 import { Folders } from 'constants/enums'
 import { swapNote, swapCategory, pruneNotes, addCategoryToNote } from 'actions'
