@@ -118,3 +118,11 @@ export const syncStateError = (error: string) => ({
   type: Actions.SYNC_STATE_ERROR,
   payload: error,
 })
+
+//==============================================================================
+// Theme
+//==============================================================================
+
+export const toggleDarkTheme = () => ({
+  type: Actions.TOGGLE_DARK_THEME,
+})
