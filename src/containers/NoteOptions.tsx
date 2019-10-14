@@ -1,10 +1,11 @@
 import React from 'react'
-import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
+import { Dispatch } from 'redux'
 import { ArrowUp, Bookmark, Download, Trash } from 'react-feather'
-import { toggleTrashedNote, toggleFavoriteNote } from 'actions'
-import { NoteItem, ApplicationState } from 'types'
-import { getNoteTitle, downloadNote } from 'helpers'
+
+import { toggleFavoriteNote, toggleTrashedNote } from 'actions'
+import { downloadNote, getNoteTitle } from 'helpers'
+import { ApplicationState, NoteItem } from 'types'
 
 export interface NoteOptionsProps {
   clickedNote: NoteItem

@@ -1,4 +1,4 @@
-import { NoteItem, CategoryItem } from 'types'
+import { CategoryItem, NoteItem } from 'types'
 
 export const requestNotes = () => {
   return new Promise((resolve, reject) => {
