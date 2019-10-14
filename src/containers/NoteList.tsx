@@ -1,13 +1,14 @@
-import React, { useState, useEffect, useRef } from 'react'
-import { Dispatch } from 'redux'
-import { connect } from 'react-redux'
+import React, { useEffect, useRef, useState } from 'react'
 import { MoreHorizontal } from 'react-feather'
-import { folderMap } from 'constants/index'
-import { Folders } from 'constants/enums'
-import { swapNote, swapCategory, pruneNotes, addCategoryToNote } from 'actions'
-import { NoteItem, CategoryItem, ApplicationState } from 'types'
-import { getNoteTitle, sortByLastUpdated } from 'helpers'
-import NoteOptions from 'containers/NoteOptions'
+import { connect } from 'react-redux'
+import { Dispatch } from 'redux'
+
+import { addCategoryToNote, pruneNotes, swapCategory, swapNote } from '../actions'
+import { folderMap } from '../constants'
+import { Folders } from '../constants/enums'
+import { getNoteTitle, sortByLastUpdated } from '../helpers'
+import { ApplicationState, CategoryItem, NoteItem } from '../types'
+import NoteOptions from './NoteOptions'
 
 interface NoteListProps {
   activeFolder: string

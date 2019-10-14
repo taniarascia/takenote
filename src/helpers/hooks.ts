@@ -1,6 +1,7 @@
-import { useEffect, useRef } from 'react'
-import mousetrap from 'mousetrap'
 import 'mousetrap-global-bind'
+
+import mousetrap from 'mousetrap'
+import { useEffect, useRef } from 'react'
 
 const noop = () => {}
 

@@ -1,5 +1,5 @@
-import { Actions } from 'constants/enums'
-import { NoteItem, CategoryItem } from 'types'
+import { Actions } from '../constants/enums'
+import { CategoryItem, NoteItem } from '../types'
 
 //==============================================================================
 // Notes

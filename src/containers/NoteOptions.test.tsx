@@ -1,6 +1,7 @@
 import React from 'react'
-import NoteOptions, { NoteOptionsProps } from './NoteOptions'
+
 import { renderWithRouter } from '../../tests/helpers'
+import NoteOptions, { NoteOptionsProps } from './NoteOptions'
 
 const wrap = (props: NoteOptionsProps) => renderWithRouter(<NoteOptions {...props} />)
 

@@ -1,5 +1,5 @@
-import { Actions } from 'constants/enums'
-import { SyncState, SyncStateActionTypes } from 'types'
+import { Actions } from '../constants/enums'
+import { SyncState, SyncStateActionTypes } from '../types'
 
 const initialState: SyncState = {
   syncing: false,

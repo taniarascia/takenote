@@ -1,8 +1,9 @@
 import { combineReducers, Reducer } from 'redux'
-import noteReducer from 'reducers/noteReducer'
-import categoryReducer from 'reducers/categoryReducer'
-import syncReducer from 'reducers/syncReducer'
-import { ApplicationState } from 'types'
+
+import { ApplicationState } from '../types'
+import categoryReducer from './categoryReducer'
+import noteReducer from './noteReducer'
+import syncReducer from './syncReducer'
 
 const rootReducer: Reducer<ApplicationState> = combineReducers<ApplicationState>({
   noteState: noteReducer,

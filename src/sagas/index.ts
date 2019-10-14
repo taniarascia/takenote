@@ -1,15 +1,16 @@
-import { put, all, takeLatest } from 'redux-saga/effects'
-import { Actions } from 'constants/enums'
+import { all, put, takeLatest } from 'redux-saga/effects'
+
 import {
-  loadNotesSuccess,
-  loadNotesError,
-  loadCategoriesSuccess,
   loadCategoriesError,
-  syncStateSuccess,
+  loadCategoriesSuccess,
+  loadNotesError,
+  loadNotesSuccess,
   syncStateError,
-} from 'actions'
-import { SyncStateAction } from 'types'
-import { requestNotes, requestCategories, saveState } from 'api'
+  syncStateSuccess,
+} from '../actions'
+import { requestCategories, requestNotes, saveState } from '../api'
+import { Actions } from '../constants/enums'
+import { SyncStateAction } from '../types'
 
 function* fetchNotes() {
   try {

@@ -1,10 +1,11 @@
+import { render } from '@testing-library/react'
+import { createMemoryHistory, MemoryHistory } from 'history'
 import React, { ReactNode } from 'react'
 import { Provider } from 'react-redux'
-import { createStore, applyMiddleware, compose } from 'redux'
-import { createMemoryHistory, MemoryHistory } from 'history'
 import { MemoryRouter } from 'react-router-dom'
-import { render } from '@testing-library/react'
+import { applyMiddleware, compose, createStore } from 'redux'
 import createSagaMiddleware from 'redux-saga'
+
 import rootReducer from '../src/reducers'
 import rootSaga from '../src/sagas'
 

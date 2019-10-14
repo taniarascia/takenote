@@ -1,10 +1,11 @@
 import React from 'react'
-import { Dispatch } from 'redux'
-import { connect } from 'react-redux'
 import { Bookmark, Download, Trash } from 'react-feather'
-import { sendNoteToTrash, toggleFavoriteNote } from 'actions'
-import { NoteItem, ApplicationState } from 'types'
-import { getNoteTitle, downloadNote } from 'helpers'
+import { connect } from 'react-redux'
+import { Dispatch } from 'redux'
+
+import { sendNoteToTrash, toggleFavoriteNote } from '../actions'
+import { downloadNote, getNoteTitle } from '../helpers'
+import { ApplicationState, NoteItem } from '../types'
 
 export interface NoteOptionsProps {
   sendNoteToTrash: (noteId: string) => void

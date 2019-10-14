@@ -1,16 +1,17 @@
-import React from 'react'
-import { Dispatch } from 'redux'
-import { connect } from 'react-redux'
-import { Controlled as CodeMirror } from 'react-codemirror2'
-import moment from 'moment'
-import { updateNote } from 'actions'
-import { NoteItem, ApplicationState } from 'types'
-
-import options from 'constants/codeMirrorOptions'
 import 'codemirror/lib/codemirror.css'
 import 'codemirror/theme/base16-light.css'
 import 'codemirror/mode/gfm/gfm.js'
 import 'codemirror/addon/selection/active-line.js'
+
+import moment from 'moment'
+import React from 'react'
+import { Controlled as CodeMirror } from 'react-codemirror2'
+import { connect } from 'react-redux'
+import { Dispatch } from 'redux'
+
+import { updateNote } from '../actions'
+import options from '../constants/codeMirrorOptions'
+import { ApplicationState, NoteItem } from '../types'
 
 interface NoteEditorProps {
   loading: boolean

@@ -1,22 +1,23 @@
-import React, { useState } from 'react'
-import { Dispatch } from 'redux'
-import { connect } from 'react-redux'
 import kebabCase from 'lodash/kebabCase'
-import { Trash2, Book, Folder, X, UploadCloud, Plus, Settings, Bookmark } from 'react-feather'
-import { Folders } from 'constants/enums'
-import { CategoryItem, NoteItem, ApplicationState } from 'types'
+import React, { useState } from 'react'
+import { Book, Bookmark, Folder, Plus, Settings, Trash2, UploadCloud, X } from 'react-feather'
+import { connect } from 'react-redux'
+import { Dispatch } from 'redux'
+
 import {
-  addNote,
   addCategory,
+  addNote,
   deleteCategory,
   pruneCategoryFromNotes,
   swapCategory,
   swapFolder,
   swapNote,
   syncState,
-} from 'actions'
-import { newNote } from 'helpers'
+} from '../actions'
+import { Folders } from '../constants/enums'
 import { useKeyboard } from '../contexts/KeyboardContext'
+import { newNote } from '../helpers'
+import { ApplicationState, CategoryItem, NoteItem } from '../types'
 
 const iconColor = 'rgba(255, 255, 255, 0.3)'
 
