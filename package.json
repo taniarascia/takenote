@@ -1,9 +1,10 @@
 {
   "name": "takenote",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
   "scripts": {
     "build": "react-scripts build",
+    "coveralls": "react-scripts test --ci --coverage --watchAll=false && cat ./coverage/lcov.info | coveralls",
     "eject": "react-scripts eject",
     "postinstall": "patch-package",
     "start": "react-scripts start",
@@ -63,15 +64,12 @@
     "@types/uuid": "^3.4.5",
     "all-contributors-cli": "^6.9.1",
     "codemirror": "^5.49.0",
-    "husky": "^3.0.5",
-    "lint-staged": "^9.4.0",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "mousetrap": "^1.6.3",
     "mousetrap-global-bind": "^1.1.0",
     "node-sass": "^4.12.0",
     "patch-package": "^6.2.0",
-    "prettier": "^1.18.2",
     "react": "^16.9.0",
     "react-codemirror2": "^6.0.0",
     "react-dom": "^16.9.0",
@@ -88,9 +86,14 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^4.1.2",
     "@testing-library/react": "^9.3.0",
+    "coveralls": "^3.0.7",
     "eslint-config-prettier": "^6.4.0",
     "eslint-plugin-prettier": "^3.1.1",
+    "husky": "^3.0.9",
     "jest": "^24.9.0",
+    "lint-staged": "^9.4.2",
+    "prettier": "^1.18.2",
+    "pretty-quick": "^2.0.0",
     "ts-jest": "^24.1.0"
   }
 }
