@@ -48,9 +48,41 @@
   "eslintConfig": {
     "extends": [
       "react-app",
+      "plugin:import/errors",
+      "plugin:import/typescript",
+      "plugin:import/warnings",
       "plugin:prettier/recommended",
       "prettier/react"
-    ]
+    ],
+    "plugins": [
+      "import"
+    ],
+    "rules": {
+      "import/order": [
+        "error",
+        {
+          "groups": [
+            "builtin",
+            "external",
+            "internal",
+            "parent",
+            "sibling",
+            "index",
+            "unknown"
+          ],
+          "newlines-between": "always"
+        }
+      ]
+    },
+    "settings": {
+      "import/resolver": {
+        "node": {
+          "paths": [
+            "src"
+          ]
+        }
+      }
+    }
   },
   "dependencies": {
     "@types/codemirror": "0.0.78",
@@ -88,6 +120,7 @@
     "@testing-library/react": "^9.3.0",
     "coveralls": "^3.0.7",
     "eslint-config-prettier": "^6.4.0",
+    "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-prettier": "^3.1.1",
     "husky": "^3.0.9",
     "jest": "^24.9.0",

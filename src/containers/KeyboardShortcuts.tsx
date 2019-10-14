@@ -1,11 +1,12 @@
 import React from 'react'
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
+
 import { addNote, swapNote, toggleTrashedNote, syncState } from 'actions'
 import { NoteItem, CategoryItem, ApplicationState } from 'types'
 import { newNote, getNoteTitle, downloadNote } from 'helpers'
 import { useKey } from 'helpers/hooks'
-import { useKeyboard } from '../contexts/KeyboardContext'
+import { useKeyboard } from 'contexts/KeyboardContext'
 
 interface KeyboardShortcutsProps {
   addNote: (note: NoteItem) => void

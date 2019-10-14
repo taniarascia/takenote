@@ -2,6 +2,7 @@ import React from 'react'
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
 import { ArrowUp, Bookmark, Download, Trash } from 'react-feather'
+
 import { toggleTrashedNote, toggleFavoriteNote } from 'actions'
 import { NoteItem, ApplicationState } from 'types'
 import { getNoteTitle, downloadNote } from 'helpers'

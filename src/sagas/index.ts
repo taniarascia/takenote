@@ -1,4 +1,6 @@
+// eslint-disable-next-line import/named
 import { put, all, takeLatest } from 'redux-saga/effects'
+
 import { Actions } from 'constants/enums'
 import {
   loadNotesSuccess,
