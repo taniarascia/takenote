@@ -1,14 +1,12 @@
-import React, { useState } from 'react'
-import { Dispatch } from 'redux'
-import { connect } from 'react-redux'
 import kebabCase from 'lodash/kebabCase'
-import { Trash2, Book, Folder, X, UploadCloud, Plus, Settings, Bookmark } from 'react-feather'
+import React, { useState } from 'react'
+import { Book, Bookmark, Folder, Plus, Settings, Trash2, UploadCloud, X } from 'react-feather'
+import { connect } from 'react-redux'
+import { Dispatch } from 'redux'
 
-import { Folders } from 'constants/enums'
-import { CategoryItem, NoteItem, ApplicationState } from 'types'
 import {
-  addNote,
   addCategory,
+  addNote,
   deleteCategory,
   pruneCategoryFromNotes,
   swapCategory,
@@ -16,8 +14,10 @@ import {
   swapNote,
   syncState,
 } from 'actions'
-import { newNote } from 'helpers'
+import { Folders } from 'constants/enums'
 import { useKeyboard } from 'contexts/KeyboardContext'
+import { newNote } from 'helpers'
+import { ApplicationState, CategoryItem, NoteItem } from 'types'
 
 const iconColor = 'rgba(255, 255, 255, 0.3)'
 
@@ -190,7 +190,9 @@ const AppSidebar: React.FC<AppProps> = ({
       </section>
       <section className="app-sidebar-actions">
         <div>
-          <Plus className="action-button" size={18} color={iconColor} onClick={newNoteHandler} />
+          {activeFolder !== Folders.TRASH && (
+            <Plus className="action-button" size={18} color={iconColor} onClick={newNoteHandler} />
+          )}
           <UploadCloud
             size={18}
             className="action-button"
