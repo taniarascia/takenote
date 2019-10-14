@@ -47,12 +47,8 @@
     }
   },
   "lint-staged": {
-    "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
-      "prettier --single-quote --trailing-comma es5 --print-width 100 --tab-width 2 --no-semi --write",
-      "git add"
-    ],
-    "*.{js,css,json,md}": [
-      "prettier --write",
+    "*.{js,jsx,ts,tsx,json,css,scss,md}": [
+      "prettier--single-quote --trailing-comma es5 --print-width 100 --tab-width 2 --no-semi --write",
       "git add"
     ]
   },
