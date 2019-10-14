@@ -2,6 +2,88 @@
   "name": "takenote",
   "version": "0.1.0",
   "private": false,
+  "scripts": {
+    "build": "react-scripts build",
+    "coveralls": "react-scripts test --ci --coverage --watchAll=false && cat ./coverage/lcov.info | coveralls",
+    "eject": "react-scripts eject",
+    "postinstall": "patch-package",
+    "start": "react-scripts start",
+    "test": "react-scripts test"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "**/*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "git add"
+    ],
+    "**/*.{json,css,scss,md}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "prettier": {
+    "bracketSpacing": true,
+    "printWidth": 100,
+    "semi": false,
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "es5"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "plugin:import/errors",
+      "plugin:import/typescript",
+      "plugin:import/warnings",
+      "plugin:prettier/recommended",
+      "prettier/react"
+    ],
+    "plugins": [
+      "import"
+    ],
+    "rules": {
+      "import/order": [
+        "error",
+        {
+          "groups": [
+            "builtin",
+            "external",
+            "internal",
+            "parent",
+            "sibling",
+            "index",
+            "unknown"
+          ],
+          "newlines-between": "always"
+        }
+      ]
+    },
+    "settings": {
+      "import/resolver": {
+        "node": {
+          "paths": [
+            "src"
+          ]
+        }
+      }
+    }
+  },
   "dependencies": {
     "@types/codemirror": "0.0.78",
     "@types/jest": "24.0.18",
@@ -33,52 +115,13 @@
     "typescript": "3.6.3",
     "uuid": "^3.3.3"
   },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "postinstall": "patch-package",
-    "coveralls": "react-scripts test --ci --coverage --watchAll=false && cat ./coverage/lcov.info | coveralls"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.{js,jsx,ts,tsx,json,css,scss,md}": [
-      "prettier --single-quote --trailing-comma es5 --print-width 100 --tab-width 2 --no-semi --write",
-      "git add"
-    ]
-  },
-  "prettier": {
-    "singleQuote": true,
-    "trailingComma": "es5",
-    "printWidth": 100,
-    "tabWidth": 2,
-    "semi": false,
-    "bracketSpacing": true
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
   "devDependencies": {
     "@testing-library/jest-dom": "^4.1.2",
     "@testing-library/react": "^9.3.0",
     "coveralls": "^3.0.7",
+    "eslint-config-prettier": "^6.4.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-prettier": "^3.1.1",
     "husky": "^3.0.9",
     "jest": "^24.9.0",
     "lint-staged": "^9.4.2",

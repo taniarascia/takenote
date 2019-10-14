@@ -1,5 +1,6 @@
 import uuid from 'uuid/v4'
 import moment from 'moment'
+
 import { NoteItem } from 'types'
 import { Folders } from 'constants/enums'
 

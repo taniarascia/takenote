@@ -3,6 +3,7 @@ import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
 import kebabCase from 'lodash/kebabCase'
 import { Trash2, Book, Folder, X, UploadCloud, Plus, Settings, Bookmark } from 'react-feather'
+
 import { Folders } from 'constants/enums'
 import { CategoryItem, NoteItem, ApplicationState } from 'types'
 import {
@@ -16,7 +17,7 @@ import {
   syncState,
 } from 'actions'
 import { newNote } from 'helpers'
-import { useKeyboard } from '../contexts/KeyboardContext'
+import { useKeyboard } from 'contexts/KeyboardContext'
 
 const iconColor = 'rgba(255, 255, 255, 0.3)'
 
