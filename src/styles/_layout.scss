@@ -2,19 +2,25 @@
   display: grid;
   grid-template-areas: 'app-sidebar note-sidebar editor editor';
   grid-template-columns: $app-sidebar-width $note-sidebar-width auto;
-  min-height: 100vh;
-}
-
-.navigation {
-  grid-area: nav;
+  height: 100vh;
 }
 
 .note-sidebar {
   grid-area: note-sidebar;
+  overflow-y: hidden;
+
+  &:hover {
+    overflow-y: auto;
+  }
 }
 
 .app-sidebar {
   grid-area: app-sidebar;
+  overflow-y: hidden;
+
+  &:hover {
+    overflow-y: auto;
+  }
 }
 
 .note-options-nav {
