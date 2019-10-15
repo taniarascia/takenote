@@ -16,7 +16,16 @@ import { Folder } from 'constants/enums'
 import { useKeyboard } from 'contexts/KeyboardContext'
 import { newNote } from 'helpers'
 import { addCategory, deleteCategory } from 'slices/category'
-import { addNote, pruneCategoryFromNotes, swapCategory, swapFolder, swapNote } from 'slices/note'
+import {
+  addCategoryToNote,
+  addNote,
+  pruneCategoryFromNotes,
+  swapCategory,
+  swapFolder,
+  swapNote,
+  toggleFavoriteNote,
+  toggleTrashedNote,
+} from 'slices/note'
 import { toggleSettingsModal } from 'slices/settings'
 import { syncState } from 'slices/sync'
 import { RootState, CategoryItem, NoteItem } from 'types'
@@ -44,6 +53,10 @@ const AppSidebar: React.FC = () => {
   const _syncState = (notes: NoteItem[], categories: CategoryItem[]) =>
     dispatch(syncState({ notes, categories }))
   const _toggleSettingsModal = () => dispatch(toggleSettingsModal())
+  const _toggleTrashedNote = (noteId: string) => dispatch(toggleTrashedNote(noteId))
+  const _toggleFavoriteNote = (noteId: string) => dispatch(toggleFavoriteNote(noteId))
+  const _addCategoryToNote = (categoryId: string, noteId: string) =>
+    dispatch(addCategoryToNote(categoryId, noteId))
 
   const { addingTempCategory, setAddingTempCategory } = useKeyboard()
   const [tempCategory, setTempCategory] = useState('')
@@ -84,6 +97,18 @@ const AppSidebar: React.FC = () => {
     _toggleSettingsModal()
   }
 
+  const allowDrop = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault()
+  }
+
+  const trashNoteHandler = (event: React.DragEvent<HTMLDivElement>) => {
+    _toggleTrashedNote(event.dataTransfer.getData('text'))
+  }
+
+  const favoriteNoteHandler = (event: React.DragEvent<HTMLDivElement>) => {
+    _toggleFavoriteNote(event.dataTransfer.getData('text'))
+  }
+
   return (
     <aside className="app-sidebar">
       <section className="app-sidebar-main">
@@ -101,6 +126,8 @@ const AppSidebar: React.FC = () => {
           onClick={() => {
             _swapFolder(Folder.FAVORITES)
           }}
+          onDrop={favoriteNoteHandler}
+          onDragOver={allowDrop}
         >
           <Bookmark size={15} style={{ marginRight: '.75rem' }} color={iconColor} />
           Favorites
@@ -110,6 +137,8 @@ const AppSidebar: React.FC = () => {
           onClick={() => {
             _swapFolder(Folder.TRASH)
           }}
+          onDrop={trashNoteHandler}
+          onDragOver={allowDrop}
         >
           <Trash2 size={15} style={{ marginRight: '.75rem' }} color={iconColor} />
           Trash
@@ -137,6 +166,10 @@ const AppSidebar: React.FC = () => {
                     _swapNote(newNoteId)
                   }
                 }}
+                onDrop={event => {
+                  _addCategoryToNote(category.id, event.dataTransfer.getData('noteId'))
+                }}
+                onDragOver={allowDrop}
               >
                 <div className="category-each-name">
                   <FolderIcon size={15} style={{ marginRight: '.75rem' }} color={iconColor} />
