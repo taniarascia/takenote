@@ -3,8 +3,8 @@ import { ArrowUp, Bookmark, Download, Trash, X } from 'react-feather'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 
-import { deleteNote, toggleFavoriteNote, toggleTrashedNote } from 'actions'
 import { downloadNote, getNoteTitle } from 'helpers'
+import { deleteNote, toggleFavoriteNote, toggleTrashedNote } from 'slices/noteSlice'
 import { ApplicationState, NoteItem } from 'types'
 
 export interface NoteOptionsProps {

@@ -1,24 +1,32 @@
 import React, { ReactNode } from 'react'
 import { Provider } from 'react-redux'
-import { applyMiddleware, compose, createStore } from 'redux'
 import { createMemoryHistory, MemoryHistory } from 'history'
 import { MemoryRouter } from 'react-router-dom'
 import { render } from '@testing-library/react'
 import createSagaMiddleware from 'redux-saga'
+import { configureStore, getDefaultMiddleware } from 'redux-starter-kit'
 
-import rootReducer from 'reducers'
+import rootReducer from 'slices'
 import rootSaga from 'sagas'
+
+interface RenderWithRouterOptions {
+  route: string
+  history: MemoryHistory
+}
 
 export const renderWithRouter = (
   ui: ReactNode,
   {
     route = '/',
     history = createMemoryHistory({ initialEntries: [route] }),
-  }: { route: string; history: MemoryHistory } = {} as { route: string; history: MemoryHistory }
+  }: RenderWithRouterOptions = {} as RenderWithRouterOptions
 ) => {
   const sagaMiddleware = createSagaMiddleware()
 
-  const store = createStore(rootReducer, {}, compose(applyMiddleware(sagaMiddleware)))
+  const store = configureStore({
+    reducer: rootReducer,
+    middleware: [sagaMiddleware, ...getDefaultMiddleware({ thunk: false })],
+  })
 
   sagaMiddleware.run(rootSaga)
 

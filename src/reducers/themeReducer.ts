@@ -1,4 +1,4 @@
-import { Actions } from 'constants/enums'
+import { Action } from 'constants/enums'
 import { ThemeState, ThemeActionTypes } from 'types'
 
 const initialState: ThemeState = {
@@ -7,7 +7,7 @@ const initialState: ThemeState = {
 
 const themeReducer = (state = initialState, action: ThemeActionTypes): ThemeState => {
   switch (action.type) {
-    case Actions.TOGGLE_DARK_THEME:
+    case Action.TOGGLE_DARK_THEME:
       return {
         ...state,
         dark: !state.dark,

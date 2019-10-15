@@ -1,4 +1,4 @@
-export enum Actions {
+export enum Action {
   ADD_NOTE = 'ADD_NOTE',
   SWAP_NOTE = 'SWAP_NOTE',
   UPDATE_NOTE = 'UPDATE_NOTE',
@@ -31,7 +31,7 @@ export enum Actions {
   SYNC_STATE_ERROR = 'SYNC_STATE_ERROR',
 }
 
-export enum Folders {
+export enum Folder {
   ALL = 'ALL',
   TRASH = 'TRASH',
   FAVORITES = 'FAVORITES',

@@ -8,7 +8,7 @@ import createSagaMiddleware from 'redux-saga'
 import { configureStore, getDefaultMiddleware } from 'redux-starter-kit'
 
 import App from 'containers/App'
-import rootReducer from 'reducers'
+import rootReducer from 'slices'
 import rootSaga from 'sagas'
 
 const sagaMiddleware = createSagaMiddleware()

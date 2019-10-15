@@ -2,11 +2,13 @@ import React from 'react'
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
 
-import { addNote, swapNote, toggleTrashedNote, syncState, toggleDarkTheme } from 'actions'
-import { NoteItem, CategoryItem, ApplicationState } from 'types'
-import { newNote, getNoteTitle, downloadNote } from 'helpers'
-import { useKey } from 'helpers/hooks'
 import { useKeyboard } from 'contexts/KeyboardContext'
+import { downloadNote, getNoteTitle, newNote } from 'helpers'
+import { useKey } from 'helpers/hooks'
+import { addNote, swapNote, toggleTrashedNote } from 'slices/noteSlice'
+import { syncState } from 'slices/syncSlice'
+import { toggleDarkTheme } from 'slices/themeSlice'
+import { ApplicationState, CategoryItem, NoteItem } from 'types'
 
 interface KeyboardShortcutsProps {
   addNote: (note: NoteItem) => void
@@ -109,7 +111,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   swapNote: (noteId: string) => dispatch(swapNote(noteId)),
   toggleTrashedNote: (noteId: string) => dispatch(toggleTrashedNote(noteId)),
   syncState: (notes: NoteItem[], categories: CategoryItem[]) =>
-    dispatch(syncState(notes, categories)),
+    dispatch(syncState({ notes, categories })),
   toggleDarkTheme: () => dispatch(toggleDarkTheme()),
 })
 

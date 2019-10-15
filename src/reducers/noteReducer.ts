@@ -1,4 +1,4 @@
-import { Actions, Folders } from 'constants/enums'
+import { Action, Folder } from 'constants/enums'
 import { NoteItem, NotesActionTypes, NoteState } from 'types'
 import { sortByLastUpdated } from 'helpers'
 
@@ -13,27 +13,27 @@ const initialState: NoteState = {
 
 const noteReducer = (state = initialState, action: NotesActionTypes): NoteState => {
   switch (action.type) {
-    case Actions.LOAD_NOTES:
+    case Action.LOAD_NOTES:
       return initialState
-    case Actions.LOAD_NOTES_SUCCESS:
+    case Action.LOAD_NOTES_SUCCESS:
       return {
         ...state,
         notes: action.payload,
-        activeNoteId: getFirstNote(Folders.ALL, action.payload),
+        activeNoteId: getFirstNote(Folder.ALL, action.payload),
         loading: false,
       }
-    case Actions.LOAD_NOTES_ERROR:
+    case Action.LOAD_NOTES_ERROR:
       return {
         ...state,
         loading: false,
         error: action.payload,
       }
-    case Actions.ADD_NOTE:
+    case Action.ADD_NOTE:
       return {
         ...state,
         notes: [action.payload, ...state.notes],
       }
-    case Actions.UPDATE_NOTE:
+    case Action.UPDATE_NOTE:
       return {
         ...state,
         notes: state.notes.map(note =>
@@ -46,7 +46,7 @@ const noteReducer = (state = initialState, action: NotesActionTypes): NoteState 
             : note
         ),
       }
-    case Actions.TOGGLE_FAVORITE_NOTE:
+    case Action.TOGGLE_FAVORITE_NOTE:
       return {
         ...state,
         notes: state.notes.map(note =>
@@ -58,7 +58,7 @@ const noteReducer = (state = initialState, action: NotesActionTypes): NoteState 
             : note
         ),
       }
-    case Actions.TOGGLE_TRASHED_NOTE:
+    case Action.TOGGLE_TRASHED_NOTE:
       return {
         ...state,
         notes: state.notes.map(note =>
@@ -71,37 +71,37 @@ const noteReducer = (state = initialState, action: NotesActionTypes): NoteState 
         ),
         activeNoteId: getNewNoteId(state.notes, action.payload, state.activeCategoryId),
       }
-    case Actions.DELETE_NOTE:
+    case Action.DELETE_NOTE:
       return {
         ...state,
         notes: state.notes.filter(note => note.id !== action.payload),
         activeNoteId: getNewNoteId(state.notes, action.payload, state.activeCategoryId),
       }
-    case Actions.SWAP_NOTE:
+    case Action.SWAP_NOTE:
       return {
         ...state,
         activeNoteId: action.payload,
       }
-    case Actions.SWAP_CATEGORY:
+    case Action.SWAP_CATEGORY:
       return {
         ...state,
         activeCategoryId: action.payload,
-        activeFolder: Folders.CATEGORY,
-        activeNoteId: getFirstNote(Folders.CATEGORY, state.notes, action.payload),
+        activeFolder: Folder.CATEGORY,
+        activeNoteId: getFirstNote(Folder.CATEGORY, state.notes, action.payload),
       }
-    case Actions.SWAP_FOLDER:
+    case Action.SWAP_FOLDER:
       return {
         ...state,
         activeFolder: action.payload,
         activeCategoryId: '',
         activeNoteId: getFirstNote(action.payload, state.notes),
       }
-    case Actions.PRUNE_NOTES:
+    case Action.PRUNE_NOTES:
       return {
         ...state,
         notes: state.notes.filter(note => note.text !== '' || note.id === state.activeNoteId),
       }
-    case Actions.PRUNE_CATEGORY_FROM_NOTES:
+    case Action.PRUNE_CATEGORY_FROM_NOTES:
       return {
         ...state,
         notes: state.notes.map(note =>
@@ -113,7 +113,7 @@ const noteReducer = (state = initialState, action: NotesActionTypes): NoteState 
             : note
         ),
       }
-    case Actions.ADD_CATEGORY_TO_NOTE:
+    case Action.ADD_CATEGORY_TO_NOTE:
       return {
         ...state,
         notes: state.notes.map(note =>
@@ -140,13 +140,13 @@ export function getFirstNote(folder: string, notes: NoteItem[], categoryId?: str
   const firstNoteTrash = notes.find(note => note.trash)
 
   switch (folder) {
-    case Folders.CATEGORY:
+    case Folder.CATEGORY:
       return firstNoteCategory ? firstNoteCategory.id : ''
-    case Folders.FAVORITES:
+    case Folder.FAVORITES:
       return firstNoteFavorite ? firstNoteFavorite.id : ''
-    case Folders.TRASH:
+    case Folder.TRASH:
       return firstNoteTrash ? firstNoteTrash.id : ''
-    case Folders.ALL:
+    case Folder.ALL:
       return notesNotTrash.length > 0 ? notesNotTrash[0].id : ''
     default:
       return ''

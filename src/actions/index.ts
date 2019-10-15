@@ -1,4 +1,4 @@
-import { Actions } from 'constants/enums'
+import { Action } from 'constants/enums'
 import { CategoryItem, NoteItem } from 'types'
 
 //==============================================================================
@@ -6,70 +6,70 @@ import { CategoryItem, NoteItem } from 'types'
 //==============================================================================
 
 export const loadNotes = () => ({
-  type: Actions.LOAD_NOTES,
+  type: Action.LOAD_NOTES,
 })
 
 export const loadNotesSuccess = (notes: NoteItem[]) => ({
-  type: Actions.LOAD_NOTES_SUCCESS,
+  type: Action.LOAD_NOTES_SUCCESS,
   payload: notes,
 })
 
 export const loadNotesError = (error: string) => ({
-  type: Actions.LOAD_NOTES_ERROR,
+  type: Action.LOAD_NOTES_ERROR,
   payload: error,
 })
 
 export const addNote = (note: NoteItem) => ({
-  type: Actions.ADD_NOTE,
+  type: Action.ADD_NOTE,
   payload: note,
 })
 
 export const updateNote = (note: NoteItem) => ({
-  type: Actions.UPDATE_NOTE,
+  type: Action.UPDATE_NOTE,
   payload: note,
 })
 
 export const deleteNote = (noteId: string) => ({
-  type: Actions.DELETE_NOTE,
+  type: Action.DELETE_NOTE,
   payload: noteId,
 })
 
 export const toggleTrashedNote = (noteId: string) => ({
-  type: Actions.TOGGLE_TRASHED_NOTE,
+  type: Action.TOGGLE_TRASHED_NOTE,
   payload: noteId,
 })
 
 export const toggleFavoriteNote = (noteId: string) => ({
-  type: Actions.TOGGLE_FAVORITE_NOTE,
+  type: Action.TOGGLE_FAVORITE_NOTE,
   payload: noteId,
 })
 
 export const swapNote = (noteId: string) => ({
-  type: Actions.SWAP_NOTE,
+  type: Action.SWAP_NOTE,
   payload: noteId,
 })
 
 export const swapCategory = (categoryId: string) => ({
-  type: Actions.SWAP_CATEGORY,
+  type: Action.SWAP_CATEGORY,
   payload: categoryId,
 })
 
 export const pruneNotes = () => ({
-  type: Actions.PRUNE_NOTES,
+  type: Action.PRUNE_NOTES,
 })
 
 export const pruneCategoryFromNotes = (categoryId: string) => ({
-  type: Actions.PRUNE_CATEGORY_FROM_NOTES,
+  type: Action.PRUNE_CATEGORY_FROM_NOTES,
   payload: categoryId,
 })
 
 export const addCategoryToNote = (categoryId: string, noteId: string) => ({
-  type: Actions.ADD_CATEGORY_TO_NOTE,
+  type: Action.ADD_CATEGORY_TO_NOTE,
   payload: { categoryId, noteId },
 })
 
 export const swapFolder = (folder: string) => ({
-  type: Actions.SWAP_FOLDER,
+  type: Action.SWAP_FOLDER,
   payload: folder,
 })
 
@@ -78,26 +78,26 @@ export const swapFolder = (folder: string) => ({
 //==============================================================================
 
 export const addCategory = (category: CategoryItem) => ({
-  type: Actions.ADD_CATEGORY,
+  type: Action.ADD_CATEGORY,
   payload: category,
 })
 
 export const deleteCategory = (categoryId: string) => ({
-  type: Actions.DELETE_CATEGORY,
+  type: Action.DELETE_CATEGORY,
   payload: categoryId,
 })
 
 export const loadCategories = () => ({
-  type: Actions.LOAD_CATEGORIES,
+  type: Action.LOAD_CATEGORIES,
 })
 
 export const loadCategoriesSuccess = (categories: CategoryItem[]) => ({
-  type: Actions.LOAD_CATEGORIES_SUCCESS,
+  type: Action.LOAD_CATEGORIES_SUCCESS,
   payload: categories,
 })
 
 export const loadCategoriesError = (error: string) => ({
-  type: Actions.LOAD_CATEGORIES_ERROR,
+  type: Action.LOAD_CATEGORIES_ERROR,
   payload: error,
 })
 
@@ -106,16 +106,16 @@ export const loadCategoriesError = (error: string) => ({
 //==============================================================================
 
 export const syncState = (notes: NoteItem[], categories: CategoryItem[]) => ({
-  type: Actions.SYNC_STATE,
+  type: Action.SYNC_STATE,
   payload: { notes, categories },
 })
 
 export const syncStateSuccess = () => ({
-  type: Actions.SYNC_STATE_SUCCESS,
+  type: Action.SYNC_STATE_SUCCESS,
 })
 
 export const syncStateError = (error: string) => ({
-  type: Actions.SYNC_STATE_ERROR,
+  type: Action.SYNC_STATE_ERROR,
   payload: error,
 })
 
@@ -124,5 +124,5 @@ export const syncStateError = (error: string) => ({
 //==============================================================================
 
 export const toggleDarkTheme = () => ({
-  type: Actions.TOGGLE_DARK_THEME,
+  type: Action.TOGGLE_DARK_THEME,
 })

@@ -1,22 +1,30 @@
 import kebabCase from 'lodash/kebabCase'
 import React, { useState } from 'react'
-import { Book, Bookmark, Folder, Plus, Settings, Trash2, UploadCloud, X } from 'react-feather'
+import {
+  Book,
+  Bookmark,
+  Folder as FolderIcon,
+  Plus,
+  Settings,
+  Trash2,
+  UploadCloud,
+  X,
+} from 'react-feather'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 
+import { Folder } from 'constants/enums'
+import { useKeyboard } from 'contexts/KeyboardContext'
+import { newNote } from 'helpers'
+import { addCategory, deleteCategory } from 'slices/categorySlice'
 import {
-  addCategory,
   addNote,
-  deleteCategory,
   pruneCategoryFromNotes,
   swapCategory,
   swapFolder,
   swapNote,
-  syncState,
-} from 'actions'
-import { Folders } from 'constants/enums'
-import { useKeyboard } from 'contexts/KeyboardContext'
-import { newNote } from 'helpers'
+} from 'slices/noteSlice'
+import { syncState } from 'slices/syncSlice'
 import { ApplicationState, CategoryItem, NoteItem } from 'types'
 
 const iconColor = 'rgba(255, 255, 255, 0.3)'
@@ -91,9 +99,9 @@ const AppSidebar: React.FC<AppProps> = ({
     <aside className="app-sidebar">
       <section className="app-sidebar-main">
         <div
-          className={activeFolder === Folders.ALL ? 'app-sidebar-link active' : 'app-sidebar-link'}
+          className={activeFolder === Folder.ALL ? 'app-sidebar-link active' : 'app-sidebar-link'}
           onClick={() => {
-            swapFolder(Folders.ALL)
+            swapFolder(Folder.ALL)
           }}
         >
           <Book size={15} style={{ marginRight: '.5rem' }} color={iconColor} />
@@ -101,21 +109,19 @@ const AppSidebar: React.FC<AppProps> = ({
         </div>
         <div
           className={
-            activeFolder === Folders.FAVORITES ? 'app-sidebar-link active' : 'app-sidebar-link'
+            activeFolder === Folder.FAVORITES ? 'app-sidebar-link active' : 'app-sidebar-link'
           }
           onClick={() => {
-            swapFolder(Folders.FAVORITES)
+            swapFolder(Folder.FAVORITES)
           }}
         >
           <Bookmark size={15} style={{ marginRight: '.5rem' }} color={iconColor} />
           Favorites
         </div>
         <div
-          className={
-            activeFolder === Folders.TRASH ? 'app-sidebar-link active' : 'app-sidebar-link'
-          }
+          className={activeFolder === Folder.TRASH ? 'app-sidebar-link active' : 'app-sidebar-link'}
           onClick={() => {
-            swapFolder(Folders.TRASH)
+            swapFolder(Folder.TRASH)
           }}
         >
           <Trash2 size={15} style={{ marginRight: '.5rem' }} color={iconColor} />
@@ -148,7 +154,7 @@ const AppSidebar: React.FC<AppProps> = ({
                 }}
               >
                 <div className="category-each-name">
-                  <Folder size={15} style={{ marginRight: '.5rem' }} color={iconColor} />
+                  <FolderIcon size={15} style={{ marginRight: '.5rem' }} color={iconColor} />
                   {category.name}
                 </div>
                 <div
@@ -159,7 +165,7 @@ const AppSidebar: React.FC<AppProps> = ({
 
                     deleteCategory(category.id)
                     pruneCategoryFromNotes(category.id)
-                    swapFolder(Folders.ALL)
+                    swapFolder(Folder.ALL)
                     swapNote(newNoteId)
                   }}
                 >
@@ -190,7 +196,7 @@ const AppSidebar: React.FC<AppProps> = ({
       </section>
       <section className="app-sidebar-actions">
         <div>
-          {activeFolder !== Folders.TRASH && (
+          {activeFolder !== Folder.TRASH && (
             <Plus className="action-button" size={18} color={iconColor} onClick={newNoteHandler} />
           )}
           <UploadCloud
@@ -223,7 +229,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   deleteCategory: (categoryId: string) => dispatch(deleteCategory(categoryId)),
   pruneCategoryFromNotes: (categoryId: string) => dispatch(pruneCategoryFromNotes(categoryId)),
   syncState: (notes: NoteItem[], categories: CategoryItem[]) =>
-    dispatch(syncState(notes, categories)),
+    dispatch(syncState({ notes, categories })),
 })
 
 export default connect(

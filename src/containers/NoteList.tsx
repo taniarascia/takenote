@@ -1,14 +1,14 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
 import { MoreHorizontal } from 'react-feather'
 
+import { Folder } from 'constants/enums'
 import { folderMap } from 'constants/index'
-import { Folders } from 'constants/enums'
-import { swapNote, swapCategory, pruneNotes, addCategoryToNote } from 'actions'
-import { NoteItem, CategoryItem, ApplicationState } from 'types'
-import { getNoteTitle, sortByLastUpdated } from 'helpers'
 import NoteOptions from 'containers/NoteOptions'
+import { getNoteTitle, sortByLastUpdated } from 'helpers'
+import { addCategoryToNote, pruneNotes, swapCategory, swapNote } from 'slices/noteSlice'
+import { ApplicationState, CategoryItem, NoteItem } from 'types'
 
 interface NoteListProps {
   activeFolder: string
@@ -141,13 +141,13 @@ const mapStateToProps = (state: ApplicationState) => {
 
   let filteredNotes: NoteItem[]
 
-  if (noteState.activeFolder === Folders.CATEGORY) {
+  if (noteState.activeFolder === Folder.CATEGORY) {
     filteredNotes = noteState.notes.filter(
       note => !note.trash && note.category === noteState.activeCategoryId
     )
-  } else if (noteState.activeFolder === Folders.FAVORITES) {
+  } else if (noteState.activeFolder === Folder.FAVORITES) {
     filteredNotes = noteState.notes.filter(note => !note.trash && note.favorite)
-  } else if (noteState.activeFolder === Folders.TRASH) {
+  } else if (noteState.activeFolder === Folder.TRASH) {
     filteredNotes = noteState.notes.filter(note => note.trash)
   } else {
     filteredNotes = noteState.notes.filter(note => !note.trash)
@@ -175,7 +175,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   swapCategory: (categoryId: string) => dispatch(swapCategory(categoryId)),
   pruneNotes: () => dispatch(pruneNotes()),
   addCategoryToNote: (categoryId: string, noteId: string) =>
-    dispatch(addCategoryToNote(categoryId, noteId)),
+    dispatch(addCategoryToNote({ categoryId, noteId })),
 })
 
 export default connect(

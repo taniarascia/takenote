@@ -1,4 +1,4 @@
-import { Actions } from 'constants/enums'
+import { Action } from 'constants/enums'
 import { SyncState, SyncStateActionTypes } from 'types'
 
 const initialState: SyncState = {
@@ -8,17 +8,17 @@ const initialState: SyncState = {
 
 const syncReducer = (state = initialState, action: SyncStateActionTypes): SyncState => {
   switch (action.type) {
-    case Actions.SYNC_STATE:
+    case Action.SYNC_STATE:
       return {
         ...state,
         syncing: true,
       }
-    case Actions.SYNC_STATE_SUCCESS:
+    case Action.SYNC_STATE_SUCCESS:
       return {
         ...state,
         syncing: false,
       }
-    case Actions.SYNC_STATE_ERROR:
+    case Action.SYNC_STATE_ERROR:
       return {
         syncing: false,
         error: action.payload,

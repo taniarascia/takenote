@@ -1,12 +1,12 @@
-import React from 'react'
-import { Dispatch } from 'redux'
-import { connect } from 'react-redux'
-import { Controlled as CodeMirror } from 'react-codemirror2'
 import moment from 'moment'
+import React from 'react'
+import { Controlled as CodeMirror } from 'react-codemirror2'
+import { connect } from 'react-redux'
+import { Dispatch } from 'redux'
 
-import { updateNote } from 'actions'
-import { NoteItem, ApplicationState } from 'types'
 import options from 'constants/codeMirrorOptions'
+import { updateNote } from 'slices/noteSlice'
+import { ApplicationState, NoteItem } from 'types'
 
 import 'codemirror/lib/codemirror.css'
 import 'codemirror/theme/base16-light.css'
@@ -22,34 +22,34 @@ interface NoteEditorProps {
 const NoteEditor: React.FC<NoteEditorProps> = ({ loading, activeNote, updateNote }) => {
   if (loading) {
     return <div className="empty-editor vcenter">Loading...</div>
-  } else if (!activeNote) {
-    return <div className="empty-editor vcenter" />
-  } else {
-    return (
-      <CodeMirror
-        className="editor mousetrap"
-        value={activeNote.text}
-        options={options}
-        editorDidMount={editor => {
-          editor.focus()
-          editor.setCursor(0)
-        }}
-        onBeforeChange={(editor, data, value) => {
-          updateNote({
-            id: activeNote.id,
-            text: value,
-            created: activeNote.created,
-            lastUpdated: moment().format(),
-          })
-        }}
-        onChange={(editor, data, value) => {
-          if (activeNote && activeNote.text === '') {
-            editor.focus()
-          }
-        }}
-      />
-    )
   }
+  if (!activeNote) {
+    return <div className="empty-editor vcenter" />
+  }
+  return (
+    <CodeMirror
+      className="editor mousetrap"
+      value={activeNote.text}
+      options={options}
+      editorDidMount={editor => {
+        editor.focus()
+        editor.setCursor(0)
+      }}
+      onBeforeChange={(editor, data, value) => {
+        updateNote({
+          id: activeNote.id,
+          text: value,
+          created: activeNote.created,
+          lastUpdated: moment().format(),
+        })
+      }}
+      onChange={(editor, data, value) => {
+        if (activeNote && activeNote.text === '') {
+          editor.focus()
+        }
+      }}
+    />
+  )
 }
 
 const mapStateToProps = (state: ApplicationState) => ({
