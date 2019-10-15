@@ -14,6 +14,9 @@ import {
   swapNote,
   syncState,
   toggleSettingsModal,
+  toggleTrashedNote,
+  addCategoryToNote,
+  toggleFavoriteNote,
 } from 'actions'
 import { Folders } from 'constants/enums'
 import { useKeyboard } from 'contexts/KeyboardContext'
@@ -37,6 +40,9 @@ interface AppProps {
   activeFolder: string
   syncState: (notes: NoteItem[], categories: CategoryItem[]) => void
   toggleSettingsModal: () => void
+  toggleTrashedNote: (noteId: string) => void
+  addCategoryToNote: (categoryId: string, noteId: string) => void
+  toggleFavoriteNote: (noteId: string) => void
 }
 
 const AppSidebar: React.FC<AppProps> = ({
@@ -54,6 +60,9 @@ const AppSidebar: React.FC<AppProps> = ({
   activeFolder,
   syncState,
   toggleSettingsModal,
+  toggleTrashedNote,
+  addCategoryToNote,
+  toggleFavoriteNote,
 }) => {
   const { addingTempCategory, setAddingTempCategory } = useKeyboard()
   const [tempCategory, setTempCategory] = useState('')
@@ -94,6 +103,18 @@ const AppSidebar: React.FC<AppProps> = ({
     toggleSettingsModal()
   }
 
+  const allowDrop = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault()
+  }
+
+  const trashNoteHandler = (event: React.DragEvent<HTMLDivElement>) => {
+    toggleTrashedNote(event.dataTransfer.getData('noteId'))
+  }
+
+  const favoriteNoteHandler = (event: React.DragEvent<HTMLDivElement>) => {
+    toggleFavoriteNote(event.dataTransfer.getData('noteId'))
+  }
+
   return (
     <aside className="app-sidebar">
       <section className="app-sidebar-main">
@@ -113,6 +134,8 @@ const AppSidebar: React.FC<AppProps> = ({
           onClick={() => {
             swapFolder(Folders.FAVORITES)
           }}
+          onDrop={favoriteNoteHandler}
+          onDragOver={allowDrop}
         >
           <Bookmark size={15} style={{ marginRight: '.75rem' }} color={iconColor} />
           Favorites
@@ -124,6 +147,8 @@ const AppSidebar: React.FC<AppProps> = ({
           onClick={() => {
             swapFolder(Folders.TRASH)
           }}
+          onDrop={trashNoteHandler}
+          onDragOver={allowDrop}
         >
           <Trash2 size={15} style={{ marginRight: '.75rem' }} color={iconColor} />
           Trash
@@ -153,6 +178,10 @@ const AppSidebar: React.FC<AppProps> = ({
                     swapNote(newNoteId)
                   }
                 }}
+                onDrop={event => {
+                  addCategoryToNote(category.id, event.dataTransfer.getData('noteId'))
+                }}
+                onDragOver={allowDrop}
               >
                 <div className="category-each-name">
                   <Folder size={15} style={{ marginRight: '.75rem' }} color={iconColor} />
@@ -237,6 +266,10 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   syncState: (notes: NoteItem[], categories: CategoryItem[]) =>
     dispatch(syncState(notes, categories)),
   toggleSettingsModal: () => dispatch(toggleSettingsModal()),
+  toggleTrashedNote: (noteId: string) => dispatch(toggleTrashedNote(noteId)),
+  addCategoryToNote: (categoryId: string, noteId: string) =>
+    dispatch(addCategoryToNote(categoryId, noteId)),
+  toggleFavoriteNote: (noteId: string) => dispatch(toggleFavoriteNote(noteId)),
 })
 
 export default connect(

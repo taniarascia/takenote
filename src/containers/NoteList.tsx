@@ -57,6 +57,11 @@ const NoteList: React.FC<NoteListProps> = ({
     }
   })
 
+  const handleDragStart = (event: React.DragEvent<HTMLDivElement>, noteId: string = '') => {
+    event.stopPropagation()
+    event.dataTransfer.setData('noteId', noteId)
+  }
+
   return (
     <aside className="note-sidebar">
       <div className="note-sidebar-header">
@@ -78,6 +83,8 @@ const NoteList: React.FC<NoteListProps> = ({
                   pruneNotes()
                 }
               }}
+              draggable
+              onDragStart={event => handleDragStart(event, note.id)}
             >
               <div>{noteTitle}</div>
               <div
