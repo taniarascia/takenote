@@ -194,11 +194,11 @@
       .note-options-context {
         cursor: default;
         position: absolute;
+        padding: 1rem;
         color: #333;
         top: 32px;
         left: 200px;
-        min-width: 150px;
-        padding: 1rem;
+        min-width: 200px;
         background: white;
         border: 1px solid #eee;
         z-index: 3;
@@ -208,14 +208,33 @@
           margin-top: 0;
           font-size: 1rem;
         }
+
+        .select-element {
+          -webkit-appearance: none;
+          font-size: 1rem;
+          padding: 0.5rem;
+          width: 100%;
+        }
+      }
+
+      .note-options-nav {
+        margin-top: 1rem;
+
+        div {
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          padding: 0.5rem;
+
+          &:hover {
+            background: #f0f0f0;
+          }
+        }
+
+        svg {
+          margin-right: 0.5rem;
+        }
       }
     }
-  }
-
-  .select-element {
-    -webkit-appearance: none;
-    font-size: 1rem;
-    padding: 0.5rem;
-    width: 100%;
   }
 }
