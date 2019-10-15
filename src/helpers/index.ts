@@ -1,8 +1,8 @@
-import uuid from 'uuid/v4'
 import moment from 'moment'
+import uuid from 'uuid/v4'
 
+import { Folder } from 'constants/enums'
 import { NoteItem } from 'types'
-import { Folders } from 'constants/enums'
 
 export function getNoteTitle(text: string): string {
   const noteTitleRegEx = /[\w'?!., ]{1,50}/
@@ -61,5 +61,5 @@ export const newNote = (categoryId?: string, folder?: string): NoteItem => ({
   created: moment().format(),
   lastUpdated: moment().format(),
   category: categoryId,
-  favorite: folder === Folders.FAVORITES,
+  favorite: folder === Folder.FAVORITES,
 })

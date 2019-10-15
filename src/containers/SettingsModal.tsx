@@ -1,27 +1,21 @@
-import React, { useRef, useEffect } from 'react'
-import { connect } from 'react-redux'
-import { Dispatch } from 'redux'
+import React, { useEffect, useRef } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
-import { toggleSettingsModal, toggleDarkTheme, updateCodeMirrorOption } from 'actions'
-import { ApplicationState } from 'types'
+import { toggleSettingsModal, updateCodeMirrorOption } from 'slices/settings'
+import { toggleDarkTheme } from 'slices/theme'
+import { RootState } from 'types'
 
-export interface SettingsModalProps {
-  isOpen: boolean
-  dark: boolean
-  codeMirrorOptions: { [key: string]: any }
-  toggleSettingsModal: () => {}
-  toggleDarkTheme: () => void
-  updateCodeMirrorOption: (key: string, value: string) => void
-}
+const SettingsModal: React.FC = () => {
+  const { codeMirrorOptions, isOpen } = useSelector((state: RootState) => state.settingsState)
+  const { dark } = useSelector((state: RootState) => state.themeState)
 
-const SettingsModal: React.FC<SettingsModalProps> = ({
-  isOpen,
-  dark,
-  codeMirrorOptions,
-  toggleSettingsModal,
-  toggleDarkTheme,
-  updateCodeMirrorOption,
-}) => {
+  const dispatch = useDispatch()
+
+  const _toggleSettingsModal = () => dispatch(toggleSettingsModal())
+  const _toggleDarkTheme = () => dispatch(toggleDarkTheme())
+  const _updateCodeMirrorOption = (key: string, value: string) =>
+    dispatch(updateCodeMirrorOption({ key, value }))
+
   const node = useRef<HTMLDivElement>(null)
 
   const handleDomClick = (
@@ -32,18 +26,13 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
     if (node.current && node.current.contains(event.target as HTMLDivElement)) return
 
     if (isOpen) {
-      toggleSettingsModal()
+      _toggleSettingsModal()
     }
   }
 
   const toggleDarkThemeHandler = () => {
-    toggleDarkTheme()
-
-    if (!dark) {
-      updateCodeMirrorOption('theme', 'zenburn')
-    } else {
-      updateCodeMirrorOption('theme', 'base16-light')
-    }
+    _toggleDarkTheme()
+    _updateCodeMirrorOption('theme', dark ? 'base16-light' : 'zenburn')
   }
 
   useEffect(() => {
@@ -62,7 +51,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
           <div className="settings-label">Dark Mode</div>
           <label className="switch">
             <input type="checkbox" onChange={toggleDarkThemeHandler} checked={dark} />
-            <span className="slider round"></span>
+            <span className="slider round" />
           </label>
         </div>
 
@@ -72,15 +61,14 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
             <input
               type="checkbox"
               onChange={() => {
-                if (codeMirrorOptions.keyMap === 'vim') {
-                  updateCodeMirrorOption('keyMap', 'default')
-                } else {
-                  updateCodeMirrorOption('keyMap', 'vim')
-                }
+                _updateCodeMirrorOption(
+                  'keyMap',
+                  codeMirrorOptions.keyMap === 'vim' ? 'vim' : 'default'
+                )
               }}
               checked={codeMirrorOptions.keyMap === 'vim'}
             />
-            <span className="slider round"></span>
+            <span className="slider round" />
           </label>
         </div>
       </div>
@@ -88,20 +76,4 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
   ) : null
 }
 
-const mapStateToProps = (state: ApplicationState) => ({
-  isOpen: state.settingsState.isOpen,
-  dark: state.themeState.dark,
-  codeMirrorOptions: state.settingsState.codeMirrorOptions,
-})
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  toggleSettingsModal: () => dispatch(toggleSettingsModal()),
-  toggleDarkTheme: () => dispatch(toggleDarkTheme()),
-  updateCodeMirrorOption: (key: string, value: string) =>
-    dispatch(updateCodeMirrorOption(key, value)),
-})
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(SettingsModal)
+export default SettingsModal

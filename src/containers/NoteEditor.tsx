@@ -1,11 +1,10 @@
-import React from 'react'
-import { Dispatch } from 'redux'
-import { connect } from 'react-redux'
-import { Controlled as CodeMirror } from 'react-codemirror2'
 import moment from 'moment'
+import React from 'react'
+import { Controlled as CodeMirror } from 'react-codemirror2'
+import { useDispatch, useSelector } from 'react-redux'
 
-import { updateNote } from 'actions'
-import { NoteItem, ApplicationState } from 'types'
+import { updateNote } from 'slices/note'
+import { RootState, NoteItem } from 'types'
 
 import 'codemirror/lib/codemirror.css'
 import 'codemirror/theme/base16-light.css'
@@ -14,19 +13,16 @@ import 'codemirror/mode/gfm/gfm'
 import 'codemirror/addon/selection/active-line'
 import 'codemirror/keymap/vim'
 
-interface NoteEditorProps {
-  loading: boolean
-  activeNote?: NoteItem
-  updateNote: (note: NoteItem) => void
-  codeMirrorOptions: { [key: string]: any }
-}
+const NoteEditor: React.FC = () => {
+  const { activeNoteId, loading, notes } = useSelector((state: RootState) => state.noteState)
+  const { codeMirrorOptions } = useSelector((state: RootState) => state.settingsState)
 
-const NoteEditor: React.FC<NoteEditorProps> = ({
-  loading,
-  activeNote,
-  updateNote,
-  codeMirrorOptions,
-}) => {
+  const activeNote = notes.find(note => note.id === activeNoteId)
+
+  const dispatch = useDispatch()
+
+  const _updateNote = (note: NoteItem) => dispatch(updateNote(note))
+
   if (loading) {
     return <div className="empty-editor vcenter">Loading...</div>
   } else if (!activeNote) {
@@ -42,7 +38,7 @@ const NoteEditor: React.FC<NoteEditorProps> = ({
           editor.setCursor(0)
         }}
         onBeforeChange={(editor, data, value) => {
-          updateNote({
+          _updateNote({
             id: activeNote.id,
             text: value,
             created: activeNote.created,
@@ -59,17 +55,4 @@ const NoteEditor: React.FC<NoteEditorProps> = ({
   }
 }
 
-const mapStateToProps = (state: ApplicationState) => ({
-  loading: state.noteState.loading,
-  activeNote: state.noteState.notes.find(note => note.id === state.noteState.activeNoteId),
-  codeMirrorOptions: state.settingsState.codeMirrorOptions,
-})
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  updateNote: (note: NoteItem) => dispatch(updateNote(note)),
-})
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(NoteEditor)
+export default NoteEditor
