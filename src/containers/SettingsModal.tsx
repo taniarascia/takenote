@@ -61,7 +61,6 @@ const SettingsModal: React.FC = () => {
             <input
               type="checkbox"
               onChange={() => {
-                console.log('hi')
                 _updateCodeMirrorOption(
                   'keyMap',
                   codeMirrorOptions.keyMap === 'vim' ? 'default' : 'vim'
