@@ -19,7 +19,7 @@
     }
 
     &.active {
-      background: #292929;
+      background: #202020;
     }
   }
 
@@ -71,7 +71,7 @@
     margin: 0 0.25rem;
 
     &:hover {
-      stroke: #6ab0f3;
+      stroke: $primary;
       background: #222;
     }
   }
@@ -111,7 +111,7 @@
       }
 
       &.active {
-        background: #222 !important;
+        background: #202020 !important;
       }
     }
   }
@@ -159,13 +159,15 @@
     .note-each {
       position: relative;
       cursor: pointer;
-      padding: 0.5rem;
+      padding: 0.25rem 0.5rem;
       border-bottom: 1px solid #ccc;
       display: flex;
       align-items: center;
       justify-content: space-between;
       font-weight: 500;
       color: #444;
+      font-size: 0.9rem;
+      line-height: 1.3;
 
       &:hover {
         background: darken($background, 4%);
@@ -176,8 +178,14 @@
       }
 
       &.active {
-        background: #eee;
-        color: #222;
+        background: $primary;
+        color: white;
+
+        &:hover {
+          .note-options {
+            color: white;
+          }
+        }
       }
 
       .note-options {
