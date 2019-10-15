@@ -56,6 +56,24 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "meowwwls",
+      "name": "Melissa",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/16426195?v=4",
+      "profile": "http://codepen.io/meowwwls",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "jjtowle",
+      "name": "Jason Towle",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/41359068?v=4",
+      "profile": "https://github.com/jjtowle",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7
