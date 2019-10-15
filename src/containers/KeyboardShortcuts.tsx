@@ -38,7 +38,7 @@ const KeyboardShortcuts: React.FC<KeyboardShortcutsProps> = ({
   const newNoteHandler = () => {
     const note = newNote(activeCategoryId, activeFolder)
 
-    if ((activeNote && activeNote.text !== '') || !activeNote) {
+    if ((activeNote && activeNote.text !== '' && !activeNote.trash) || !activeNote) {
       addNote(note)
       swapNote(note.id)
     }
