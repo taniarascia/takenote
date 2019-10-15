@@ -29,4 +29,12 @@
       }
     }
   }
+
+  .empty-editor {
+    background: #3f3f3f;
+  }
+
+  .editor .CodeMirror-activeline-background {
+    background: #222 !important;
+  }
 }
