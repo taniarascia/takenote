@@ -21,7 +21,6 @@
   padding: 1.5rem;
   box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.1);
   text-align: left;
-  min-height: 300px;
   width: 600px;
   max-width: 90%;
   user-select: text;
@@ -29,5 +28,20 @@
 
   h2 {
     margin-top: 0;
+    margin-bottom: 1.5rem;
+  }
+
+  .settings-options {
+    padding: 0.5rem 0;
+    border-bottom: 2px solid #ddd;
+
+    &:last-of-type {
+      border-bottom: 0;
+    }
+  }
+
+  .settings-label {
+    font-weight: 600;
+    font-size: 1.1rem;
   }
 }

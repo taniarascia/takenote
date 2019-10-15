@@ -20,7 +20,7 @@ import { useKeyboard } from 'contexts/KeyboardContext'
 import { newNote } from 'helpers'
 import { ApplicationState, CategoryItem, NoteItem } from 'types'
 
-const iconColor = 'rgba(255, 255, 255, 0.3)'
+const iconColor = 'rgba(255, 255, 255, 0.25)'
 
 interface AppProps {
   addNote: (note: NoteItem) => void
@@ -103,7 +103,7 @@ const AppSidebar: React.FC<AppProps> = ({
             swapFolder(Folders.ALL)
           }}
         >
-          <Book size={15} style={{ marginRight: '.5rem' }} color={iconColor} />
+          <Book size={15} style={{ marginRight: '.75rem' }} color={iconColor} />
           All Notes
         </div>
         <div
@@ -114,7 +114,7 @@ const AppSidebar: React.FC<AppProps> = ({
             swapFolder(Folders.FAVORITES)
           }}
         >
-          <Bookmark size={15} style={{ marginRight: '.5rem' }} color={iconColor} />
+          <Bookmark size={15} style={{ marginRight: '.75rem' }} color={iconColor} />
           Favorites
         </div>
         <div
@@ -125,7 +125,7 @@ const AppSidebar: React.FC<AppProps> = ({
             swapFolder(Folders.TRASH)
           }}
         >
-          <Trash2 size={15} style={{ marginRight: '.5rem' }} color={iconColor} />
+          <Trash2 size={15} style={{ marginRight: '.75rem' }} color={iconColor} />
           Trash
         </div>
 
@@ -155,7 +155,7 @@ const AppSidebar: React.FC<AppProps> = ({
                 }}
               >
                 <div className="category-each-name">
-                  <Folder size={15} style={{ marginRight: '.5rem' }} color={iconColor} />
+                  <Folder size={15} style={{ marginRight: '.75rem' }} color={iconColor} />
                   {category.name}
                 </div>
                 <div

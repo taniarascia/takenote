@@ -20,6 +20,14 @@ const settingsReducer = (state = initialState, action: SettingsActionTypes): Set
         ...state,
         isOpen: !state.isOpen,
       }
+    case Actions.UPDATE_CODE_MIRROR_OPTION:
+      return {
+        ...state,
+        codeMirrorOptions: {
+          ...state.codeMirrorOptions,
+          [action.payload.key]: action.payload.value,
+        },
+      }
 
     default:
       return state

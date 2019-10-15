@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 
-import { toggleSettingsModal, toggleDarkTheme } from 'actions'
+import { toggleSettingsModal, toggleDarkTheme, updateCodeMirrorOption } from 'actions'
 import { ApplicationState } from 'types'
 
 export interface SettingsModalProps {
@@ -10,6 +10,7 @@ export interface SettingsModalProps {
   dark: boolean
   toggleSettingsModal: () => {}
   toggleDarkTheme: () => void
+  updateCodeMirrorOption: (key: string, value: string) => void
 }
 
 const SettingsModal: React.FC<SettingsModalProps> = ({
@@ -17,6 +18,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
   dark,
   toggleSettingsModal,
   toggleDarkTheme,
+  updateCodeMirrorOption,
 }) => {
   const node = useRef<HTMLDivElement>(null)
 
@@ -34,6 +36,12 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
 
   const toggleDarkThemeHandler = () => {
     toggleDarkTheme()
+
+    if (!dark) {
+      updateCodeMirrorOption('theme', 'zenburn')
+    } else {
+      updateCodeMirrorOption('theme', 'base16-light')
+    }
   }
 
   useEffect(() => {
@@ -47,7 +55,14 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
     <div className="dimmer">
       <div ref={node} className="settings-modal">
         <h2>Settings</h2>
-        <button onClick={toggleDarkThemeHandler}>Toggle Dark Theme</button>
+
+        <div className="settings-options vbetween">
+          <div className="settings-label">Dark Mode</div>
+          <label className="switch">
+            <input type="checkbox" onChange={toggleDarkThemeHandler} checked={dark} />
+            <span className="slider round"></span>
+          </label>
+        </div>
       </div>
     </div>
   ) : null
@@ -61,6 +76,8 @@ const mapStateToProps = (state: ApplicationState) => ({
 const mapDispatchToProps = (dispatch: Dispatch) => ({
   toggleSettingsModal: () => dispatch(toggleSettingsModal()),
   toggleDarkTheme: () => dispatch(toggleDarkTheme()),
+  updateCodeMirrorOption: (key: string, value: string) =>
+    dispatch(updateCodeMirrorOption(key, value)),
 })
 
 export default connect(

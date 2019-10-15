@@ -230,8 +230,14 @@ export interface ToggleDarkThemeAction {
 export type ThemeActionTypes = ToggleDarkThemeAction
 
 /* Settings */
+
 export interface ToggleSettingsModalAction {
   type: typeof Actions.TOGGLE_SETTINGS_MODAL
 }
 
-export type SettingsActionTypes = ToggleSettingsModalAction
+export interface UpdateCodeMirrorOptionAction {
+  type: typeof Actions.UPDATE_CODE_MIRROR_OPTION
+  payload: { [key: string]: any }
+}
+
+export type SettingsActionTypes = ToggleSettingsModalAction | UpdateCodeMirrorOptionAction

@@ -20,6 +20,10 @@
 
     &.active {
       background: #202020;
+
+      svg {
+        stroke: $primary;
+      }
     }
   }
 
@@ -112,18 +116,36 @@
 
       &.active {
         background: #202020 !important;
+
+        .category-each-name {
+          svg {
+            stroke: $primary;
+          }
+        }
       }
     }
   }
 
   .add-category-form {
     input {
-      background: rgba(0, 0, 0, 0.5);
+      -webkit-appearance: none;
+      border-radius: 4px;
+      background: rgba(0, 0, 0, 0.2);
       border: 1px solid #888;
       padding: 0.5rem;
       font-size: 0.9rem;
-      -webkit-appearance: none;
       color: #eee;
+      line-height: 1;
+      margin-top: 0.5rem;
+      margin-left: 1rem;
+      width: 150px;
+
+      &:active,
+      &:focus {
+        border-color: $primary;
+        outline: 0;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+      }
     }
   }
 
