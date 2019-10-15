@@ -10,6 +10,7 @@ const initialState: SettingsState = {
     lineWrapping: true,
     styleActiveLine: { nonEmpty: true },
     viewportMargin: Infinity,
+    keyMap: 'default',
   },
 }
 

@@ -8,6 +8,7 @@ import { ApplicationState } from 'types'
 export interface SettingsModalProps {
   isOpen: boolean
   dark: boolean
+  codeMirrorOptions: { [key: string]: any }
   toggleSettingsModal: () => {}
   toggleDarkTheme: () => void
   updateCodeMirrorOption: (key: string, value: string) => void
@@ -16,6 +17,7 @@ export interface SettingsModalProps {
 const SettingsModal: React.FC<SettingsModalProps> = ({
   isOpen,
   dark,
+  codeMirrorOptions,
   toggleSettingsModal,
   toggleDarkTheme,
   updateCodeMirrorOption,
@@ -63,6 +65,24 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
             <span className="slider round"></span>
           </label>
         </div>
+
+        <div className="settings-options vbetween">
+          <div className="settings-label">Vim Mode</div>
+          <label className="switch">
+            <input
+              type="checkbox"
+              onChange={() => {
+                if (codeMirrorOptions.keyMap === 'vim') {
+                  updateCodeMirrorOption('keyMap', 'default')
+                } else {
+                  updateCodeMirrorOption('keyMap', 'vim')
+                }
+              }}
+              checked={codeMirrorOptions.keyMap === 'vim'}
+            />
+            <span className="slider round"></span>
+          </label>
+        </div>
       </div>
     </div>
   ) : null
@@ -71,6 +91,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
 const mapStateToProps = (state: ApplicationState) => ({
   isOpen: state.settingsState.isOpen,
   dark: state.themeState.dark,
+  codeMirrorOptions: state.settingsState.codeMirrorOptions,
 })
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({

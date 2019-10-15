@@ -57,14 +57,7 @@ export interface ThemeState {
 
 export interface SettingsState {
   isOpen: boolean
-  codeMirrorOptions: {
-    mode: string
-    theme: string
-    lineNumbers: boolean
-    lineWrapping: boolean
-    styleActiveLine: { nonEmpty: boolean }
-    viewportMargin: number
-  }
+  codeMirrorOptions: { [key: string]: any }
 }
 
 //==============================================================================
