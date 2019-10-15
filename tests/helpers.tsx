@@ -1,13 +1,13 @@
+import { render } from '@testing-library/react'
+import { createMemoryHistory, MemoryHistory } from 'history'
 import React, { ReactNode } from 'react'
 import { Provider } from 'react-redux'
-import { createMemoryHistory, MemoryHistory } from 'history'
 import { MemoryRouter } from 'react-router-dom'
-import { render } from '@testing-library/react'
 import createSagaMiddleware from 'redux-saga'
 import { configureStore, getDefaultMiddleware } from 'redux-starter-kit'
 
-import rootReducer from 'slices'
 import rootSaga from 'sagas'
+import rootReducer from 'slices'
 
 interface RenderWithRouterOptions {
   route: string

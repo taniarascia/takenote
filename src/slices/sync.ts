@@ -15,9 +15,7 @@ const syncSlice: Slice<SyncState> = createSlice({
       ...state,
       syncing: true,
     }),
-
-    // TODO: This PayloadAction type is wrong
-    syncStateError: (state, { payload }: PayloadAction) => ({
+    syncStateError: (state, { payload }: PayloadAction<string>) => ({
       error: payload,
       syncing: false,
     }),

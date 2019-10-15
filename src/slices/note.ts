@@ -63,9 +63,7 @@ const noteSlice: Slice<NoteState> = createSlice({
       activeNoteId: getNewActiveNoteId(state.notes, payload, state.activeCategoryId),
     }),
     loadNotes: () => initialState,
-
-    // TODO: This PayloadAction type is wrong
-    loadNotesError: (state, { payload }: PayloadAction) => ({
+    loadNotesError: (state, { payload }: PayloadAction<string>) => ({
       ...state,
       loading: false,
       error: payload,

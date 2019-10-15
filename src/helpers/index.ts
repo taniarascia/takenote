@@ -55,7 +55,7 @@ export function sortByLastUpdated(a: NoteItem, b: NoteItem) {
   return dateA > dateB ? -1 : dateA < dateB ? 1 : 0
 }
 
-export const newNote = (categoryId?: string, folder?: string): NoteItem => ({
+export const newNote = (categoryId?: string, folder?: Folder): NoteItem => ({
   id: uuid(),
   text: '',
   created: moment().format(),

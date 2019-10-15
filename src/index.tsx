@@ -1,5 +1,3 @@
-import 'styles/index.scss'
-
 import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
@@ -10,6 +8,8 @@ import { configureStore, getDefaultMiddleware } from 'redux-starter-kit'
 import App from 'containers/App'
 import rootReducer from 'slices'
 import rootSaga from 'sagas'
+
+import 'styles/index.scss'
 
 const sagaMiddleware = createSagaMiddleware()
 
