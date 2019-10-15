@@ -193,14 +193,15 @@
 
       .note-options-context {
         cursor: default;
+        border-radius: 4px;
         position: absolute;
         padding: 1rem;
         color: #333;
         top: 32px;
         left: 200px;
-        min-width: 200px;
+        min-width: 250px;
         background: white;
-        border: 1px solid #eee;
+        border: 1px solid #ddd;
         z-index: 3;
         box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.1);
 
@@ -214,12 +215,11 @@
           font-size: 1rem;
           padding: 0.5rem;
           width: 100%;
+          margin-bottom: 1rem;
         }
       }
 
       .note-options-nav {
-        margin-top: 1rem;
-
         div {
           cursor: pointer;
           display: flex;

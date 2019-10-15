@@ -94,37 +94,41 @@ const NoteList: React.FC<NoteListProps> = ({
                     event.stopPropagation()
                   }}
                 >
-                  <h2>Move to category</h2>
-                  <select
-                    defaultValue=""
-                    className="select-element"
-                    onChange={event => {
-                      addCategoryToNote(event.target.value, note.id)
+                  {!note.trash && (
+                    <>
+                      <h2>Move to category</h2>
+                      <select
+                        defaultValue=""
+                        className="select-element"
+                        onChange={event => {
+                          addCategoryToNote(event.target.value, note.id)
 
-                      if (event.target.value !== activeCategoryId) {
-                        swapCategory(event.target.value)
-                        swapNote(note.id)
-                      }
+                          if (event.target.value !== activeCategoryId) {
+                            swapCategory(event.target.value)
+                            swapNote(note.id)
+                          }
 
-                      setNoteOptionsId('')
-                    }}
-                  >
-                    <option disabled value="">
-                      Select category
-                    </option>
-                    {filteredCategories
-                      .filter(category => category.id !== note.category)
-                      .map(category => (
-                        <option key={category.id} value={category.id}>
-                          {category.name}
+                          setNoteOptionsId('')
+                        }}
+                      >
+                        <option disabled value="">
+                          Select category
                         </option>
-                      ))}
-                    {note.category && (
-                      <option key="none" value="">
-                        Remove category
-                      </option>
-                    )}
-                  </select>
+                        {filteredCategories
+                          .filter(category => category.id !== note.category)
+                          .map(category => (
+                            <option key={category.id} value={category.id}>
+                              {category.name}
+                            </option>
+                          ))}
+                        {note.category && (
+                          <option key="none" value="">
+                            Remove category
+                          </option>
+                        )}
+                      </select>
+                    </>
+                  )}
                   <NoteOptions clickedNote={note} />
                 </div>
               )}
