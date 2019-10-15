@@ -1,4 +1,4 @@
-import { createSlice } from 'redux-starter-kit'
+import { createSlice, Slice } from 'redux-starter-kit'
 
 import { Folder } from 'constants/enums'
 import { sortByLastUpdated } from 'helpers'
@@ -40,7 +40,7 @@ const initialState: NoteState = {
   notes: [],
 }
 
-const noteSlice = createSlice({
+const noteSlice: Slice<NoteState> = createSlice({
   slice: 'note',
   initialState,
   reducers: {
@@ -97,7 +97,7 @@ const noteSlice = createSlice({
       activeFolder: Folder.CATEGORY,
       activeNoteId: getFirstNoteId(Folder.CATEGORY, state.notes, payload),
     }),
-    swapFolder: (state, { payload }) => ({
+    swapFolder: (state, { payload }: { payload: Folder }) => ({
       ...state,
       activeFolder: payload,
       activeCategoryId: '',

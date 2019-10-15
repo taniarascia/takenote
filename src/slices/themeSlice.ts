@@ -1,4 +1,4 @@
-import { createSlice } from 'redux-starter-kit'
+import { createSlice, Slice } from 'redux-starter-kit'
 
 import { ThemeState } from 'types'
 
@@ -6,7 +6,7 @@ const initialState: ThemeState = {
   dark: false,
 }
 
-const themeSlice = createSlice({
+const themeSlice: Slice<ThemeState> = createSlice({
   slice: 'sync',
   initialState,
   reducers: {

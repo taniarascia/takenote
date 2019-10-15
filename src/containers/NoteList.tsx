@@ -11,7 +11,7 @@ import { addCategoryToNote, pruneNotes, swapCategory, swapNote } from 'slices/no
 import { ApplicationState, CategoryItem, NoteItem } from 'types'
 
 interface NoteListProps {
-  activeFolder: string
+  activeFolder: Folder
   activeCategoryId: string
   activeCategory?: CategoryItem
   activeNoteId: string
@@ -60,7 +60,7 @@ const NoteList: React.FC<NoteListProps> = ({
   return (
     <aside className="note-sidebar">
       <div className="note-sidebar-header">
-        {activeFolder === 'CATEGORY'
+        {activeFolder === Folder.CATEGORY
           ? activeCategory && activeCategory.name
           : folderMap[activeFolder]}
       </div>
@@ -137,45 +137,38 @@ const NoteList: React.FC<NoteListProps> = ({
 }
 
 const mapStateToProps = (state: ApplicationState) => {
-  const { noteState, categoryState } = state
+  const {
+    noteState: { activeCategoryId, activeFolder, activeNoteId, notes },
+    categoryState: { categories },
+  } = state
 
-  let filteredNotes: NoteItem[]
-
-  if (noteState.activeFolder === Folder.CATEGORY) {
-    filteredNotes = noteState.notes.filter(
-      note => !note.trash && note.category === noteState.activeCategoryId
-    )
-  } else if (noteState.activeFolder === Folder.FAVORITES) {
-    filteredNotes = noteState.notes.filter(note => !note.trash && note.favorite)
-  } else if (noteState.activeFolder === Folder.TRASH) {
-    filteredNotes = noteState.notes.filter(note => note.trash)
-  } else {
-    filteredNotes = noteState.notes.filter(note => !note.trash)
+  const filter: Record<Folder, (note: NoteItem) => boolean | undefined> = {
+    [Folder.CATEGORY]: note => !note.trash && note.category === activeCategoryId,
+    [Folder.FAVORITES]: note => !note.trash && note.favorite,
+    [Folder.TRASH]: note => note.trash,
+    [Folder.ALL]: note => !note.trash,
   }
+  const filteredNotes: NoteItem[] = notes.filter(filter[activeFolder])
 
   filteredNotes.sort(sortByLastUpdated)
 
   return {
-    activeFolder: noteState.activeFolder,
-    activeCategoryId: noteState.activeCategoryId,
-    activeCategory: categoryState.categories.find(
-      category => category.id === noteState.activeCategoryId
-    ),
-    activeNoteId: noteState.activeNoteId,
-    notes: noteState.notes,
+    activeCategory: categories.find(({ id }) => id === activeCategoryId),
+    activeCategoryId,
+    activeFolder,
+    activeNoteId,
+    filteredCategories: categories.filter(({ id }) => id !== activeCategoryId),
     filteredNotes,
-    filteredCategories: categoryState.categories.filter(
-      category => category.id !== noteState.activeCategoryId
-    ),
+    notes,
   }
 }
 
 const mapDispatchToProps = (dispatch: Dispatch) => ({
-  swapNote: (noteId: string) => dispatch(swapNote(noteId)),
-  swapCategory: (categoryId: string) => dispatch(swapCategory(categoryId)),
-  pruneNotes: () => dispatch(pruneNotes()),
   addCategoryToNote: (categoryId: string, noteId: string) =>
     dispatch(addCategoryToNote({ categoryId, noteId })),
+  pruneNotes: () => dispatch(pruneNotes()),
+  swapNote: (noteId: string) => dispatch(swapNote(noteId)),
+  swapCategory: (categoryId: string) => dispatch(swapCategory(categoryId)),
 })
 
 export default connect(

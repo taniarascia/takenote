@@ -1,4 +1,4 @@
-import { createSlice } from 'redux-starter-kit'
+import { createSlice, Slice } from 'redux-starter-kit'
 
 import { CategoryState } from 'types'
 
@@ -8,7 +8,7 @@ const initialState: CategoryState = {
   loading: true,
 }
 
-const categorySlice = createSlice({
+const categorySlice: Slice<CategoryState> = createSlice({
   slice: 'category',
   initialState,
   reducers: {

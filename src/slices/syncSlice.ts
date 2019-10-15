@@ -1,4 +1,4 @@
-import { createSlice } from 'redux-starter-kit'
+import { createSlice, Slice } from 'redux-starter-kit'
 
 import { SyncState } from 'types'
 
@@ -7,7 +7,7 @@ const initialState: SyncState = {
   syncing: false,
 }
 
-const syncSlice = createSlice({
+const syncSlice: Slice<SyncState> = createSlice({
   slice: 'sync',
   initialState,
   reducers: {
