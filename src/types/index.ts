@@ -1,4 +1,5 @@
-import { Actions } from 'constants/enums'
+import { Folder } from 'constants/enums'
+import { syncState } from 'slices/sync'
 
 //==============================================================================
 // Items
@@ -23,27 +24,24 @@ export interface CategoryItem {
 // State
 //==============================================================================
 
-export interface ApplicationState {
-  noteState: NoteState
-  categoryState: CategoryState
-  syncState: SyncState
-  themeState: ThemeState
-  settingsState: SettingsState
+export interface CategoryState {
+  categories: CategoryItem[]
+  error: string
+  loading: boolean
 }
 
 export interface NoteState {
   notes: NoteItem[]
-  activeFolder: string
+  activeFolder: Folder
   activeNoteId: string
   activeCategoryId: string
   error: string
   loading: boolean
 }
 
-export interface CategoryState {
-  categories: CategoryItem[]
-  error: string
-  loading: boolean
+export interface SettingsState {
+  isOpen: boolean
+  codeMirrorOptions: { [key: string]: any }
 }
 
 export interface SyncState {
@@ -55,182 +53,22 @@ export interface ThemeState {
   dark: boolean
 }
 
-export interface SettingsState {
-  isOpen: boolean
-  codeMirrorOptions: { [key: string]: any }
+export interface RootState {
+  categoryState: CategoryState
+  noteState: NoteState
+  settingsState: SettingsState
+  syncState: SyncState
+  themeState: ThemeState
 }
 
 //==============================================================================
-// Actions
+// Sagas
 //==============================================================================
 
-/* Sync */
-
 export interface SyncStateAction {
-  type: typeof Actions.SYNC_STATE
+  type: typeof syncState.type
   payload: {
     categories: CategoryItem[]
     notes: NoteItem[]
   }
 }
-
-export interface SyncStateSuccessAction {
-  type: typeof Actions.SYNC_STATE_SUCCESS
-}
-
-export interface SyncStateErrorAction {
-  type: typeof Actions.SYNC_STATE_ERROR
-  payload: string
-}
-
-export type SyncStateActionTypes = SyncStateAction | SyncStateSuccessAction | SyncStateErrorAction
-
-/* Notes */
-
-export interface LoadNotesAction {
-  type: typeof Actions.LOAD_NOTES
-}
-
-export interface LoadNotesSuccessAction {
-  type: typeof Actions.LOAD_NOTES_SUCCESS
-  payload: NoteItem[]
-}
-
-export interface LoadNotesErrorAction {
-  type: typeof Actions.LOAD_NOTES_ERROR
-  payload: string
-}
-
-export interface AddNoteAction {
-  type: typeof Actions.ADD_NOTE
-  payload: NoteItem
-}
-
-export interface DeleteNoteAction {
-  type: typeof Actions.DELETE_NOTE
-  payload: string
-}
-
-export interface ToggleTrashAction {
-  type: typeof Actions.TOGGLE_TRASHED_NOTE
-  payload: string
-}
-
-export interface ToggleFavoriteNoteAction {
-  type: typeof Actions.TOGGLE_FAVORITE_NOTE
-  payload: string
-}
-
-export interface UpdateNoteAction {
-  type: typeof Actions.UPDATE_NOTE
-  payload: NoteItem
-}
-
-export interface SwapNoteAction {
-  type: typeof Actions.SWAP_NOTE
-  payload: string
-}
-
-export interface SwapCategoryAction {
-  type: typeof Actions.SWAP_CATEGORY
-  payload: string
-}
-
-export interface PruneNotesAction {
-  type: typeof Actions.PRUNE_NOTES
-  payload: string
-}
-
-export interface PruneCategoryFromNotesAction {
-  type: typeof Actions.PRUNE_CATEGORY_FROM_NOTES
-  payload: string
-}
-
-export interface AddCategoryToNoteAction {
-  type: typeof Actions.ADD_CATEGORY_TO_NOTE
-  payload: {
-    categoryId: string
-    noteId: string
-  }
-}
-
-export interface SwapFolderAction {
-  type: typeof Actions.SWAP_FOLDER
-  payload: string
-}
-
-export type NotesActionTypes =
-  | LoadNotesAction
-  | LoadNotesSuccessAction
-  | LoadNotesErrorAction
-  | AddNoteAction
-  | ToggleTrashAction
-  | ToggleFavoriteNoteAction
-  | DeleteNoteAction
-  | UpdateNoteAction
-  | SwapNoteAction
-  | SwapCategoryAction
-  | PruneNotesAction
-  | PruneCategoryFromNotesAction
-  | AddCategoryToNoteAction
-  | SwapFolderAction
-
-/* Categories */
-
-export interface LoadCategoriesAction {
-  type: typeof Actions.LOAD_CATEGORIES
-}
-
-export interface LoadCategoriesSuccessAction {
-  type: typeof Actions.LOAD_CATEGORIES_SUCCESS
-  payload: CategoryItem[]
-}
-
-export interface LoadCategoriesErrorAction {
-  type: typeof Actions.LOAD_CATEGORIES_ERROR
-  payload: string
-}
-
-export interface AddCategoryAction {
-  type: typeof Actions.ADD_CATEGORY
-  payload: CategoryItem
-}
-
-export interface DeleteCategoryAction {
-  type: typeof Actions.DELETE_CATEGORY
-  payload: string
-}
-
-export interface UpdateCategoryAction {
-  type: typeof Actions.UPDATE_CATEGORY
-  payload: CategoryItem
-}
-
-export type CategoryActionTypes =
-  | LoadCategoriesAction
-  | LoadCategoriesSuccessAction
-  | LoadCategoriesErrorAction
-  | AddCategoryAction
-  | DeleteCategoryAction
-  | UpdateCategoryAction
-
-/* Themes */
-
-export interface ToggleDarkThemeAction {
-  type: typeof Actions.TOGGLE_DARK_THEME
-}
-
-export type ThemeActionTypes = ToggleDarkThemeAction
-
-/* Settings */
-
-export interface ToggleSettingsModalAction {
-  type: typeof Actions.TOGGLE_SETTINGS_MODAL
-}
-
-export interface UpdateCodeMirrorOptionAction {
-  type: typeof Actions.UPDATE_CODE_MIRROR_OPTION
-  payload: { [key: string]: any }
-}
-
-export type SettingsActionTypes = ToggleSettingsModalAction | UpdateCodeMirrorOptionAction

@@ -111,6 +111,7 @@
     "react-scripts": "3.1.2",
     "redux": "^4.0.4",
     "redux-saga": "^1.1.1",
+    "redux-starter-kit": "^0.7.0",
     "typesafe-actions": "^4.4.2",
     "typescript": "3.6.3",
     "uuid": "^3.3.3"

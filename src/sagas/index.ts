@@ -1,22 +1,15 @@
 // eslint-disable-next-line import/named
 import { all, put, takeLatest } from 'redux-saga/effects'
 
-import { Actions } from 'constants/enums'
-import {
-  loadCategoriesError,
-  loadCategoriesSuccess,
-  loadNotesError,
-  loadNotesSuccess,
-  syncStateError,
-  syncStateSuccess,
-} from 'actions'
-import { SyncStateAction } from 'types'
 import { requestCategories, requestNotes, saveState } from 'api'
+import { loadCategories, loadCategoriesError, loadCategoriesSuccess } from 'slices/category'
+import { loadNotes, loadNotesError, loadNotesSuccess } from 'slices/note'
+import { syncState, syncStateError, syncStateSuccess } from 'slices/sync'
+import { SyncStateAction } from 'types'
 
 function* fetchNotes() {
   try {
     const notes = yield requestNotes()
-
     yield put(loadNotesSuccess(notes))
   } catch (error) {
     yield put(loadNotesError(error.message))
@@ -26,7 +19,6 @@ function* fetchNotes() {
 function* fetchCategories() {
   try {
     const categories = yield requestCategories()
-
     yield put(loadCategoriesSuccess(categories))
   } catch (error) {
     yield put(loadCategoriesError(error.message))
@@ -36,7 +28,6 @@ function* fetchCategories() {
 function* postState({ payload: { notes, categories } }: SyncStateAction) {
   try {
     yield saveState(notes, categories)
-
     yield put(syncStateSuccess())
   } catch (error) {
     yield put(syncStateError(error.message))
@@ -45,9 +36,9 @@ function* postState({ payload: { notes, categories } }: SyncStateAction) {
 
 export function* allSagas() {
   yield all([
-    takeLatest(Actions.LOAD_NOTES, fetchNotes),
-    takeLatest(Actions.LOAD_CATEGORIES, fetchCategories),
-    takeLatest(Actions.SYNC_STATE, postState),
+    takeLatest(loadNotes.type, fetchNotes),
+    takeLatest(loadCategories.type, fetchCategories),
+    takeLatest(syncState.type, postState),
   ])
 }
 

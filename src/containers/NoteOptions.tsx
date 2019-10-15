@@ -1,27 +1,24 @@
 import React from 'react'
 import { ArrowUp, Bookmark, Download, Trash, X } from 'react-feather'
-import { connect } from 'react-redux'
-import { Dispatch } from 'redux'
+import { useDispatch } from 'react-redux'
 
-import { deleteNote, toggleFavoriteNote, toggleTrashedNote } from 'actions'
 import { downloadNote, getNoteTitle } from 'helpers'
-import { ApplicationState, NoteItem } from 'types'
+import { deleteNote, toggleFavoriteNote, toggleTrashedNote } from 'slices/note'
+import { NoteItem } from 'types'
 
 export interface NoteOptionsProps {
   clickedNote: NoteItem
-  deleteNote: (noteId: string) => void
-  toggleTrashedNote: (noteId: string) => void
-  toggleFavoriteNote: (noteId: string) => void
 }
 
-const NoteOptions: React.FC<NoteOptionsProps> = ({
-  clickedNote,
-  deleteNote,
-  toggleTrashedNote,
-  toggleFavoriteNote,
-}) => {
+const NoteOptions: React.FC<NoteOptionsProps> = ({ clickedNote }) => {
+  const dispatch = useDispatch()
+
+  const _deleteNote = (noteId: string) => dispatch(deleteNote(noteId))
+  const _toggleTrashedNote = (noteId: string) => dispatch(toggleTrashedNote(noteId))
+  const _toggleFavoriteNote = (noteId: string) => dispatch(toggleFavoriteNote(noteId))
+
   const deleteNoteHandler = () => {
-    deleteNote(clickedNote.id)
+    _deleteNote(clickedNote.id)
   }
 
   const downloadNoteHandler = () => {
@@ -31,11 +28,11 @@ const NoteOptions: React.FC<NoteOptionsProps> = ({
   }
 
   const favoriteNoteHandler = () => {
-    toggleFavoriteNote(clickedNote.id)
+    _toggleFavoriteNote(clickedNote.id)
   }
 
   const trashNoteHandler = () => {
-    toggleTrashedNote(clickedNote.id)
+    _toggleTrashedNote(clickedNote.id)
   }
 
   return (
@@ -71,17 +68,4 @@ const NoteOptions: React.FC<NoteOptionsProps> = ({
   )
 }
 
-const mapStateToProps = (state: ApplicationState) => ({
-  activeCategoryId: state.noteState.activeCategoryId,
-})
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  deleteNote: (noteId: string) => dispatch(deleteNote(noteId)),
-  toggleTrashedNote: (noteId: string) => dispatch(toggleTrashedNote(noteId)),
-  toggleFavoriteNote: (noteId: string) => dispatch(toggleFavoriteNote(noteId)),
-})
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(NoteOptions)
+export default NoteOptions
