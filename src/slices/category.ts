@@ -1,6 +1,6 @@
-import { createSlice, Slice } from 'redux-starter-kit'
+import { createSlice, PayloadAction, Slice } from 'redux-starter-kit'
 
-import { CategoryState } from 'types'
+import { CategoryItem, CategoryState } from 'types'
 
 const initialState: CategoryState = {
   categories: [],
@@ -12,34 +12,29 @@ const categorySlice: Slice<CategoryState> = createSlice({
   slice: 'category',
   initialState,
   reducers: {
-    addCategory: (state, { payload }) => ({
+    addCategory: (state, { payload }: PayloadAction<CategoryItem>) => ({
       ...state,
       categories: [...state.categories, payload],
     }),
-    deleteCategory: (state, { payload }) => ({
+    deleteCategory: (state, { payload }: PayloadAction<string>) => ({
       ...state,
       categories: state.categories.filter(category => category.id !== payload),
     }),
     loadCategories: () => initialState,
-    loadCategoriesError: (state, { payload }) => ({
+    loadCategoriesError: (state, { payload }: PayloadAction<string>) => ({
       ...state,
       loading: false,
       error: payload,
     }),
-    loadCategoriesSuccess: (state, { payload }) => ({
+    loadCategoriesSuccess: (state, { payload }: PayloadAction<CategoryItem[]>) => ({
       ...state,
       categories: payload,
       loading: false,
     }),
-    updateCategory: (state, { payload }) => ({
+    updateCategory: (state, { payload }: PayloadAction<CategoryItem>) => ({
       ...state,
       categories: state.categories.map(category =>
-        category.id === payload.id
-          ? {
-              id: category.id,
-              name: payload.name,
-            }
-          : category
+        category.id === payload.id ? { id: category.id, name: payload.name } : category
       ),
     }),
   },

@@ -1,4 +1,4 @@
-import { createSlice, Slice } from 'redux-starter-kit'
+import { createSlice, PayloadAction, Slice } from 'redux-starter-kit'
 
 import { Folder } from 'constants/enums'
 import { sortByLastUpdated } from 'helpers'
@@ -44,91 +44,82 @@ const noteSlice: Slice<NoteState> = createSlice({
   slice: 'note',
   initialState,
   reducers: {
-    addCategoryToNote: (state, { payload }) => ({
+    addCategoryToNote: (
+      state,
+      { payload }: PayloadAction<{ categoryId: string; noteId: string }>
+    ) => ({
       ...state,
       notes: state.notes.map(note =>
-        note.id === payload.noteId
-          ? {
-              ...note,
-              category: payload.categoryId,
-            }
-          : note
+        note.id === payload.noteId ? { ...note, category: payload.categoryId } : note
       ),
     }),
-    addNote: (state, { payload }) => ({
+    addNote: (state, { payload }: PayloadAction<NoteItem>) => ({
       ...state,
       notes: [...state.notes, payload],
     }),
-    deleteNote: (state, { payload }) => ({
+    deleteNote: (state, { payload }: PayloadAction<string>) => ({
       ...state,
       notes: state.notes.filter(note => note.id !== payload),
       activeNoteId: getNewActiveNoteId(state.notes, payload, state.activeCategoryId),
     }),
     loadNotes: () => initialState,
-    loadNotesError: (state, { payload }) => ({
+
+    // TODO: This PayloadAction type is wrong
+    loadNotesError: (state, { payload }: PayloadAction) => ({
       ...state,
       loading: false,
       error: payload,
     }),
-    loadNotesSuccess: (state, { payload }) => ({
+    loadNotesSuccess: (state, { payload }: PayloadAction<NoteItem[]>) => ({
       ...state,
       notes: payload,
       activeNoteId: getFirstNoteId(Folder.ALL, payload),
       loading: false,
     }),
-    pruneCategoryFromNotes: (state, { payload }) => ({
+    pruneCategoryFromNotes: (state, { payload }: PayloadAction<string>) => ({
       ...state,
       notes: state.notes.map(note =>
-        note.category === payload
-          ? {
-              ...note,
-              category: undefined,
-            }
-          : note
+        note.category === payload ? { ...note, category: undefined } : note
       ),
     }),
     pruneNotes: state => ({
       ...state,
       notes: state.notes.filter(note => note.text !== '' || note.id === state.activeNoteId),
     }),
-    swapCategory: (state, { payload }) => ({
+    swapCategory: (state, { payload }: PayloadAction<string>) => ({
       ...state,
       activeCategoryId: payload,
       activeFolder: Folder.CATEGORY,
       activeNoteId: getFirstNoteId(Folder.CATEGORY, state.notes, payload),
     }),
-    swapFolder: (state, { payload }: { payload: Folder }) => ({
+    swapFolder: (state, { payload }: PayloadAction<Folder>) => ({
       ...state,
       activeFolder: payload,
       activeCategoryId: '',
       activeNoteId: getFirstNoteId(payload, state.notes),
     }),
-    swapNote: (state, { payload }) => ({
+    swapNote: (state, { payload }: PayloadAction<string>) => ({
       ...state,
       activeNoteId: payload,
     }),
-    toggleFavoriteNote: (state, { payload }) => ({
+    toggleFavoriteNote: (state, { payload }: PayloadAction<string>) => ({
       ...state,
       notes: state.notes.map(note =>
         note.id === payload ? { ...note, favorite: !note.favorite } : note
       ),
     }),
-    toggleTrashedNote: (state, { payload }) => ({
+    toggleTrashedNote: (state, { payload }: PayloadAction<string>) => ({
       ...state,
       notes: state.notes.map(note =>
         note.id === payload ? { ...note, trash: !note.trash } : note
       ),
       activeNoteId: getNewActiveNoteId(state.notes, payload, state.activeCategoryId),
     }),
-    updateNote: (state, { payload }) => ({
+    updateNote: (state, { payload }: PayloadAction<NoteItem>) => ({
       ...state,
       notes: state.notes.map(note =>
         note.id === payload.id
-          ? {
-              ...note,
-              text: payload.text,
-              lastUpdated: payload.lastUpdated,
-            }
+          ? { ...note, text: payload.text, lastUpdated: payload.lastUpdated }
           : note
       ),
     }),

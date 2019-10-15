@@ -1,4 +1,4 @@
-import { createSlice, Slice } from 'redux-starter-kit'
+import { createSlice, PayloadAction, Slice } from 'redux-starter-kit'
 
 import { SettingsState } from 'types'
 
@@ -23,7 +23,10 @@ const settingsSlice: Slice<SettingsState> = createSlice({
       ...state,
       isOpen: !state.isOpen,
     }),
-    updateCodeMirrorOption: (state, { payload }) => ({
+    updateCodeMirrorOption: (
+      state,
+      { payload }: PayloadAction<{ key: string; value: string }>
+    ) => ({
       ...state,
       codeMirrorOptions: {
         ...state.codeMirrorOptions,
