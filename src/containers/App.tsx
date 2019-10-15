@@ -16,17 +16,16 @@ const App: React.FC = () => {
 
   const dispatch = useDispatch()
 
-  // TODO: Fix how the dispatchers interact with the `useEffect`s below
   const _loadNotes = () => dispatch(loadNotes())
   const _loadCategories = () => dispatch(loadCategories())
 
   useEffect(() => {
     _loadNotes()
-  }, [_loadNotes])
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   useEffect(() => {
     _loadCategories()
-  }, [_loadCategories])
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <div className={`app ${dark ? 'dark' : ''}`}>
