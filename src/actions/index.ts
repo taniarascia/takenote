@@ -126,3 +126,11 @@ export const syncStateError = (error: string) => ({
 export const toggleDarkTheme = () => ({
   type: Actions.TOGGLE_DARK_THEME,
 })
+
+//==============================================================================
+// Settings
+//==============================================================================
+
+export const toggleSettingsModal = () => ({
+  type: Actions.TOGGLE_SETTINGS_MODAL,
+})

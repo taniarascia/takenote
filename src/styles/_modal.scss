@@ -1,0 +1,33 @@
+.dimmer {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  background-color: rgba(0, 0, 0, 0.6);
+  line-height: 1;
+  user-select: none;
+  z-index: 99;
+}
+
+.settings-modal {
+  border-radius: 4px;
+  background: white;
+  padding: 1.5rem;
+  box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.1);
+  text-align: left;
+  min-height: 300px;
+  width: 600px;
+  max-width: 90%;
+  user-select: text;
+  z-index: 100;
+
+  h2 {
+    margin-top: 0;
+  }
+}

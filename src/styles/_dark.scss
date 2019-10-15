@@ -1,0 +1,32 @@
+.dark {
+  .note-sidebar {
+    background: #292929;
+    border-right: 1px solid #222;
+
+    .note-sidebar-header {
+      color: white;
+      border-bottom: 1px solid #333;
+    }
+
+    .note-list {
+      .note-each {
+        border-bottom: 1px solid #333;
+        color: #aaa;
+
+        &:hover {
+          background: #303030;
+          color: white;
+        }
+
+        &.active {
+          color: white;
+          background: darken($primary, 10%);
+
+          &:hover {
+            background: $primary;
+          }
+        }
+      }
+    }
+  }
+}

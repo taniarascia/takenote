@@ -13,6 +13,7 @@ import {
   swapFolder,
   swapNote,
   syncState,
+  toggleSettingsModal,
 } from 'actions'
 import { Folders } from 'constants/enums'
 import { useKeyboard } from 'contexts/KeyboardContext'
@@ -35,6 +36,7 @@ interface AppProps {
   activeCategoryId: string
   activeFolder: string
   syncState: (notes: NoteItem[], categories: CategoryItem[]) => void
+  toggleSettingsModal: () => void
 }
 
 const AppSidebar: React.FC<AppProps> = ({
@@ -51,6 +53,7 @@ const AppSidebar: React.FC<AppProps> = ({
   activeCategoryId,
   activeFolder,
   syncState,
+  toggleSettingsModal,
 }) => {
   const { addingTempCategory, setAddingTempCategory } = useKeyboard()
   const [tempCategory, setTempCategory] = useState('')
@@ -85,6 +88,10 @@ const AppSidebar: React.FC<AppProps> = ({
 
   const syncNotesHandler = () => {
     syncState(notes, categories)
+  }
+
+  const settingsHandler = () => {
+    toggleSettingsModal()
   }
 
   return (
@@ -199,7 +206,12 @@ const AppSidebar: React.FC<AppProps> = ({
             color={iconColor}
             onClick={syncNotesHandler}
           />
-          <Settings size={18} className="action-button" color={iconColor} />
+          <Settings
+            size={18}
+            className="action-button"
+            color={iconColor}
+            onClick={settingsHandler}
+          />
         </div>
       </section>
     </aside>
@@ -224,6 +236,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   pruneCategoryFromNotes: (categoryId: string) => dispatch(pruneCategoryFromNotes(categoryId)),
   syncState: (notes: NoteItem[], categories: CategoryItem[]) =>
     dispatch(syncState(notes, categories)),
+  toggleSettingsModal: () => dispatch(toggleSettingsModal()),
 })
 
 export default connect(
