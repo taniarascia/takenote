@@ -108,11 +108,11 @@ const AppSidebar: React.FC<AppProps> = ({
   }
 
   const trashNoteHandler = (event: React.DragEvent<HTMLDivElement>) => {
-    toggleTrashedNote(event.dataTransfer.getData('noteId'))
+    toggleTrashedNote(event.dataTransfer.getData('text'))
   }
 
   const favoriteNoteHandler = (event: React.DragEvent<HTMLDivElement>) => {
-    toggleFavoriteNote(event.dataTransfer.getData('noteId'))
+    toggleFavoriteNote(event.dataTransfer.getData('text'))
   }
 
   return (

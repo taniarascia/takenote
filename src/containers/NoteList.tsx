@@ -59,7 +59,7 @@ const NoteList: React.FC<NoteListProps> = ({
 
   const handleDragStart = (event: React.DragEvent<HTMLDivElement>, noteId: string = '') => {
     event.stopPropagation()
-    event.dataTransfer.setData('noteId', noteId)
+    event.dataTransfer.setData('text/plain', noteId)
   }
 
   return (
