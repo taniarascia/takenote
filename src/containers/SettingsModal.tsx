@@ -2,7 +2,8 @@ import React, { useRef, useEffect } from 'react'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 
-import { toggleSettingsModal, toggleDarkTheme, updateCodeMirrorOption } from 'actions'
+import { toggleSettingsModal, updateCodeMirrorOption } from 'slices/settings'
+import { toggleDarkTheme } from 'slices/theme'
 import { ApplicationState } from 'types'
 
 export interface SettingsModalProps {
@@ -98,7 +99,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   toggleSettingsModal: () => dispatch(toggleSettingsModal()),
   toggleDarkTheme: () => dispatch(toggleDarkTheme()),
   updateCodeMirrorOption: (key: string, value: string) =>
-    dispatch(updateCodeMirrorOption(key, value)),
+    dispatch(updateCodeMirrorOption({ key, value })),
 })
 
 export default connect(

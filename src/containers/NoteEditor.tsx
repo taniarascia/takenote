@@ -4,7 +4,7 @@ import { Controlled as CodeMirror } from 'react-codemirror2'
 import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 
-import { updateNote } from 'slices/noteSlice'
+import { updateNote } from 'slices/note'
 import { ApplicationState, NoteItem } from 'types'
 
 import 'codemirror/lib/codemirror.css'

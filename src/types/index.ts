@@ -1,5 +1,5 @@
 import { Folder } from 'constants/enums'
-import { syncState } from 'slices/syncSlice'
+import { syncState } from 'slices/sync'
 
 //==============================================================================
 // Items
@@ -24,12 +24,10 @@ export interface CategoryItem {
 // State
 //==============================================================================
 
-export interface ApplicationState {
-  noteState: NoteState
-  categoryState: CategoryState
-  syncState: SyncState
-  themeState: ThemeState
-  settingsState: SettingsState
+export interface CategoryState {
+  categories: CategoryItem[]
+  error: string
+  loading: boolean
 }
 
 export interface NoteState {
@@ -41,10 +39,9 @@ export interface NoteState {
   loading: boolean
 }
 
-export interface CategoryState {
-  categories: CategoryItem[]
-  error: string
-  loading: boolean
+export interface SettingsState {
+  isOpen: boolean
+  codeMirrorOptions: { [key: string]: any }
 }
 
 export interface SyncState {
@@ -56,16 +53,17 @@ export interface ThemeState {
   dark: boolean
 }
 
-export interface SettingsState {
-  isOpen: boolean
-  codeMirrorOptions: { [key: string]: any }
+export interface ApplicationState {
+  categoryState: CategoryState
+  noteState: NoteState
+  settingsState: SettingsState
+  syncState: SyncState
+  themeState: ThemeState
 }
 
 //==============================================================================
 // Sagas
 //==============================================================================
-
-/* Sync */
 
 export interface SyncStateAction {
   type: typeof syncState.type
@@ -74,16 +72,3 @@ export interface SyncStateAction {
     notes: NoteItem[]
   }
 }
-
-/* Settings */
-
-export interface ToggleSettingsModalAction {
-  type: 'TOGGLE_SETTINGS_MODAL' // todo
-}
-
-export interface UpdateCodeMirrorOptionAction {
-  type: 'UPDATE_CODE_MIRROR_OPTION' // todo
-  payload: { [key: string]: any }
-}
-
-export type SettingsActionTypes = ToggleSettingsModalAction | UpdateCodeMirrorOptionAction

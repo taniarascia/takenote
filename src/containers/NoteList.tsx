@@ -7,7 +7,7 @@ import { Folder } from 'constants/enums'
 import { folderMap } from 'constants/index'
 import NoteOptions from 'containers/NoteOptions'
 import { getNoteTitle, sortByLastUpdated } from 'helpers'
-import { addCategoryToNote, pruneNotes, swapCategory, swapNote } from 'slices/noteSlice'
+import { addCategoryToNote, pruneNotes, swapCategory, swapNote } from 'slices/note'
 import { ApplicationState, CategoryItem, NoteItem } from 'types'
 
 interface NoteListProps {

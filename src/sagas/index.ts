@@ -2,9 +2,9 @@
 import { all, put, takeLatest } from 'redux-saga/effects'
 
 import { requestCategories, requestNotes, saveState } from 'api'
-import { loadCategories, loadCategoriesError, loadCategoriesSuccess } from 'slices/categorySlice'
-import { loadNotes, loadNotesError, loadNotesSuccess } from 'slices/noteSlice'
-import { syncState, syncStateError, syncStateSuccess } from 'slices/syncSlice'
+import { loadCategories, loadCategoriesError, loadCategoriesSuccess } from 'slices/category'
+import { loadNotes, loadNotesError, loadNotesSuccess } from 'slices/note'
+import { syncState, syncStateError, syncStateSuccess } from 'slices/sync'
 import { SyncStateAction } from 'types'
 
 function* fetchNotes() {

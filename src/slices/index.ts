@@ -1,18 +1,18 @@
 import { combineReducers, Reducer } from 'redux'
 
-import categoryReducer from 'slices/categorySlice'
-import noteReducer from 'slices/noteSlice'
-import settingsReducer from 'slices/settingsSlice'
-import syncReducer from 'slices/syncSlice'
-import themeReducer from 'slices/themeSlice'
+import categoryReducer from 'slices/category'
+import noteReducer from 'slices/note'
+import settingsReducer from 'slices/settings'
+import syncReducer from 'slices/sync'
+import themeReducer from 'slices/theme'
 import { ApplicationState } from 'types'
 
 const rootReducer: Reducer<ApplicationState> = combineReducers<ApplicationState>({
-  noteState: noteReducer,
   categoryState: categoryReducer,
+  noteState: noteReducer,
+  settingsState: settingsReducer,
   syncState: syncReducer,
   themeState: themeReducer,
-  settingsState: settingsReducer,
 })
 
 export default rootReducer

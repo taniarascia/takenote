@@ -8,8 +8,8 @@ import NoteEditor from 'containers/NoteEditor'
 import NoteList from 'containers/NoteList'
 import SettingsModal from 'containers/SettingsModal'
 import { KeyboardProvider } from 'contexts/KeyboardContext'
-import { loadCategories } from 'slices/categorySlice'
-import { loadNotes } from 'slices/noteSlice'
+import { loadCategories } from 'slices/category'
+import { loadNotes } from 'slices/note'
 import { ApplicationState } from 'types'
 
 interface AppProps {

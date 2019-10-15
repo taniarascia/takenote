@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { Dispatch } from 'redux'
 
 import { downloadNote, getNoteTitle } from 'helpers'
-import { deleteNote, toggleFavoriteNote, toggleTrashedNote } from 'slices/noteSlice'
+import { deleteNote, toggleFavoriteNote, toggleTrashedNote } from 'slices/note'
 import { ApplicationState, NoteItem } from 'types'
 
 export interface NoteOptionsProps {

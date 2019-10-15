@@ -5,9 +5,9 @@ import { connect } from 'react-redux'
 import { useKeyboard } from 'contexts/KeyboardContext'
 import { downloadNote, getNoteTitle, newNote } from 'helpers'
 import { useKey } from 'helpers/hooks'
-import { addNote, swapNote, toggleTrashedNote } from 'slices/noteSlice'
-import { syncState } from 'slices/syncSlice'
-import { toggleDarkTheme } from 'slices/themeSlice'
+import { addNote, swapNote, toggleTrashedNote } from 'slices/note'
+import { syncState } from 'slices/sync'
+import { toggleDarkTheme } from 'slices/theme'
 import { ApplicationState, CategoryItem, NoteItem } from 'types'
 
 interface KeyboardShortcutsProps {

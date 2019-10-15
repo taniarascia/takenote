@@ -7,7 +7,7 @@ const initialState: ThemeState = {
 }
 
 const themeSlice: Slice<ThemeState> = createSlice({
-  slice: 'sync',
+  slice: 'theme',
   initialState,
   reducers: {
     toggleDarkTheme: state => ({

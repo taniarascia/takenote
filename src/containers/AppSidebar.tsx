@@ -16,16 +16,10 @@ import { Dispatch } from 'redux'
 import { Folder } from 'constants/enums'
 import { useKeyboard } from 'contexts/KeyboardContext'
 import { newNote } from 'helpers'
-import { addCategory, deleteCategory } from 'slices/categorySlice'
-import {
-  addNote,
-  pruneCategoryFromNotes,
-  swapCategory,
-  swapFolder,
-  swapNote,
-} from 'slices/noteSlice'
-import { toggleSettingsModal } from 'slices/settingsSlice'
-import { syncState } from 'slices/syncSlice'
+import { addCategory, deleteCategory } from 'slices/category'
+import { addNote, pruneCategoryFromNotes, swapCategory, swapFolder, swapNote } from 'slices/note'
+import { toggleSettingsModal } from 'slices/settings'
+import { syncState } from 'slices/sync'
 import { ApplicationState, CategoryItem, NoteItem } from 'types'
 
 const iconColor = 'rgba(255, 255, 255, 0.25)'
