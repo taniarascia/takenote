@@ -17,7 +17,8 @@
       "profile": "https://www.taniarascia.com",
       "contributions": [
         "code",
-        "ideas"
+        "ideas",
+        "bug"
       ]
     },
     {
@@ -26,7 +27,8 @@
       "avatar_url": "https://avatars3.githubusercontent.com/u/1008390?v=4",
       "profile": "https://github.com/hankolsen",
       "contributions": [
-        "code"
+        "code",
+        "bug"
       ]
     },
     {
@@ -54,7 +56,8 @@
       "avatar_url": "https://avatars2.githubusercontent.com/u/2382147?v=4",
       "profile": "https://martinbrosenberg.com/",
       "contributions": [
-        "code"
+        "code",
+        "bug"
       ]
     },
     {
@@ -73,6 +76,24 @@
       "profile": "https://github.com/jjtowle",
       "contributions": [
         "code"
+      ]
+    },
+    {
+      "login": "markerikson",
+      "name": "Mark Erikson",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/1128784?v=4",
+      "profile": "http://blog.isquaredsoftware.com",
+      "contributions": [
+        "ideas"
+      ]
+    },
+    {
+      "login": "alphonseb",
+      "name": "Alphonse Bouy",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/32797759?v=4",
+      "profile": "http://www.alphonsebouy.fr",
+      "contributions": [
+        "bug"
       ]
     }
   ],
