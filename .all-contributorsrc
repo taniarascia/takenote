@@ -105,6 +105,15 @@
         "design",
         "ideas"
       ]
+    },
+    {
+      "login": "Dantaro",
+      "name": "Devin McIntyre",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/2750903?v=4",
+      "profile": "https://github.com/Dantaro",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7
