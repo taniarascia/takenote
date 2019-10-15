@@ -15,6 +15,7 @@ describe('<NoteOptions />', () => {
         created: '01/02/2019',
         lastUpdated: '01/02/2019',
       },
+      deleteNote: jest.fn(),
       toggleTrashedNote: jest.fn(),
       toggleFavoriteNote: jest.fn(),
     }
