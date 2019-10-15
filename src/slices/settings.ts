@@ -12,6 +12,7 @@ const initialState: SettingsState = {
     styleActiveLine: { nonEmpty: true },
     viewportMargin: Infinity,
     keyMap: 'default',
+    dragDrop: false,
   },
 }
 

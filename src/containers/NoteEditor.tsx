@@ -30,6 +30,10 @@ const NoteEditor: React.FC = () => {
   } else {
     return (
       <CodeMirror
+        onDragOver={(editor, event) => {
+          event.preventDefault()
+          console.log(editor)
+        }}
         className="editor mousetrap"
         value={activeNote.text}
         options={codeMirrorOptions}

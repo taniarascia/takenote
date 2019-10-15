@@ -102,10 +102,14 @@ const AppSidebar: React.FC = () => {
   }
 
   const trashNoteHandler = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault()
+
     _toggleTrashedNote(event.dataTransfer.getData('text'))
   }
 
   const favoriteNoteHandler = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault()
+
     _toggleFavoriteNote(event.dataTransfer.getData('text'))
   }
 
@@ -167,6 +171,8 @@ const AppSidebar: React.FC = () => {
                   }
                 }}
                 onDrop={event => {
+                  event.preventDefault()
+
                   _addCategoryToNote(category.id, event.dataTransfer.getData('noteId'))
                 }}
                 onDragOver={allowDrop}
