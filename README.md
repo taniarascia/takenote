@@ -27,7 +27,7 @@ npm start
 - [ ] Settings for light/dark mode, sync frequency, and Vim mode
 - [ ] Sync and store notes in GitHub gist (currently local storage)
 
-## Contrubuting
+## Contributing
 
 TakeNote is an open source project, and contributions of any kind are welcome! Open issues, bugs, and enhancements are all listed on the [issues](/issues) tab and labeled accordingly. Feel free to open bug tickets and make feature requests. Easy bugs and features will be tagged with the `good first issue` label.
 
