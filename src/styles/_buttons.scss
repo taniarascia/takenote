@@ -1,0 +1,52 @@
+%buttons {
+  -webkit-appearance: none;
+  display: inline-block;
+  border: 2px solid $primary;
+  border-radius: 4px;
+  background: $primary;
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 0.75rem 1.25rem;
+  margin: 0 0 0.5rem 0;
+  vertical-align: middle;
+  text-align: center;
+  cursor: pointer;
+  text-decoration: none;
+  line-height: 1;
+}
+
+// Buttons on hover
+%buttons-hover {
+  border: 2px solid $primary;
+  border-radius: 4px;
+  background: $primary;
+  text-decoration: none;
+}
+
+// Buttons on focus
+%buttons-focus {
+  border: 2px solid $primary;
+  border-radius: 4px;
+  background: $primary;
+  text-decoration: none;
+}
+
+// Apply styles to .button class, button element, and button-based inputs
+#{$buttons} {
+  @extend %buttons;
+
+  &::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+  }
+
+  &:hover {
+    @extend %buttons-hover;
+  }
+
+  &:focus,
+  &:active {
+    @extend %buttons-focus;
+  }
+}

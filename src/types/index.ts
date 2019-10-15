@@ -1,6 +1,5 @@
+import { Folder } from 'constants/enums'
 import { syncState } from 'slices/syncSlice'
-
-import { Folder } from '../constants/enums'
 
 //==============================================================================
 // Items
@@ -30,6 +29,7 @@ export interface ApplicationState {
   categoryState: CategoryState
   syncState: SyncState
   themeState: ThemeState
+  settingsState: SettingsState
 }
 
 export interface NoteState {
@@ -56,9 +56,16 @@ export interface ThemeState {
   dark: boolean
 }
 
+export interface SettingsState {
+  isOpen: boolean
+  codeMirrorOptions: { [key: string]: any }
+}
+
 //==============================================================================
 // Sagas
 //==============================================================================
+
+/* Sync */
 
 export interface SyncStateAction {
   type: typeof syncState.type
@@ -67,3 +74,16 @@ export interface SyncStateAction {
     notes: NoteItem[]
   }
 }
+
+/* Settings */
+
+export interface ToggleSettingsModalAction {
+  type: 'TOGGLE_SETTINGS_MODAL' // todo
+}
+
+export interface UpdateCodeMirrorOptionAction {
+  type: 'UPDATE_CODE_MIRROR_OPTION' // todo
+  payload: { [key: string]: any }
+}
+
+export type SettingsActionTypes = ToggleSettingsModalAction | UpdateCodeMirrorOptionAction

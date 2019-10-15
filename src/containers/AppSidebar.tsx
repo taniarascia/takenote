@@ -24,10 +24,11 @@ import {
   swapFolder,
   swapNote,
 } from 'slices/noteSlice'
+import { toggleSettingsModal } from 'slices/settingsSlice'
 import { syncState } from 'slices/syncSlice'
 import { ApplicationState, CategoryItem, NoteItem } from 'types'
 
-const iconColor = 'rgba(255, 255, 255, 0.3)'
+const iconColor = 'rgba(255, 255, 255, 0.25)'
 
 interface AppProps {
   addNote: (note: NoteItem) => void
@@ -43,6 +44,7 @@ interface AppProps {
   activeCategoryId: string
   activeFolder: string
   syncState: (notes: NoteItem[], categories: CategoryItem[]) => void
+  toggleSettingsModal: () => void
 }
 
 const AppSidebar: React.FC<AppProps> = ({
@@ -59,6 +61,7 @@ const AppSidebar: React.FC<AppProps> = ({
   activeCategoryId,
   activeFolder,
   syncState,
+  toggleSettingsModal,
 }) => {
   const { addingTempCategory, setAddingTempCategory } = useKeyboard()
   const [tempCategory, setTempCategory] = useState('')
@@ -95,6 +98,10 @@ const AppSidebar: React.FC<AppProps> = ({
     syncState(notes, categories)
   }
 
+  const settingsHandler = () => {
+    toggleSettingsModal()
+  }
+
   return (
     <aside className="app-sidebar">
       <section className="app-sidebar-main">
@@ -104,7 +111,7 @@ const AppSidebar: React.FC<AppProps> = ({
             swapFolder(Folder.ALL)
           }}
         >
-          <Book size={15} style={{ marginRight: '.5rem' }} color={iconColor} />
+          <Book size={15} style={{ marginRight: '.75rem' }} color={iconColor} />
           All Notes
         </div>
         <div
@@ -115,7 +122,7 @@ const AppSidebar: React.FC<AppProps> = ({
             swapFolder(Folder.FAVORITES)
           }}
         >
-          <Bookmark size={15} style={{ marginRight: '.5rem' }} color={iconColor} />
+          <Bookmark size={15} style={{ marginRight: '.75rem' }} color={iconColor} />
           Favorites
         </div>
         <div
@@ -124,7 +131,7 @@ const AppSidebar: React.FC<AppProps> = ({
             swapFolder(Folder.TRASH)
           }}
         >
-          <Trash2 size={15} style={{ marginRight: '.5rem' }} color={iconColor} />
+          <Trash2 size={15} style={{ marginRight: '.75rem' }} color={iconColor} />
           Trash
         </div>
 
@@ -154,7 +161,7 @@ const AppSidebar: React.FC<AppProps> = ({
                 }}
               >
                 <div className="category-each-name">
-                  <FolderIcon size={15} style={{ marginRight: '.5rem' }} color={iconColor} />
+                  <FolderIcon size={15} style={{ marginRight: '.75rem' }} color={iconColor} />
                   {category.name}
                 </div>
                 <div
@@ -205,7 +212,12 @@ const AppSidebar: React.FC<AppProps> = ({
             color={iconColor}
             onClick={syncNotesHandler}
           />
-          <Settings size={18} className="action-button" color={iconColor} />
+          <Settings
+            size={18}
+            className="action-button"
+            color={iconColor}
+            onClick={settingsHandler}
+          />
         </div>
       </section>
     </aside>
@@ -230,6 +242,7 @@ const mapDispatchToProps = (dispatch: Dispatch) => ({
   pruneCategoryFromNotes: (categoryId: string) => dispatch(pruneCategoryFromNotes(categoryId)),
   syncState: (notes: NoteItem[], categories: CategoryItem[]) =>
     dispatch(syncState({ notes, categories })),
+  toggleSettingsModal: () => dispatch(toggleSettingsModal()),
 })
 
 export default connect(

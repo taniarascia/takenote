@@ -19,7 +19,11 @@
     }
 
     &.active {
-      background: #292929;
+      background: #202020;
+
+      svg {
+        stroke: $primary;
+      }
     }
   }
 
@@ -71,7 +75,7 @@
     margin: 0 0.25rem;
 
     &:hover {
-      stroke: #6ab0f3;
+      stroke: $primary;
       background: #222;
     }
   }
@@ -111,19 +115,37 @@
       }
 
       &.active {
-        background: #222 !important;
+        background: #202020 !important;
+
+        .category-each-name {
+          svg {
+            stroke: $primary;
+          }
+        }
       }
     }
   }
 
   .add-category-form {
     input {
-      background: rgba(0, 0, 0, 0.5);
+      -webkit-appearance: none;
+      border-radius: 4px;
+      background: rgba(0, 0, 0, 0.2);
       border: 1px solid #888;
       padding: 0.5rem;
       font-size: 0.9rem;
-      -webkit-appearance: none;
       color: #eee;
+      line-height: 1;
+      margin-top: 0.5rem;
+      margin-left: 1rem;
+      width: 150px;
+
+      &:active,
+      &:focus {
+        border-color: $primary;
+        outline: 0;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+      }
     }
   }
 
@@ -159,13 +181,15 @@
     .note-each {
       position: relative;
       cursor: pointer;
-      padding: 0.5rem;
+      padding: 0.25rem 0.5rem;
       border-bottom: 1px solid #ccc;
       display: flex;
       align-items: center;
       justify-content: space-between;
       font-weight: 500;
       color: #444;
+      font-size: 0.9rem;
+      line-height: 1.3;
 
       &:hover {
         background: darken($background, 4%);
@@ -176,8 +200,14 @@
       }
 
       &.active {
-        background: #eee;
-        color: #222;
+        background: $primary;
+        color: white;
+
+        &:hover {
+          .note-options {
+            color: white;
+          }
+        }
       }
 
       .note-options {
@@ -193,14 +223,15 @@
 
       .note-options-context {
         cursor: default;
+        border-radius: 4px;
         position: absolute;
+        padding: 1rem;
         color: #333;
         top: 32px;
         left: 200px;
-        min-width: 150px;
-        padding: 1rem;
+        min-width: 250px;
         background: white;
-        border: 1px solid #eee;
+        border: 1px solid #ddd;
         z-index: 3;
         box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.1);
 
@@ -208,14 +239,32 @@
           margin-top: 0;
           font-size: 1rem;
         }
+
+        .select-element {
+          -webkit-appearance: none;
+          font-size: 1rem;
+          padding: 0.5rem;
+          width: 100%;
+          margin-bottom: 1rem;
+        }
+      }
+
+      .note-options-nav {
+        div {
+          cursor: pointer;
+          display: flex;
+          align-items: center;
+          padding: 0.5rem;
+
+          &:hover {
+            background: #f0f0f0;
+          }
+        }
+
+        svg {
+          margin-right: 0.5rem;
+        }
       }
     }
-  }
-
-  .select-element {
-    -webkit-appearance: none;
-    font-size: 1rem;
-    padding: 0.5rem;
-    width: 100%;
   }
 }
