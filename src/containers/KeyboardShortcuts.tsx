@@ -60,27 +60,27 @@ const KeyboardShortcuts: React.FC = () => {
     _toggleDarkTheme()
   }
 
-  useKey('ctrl+n', () => {
+  useKey('alt+ctrl+n', () => {
     newNoteHandler()
   })
 
-  useKey('ctrl+c', () => {
+  useKey('alt+ctrl+c', () => {
     newTempCategoryHandler()
   })
 
-  useKey('ctrl+w', () => {
+  useKey('alt+ctrl+w', () => {
     trashNoteHandler()
   })
 
-  useKey('ctrl+s', () => {
+  useKey('alt+ctrl+s', () => {
     syncNotesHandler()
   })
 
-  useKey('ctrl+d', () => {
+  useKey('alt+ctrl+d', () => {
     downloadNoteHandler()
   })
 
-  useKey('ctrl+t', () => {
+  useKey('alt+ctrl+t', () => {
     toggleDarkThemeHandler()
   })
 
