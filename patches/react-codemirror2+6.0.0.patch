@@ -27,7 +27,7 @@ index 1f37fce..7f336d2 100644
 @@ -540,7 +540,7 @@ var Controlled = function(_super) {
      }
    };
- 
+
 -  Controlled.prototype.componentWillReceiveProps = function(nextProps) {
 +  Controlled.prototype.UNSAFE_componentWillReceiveProps = function(nextProps) {
      if (SERVER_RENDERED) return;
@@ -36,9 +36,9 @@ index 1f37fce..7f336d2 100644
 @@ -704,7 +704,7 @@ var UnControlled = function(_super) {
      }
    };
- 
+
 -  UnControlled.prototype.componentWillReceiveProps = function(nextProps) {
 +  UnControlled.prototype.UNSAFE_componentWillReceiveProps = function(nextProps) {
      if (this.detached && nextProps.detach === false) {
        this.detached = false;
- 
+

@@ -45,7 +45,7 @@ const AppSidebar: React.FC = () => {
   const _addNote = (note: NoteItem) => dispatch(addNote(note))
   const _swapNote = (noteId: string) => dispatch(swapNote(noteId))
   const _swapCategory = (categoryId: string) => dispatch(swapCategory(categoryId))
-  const _swapFolder = (folder: string) => dispatch(swapFolder(folder))
+  const _swapFolder = (folder: Folder) => dispatch(swapFolder(folder))
   const _addCategory = (category: CategoryItem) => dispatch(addCategory(category))
   const _deleteCategory = (categoryId: string) => dispatch(deleteCategory(categoryId))
   const _pruneCategoryFromNotes = (categoryId: string) =>
@@ -56,7 +56,7 @@ const AppSidebar: React.FC = () => {
   const _toggleTrashedNote = (noteId: string) => dispatch(toggleTrashedNote(noteId))
   const _toggleFavoriteNote = (noteId: string) => dispatch(toggleFavoriteNote(noteId))
   const _addCategoryToNote = (categoryId: string, noteId: string) =>
-    dispatch(addCategoryToNote(categoryId, noteId))
+    dispatch(addCategoryToNote({ categoryId, noteId }))
 
   const { addingTempCategory, setAddingTempCategory } = useKeyboard()
   const [tempCategory, setTempCategory] = useState('')
@@ -217,12 +217,12 @@ const AppSidebar: React.FC = () => {
           {activeFolder !== Folder.TRASH && (
             <button className="action-button" aria-label="Create new note" onClick={newNoteHandler}>
               <span>
-                <Plus 
-                  className="action-button__icon" 
-                  size={18} 
-                  color={iconColor} 
+                <Plus
+                  className="action-button__icon"
+                  size={18}
+                  color={iconColor}
                   aria-hidden="true"
-                  focusable="false" 
+                  focusable="false"
                 />
               </span>
             </button>
@@ -230,11 +230,11 @@ const AppSidebar: React.FC = () => {
           <button className="action-button" aria-label="Sync notes" onClick={syncNotesHandler}>
             <span>
               <UploadCloud
-              size={18}
-              className="action-button__icon"
-              color={iconColor}
-              aria-hidden="true"
-              focusable="false"
+                size={18}
+                className="action-button__icon"
+                color={iconColor}
+                aria-hidden="true"
+                focusable="false"
               />
             </span>
           </button>
