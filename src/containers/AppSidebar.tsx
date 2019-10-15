@@ -215,20 +215,40 @@ const AppSidebar: React.FC = () => {
       <section className="app-sidebar-actions">
         <div>
           {activeFolder !== Folder.TRASH && (
-            <Plus className="action-button" size={18} color={iconColor} onClick={newNoteHandler} />
+            <button className="action-button" aria-label="Create new note" onClick={newNoteHandler}>
+              <span>
+                <Plus 
+                  className="action-button__icon" 
+                  size={18} 
+                  color={iconColor} 
+                  aria-hidden="true"
+                  focusable="false" 
+                />
+              </span>
+            </button>
           )}
-          <UploadCloud
-            size={18}
-            className="action-button"
-            color={iconColor}
-            onClick={syncNotesHandler}
-          />
-          <Settings
-            size={18}
-            className="action-button"
-            color={iconColor}
-            onClick={settingsHandler}
-          />
+          <button className="action-button" aria-label="Sync notes" onClick={syncNotesHandler}>
+            <span>
+              <UploadCloud
+              size={18}
+              className="action-button__icon"
+              color={iconColor}
+              aria-hidden="true"
+              focusable="false"
+              />
+            </span>
+          </button>
+          <button className="action-button" aria-label="Settings" onClick={settingsHandler}>
+            <span>
+              <Settings
+                size={18}
+                className="action-button__icon"
+                color={iconColor}
+                aria-hidden="true"
+                focusable="false"
+              />
+            </span>
+          </button>
         </div>
       </section>
     </aside>
