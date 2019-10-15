@@ -10,8 +10,7 @@ import {
   UploadCloud,
   X,
 } from 'react-feather'
-import { connect } from 'react-redux'
-import { Dispatch } from 'redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { Folder } from 'constants/enums'
 import { useKeyboard } from 'contexts/KeyboardContext'
@@ -20,43 +19,32 @@ import { addCategory, deleteCategory } from 'slices/category'
 import { addNote, pruneCategoryFromNotes, swapCategory, swapFolder, swapNote } from 'slices/note'
 import { toggleSettingsModal } from 'slices/settings'
 import { syncState } from 'slices/sync'
-import { ApplicationState, CategoryItem, NoteItem } from 'types'
+import { RootState, CategoryItem, NoteItem } from 'types'
 
 const iconColor = 'rgba(255, 255, 255, 0.25)'
 
-interface AppProps {
-  addNote: (note: NoteItem) => void
-  activeNote?: NoteItem
-  addCategory: (category: CategoryItem) => void
-  deleteCategory: (categoryId: string) => void
-  pruneCategoryFromNotes: (categoryId: string) => void
-  swapCategory: (categoryId: string) => void
-  swapFolder: (folder: string) => void
-  swapNote: (swapNote: string) => void
-  notes: NoteItem[]
-  categories: CategoryItem[]
-  activeCategoryId: string
-  activeFolder: string
-  syncState: (notes: NoteItem[], categories: CategoryItem[]) => void
-  toggleSettingsModal: () => void
-}
+const AppSidebar: React.FC = () => {
+  const { categories } = useSelector((state: RootState) => state.categoryState)
+  const { activeCategoryId, activeFolder, activeNoteId, notes } = useSelector(
+    (state: RootState) => state.noteState
+  )
 
-const AppSidebar: React.FC<AppProps> = ({
-  addNote,
-  activeNote,
-  addCategory,
-  deleteCategory,
-  pruneCategoryFromNotes,
-  swapCategory,
-  swapFolder,
-  swapNote,
-  notes,
-  categories,
-  activeCategoryId,
-  activeFolder,
-  syncState,
-  toggleSettingsModal,
-}) => {
+  const activeNote = notes.find(note => note.id === activeNoteId)
+
+  const dispatch = useDispatch()
+
+  const _addNote = (note: NoteItem) => dispatch(addNote(note))
+  const _swapNote = (noteId: string) => dispatch(swapNote(noteId))
+  const _swapCategory = (categoryId: string) => dispatch(swapCategory(categoryId))
+  const _swapFolder = (folder: string) => dispatch(swapFolder(folder))
+  const _addCategory = (category: CategoryItem) => dispatch(addCategory(category))
+  const _deleteCategory = (categoryId: string) => dispatch(deleteCategory(categoryId))
+  const _pruneCategoryFromNotes = (categoryId: string) =>
+    dispatch(pruneCategoryFromNotes(categoryId))
+  const _syncState = (notes: NoteItem[], categories: CategoryItem[]) =>
+    dispatch(syncState({ notes, categories }))
+  const _toggleSettingsModal = () => dispatch(toggleSettingsModal())
+
   const { addingTempCategory, setAddingTempCategory } = useKeyboard()
   const [tempCategory, setTempCategory] = useState('')
 
@@ -68,8 +56,8 @@ const AppSidebar: React.FC<AppProps> = ({
     if ((activeNote && activeNote.text !== '') || !activeNote) {
       const note = newNote(activeCategoryId, activeFolder)
 
-      addNote(note)
-      swapNote(note.id)
+      _addNote(note)
+      _swapNote(note.id)
     }
   }
 
@@ -81,7 +69,7 @@ const AppSidebar: React.FC<AppProps> = ({
     const category = { id: kebabCase(tempCategory), name: tempCategory }
 
     if (!categories.find(cat => cat.id === kebabCase(tempCategory))) {
-      addCategory(category)
+      _addCategory(category)
 
       setTempCategory('')
       setAddingTempCategory(false)
@@ -89,40 +77,38 @@ const AppSidebar: React.FC<AppProps> = ({
   }
 
   const syncNotesHandler = () => {
-    syncState(notes, categories)
+    _syncState(notes, categories)
   }
 
   const settingsHandler = () => {
-    toggleSettingsModal()
+    _toggleSettingsModal()
   }
 
   return (
     <aside className="app-sidebar">
       <section className="app-sidebar-main">
         <div
-          className={activeFolder === Folder.ALL ? 'app-sidebar-link active' : 'app-sidebar-link'}
+          className={`app-sidebar-link ${activeFolder === Folder.ALL ? 'active' : ''}`}
           onClick={() => {
-            swapFolder(Folder.ALL)
+            _swapFolder(Folder.ALL)
           }}
         >
           <Book size={15} style={{ marginRight: '.75rem' }} color={iconColor} />
           All Notes
         </div>
         <div
-          className={
-            activeFolder === Folder.FAVORITES ? 'app-sidebar-link active' : 'app-sidebar-link'
-          }
+          className={`app-sidebar-link ${activeFolder === Folder.FAVORITES ? 'active' : ''}`}
           onClick={() => {
-            swapFolder(Folder.FAVORITES)
+            _swapFolder(Folder.FAVORITES)
           }}
         >
           <Bookmark size={15} style={{ marginRight: '.75rem' }} color={iconColor} />
           Favorites
         </div>
         <div
-          className={activeFolder === Folder.TRASH ? 'app-sidebar-link active' : 'app-sidebar-link'}
+          className={`app-sidebar-link ${activeFolder === Folder.TRASH ? 'active' : ''}`}
           onClick={() => {
-            swapFolder(Folder.TRASH)
+            _swapFolder(Folder.TRASH)
           }}
         >
           <Trash2 size={15} style={{ marginRight: '.75rem' }} color={iconColor} />
@@ -140,17 +126,15 @@ const AppSidebar: React.FC<AppProps> = ({
             return (
               <div
                 key={category.id}
-                className={
-                  category.id === activeCategoryId ? 'category-each active' : 'category-each'
-                }
+                className={`category-each ${category.id === activeCategoryId ? 'active' : ''}`}
                 onClick={() => {
                   const notesForNewCategory = notes.filter(
                     note => !note.trash && note.category === category.id
                   )
                   const newNoteId = notesForNewCategory.length > 0 ? notesForNewCategory[0].id : ''
                   if (category.id !== activeCategoryId) {
-                    swapCategory(category.id)
-                    swapNote(newNoteId)
+                    _swapCategory(category.id)
+                    _swapNote(newNoteId)
                   }
                 }}
               >
@@ -164,10 +148,10 @@ const AppSidebar: React.FC<AppProps> = ({
                     const notesNotTrash = notes.filter(note => !note.trash)
                     const newNoteId = notesNotTrash.length > 0 ? notesNotTrash[0].id : ''
 
-                    deleteCategory(category.id)
-                    pruneCategoryFromNotes(category.id)
-                    swapFolder(Folder.ALL)
-                    swapNote(newNoteId)
+                    _deleteCategory(category.id)
+                    _pruneCategoryFromNotes(category.id)
+                    _swapFolder(Folder.ALL)
+                    _swapNote(newNoteId)
                   }}
                 >
                   <X size={12} />
@@ -218,28 +202,4 @@ const AppSidebar: React.FC<AppProps> = ({
   )
 }
 
-const mapStateToProps = (state: ApplicationState) => ({
-  activeNote: state.noteState.notes.find(note => note.id === state.noteState.activeNoteId),
-  activeFolder: state.noteState.activeFolder,
-  activeCategoryId: state.noteState.activeCategoryId,
-  categories: state.categoryState.categories,
-  notes: state.noteState.notes,
-})
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  addNote: (note: NoteItem) => dispatch(addNote(note)),
-  swapNote: (noteId: string) => dispatch(swapNote(noteId)),
-  swapCategory: (categoryId: string) => dispatch(swapCategory(categoryId)),
-  swapFolder: (folder: string) => dispatch(swapFolder(folder)),
-  addCategory: (category: CategoryItem) => dispatch(addCategory(category)),
-  deleteCategory: (categoryId: string) => dispatch(deleteCategory(categoryId)),
-  pruneCategoryFromNotes: (categoryId: string) => dispatch(pruneCategoryFromNotes(categoryId)),
-  syncState: (notes: NoteItem[], categories: CategoryItem[]) =>
-    dispatch(syncState({ notes, categories })),
-  toggleSettingsModal: () => dispatch(toggleSettingsModal()),
-})
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(AppSidebar)
+export default AppSidebar

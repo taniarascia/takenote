@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react'
-import { Dispatch } from 'redux'
-import { connect } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import AppSidebar from 'containers/AppSidebar'
 import KeyboardShortcuts from 'containers/KeyboardShortcuts'
@@ -10,31 +9,27 @@ import SettingsModal from 'containers/SettingsModal'
 import { KeyboardProvider } from 'contexts/KeyboardContext'
 import { loadCategories } from 'slices/category'
 import { loadNotes } from 'slices/note'
-import { ApplicationState } from 'types'
+import { RootState } from 'types'
 
-interface AppProps {
-  loadNotes: () => void
-  loadCategories: () => void
-  dark?: boolean
-}
+const App: React.FC = () => {
+  const { dark } = useSelector((state: RootState) => state.themeState)
 
-const App: React.FC<AppProps> = ({ loadNotes, loadCategories, dark }) => {
-  let themeClass = ''
+  const dispatch = useDispatch()
 
-  if (dark) {
-    themeClass = 'dark'
-  }
+  // TODO: Fix how the dispatchers interact with the `useEffect`s below
+  const _loadNotes = () => dispatch(loadNotes())
+  const _loadCategories = () => dispatch(loadCategories())
 
   useEffect(() => {
-    loadNotes()
-  }, [loadNotes])
+    _loadNotes()
+  }, [_loadNotes])
 
   useEffect(() => {
-    loadCategories()
-  }, [loadCategories])
+    _loadCategories()
+  }, [_loadCategories])
 
   return (
-    <div className={`app ${themeClass}`}>
+    <div className={`app ${dark ? 'dark' : ''}`}>
       <KeyboardProvider>
         <AppSidebar />
         <NoteList />
@@ -46,16 +41,4 @@ const App: React.FC<AppProps> = ({ loadNotes, loadCategories, dark }) => {
   )
 }
 
-const mapStateToProps = (state: ApplicationState) => ({
-  dark: state.themeState.dark,
-})
-
-const mapDispatchToProps = (dispatch: Dispatch) => ({
-  loadNotes: () => dispatch(loadNotes()),
-  loadCategories: () => dispatch(loadCategories()),
-})
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(App)
+export default App

@@ -53,7 +53,7 @@ export interface ThemeState {
   dark: boolean
 }
 
-export interface ApplicationState {
+export interface RootState {
   categoryState: CategoryState
   noteState: NoteState
   settingsState: SettingsState
