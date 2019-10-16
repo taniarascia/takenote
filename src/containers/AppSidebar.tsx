@@ -9,6 +9,7 @@ import {
   Trash2,
   UploadCloud,
   X,
+  Loader,
 } from 'react-feather'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -60,6 +61,7 @@ const AppSidebar: React.FC = () => {
 
   const { addingTempCategory, setAddingTempCategory } = useKeyboard()
   const [tempCategory, setTempCategory] = useState('')
+  const { syncing } = useSelector((state: RootState) => state.syncState)
 
   const newTempCategoryHandler = () => {
     !addingTempCategory && setAddingTempCategory(true)
@@ -115,6 +117,71 @@ const AppSidebar: React.FC = () => {
 
   return (
     <aside className="app-sidebar">
+      <section className="app-sidebar-actions">
+        <>
+          {activeFolder !== Folder.TRASH && (
+            <button
+              className="action-button"
+              aria-label="Create new note"
+              onClick={newNoteHandler}
+              title="Create note"
+            >
+              <span>
+                <Plus
+                  className="action-button-icon"
+                  size={18}
+                  color={iconColor}
+                  aria-hidden="true"
+                  focusable="false"
+                />
+              </span>
+            </button>
+          )}
+          <button
+            className="action-button"
+            aria-label="Sync notes"
+            onClick={syncNotesHandler}
+            disabled={syncing}
+            title="Sync notes"
+          >
+            <span>
+              {syncing ? (
+                <Loader
+                  size={18}
+                  className="action-button-icon"
+                  color={iconColor}
+                  aria-hidden="true"
+                  focusable="false"
+                />
+              ) : (
+                <UploadCloud
+                  size={18}
+                  className="action-button-icon"
+                  color={iconColor}
+                  aria-hidden="true"
+                  focusable="false"
+                />
+              )}
+            </span>
+          </button>
+          <button
+            className="action-button"
+            aria-label="Settings"
+            onClick={settingsHandler}
+            title="Settings"
+          >
+            <span>
+              <Settings
+                size={18}
+                className="action-button-icon"
+                color={iconColor}
+                aria-hidden="true"
+                focusable="false"
+              />
+            </span>
+          </button>
+        </>
+      </section>
       <section className="app-sidebar-main">
         <div
           className={`app-sidebar-link ${activeFolder === Folder.ALL ? 'active' : ''}`}
@@ -217,45 +284,6 @@ const AppSidebar: React.FC = () => {
             />
           </form>
         )}
-      </section>
-      <section className="app-sidebar-actions">
-        <div>
-          {activeFolder !== Folder.TRASH && (
-            <button className="action-button" aria-label="Create new note" onClick={newNoteHandler}>
-              <span>
-                <Plus
-                  className="action-button-icon"
-                  size={18}
-                  color={iconColor}
-                  aria-hidden="true"
-                  focusable="false"
-                />
-              </span>
-            </button>
-          )}
-          <button className="action-button" aria-label="Sync notes" onClick={syncNotesHandler}>
-            <span>
-              <UploadCloud
-                size={18}
-                className="action-button-icon"
-                color={iconColor}
-                aria-hidden="true"
-                focusable="false"
-              />
-            </span>
-          </button>
-          <button className="action-button" aria-label="Settings" onClick={settingsHandler}>
-            <span>
-              <Settings
-                size={18}
-                className="action-button-icon"
-                color={iconColor}
-                aria-hidden="true"
-                focusable="false"
-              />
-            </span>
-          </button>
-        </div>
       </section>
     </aside>
   )
