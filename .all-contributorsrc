@@ -123,6 +123,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "dong-alex",
+      "name": "Alex Dong",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/23242741?v=4",
+      "profile": "https://github.com/dong-alex",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7
