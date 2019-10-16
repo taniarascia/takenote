@@ -2,13 +2,13 @@
   color: rgba(255, 255, 255, 0.7);
 }
 
-.vcenter {
+.v-center {
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.vbetween {
+.v-between {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -19,12 +19,24 @@
   display: inline-block;
   width: 60px;
   height: 34px;
-}
 
-.switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
+  input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+
+    &:checked + .slider {
+      background: $primary;
+    }
+
+    &:focus + .slider {
+      box-shadow: 0 0 1px $primary;
+    }
+
+    &:checked + .slider:before {
+      transform: translateX(26px);
+    }
+  }
 }
 
 .slider {
@@ -34,42 +46,19 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #ccc;
-  -webkit-transition: 0.4s;
+  background-color: $accent-gray;
   transition: 0.4s;
-}
-
-.slider:before {
-  position: absolute;
-  content: '';
-  height: 26px;
-  width: 26px;
-  left: 4px;
-  bottom: 4px;
-  background-color: white;
-  -webkit-transition: 0.4s;
-  transition: 0.4s;
-}
-
-input:checked + .slider {
-  background-color: $primary;
-}
-
-input:focus + .slider {
-  box-shadow: 0 0 1px $primary;
-}
-
-input:checked + .slider:before {
-  -webkit-transform: translateX(26px);
-  -ms-transform: translateX(26px);
-  transform: translateX(26px);
-}
-
-/* Rounded sliders */
-.slider.round {
   border-radius: 34px;
-}
 
-.slider.round:before {
-  border-radius: 50%;
+  &:before {
+    position: absolute;
+    content: '';
+    height: 26px;
+    width: 26px;
+    left: 4px;
+    bottom: 4px;
+    background: white;
+    transition: 0.4s;
+    border-radius: 50%;
+  }
 }

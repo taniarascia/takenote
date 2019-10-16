@@ -1,0 +1,158 @@
+.app-sidebar {
+  padding: 1rem 0 0.25rem;
+  background: $app-sidebar-color;
+  color: $light-font-color;
+  display: flex;
+  flex-direction: column;
+
+  &-link {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+
+    &:hover {
+      background: lighten($app-sidebar-color, 5%);
+    }
+
+    &.active {
+      background: darken($app-sidebar-color, 5%);
+
+      svg {
+        stroke: $primary;
+      }
+    }
+  }
+
+  &-main {
+    flex: 1;
+
+    p {
+      padding: 0 0.5rem;
+    }
+
+    h2 {
+      margin: 0;
+      color: lighten($app-sidebar-color, 20%);
+      text-transform: uppercase;
+      font-size: 0.7rem;
+    }
+  }
+
+  &-icon {
+    margin-right: 0.75rem;
+  }
+
+  &-actions {
+    > div {
+      box-sizing: content-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 1rem 0;
+    }
+  }
+
+  .action-button {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #292929;
+    padding: 0.7rem;
+    border-radius: 50%;
+    margin: 0 0.25rem;
+    border: none !important;
+
+    &:hover .action-button-icon,
+    &:focus .action-button-icon {
+      stroke: $primary;
+    }
+
+    .action-button-icon {
+      stroke: $light-font-color;
+    }
+  }
+
+  .category {
+    &-title {
+      margin-top: 1rem;
+      padding: 0.5rem;
+    }
+
+    &-list {
+      font-size: 0.9rem;
+
+      &-each {
+        cursor: pointer;
+        padding: 0.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        &:hover {
+          background: lighten($app-sidebar-color, 5%);
+
+          .category-options {
+            color: lighten($app-sidebar-color, 20%);
+          }
+        }
+
+        &.active {
+          background: darken($app-sidebar-color, 5%);
+
+          .category-list-name {
+            svg {
+              stroke: $primary;
+            }
+          }
+        }
+      }
+
+      &-name {
+        display: flex;
+        align-items: center;
+      }
+
+      .category-options {
+        color: transparent;
+        z-index: 1;
+        display: flex;
+        cursor: pointer;
+      }
+    }
+
+    &-form {
+      input {
+        -webkit-appearance: none;
+        border-radius: 4px;
+        background: darken($app-sidebar-color, 5%);
+        border: none;
+        padding: 0.5rem;
+        font-size: 0.9rem;
+        color: #eee;
+        line-height: 1;
+        margin: 0.5rem 0.5rem 0.5rem 1rem;
+        width: 150px;
+      }
+    }
+
+    &-button {
+      cursor: pointer;
+      -webkit-appearance: none;
+      padding: 0;
+      color: $light-font-color;
+      background: transparent;
+      font-size: 1rem;
+      border: none;
+      line-height: 1;
+      margin: 0;
+
+      svg:hover {
+        stroke: white;
+      }
+    }
+  }
+}

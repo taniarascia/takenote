@@ -47,15 +47,15 @@ const SettingsModal: React.FC = () => {
       <div ref={node} className="settings-modal">
         <h2>Settings</h2>
 
-        <div className="settings-options vbetween">
+        <div className="settings-options v-between">
           <div className="settings-label">Dark Mode</div>
           <label className="switch">
             <input type="checkbox" onChange={toggleDarkThemeHandler} checked={dark} />
-            <span className="slider round" />
+            <span className="slider" />
           </label>
         </div>
 
-        <div className="settings-options vbetween">
+        <div className="settings-options v-between">
           <div className="settings-label">Vim Mode</div>
           <label className="switch">
             <input
@@ -68,7 +68,7 @@ const SettingsModal: React.FC = () => {
               }}
               checked={codeMirrorOptions.keyMap === 'vim'}
             />
-            <span className="slider round" />
+            <span className="slider" />
           </label>
         </div>
       </div>

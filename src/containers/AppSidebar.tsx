@@ -122,7 +122,7 @@ const AppSidebar: React.FC = () => {
             _swapFolder(Folder.ALL)
           }}
         >
-          <Book size={15} style={{ marginRight: '.75rem' }} color={iconColor} />
+          <Book size={15} className="app-sidebar-icon" color={iconColor} />
           All Notes
         </div>
         <div
@@ -133,7 +133,7 @@ const AppSidebar: React.FC = () => {
           onDrop={favoriteNoteHandler}
           onDragOver={allowDrop}
         >
-          <Bookmark size={15} style={{ marginRight: '.75rem' }} color={iconColor} />
+          <Bookmark size={15} className="app-sidebar-icon" color={iconColor} />
           Favorites
         </div>
         <div
@@ -144,13 +144,13 @@ const AppSidebar: React.FC = () => {
           onDrop={trashNoteHandler}
           onDragOver={allowDrop}
         >
-          <Trash2 size={15} style={{ marginRight: '.75rem' }} color={iconColor} />
+          <Trash2 size={15} className="app-sidebar-icon" color={iconColor} />
           Trash
         </div>
 
-        <div className="category-title vbetween">
+        <div className="category-title v-between">
           <h2>Categories</h2>
-          <button className="add-category-button" onClick={newTempCategoryHandler}>
+          <button className="category-button" onClick={newTempCategoryHandler}>
             <Plus size={15} color={iconColor} />
           </button>
         </div>
@@ -159,7 +159,7 @@ const AppSidebar: React.FC = () => {
             return (
               <div
                 key={category.id}
-                className={`category-each ${category.id === activeCategoryId ? 'active' : ''}`}
+                className={`category-list-each ${category.id === activeCategoryId ? 'active' : ''}`}
                 onClick={() => {
                   const notesForNewCategory = notes.filter(
                     note => !note.trash && note.category === category.id
@@ -177,8 +177,8 @@ const AppSidebar: React.FC = () => {
                 }}
                 onDragOver={allowDrop}
               >
-                <div className="category-each-name">
-                  <FolderIcon size={15} style={{ marginRight: '.75rem' }} color={iconColor} />
+                <div className="category-list-name">
+                  <FolderIcon size={15} className="app-sidebar-icon" color={iconColor} />
                   {category.name}
                 </div>
                 <div
@@ -200,7 +200,7 @@ const AppSidebar: React.FC = () => {
           })}
         </div>
         {addingTempCategory && (
-          <form className="add-category-form" onSubmit={onSubmit}>
+          <form className="category-form" onSubmit={onSubmit}>
             <input
               autoFocus
               placeholder="New category..."
@@ -224,7 +224,7 @@ const AppSidebar: React.FC = () => {
             <button className="action-button" aria-label="Create new note" onClick={newNoteHandler}>
               <span>
                 <Plus
-                  className="action-button__icon"
+                  className="action-button-icon"
                   size={18}
                   color={iconColor}
                   aria-hidden="true"
@@ -237,7 +237,7 @@ const AppSidebar: React.FC = () => {
             <span>
               <UploadCloud
                 size={18}
-                className="action-button__icon"
+                className="action-button-icon"
                 color={iconColor}
                 aria-hidden="true"
                 focusable="false"
@@ -248,7 +248,7 @@ const AppSidebar: React.FC = () => {
             <span>
               <Settings
                 size={18}
-                className="action-button__icon"
+                className="action-button-icon"
                 color={iconColor}
                 aria-hidden="true"
                 focusable="false"
