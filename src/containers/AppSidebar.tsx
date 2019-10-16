@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { Folder } from 'constants/enums'
 import { useTempState } from 'contexts/TempStateContext'
-import { newNote } from 'helpers'
+import { newNote, sortByName } from 'helpers'
 import { addCategory, deleteCategory } from 'slices/category'
 import {
   addCategoryToNote,
@@ -239,7 +239,7 @@ const AppSidebar: React.FC = () => {
           {errorCategoryMessage && (
             <div className="category-error-message">{errorCategoryMessage}</div>
           )}
-          {categories.map(category => {
+          {categories.sort(sortByName).map(category => {
             return (
               <div
                 key={category.id}

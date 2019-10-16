@@ -5,7 +5,7 @@ import { MoreHorizontal } from 'react-feather'
 import { Folder } from 'constants/enums'
 import { folderMap } from 'constants/index'
 import NoteOptions from 'containers/NoteOptions'
-import { getNoteTitle, sortByLastUpdated } from 'helpers'
+import { getNoteTitle, sortByLastUpdated, sortByName } from 'helpers'
 import { addCategoryToNote, pruneNotes, swapCategory, swapNote } from 'slices/note'
 import { RootState, NoteItem } from 'types'
 
@@ -122,7 +122,7 @@ const NoteList: React.FC = () => {
                         </option>
                         {filteredCategories
                           .filter(category => category.id !== note.category)
-                          .sort((catA, catB) => catA.name.localeCompare(catB.name))
+                          .sort(sortByName)
                           .map(category => (
                             <option key={category.id} value={category.id}>
                               {category.name}

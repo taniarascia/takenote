@@ -2,7 +2,7 @@ import moment from 'moment'
 import uuid from 'uuid/v4'
 
 import { Folder } from 'constants/enums'
-import { NoteItem } from 'types'
+import { NoteItem, CategoryItem } from 'types'
 
 export function getNoteTitle(text: string): string {
   const noteTitleRegEx = /[\w'?!., ]{1,50}/
@@ -53,6 +53,10 @@ export function sortByLastUpdated(a: NoteItem, b: NoteItem) {
   let dateB = new Date(b.lastUpdated)
 
   return dateA > dateB ? -1 : dateA < dateB ? 1 : 0
+}
+
+export function sortByName(a: CategoryItem, b: CategoryItem) {
+  return a.name.localeCompare(b.name)
 }
 
 export const newNote = (categoryId?: string, folder?: Folder): NoteItem => ({
