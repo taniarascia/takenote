@@ -4,6 +4,7 @@ import {
   Book,
   Bookmark,
   Folder as FolderIcon,
+  Loader,
   Plus,
   Settings,
   Trash2,
@@ -12,8 +13,10 @@ import {
 } from 'react-feather'
 import { useDispatch, useSelector } from 'react-redux'
 
+import AppSidebarAction from 'components/AppSidebarAction'
 import { Folder } from 'constants/enums'
-import { useKeyboard } from 'contexts/KeyboardContext'
+import { iconColor } from 'constants/index'
+import { useTempState } from 'contexts/TempStateContext'
 import { newNote } from 'helpers'
 import { addCategory, deleteCategory } from 'slices/category'
 import {
@@ -28,9 +31,7 @@ import {
 } from 'slices/note'
 import { toggleSettingsModal } from 'slices/settings'
 import { syncState } from 'slices/sync'
-import { RootState, CategoryItem, NoteItem } from 'types'
-
-const iconColor = 'rgba(255, 255, 255, 0.25)'
+import { CategoryItem, NoteItem, ReactDragEvent, ReactSubmitEvent, RootState } from 'types'
 
 const AppSidebar: React.FC = () => {
   const { categories } = useSelector((state: RootState) => state.categoryState)
@@ -58,8 +59,14 @@ const AppSidebar: React.FC = () => {
   const _addCategoryToNote = (categoryId: string, noteId: string) =>
     dispatch(addCategoryToNote({ categoryId, noteId }))
 
-  const { addingTempCategory, setAddingTempCategory } = useKeyboard()
+  const {
+    errorCategoryMessage,
+    setErrorCategoryMessage,
+    addingTempCategory,
+    setAddingTempCategory,
+  } = useTempState()
   const [tempCategory, setTempCategory] = useState('')
+  const { syncing } = useSelector((state: RootState) => state.syncState)
 
   const newTempCategoryHandler = () => {
     !addingTempCategory && setAddingTempCategory(true)
@@ -74,18 +81,25 @@ const AppSidebar: React.FC = () => {
     }
   }
 
-  const onSubmit = (
-    event: React.FormEvent<HTMLFormElement> | React.FocusEvent<HTMLInputElement>
-  ): void => {
+  const resetTempCategory = () => {
+    setTempCategory('')
+    setAddingTempCategory(false)
+    setErrorCategoryMessage('')
+  }
+
+  const onSubmit = (event: ReactSubmitEvent): void => {
     event.preventDefault()
 
     const category = { id: kebabCase(tempCategory), name: tempCategory }
 
-    if (!categories.find(cat => cat.id === kebabCase(tempCategory))) {
+    if (category.name.length > 20) {
+      setErrorCategoryMessage('Category name must not exceed 20 characters')
+    } else if (categories.find(cat => cat.id === kebabCase(tempCategory))) {
+      setErrorCategoryMessage('Category name has already been added')
+    } else {
       _addCategory(category)
 
-      setTempCategory('')
-      setAddingTempCategory(false)
+      resetTempCategory()
     }
   }
 
@@ -97,17 +111,17 @@ const AppSidebar: React.FC = () => {
     _toggleSettingsModal()
   }
 
-  const allowDrop = (event: React.DragEvent<HTMLDivElement>) => {
+  const allowDrop = (event: ReactDragEvent) => {
     event.preventDefault()
   }
 
-  const trashNoteHandler = (event: React.DragEvent<HTMLDivElement>) => {
+  const trashNoteHandler = (event: ReactDragEvent) => {
     event.preventDefault()
 
     _toggleTrashedNote(event.dataTransfer.getData('text'))
   }
 
-  const favoriteNoteHandler = (event: React.DragEvent<HTMLDivElement>) => {
+  const favoriteNoteHandler = (event: ReactDragEvent) => {
     event.preventDefault()
 
     _toggleFavoriteNote(event.dataTransfer.getData('text'))
@@ -115,6 +129,17 @@ const AppSidebar: React.FC = () => {
 
   return (
     <aside className="app-sidebar">
+      <section className="app-sidebar-actions">
+        {activeFolder !== Folder.TRASH && (
+          <AppSidebarAction handler={newNoteHandler} icon={Plus} label="Create new note" />
+        )}
+        <AppSidebarAction
+          handler={syncNotesHandler}
+          icon={syncing ? Loader : UploadCloud}
+          label="Sync notes"
+        />
+        <AppSidebarAction handler={settingsHandler} icon={Settings} label="Settings" />
+      </section>
       <section className="app-sidebar-main">
         <div
           className={`app-sidebar-link ${activeFolder === Folder.ALL ? 'active' : ''}`}
@@ -155,6 +180,9 @@ const AppSidebar: React.FC = () => {
           </button>
         </div>
         <div className="category-list">
+          {errorCategoryMessage && (
+            <div className="category-error-message">{errorCategoryMessage}</div>
+          )}
           {categories.map(category => {
             return (
               <div
@@ -173,7 +201,7 @@ const AppSidebar: React.FC = () => {
                 onDrop={event => {
                   event.preventDefault()
 
-                  _addCategoryToNote(category.id, event.dataTransfer.getData('noteId'))
+                  _addCategoryToNote(category.id, event.dataTransfer.getData('text'))
                 }}
                 onDragOver={allowDrop}
               >
@@ -208,8 +236,8 @@ const AppSidebar: React.FC = () => {
                 setTempCategory(event.target.value)
               }}
               onBlur={event => {
-                if (!tempCategory) {
-                  setAddingTempCategory(false)
+                if (!tempCategory || errorCategoryMessage) {
+                  resetTempCategory()
                 } else {
                   onSubmit(event)
                 }
@@ -217,45 +245,6 @@ const AppSidebar: React.FC = () => {
             />
           </form>
         )}
-      </section>
-      <section className="app-sidebar-actions">
-        <div>
-          {activeFolder !== Folder.TRASH && (
-            <button className="action-button" aria-label="Create new note" onClick={newNoteHandler}>
-              <span>
-                <Plus
-                  className="action-button-icon"
-                  size={18}
-                  color={iconColor}
-                  aria-hidden="true"
-                  focusable="false"
-                />
-              </span>
-            </button>
-          )}
-          <button className="action-button" aria-label="Sync notes" onClick={syncNotesHandler}>
-            <span>
-              <UploadCloud
-                size={18}
-                className="action-button-icon"
-                color={iconColor}
-                aria-hidden="true"
-                focusable="false"
-              />
-            </span>
-          </button>
-          <button className="action-button" aria-label="Settings" onClick={settingsHandler}>
-            <span>
-              <Settings
-                size={18}
-                className="action-button-icon"
-                color={iconColor}
-                aria-hidden="true"
-                focusable="false"
-              />
-            </span>
-          </button>
-        </div>
       </section>
     </aside>
   )

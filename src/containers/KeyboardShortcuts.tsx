@@ -1,9 +1,9 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { useKeyboard } from 'contexts/KeyboardContext'
+import { useTempState } from 'contexts/TempStateContext'
 import { downloadNote, getNoteTitle, newNote } from 'helpers'
-import { useKey } from 'helpers/hooks'
+import { useKey, useInterval } from 'helpers/hooks'
 import { addNote, swapNote, toggleTrashedNote } from 'slices/note'
 import { syncState } from 'slices/sync'
 import { toggleDarkTheme } from 'slices/theme'
@@ -26,7 +26,7 @@ const KeyboardShortcuts: React.FC = () => {
     dispatch(syncState({ notes, categories }))
   const _toggleDarkTheme = () => dispatch(toggleDarkTheme())
 
-  const { addingTempCategory, setAddingTempCategory } = useKeyboard()
+  const { addingTempCategory, setAddingTempCategory } = useTempState()
   const newNoteHandler = () => {
     const note = newNote(activeCategoryId, activeFolder)
 
@@ -83,6 +83,10 @@ const KeyboardShortcuts: React.FC = () => {
   useKey('alt+ctrl+t', () => {
     toggleDarkThemeHandler()
   })
+
+  useInterval(() => {
+    _syncState(notes, categories)
+  }, 30000)
 
   return null
 }

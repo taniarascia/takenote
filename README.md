@@ -4,7 +4,7 @@
 
 <p align="center">
  <img src="https://img.shields.io/badge/License-MIT-blue.svg">
-  <a href="#contributors"><img src="https://img.shields.io/badge/all_contributors-10-orange.svg?style=flat-square)"></a>
+  <a href="#contributors"><img src="https://img.shields.io/badge/all_contributors-13-orange.svg?style=flat-square)"></a>
   <a href="https://travis-ci.org/taniarascia/takenote"><img src="https://travis-ci.org/taniarascia/takenote.svg?branch=master"></a>
   <a href="https://coveralls.io/github/taniarascia/takenote?branch=master"><img src="https://coveralls.io/repos/github/taniarascia/takenote/badge.svg?branch=master"></a>
 </p>
@@ -13,14 +13,25 @@
 
 ![Screenshot](./screenshot.png)
 
-## Installation
+## Setup
+
+### Install
 
 ```bash
 git clone git@github.com:taniarascia/takenote
 cd takenote
 npm i
+```
+
+### Run
+
+```bash
 npm start
 ```
+
+### Seed data
+
+To seed the app with some test data, paste the contents of `seed.js` into your browser console and refresh.
 
 ## Features
 
@@ -29,7 +40,8 @@ npm start
 - [x] Add, update, and delete categories
 - [x] Add notes to categories or mark note as favorite
 - [x] Keybinding shortcuts for common actions
-- [ ] Settings for light/dark mode, sync frequency, and Vim mode
+- [x] Settings for light/dark mode, sync frequency, and Vim mode
+- [ ] Search notes
 - [ ] Sync and store notes in GitHub gist (currently local storage)
 
 ## Contributing
@@ -37,10 +49,6 @@ npm start
 TakeNote is an open source project, and contributions of any kind are welcome! Open issues, bugs, and enhancements are all listed on the [issues](https://github.com/taniarascia/takenote/issues) tab and labeled accordingly. Feel free to open bug tickets and make feature requests. Easy bugs and features will be tagged with the `good first issue` label.
 
 The project is written in TypeScript, React and Redux. TypeScript is set to strict mode, with no implicit any allowed. The formatting style for the project is set by Prettier.
-
-### Data Seed
-
-To seed the app with some test data, paste the contents of `seed.js` into your browser console and refresh.
 
 ## Contributors
 
@@ -63,6 +71,8 @@ Thanks goes to these wonderful people:
     <td align="center"><a href="http://www.alphonsebouy.fr"><img src="https://avatars2.githubusercontent.com/u/32797759?v=4" width="50px;" alt="Alphonse Bouy"/><br /><sub><b>Alphonse Bouy</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/issues?q=author%3Aalphonseb" title="Bug reports">🐛</a></td>
     <td align="center"><a href="https://github.com/dave2kb"><img src="https://avatars1.githubusercontent.com/u/30696030?v=4" width="50px;" alt="dave2kb"/><br /><sub><b>dave2kb</b></sub></a><br /><a href="#design-dave2kb" title="Design">🎨</a> <a href="#ideas-dave2kb" title="Ideas, Planning, & Feedback">🤔</a></td>
     <td align="center"><a href="https://github.com/Dantaro"><img src="https://avatars3.githubusercontent.com/u/2750903?v=4" width="50px;" alt="Devin McIntyre"/><br /><sub><b>Devin McIntyre</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=Dantaro" title="Code">💻</a></td>
+    <td align="center"><a href="http://slofish.io"><img src="https://avatars0.githubusercontent.com/u/1240484?v=4" width="50px;" alt="Jeffrey Fisher"/><br /><sub><b>Jeffrey Fisher</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/issues?q=author%3Ajeffslofish" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://github.com/dong-alex"><img src="https://avatars2.githubusercontent.com/u/23242741?v=4" width="50px;" alt="Alex Dong"/><br /><sub><b>Alex Dong</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=dong-alex" title="Code">💻</a></td>
   </tr>
 </table>
 

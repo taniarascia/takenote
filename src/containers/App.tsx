@@ -6,7 +6,7 @@ import KeyboardShortcuts from 'containers/KeyboardShortcuts'
 import NoteEditor from 'containers/NoteEditor'
 import NoteList from 'containers/NoteList'
 import SettingsModal from 'containers/SettingsModal'
-import { KeyboardProvider } from 'contexts/KeyboardContext'
+import { TempStateProvider } from 'contexts/TempStateContext'
 import { loadCategories } from 'slices/category'
 import { loadNotes } from 'slices/note'
 import { RootState } from 'types'
@@ -16,21 +16,25 @@ const App: React.FC = () => {
 
   const dispatch = useDispatch()
 
-  const _loadNotes = () => { dispatch(loadNotes()) }
-  const _loadCategories = () => { dispatch(loadCategories()) }
+  const _loadNotes = () => {
+    dispatch(loadNotes())
+  }
+  const _loadCategories = () => {
+    dispatch(loadCategories())
+  }
 
   useEffect(_loadNotes, [])
   useEffect(_loadCategories, [])
 
   return (
     <div className={`app ${dark ? 'dark' : ''}`}>
-      <KeyboardProvider>
+      <TempStateProvider>
         <AppSidebar />
         <NoteList />
         <NoteEditor />
         <KeyboardShortcuts />
         <SettingsModal />
-      </KeyboardProvider>
+      </TempStateProvider>
     </div>
   )
 }

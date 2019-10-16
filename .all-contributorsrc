@@ -114,6 +114,24 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "jeffslofish",
+      "name": "Jeffrey Fisher",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/1240484?v=4",
+      "profile": "http://slofish.io",
+      "contributions": [
+        "bug"
+      ]
+    },
+    {
+      "login": "dong-alex",
+      "name": "Alex Dong",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/23242741?v=4",
+      "profile": "https://github.com/dong-alex",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7

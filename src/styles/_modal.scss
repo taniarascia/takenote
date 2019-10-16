@@ -32,18 +32,31 @@
   }
 
   .settings {
+    &-label {
+      font-weight: 600;
+      font-size: 1.05rem;
+    }
+
     &-options {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       padding: 0.75rem 0;
-      border-bottom: 2px solid $accent-lightgray;
 
       &:last-of-type {
         border-bottom: 0;
       }
     }
 
-    &-label {
-      font-weight: 600;
-      font-size: 1.05rem;
+    &-shortcut {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.5rem 0;
+    }
+
+    &-section {
+      padding: 1.25rem 0;
     }
   }
 }

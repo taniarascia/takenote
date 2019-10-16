@@ -7,7 +7,7 @@ import { folderMap } from 'constants/index'
 import NoteOptions from 'containers/NoteOptions'
 import { getNoteTitle, sortByLastUpdated } from 'helpers'
 import { addCategoryToNote, pruneNotes, swapCategory, swapNote } from 'slices/note'
-import { RootState, NoteItem } from 'types'
+import { NoteItem, ReactDragEvent, ReactMouseEvent, RootState } from 'types'
 
 const NoteList: React.FC = () => {
   const { categories } = useSelector((state: RootState) => state.categoryState)
@@ -36,10 +36,7 @@ const NoteList: React.FC = () => {
   const [noteOptionsId, setNoteOptionsId] = useState('')
   const node = useRef<HTMLDivElement>(null)
 
-  const handleNoteOptionsClick = (
-    event: MouseEvent | React.MouseEvent<HTMLDivElement> | React.ChangeEvent<HTMLSelectElement>,
-    noteId: string = ''
-  ) => {
+  const handleNoteOptionsClick = (event: ReactMouseEvent, noteId: string = '') => {
     event.stopPropagation()
 
     if (node.current && node.current.contains(event.target as HTMLDivElement)) return
@@ -55,7 +52,7 @@ const NoteList: React.FC = () => {
     }
   })
 
-  const handleDragStart = (event: React.DragEvent<HTMLDivElement>, noteId: string = '') => {
+  const handleDragStart = (event: ReactDragEvent, noteId: string = '') => {
     event.stopPropagation()
 
     event.dataTransfer.setData('text/plain', noteId)
