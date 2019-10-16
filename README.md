@@ -13,14 +13,25 @@
 
 ![Screenshot](./screenshot.png)
 
-## Installation
+## Setup
+
+### Install
 
 ```bash
 git clone git@github.com:taniarascia/takenote
 cd takenote
 npm i
+```
+
+### Run
+
+```bash
 npm start
 ```
+
+### Seed data
+
+To seed the app with some test data, paste the contents of `seed.js` into your browser console and refresh.
 
 ## Features
 
@@ -38,10 +49,6 @@ npm start
 TakeNote is an open source project, and contributions of any kind are welcome! Open issues, bugs, and enhancements are all listed on the [issues](https://github.com/taniarascia/takenote/issues) tab and labeled accordingly. Feel free to open bug tickets and make feature requests. Easy bugs and features will be tagged with the `good first issue` label.
 
 The project is written in TypeScript, React and Redux. TypeScript is set to strict mode, with no implicit any allowed. The formatting style for the project is set by Prettier.
-
-### Data Seed
-
-To seed the app with some test data, paste the contents of `seed.js` into your browser console and refresh.
 
 ## Contributors
 
