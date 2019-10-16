@@ -4,7 +4,6 @@ import {
   Book,
   Bookmark,
   Folder as FolderIcon,
-  Icon,
   Loader,
   Plus,
   Settings,
@@ -14,7 +13,9 @@ import {
 } from 'react-feather'
 import { useDispatch, useSelector } from 'react-redux'
 
+import AppSidebarAction from 'components/AppSidebarAction'
 import { Folder } from 'constants/enums'
+import { iconColor } from 'constants/index'
 import { useTempState } from 'contexts/TempStateContext'
 import { newNote } from 'helpers'
 import { addCategory, deleteCategory } from 'slices/category'
@@ -31,8 +32,6 @@ import {
 import { toggleSettingsModal } from 'slices/settings'
 import { syncState } from 'slices/sync'
 import { CategoryItem, NoteItem, ReactDragEvent, ReactSubmitEvent, RootState } from 'types'
-
-const iconColor = 'rgba(255, 255, 255, 0.25)'
 
 const AppSidebar: React.FC = () => {
   const { categories } = useSelector((state: RootState) => state.categoryState)
@@ -131,69 +130,15 @@ const AppSidebar: React.FC = () => {
   return (
     <aside className="app-sidebar">
       <section className="app-sidebar-actions">
-        <>
-          {activeFolder !== Folder.TRASH && (
-            <button
-              className="action-button"
-              aria-label="Create new note"
-              onClick={newNoteHandler}
-              title="Create note"
-            >
-              <span>
-                <Plus
-                  className="action-button-icon"
-                  size={18}
-                  color={iconColor}
-                  aria-hidden="true"
-                  focusable="false"
-                />
-              </span>
-            </button>
-          )}
-          <button
-            className="action-button"
-            aria-label="Sync notes"
-            onClick={syncNotesHandler}
-            disabled={syncing}
-            title="Sync notes"
-          >
-            <span>
-              {syncing ? (
-                <Loader
-                  size={18}
-                  className="action-button-icon"
-                  color={iconColor}
-                  aria-hidden="true"
-                  focusable="false"
-                />
-              ) : (
-                <UploadCloud
-                  size={18}
-                  className="action-button-icon"
-                  color={iconColor}
-                  aria-hidden="true"
-                  focusable="false"
-                />
-              )}
-            </span>
-          </button>
-          <button
-            className="action-button"
-            aria-label="Settings"
-            onClick={settingsHandler}
-            title="Settings"
-          >
-            <span>
-              <Settings
-                size={18}
-                className="action-button-icon"
-                color={iconColor}
-                aria-hidden="true"
-                focusable="false"
-              />
-            </span>
-          </button>
-        </>
+        {activeFolder !== Folder.TRASH && (
+          <AppSidebarAction handler={newNoteHandler} icon={Plus} label="Create new note" />
+        )}
+        <AppSidebarAction
+          handler={syncNotesHandler}
+          icon={syncing ? Loader : UploadCloud}
+          label="Sync notes"
+        />
+        <AppSidebarAction handler={settingsHandler} icon={Settings} label="Settings" />
       </section>
       <section className="app-sidebar-main">
         <div
