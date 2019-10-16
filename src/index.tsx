@@ -6,8 +6,8 @@ import createSagaMiddleware from 'redux-saga'
 import { configureStore, getDefaultMiddleware } from 'redux-starter-kit'
 
 import App from 'containers/App'
-import rootReducer from 'slices'
 import rootSaga from 'sagas'
+import rootReducer from 'slices'
 
 import 'styles/index.scss'
 
