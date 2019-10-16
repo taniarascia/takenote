@@ -270,7 +270,6 @@ const AppSidebar: React.FC = () => {
                   ) : (
                     category.name
                   )}
-                                  
                 </form>
                 <div
                   className="category-options"
