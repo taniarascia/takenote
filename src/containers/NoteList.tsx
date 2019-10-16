@@ -74,7 +74,7 @@ const NoteList: React.FC = () => {
 
           return (
             <div
-              className={note.id === activeNoteId ? 'note-each active' : 'note-each'}
+              className={note.id === activeNoteId ? 'note-list-each active' : 'note-list-each'}
               key={note.id}
               onClick={() => {
                 if (note.id !== activeNoteId) {
@@ -95,7 +95,7 @@ const NoteList: React.FC = () => {
               {noteOptionsId === note.id && (
                 <div
                   ref={node}
-                  className="note-options-context"
+                  className="note-options-context-menu"
                   onClick={event => {
                     event.stopPropagation()
                   }}

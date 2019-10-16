@@ -1,0 +1,102 @@
+.note-sidebar {
+  background: $note-sidebar-color;
+  border-right: 1px solid darken($note-sidebar-color, 10%);
+
+  &-header {
+    padding: 0.5rem;
+    border-bottom: 1px solid darken($note-sidebar-color, 8%);
+    text-align: center;
+    font-weight: 700;
+  }
+
+  .note-list {
+    &-each {
+      position: relative;
+      cursor: pointer;
+      padding: 0.25rem 0.5rem;
+      border-bottom: 1px solid darken($note-sidebar-color, 8%);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-weight: 500;
+      font-size: 0.9rem;
+      line-height: 1.3;
+
+      &:hover {
+        background: darken($note-sidebar-color, 5%);
+
+        .note-options {
+          color: $font-color;
+        }
+      }
+
+      &.active {
+        background: $primary;
+        color: white;
+
+        &:hover {
+          .note-options {
+            color: white;
+          }
+        }
+      }
+
+      .note-options {
+        color: transparent;
+        padding: 0.5rem;
+        z-index: 1;
+        cursor: pointer;
+
+        &.active {
+          color: $font-color;
+        }
+
+        &-context-menu {
+          cursor: default;
+          border-radius: 4px;
+          position: absolute;
+          padding: 1rem;
+          color: $font-color;
+          top: 32px;
+          left: 200px;
+          min-width: 250px;
+          background: white;
+          border: 1px solid $accent-gray;
+          z-index: 3;
+          box-shadow: $box-shadow;
+
+          h2 {
+            margin-top: 0;
+            font-size: 1rem;
+          }
+
+          .select-element {
+            -webkit-appearance: none;
+            font-size: 1rem;
+            padding: 0.5rem;
+            width: 100%;
+            margin-bottom: 1rem;
+          }
+        }
+
+        &-nav {
+          div {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            padding: 0.5rem;
+            border-radius: 2px;
+
+            &:hover {
+              background: #f0f0f0;
+            }
+          }
+
+          svg {
+            margin-right: 0.5rem;
+          }
+        }
+      }
+    }
+  }
+}

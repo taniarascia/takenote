@@ -24,9 +24,9 @@ const NoteEditor: React.FC = () => {
   const _updateNote = (note: NoteItem) => dispatch(updateNote(note))
 
   if (loading) {
-    return <div className="empty-editor vcenter">Loading...</div>
+    return <div className="empty-editor v-center">Loading...</div>
   } else if (!activeNote) {
-    return <div className="empty-editor vcenter" />
+    return <div className="empty-editor v-center" />
   } else {
     return (
       <CodeMirror

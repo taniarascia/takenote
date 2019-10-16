@@ -1,0 +1,33 @@
+%forms {
+  display: block;
+  border-radius: 4px;
+  border: 1px solid $accent-gray;
+  padding: 0.75rem;
+  outline: none;
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+  width: 100%;
+  max-width: 100%;
+  line-height: 1;
+}
+
+// %forms-hover {}
+
+%forms-focus {
+  outline: 0;
+  border: 1px solid lighten($primary, 15%);
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+#{$forms} {
+  @extend %forms;
+
+  // &:hover {
+  //   @extend %forms-hover;
+  // }
+
+  &:focus,
+  &:active {
+    @extend %forms-focus;
+  }
+}
