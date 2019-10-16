@@ -240,7 +240,7 @@ const AppSidebar: React.FC = () => {
                 onDrop={event => {
                   event.preventDefault()
 
-                  _addCategoryToNote(category.id, event.dataTransfer.getData('noteId'))
+                  _addCategoryToNote(category.id, event.dataTransfer.getData('text'))
                 }}
                 onDragOver={allowDrop}
               >
