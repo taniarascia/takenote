@@ -1,3 +1,6 @@
+import React, { ComponentType } from 'react'
+import { Props } from 'react-feather'
+
 import { Folder } from 'constants/enums'
 import { syncState } from 'slices/sync'
 
@@ -72,3 +75,16 @@ export interface SyncStateAction {
     notes: NoteItem[]
   }
 }
+
+//==============================================================================
+// Events
+//==============================================================================
+
+export type ReactDragEvent = React.DragEvent<HTMLDivElement>
+
+export type ReactMouseEvent =
+  | MouseEvent
+  | React.MouseEvent<HTMLDivElement>
+  | React.ChangeEvent<HTMLSelectElement>
+
+export type ReactSubmitEvent = React.FormEvent<HTMLFormElement> | React.FocusEvent<HTMLInputElement>
