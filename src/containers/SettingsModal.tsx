@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { toggleSettingsModal, updateCodeMirrorOption } from 'slices/settings'
 import { toggleDarkTheme } from 'slices/theme'
-import { RootState } from 'types'
+import { ReactMouseEvent, RootState } from 'types'
 import Switch from 'components/Switch'
 
 const SettingsModal: React.FC = () => {
@@ -19,9 +19,7 @@ const SettingsModal: React.FC = () => {
 
   const node = useRef<HTMLDivElement>(null)
 
-  const handleDomClick = (
-    event: MouseEvent | React.MouseEvent<HTMLDivElement> | React.ChangeEvent<HTMLSelectElement>
-  ) => {
+  const handleDomClick = (event: ReactMouseEvent) => {
     event.stopPropagation()
 
     if (node.current && node.current.contains(event.target as HTMLDivElement)) return
