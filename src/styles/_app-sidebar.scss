@@ -80,6 +80,13 @@
       padding: 0.5rem;
     }
 
+    &-error-message {
+      display: flex;
+      text-align: center;
+      margin: 0 10px;
+      color: red;
+    }
+
     &-list {
       font-size: 0.9rem;
 

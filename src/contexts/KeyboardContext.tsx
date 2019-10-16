@@ -3,11 +3,15 @@ import React, { createContext, FunctionComponent, useContext, useState } from 'r
 interface KeyboardContextInterface {
   addingTempCategory: boolean
   setAddingTempCategory(adding: boolean): void
+  errorCategoryMessage: string
+  setErrorCategoryMessage(message: string): void
 }
 
 const initialContextValue = {
+  errorCategoryMessage: '',
   addingTempCategory: false,
   setAddingTempCategory: (adding: boolean) => undefined,
+  setErrorCategoryMessage: (message: string) => undefined,
 }
 
 const KeyboardContext = createContext<KeyboardContextInterface>(initialContextValue)
@@ -20,9 +24,12 @@ const useKeyboard = () => {
 }
 const KeyboardProvider: FunctionComponent = ({ children }) => {
   const [addingTempCategory, setAddingTempCategory] = useState(false)
+  const [errorCategoryMessage, setErrorCategoryMessage] = useState('')
   const value: KeyboardContextInterface = {
     addingTempCategory,
     setAddingTempCategory,
+    errorCategoryMessage,
+    setErrorCategoryMessage,
   }
   return <KeyboardContext.Provider value={value}>{children}</KeyboardContext.Provider>
 }

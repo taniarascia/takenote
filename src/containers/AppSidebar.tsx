@@ -59,7 +59,12 @@ const AppSidebar: React.FC = () => {
   const _addCategoryToNote = (categoryId: string, noteId: string) =>
     dispatch(addCategoryToNote({ categoryId, noteId }))
 
-  const { addingTempCategory, setAddingTempCategory } = useKeyboard()
+  const {
+    errorCategoryMessage,
+    setErrorCategoryMessage,
+    addingTempCategory,
+    setAddingTempCategory,
+  } = useKeyboard()
   const [tempCategory, setTempCategory] = useState('')
   const { syncing } = useSelector((state: RootState) => state.syncState)
 
@@ -83,11 +88,16 @@ const AppSidebar: React.FC = () => {
 
     const category = { id: kebabCase(tempCategory), name: tempCategory }
 
-    if (!categories.find(cat => cat.id === kebabCase(tempCategory))) {
+    if (category.name.length > 20) {
+      setErrorCategoryMessage('Category name must not exceed 20 characters')
+    } else if (categories.find(cat => cat.id === kebabCase(tempCategory))) {
+      setErrorCategoryMessage('Category name has already been added')
+    } else {
       _addCategory(category)
 
       setTempCategory('')
       setAddingTempCategory(false)
+      setErrorCategoryMessage('')
     }
   }
 
@@ -222,6 +232,9 @@ const AppSidebar: React.FC = () => {
           </button>
         </div>
         <div className="category-list">
+          <div className="category-error-message">
+            {errorCategoryMessage && <span>{errorCategoryMessage}</span>}
+          </div>
           {categories.map(category => {
             return (
               <div
