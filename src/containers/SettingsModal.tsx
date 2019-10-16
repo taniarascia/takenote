@@ -67,31 +67,31 @@ const SettingsModal: React.FC = () => {
           <div className="settings-shortcut">
             <div>Create note</div>
             <div>
-              <kbd>CAPSLOCK</kbd> + <kbd>N</kbd>
+              <kbd>ALT</kbd> + <kbd>CTRL</kbd> + <kbd>N</kbd>
             </div>
           </div>
           <div className="settings-shortcut">
             <div>Delete note</div>
             <div>
-              <kbd>CAPSLOCK</kbd> + <kbd>W</kbd>
+              <kbd>ALT</kbd> + <kbd>CTRL</kbd> + <kbd>W</kbd>
             </div>
           </div>
           <div className="settings-shortcut">
             <div>Create category</div>
             <div>
-              <kbd>CAPSLOCK</kbd> + <kbd>C</kbd>
+              <kbd>ALT</kbd> + <kbd>CTRL</kbd> + <kbd>C</kbd>
             </div>
           </div>
           <div className="settings-shortcut">
             <div>Download note</div>
             <div>
-              <kbd>CAPSLOCK</kbd> + <kbd>D</kbd>
+              <kbd>ALT</kbd> + <kbd>CTRL</kbd> + <kbd>D</kbd>
             </div>
           </div>
           <div className="settings-shortcut">
             <div>Sync note</div>
             <div>
-              <kbd>CAPSLOCK</kbd> + <kbd>S</kbd>
+              <kbd>ALT</kbd> + <kbd>CTRL</kbd> + <kbd>S</kbd>
             </div>
           </div>
         </section>
