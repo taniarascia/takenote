@@ -114,6 +114,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "jeffslofish",
+      "name": "Jeffrey Fisher",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/1240484?v=4",
+      "profile": "http://slofish.io",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7
