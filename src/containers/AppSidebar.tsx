@@ -14,7 +14,7 @@ import {
 import { useDispatch, useSelector } from 'react-redux'
 
 import { Folder } from 'constants/enums'
-import { useKeyboard } from 'contexts/KeyboardContext'
+import { useTempState } from 'contexts/TempStateContext'
 import { newNote } from 'helpers'
 import { addCategory, deleteCategory } from 'slices/category'
 import {
@@ -64,7 +64,7 @@ const AppSidebar: React.FC = () => {
     setErrorCategoryMessage,
     addingTempCategory,
     setAddingTempCategory,
-  } = useKeyboard()
+  } = useTempState()
   const [tempCategory, setTempCategory] = useState('')
   const { syncing } = useSelector((state: RootState) => state.syncState)
 
@@ -81,6 +81,12 @@ const AppSidebar: React.FC = () => {
     }
   }
 
+  const resetTempCategory = () => {
+    setTempCategory('')
+    setAddingTempCategory(false)
+    setErrorCategoryMessage('')
+  }
+
   const onSubmit = (
     event: React.FormEvent<HTMLFormElement> | React.FocusEvent<HTMLInputElement>
   ): void => {
@@ -95,9 +101,7 @@ const AppSidebar: React.FC = () => {
     } else {
       _addCategory(category)
 
-      setTempCategory('')
-      setAddingTempCategory(false)
-      setErrorCategoryMessage('')
+      resetTempCategory()
     }
   }
 
@@ -232,9 +236,9 @@ const AppSidebar: React.FC = () => {
           </button>
         </div>
         <div className="category-list">
-          <div className="category-error-message">
-            {errorCategoryMessage && <span>{errorCategoryMessage}</span>}
-          </div>
+          {errorCategoryMessage && (
+            <div className="category-error-message">{errorCategoryMessage}</div>
+          )}
           {categories.map(category => {
             return (
               <div
@@ -288,8 +292,8 @@ const AppSidebar: React.FC = () => {
                 setTempCategory(event.target.value)
               }}
               onBlur={event => {
-                if (!tempCategory) {
-                  setAddingTempCategory(false)
+                if (!tempCategory || errorCategoryMessage) {
+                  resetTempCategory()
                 } else {
                   onSubmit(event)
                 }

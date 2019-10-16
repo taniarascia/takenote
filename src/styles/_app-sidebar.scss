@@ -82,9 +82,9 @@
 
     &-error-message {
       display: flex;
-      text-align: center;
-      margin: 0 10px;
-      color: red;
+      margin: 0.5rem;
+      color: $error;
+      font-size: 0.85rem;
     }
 
     &-list {
