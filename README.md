@@ -30,7 +30,7 @@ npm start
 - [x] Add notes to categories or mark note as favorite
 - [x] Keybinding shortcuts for common actions
 - [x] Settings for light/dark mode, sync frequency, and Vim mode
-- [x] Search notes
+- [ ] Search notes
 - [ ] Sync and store notes in GitHub gist (currently local storage)
 
 ## Contributing
