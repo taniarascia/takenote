@@ -9,7 +9,7 @@
   <a href="https://coveralls.io/github/taniarascia/takenote?branch=master"><img src="https://coveralls.io/repos/github/taniarascia/takenote/badge.svg?branch=master"></a>
 </p>
 
-A web-based note-taking app with GitHub sync and Markdown support. (WIP)
+<p align="center">A web-based note-taking app with GitHub sync and Markdown support. (WIP)</p>
 
 ![Screenshot](./screenshot.png)
 
