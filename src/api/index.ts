@@ -21,7 +21,7 @@ export const requestNotes = () => {
       resolve(exampleNote)
     } else {
       reject({
-        message: 'Something went wrong',
+        message: 'Something went wrong',
       })
     }
   })
