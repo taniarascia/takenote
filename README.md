@@ -29,7 +29,8 @@ npm start
 - [x] Add, update, and delete categories
 - [x] Add notes to categories or mark note as favorite
 - [x] Keybinding shortcuts for common actions
-- [ ] Settings for light/dark mode, sync frequency, and Vim mode
+- [x] Settings for light/dark mode, sync frequency, and Vim mode
+- [x] Search notes
 - [ ] Sync and store notes in GitHub gist (currently local storage)
 
 ## Contributing
