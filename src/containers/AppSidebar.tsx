@@ -68,9 +68,14 @@ const AppSidebar: React.FC = () => {
   }
 
   const newNoteHandler = () => {
+    if (activeFolder === Folder.TRASH) {
+      _swapFolder(Folder.ALL)
+    }
     if ((activeNote && activeNote.text !== '') || !activeNote) {
-      const note = newNote(activeCategoryId, activeFolder)
-
+      const note = newNote(
+        activeCategoryId,
+        activeFolder === Folder.TRASH ? Folder.ALL : activeFolder
+      )
       _addNote(note)
       _swapNote(note.id)
     }
@@ -119,24 +124,22 @@ const AppSidebar: React.FC = () => {
     <aside className="app-sidebar">
       <section className="app-sidebar-actions">
         <>
-          {activeFolder !== Folder.TRASH && (
-            <button
-              className="action-button"
-              aria-label="Create new note"
-              onClick={newNoteHandler}
-              title="Create note"
-            >
-              <span>
-                <Plus
-                  className="action-button-icon"
-                  size={18}
-                  color={iconColor}
-                  aria-hidden="true"
-                  focusable="false"
-                />
-              </span>
-            </button>
-          )}
+          <button
+            className="action-button"
+            aria-label="Create new note"
+            onClick={newNoteHandler}
+            title="Create note"
+          >
+            <span>
+              <Plus
+                className="action-button-icon"
+                size={18}
+                color={iconColor}
+                aria-hidden="true"
+                focusable="false"
+              />
+            </span>
+          </button>
           <button
             className="action-button"
             aria-label="Sync notes"

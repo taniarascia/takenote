@@ -12,7 +12,6 @@ import rootSaga from 'sagas'
 import 'styles/index.scss'
 
 const sagaMiddleware = createSagaMiddleware()
-
 const store = configureStore({
   reducer: rootReducer,
   middleware: [sagaMiddleware, ...getDefaultMiddleware({ thunk: false })],
