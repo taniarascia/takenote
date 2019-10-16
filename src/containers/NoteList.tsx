@@ -122,6 +122,7 @@ const NoteList: React.FC = () => {
                         </option>
                         {filteredCategories
                           .filter(category => category.id !== note.category)
+                          .sort((catA, catB) => catA.name.localeCompare(catB.name))
                           .map(category => (
                             <option key={category.id} value={category.id}>
                               {category.name}
