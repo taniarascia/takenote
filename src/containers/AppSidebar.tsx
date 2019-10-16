@@ -16,7 +16,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Folder } from 'constants/enums'
 import { useKeyboard } from 'contexts/KeyboardContext'
 import { newNote } from 'helpers'
-import { addCategory, deleteCategory } from 'slices/category'
+import { addCategory, updateCategory, deleteCategory } from 'slices/category'
 import {
   addCategoryToNote,
   addNote,
@@ -38,6 +38,7 @@ const AppSidebar: React.FC = () => {
   const { activeCategoryId, activeFolder, activeNoteId, notes } = useSelector(
     (state: RootState) => state.noteState
   )
+  const [editingCategoryId, setEditingCategoryId] = useState('')
 
   const activeNote = notes.find(note => note.id === activeNoteId)
 
@@ -48,6 +49,7 @@ const AppSidebar: React.FC = () => {
   const _swapCategory = (categoryId: string) => dispatch(swapCategory(categoryId))
   const _swapFolder = (folder: Folder) => dispatch(swapFolder(folder))
   const _addCategory = (category: CategoryItem) => dispatch(addCategory(category))
+  const _updateCategory = (category: CategoryItem) => dispatch(updateCategory(category))
   const _deleteCategory = (categoryId: string) => dispatch(deleteCategory(categoryId))
   const _pruneCategoryFromNotes = (categoryId: string) =>
     dispatch(pruneCategoryFromNotes(categoryId))
@@ -237,6 +239,12 @@ const AppSidebar: React.FC = () => {
                     _swapNote(newNoteId)
                   }
                 }}
+                onDoubleClick={() => {
+                  setEditingCategoryId(category.id)
+                }}
+                onBlur={() => {
+                  setEditingCategoryId('')
+                }}
                 onDrop={event => {
                   event.preventDefault()
 
@@ -244,10 +252,26 @@ const AppSidebar: React.FC = () => {
                 }}
                 onDragOver={allowDrop}
               >
-                <div className="category-list-name">
+                <form
+                  className="category-list-name"
+                  onSubmit={e => {
+                    setEditingCategoryId('')
+                    e.preventDefault()
+                  }}
+                >
                   <FolderIcon size={15} className="app-sidebar-icon" color={iconColor} />
-                  {category.name}
-                </div>
+                  {editingCategoryId === category.id ? (
+                    <input
+                      value={category.name}
+                      onChange={event => {
+                        _updateCategory({ ...category, name: event.target.value })
+                      }}
+                    />
+                  ) : (
+                    category.name
+                  )}
+                                  
+                </form>
                 <div
                   className="category-options"
                   onClick={() => {
