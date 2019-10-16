@@ -80,6 +80,13 @@
       padding: 0.5rem;
     }
 
+    &-error-message {
+      display: flex;
+      margin: 0.5rem;
+      color: $error;
+      font-size: 0.85rem;
+    }
+
     &-list {
       font-size: 0.9rem;
 
