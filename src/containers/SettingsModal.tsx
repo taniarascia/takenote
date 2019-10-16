@@ -67,31 +67,36 @@ const SettingsModal: React.FC = () => {
           <div className="settings-shortcut">
             <div>Create note</div>
             <div>
-              <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>N</kbd>
+              <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>N</kbd> OR <kbd>⌃</kbd> + <kbd>⌥</kbd> +{' '}
+              <kbd>N</kbd>
             </div>
           </div>
           <div className="settings-shortcut">
             <div>Delete note</div>
             <div>
-              <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>W</kbd>
+              <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>W</kbd> OR <kbd>⌃</kbd> + <kbd>⌥</kbd> +{' '}
+              <kbd>W</kbd>
             </div>
           </div>
           <div className="settings-shortcut">
             <div>Create category</div>
             <div>
-              <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>C</kbd>
+              <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>C</kbd> OR <kbd>⌃</kbd> + <kbd>⌥</kbd> +{' '}
+              <kbd>C</kbd>
             </div>
           </div>
           <div className="settings-shortcut">
             <div>Download note</div>
             <div>
-              <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>D</kbd>
+              <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>D</kbd> OR <kbd>⌃</kbd> + <kbd>⌥</kbd> +{' '}
+              <kbd>D</kbd>
             </div>
           </div>
           <div className="settings-shortcut">
             <div>Sync note</div>
             <div>
-              <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>S</kbd>
+              <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>S</kbd> OR <kbd>⌃</kbd> + <kbd>⌥</kbd> +{' '}
+              <kbd>S</kbd>
             </div>
           </div>
         </section>
