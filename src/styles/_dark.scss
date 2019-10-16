@@ -1,40 +1,43 @@
+$dark-sidebar: #333;
+$dark-editor: #3f3f3f;
+
 .dark {
   .note-sidebar {
-    background: #292929;
-    border-right: 1px solid #222;
+    background: darken($dark-sidebar, 4%);
+    border-left: 1px solid darken($dark-sidebar, 8%);
+    border-right: 1px solid darken($dark-sidebar, 8%);
 
     .note-sidebar-header {
-      color: white;
-      border-bottom: 1px solid #191919;
+      color: $light-font-color;
+      border-bottom: 1px solid darken($dark-sidebar, 8%);
     }
 
     .note-list {
-      .note-each {
-        border-bottom: 1px solid #333;
-        color: #aaa;
+      .note-list-each {
+        border-bottom: 1px solid darken($dark-sidebar, 8%);
+        color: darken($light-font-color, 10%);
 
         &:hover {
-          background: #303030;
-          color: white;
+          background: darken($dark-sidebar, 5%);
         }
 
         &.active {
           color: white;
-          background: darken($primary, 10%);
-
-          &:hover {
-            background: $primary;
-          }
+          background: darken($primary, 15%);
         }
       }
     }
   }
 
   .empty-editor {
-    background: #3f3f3f;
+    background: $dark-editor;
   }
 
   .editor .CodeMirror-activeline-background {
     background: #222 !important;
+  }
+  .settings-modal {
+    background: $dark-sidebar;
+    color: $light-font-color;
   }
 }

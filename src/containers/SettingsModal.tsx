@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { toggleSettingsModal, updateCodeMirrorOption } from 'slices/settings'
 import { toggleDarkTheme } from 'slices/theme'
 import { RootState } from 'types'
+import Switch from 'components/Switch'
 
 const SettingsModal: React.FC = () => {
   const { codeMirrorOptions, isOpen } = useSelector((state: RootState) => state.settingsState)
@@ -35,6 +36,10 @@ const SettingsModal: React.FC = () => {
     _updateCodeMirrorOption('theme', dark ? 'base16-light' : 'zenburn')
   }
 
+  const toggleVimMode = () => {
+    _updateCodeMirrorOption('keyMap', codeMirrorOptions.keyMap === 'vim' ? 'default' : 'vim')
+  }
+
   useEffect(() => {
     document.addEventListener('mousedown', handleDomClick)
     return () => {
@@ -47,30 +52,49 @@ const SettingsModal: React.FC = () => {
       <div ref={node} className="settings-modal">
         <h2>Settings</h2>
 
-        <div className="settings-options v-between">
+        <div className="settings-options">
           <div className="settings-label">Dark Mode</div>
-          <label className="switch">
-            <input type="checkbox" onChange={toggleDarkThemeHandler} checked={dark} />
-            <span className="slider" />
-          </label>
+          <Switch toggle={toggleDarkThemeHandler} checked={dark} />
         </div>
 
-        <div className="settings-options v-between">
+        <div className="settings-options">
           <div className="settings-label">Vim Mode</div>
-          <label className="switch">
-            <input
-              type="checkbox"
-              onChange={() => {
-                _updateCodeMirrorOption(
-                  'keyMap',
-                  codeMirrorOptions.keyMap === 'vim' ? 'default' : 'vim'
-                )
-              }}
-              checked={codeMirrorOptions.keyMap === 'vim'}
-            />
-            <span className="slider" />
-          </label>
+          <Switch toggle={toggleVimMode} checked={codeMirrorOptions.keyMap === 'vim'} />
         </div>
+
+        <section className="settings-section">
+          <div className="settings-label mb-1">Keyboard Shortcuts</div>
+          <div className="settings-shortcut">
+            <div>Create note</div>
+            <div>
+              <kbd>CAPSLOCK</kbd> + <kbd>N</kbd>
+            </div>
+          </div>
+          <div className="settings-shortcut">
+            <div>Delete note</div>
+            <div>
+              <kbd>CAPSLOCK</kbd> + <kbd>W</kbd>
+            </div>
+          </div>
+          <div className="settings-shortcut">
+            <div>Create category</div>
+            <div>
+              <kbd>CAPSLOCK</kbd> + <kbd>C</kbd>
+            </div>
+          </div>
+          <div className="settings-shortcut">
+            <div>Download note</div>
+            <div>
+              <kbd>CAPSLOCK</kbd> + <kbd>D</kbd>
+            </div>
+          </div>
+          <div className="settings-shortcut">
+            <div>Sync note</div>
+            <div>
+              <kbd>CAPSLOCK</kbd> + <kbd>S</kbd>
+            </div>
+          </div>
+        </section>
       </div>
     </div>
   ) : null
