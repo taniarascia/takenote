@@ -14,7 +14,7 @@ const SettingsModal: React.FC = () => {
 
   const _toggleSettingsModal = () => dispatch(toggleSettingsModal())
   const _toggleDarkTheme = () => dispatch(toggleDarkTheme())
-  const _updateCodeMirrorOption = (key: string, value: string) =>
+  const _updateCodeMirrorOption = (key: string, value: any) =>
     dispatch(updateCodeMirrorOption({ key, value }))
 
   const node = useRef<HTMLDivElement>(null)
@@ -36,6 +36,10 @@ const SettingsModal: React.FC = () => {
     _updateCodeMirrorOption('theme', dark ? 'base16-light' : 'zenburn')
   }
 
+  const toggleLineHighlight = () => {
+    _updateCodeMirrorOption('styleActiveLine', !codeMirrorOptions.styleActiveLine)
+  }
+
   const toggleVimMode = () => {
     _updateCodeMirrorOption('keyMap', codeMirrorOptions.keyMap === 'vim' ? 'default' : 'vim')
   }
@@ -55,6 +59,11 @@ const SettingsModal: React.FC = () => {
         <div className="settings-options">
           <div className="settings-label">Dark Mode</div>
           <Switch toggle={toggleDarkThemeHandler} checked={dark} />
+        </div>
+
+        <div className="settings-options">
+          <div className="settings-label">Line highlight</div>
+          <Switch toggle={toggleLineHighlight} checked={codeMirrorOptions.styleActiveLine} />
         </div>
 
         <div className="settings-options">
