@@ -16,8 +16,8 @@ const App: React.FC = () => {
 
   const dispatch = useDispatch()
 
-  const _loadNotes = () => dispatch(loadNotes())
-  const _loadCategories = () => dispatch(loadCategories())
+  const _loadNotes = () => { dispatch(loadNotes()) }
+  const _loadCategories = () => { dispatch(loadCategories()) }
 
   useEffect(_loadNotes, [])
   useEffect(_loadCategories, [])
