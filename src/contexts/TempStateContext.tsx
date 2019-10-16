@@ -2,8 +2,8 @@ import React, { createContext, FunctionComponent, useContext, useState } from 'r
 
 interface TempStateContextInterface {
   addingTempCategory: boolean
-  setAddingTempCategory(adding: boolean): void
   errorCategoryMessage: string
+  setAddingTempCategory(adding: boolean): void
   setErrorCategoryMessage(message: string): void
 }
 
