@@ -2,14 +2,22 @@ $dark-sidebar: #333;
 $dark-editor: #3f3f3f;
 
 .dark {
+  .app-sidebar {
+    border-right: 1px solid darken($dark-sidebar, 8%);
+  }
+
   .note-sidebar {
     background: darken($dark-sidebar, 4%);
-    border-left: 1px solid darken($dark-sidebar, 8%);
     border-right: 1px solid darken($dark-sidebar, 8%);
 
     .note-sidebar-header {
       color: $light-font-color;
-      border-bottom: 1px solid darken($dark-sidebar, 8%);
+
+      [type='search'] {
+        background: lighten($dark-sidebar, 8%);
+        color: $light-font-color;
+        border: 1px solid $dark-sidebar;
+      }
     }
 
     .note-list {
@@ -27,6 +35,26 @@ $dark-editor: #3f3f3f;
         }
       }
     }
+
+    .note-options-context-menu {
+      border: 1px solid darken($dark-sidebar, 8%);
+      background: $app-sidebar-color;
+      color: $light-font-color;
+
+      select {
+        background: lighten($dark-sidebar, 8%);
+        color: $light-font-color;
+        border: 1px solid $dark-sidebar;
+      }
+    }
+
+    .note-options-nav {
+      .nav-item {
+        &:hover {
+          background: darken($app-sidebar-color, 5%);
+        }
+      }
+    }
   }
 
   .empty-editor {
@@ -36,6 +64,7 @@ $dark-editor: #3f3f3f;
   .editor .CodeMirror-activeline-background {
     background: #222 !important;
   }
+
   .settings-modal {
     background: $dark-sidebar;
     color: $light-font-color;

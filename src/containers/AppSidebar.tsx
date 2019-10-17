@@ -1,4 +1,4 @@
-import kebabCase from 'lodash/kebabCase'
+import uuid from 'uuid/v4'
 import React, { useState } from 'react'
 import {
   Book,
@@ -73,9 +73,15 @@ const AppSidebar: React.FC = () => {
   }
 
   const newNoteHandler = () => {
-    if ((activeNote && activeNote.text !== '') || !activeNote) {
-      const note = newNote(activeCategoryId, activeFolder)
+    if (activeFolder === Folder.TRASH) {
+      _swapFolder(Folder.ALL)
+    }
 
+    if ((activeNote && activeNote.text !== '') || !activeNote) {
+      const note = newNote(
+        activeCategoryId,
+        activeFolder === Folder.TRASH ? Folder.ALL : activeFolder
+      )
       _addNote(note)
       _swapNote(note.id)
     }
@@ -87,15 +93,13 @@ const AppSidebar: React.FC = () => {
     setErrorCategoryMessage('')
   }
 
-  const onSubmit = (event: ReactSubmitEvent): void => {
+  const onSubmitCategory = (event: ReactSubmitEvent): void => {
     event.preventDefault()
 
-    const category = { id: kebabCase(tempCategory), name: tempCategory }
+    const category = { id: uuid(), name: tempCategory.trim() }
 
-    if (category.name.length > 20) {
-      setErrorCategoryMessage('Category name must not exceed 20 characters')
-    } else if (categories.find(cat => cat.id === kebabCase(tempCategory))) {
-      setErrorCategoryMessage('Category name has already been added')
+    if (categories.find(cat => cat.name === tempCategory.trim())) {
+      setErrorCategoryMessage('Category already exists!')
     } else {
       _addCategory(category)
 
@@ -130,9 +134,7 @@ const AppSidebar: React.FC = () => {
   return (
     <aside className="app-sidebar">
       <section className="app-sidebar-actions">
-        {activeFolder !== Folder.TRASH && (
-          <AppSidebarAction handler={newNoteHandler} icon={Plus} label="Create new note" />
-        )}
+        <AppSidebarAction handler={newNoteHandler} icon={Plus} label="Create new note" />
         <AppSidebarAction
           handler={syncNotesHandler}
           icon={syncing ? Loader : UploadCloud}
@@ -228,18 +230,19 @@ const AppSidebar: React.FC = () => {
           })}
         </div>
         {addingTempCategory && (
-          <form className="category-form" onSubmit={onSubmit}>
+          <form className="category-form" onSubmit={onSubmitCategory}>
             <input
               autoFocus
+              maxLength={20}
               placeholder="New category..."
               onChange={event => {
                 setTempCategory(event.target.value)
               }}
               onBlur={event => {
-                if (!tempCategory || errorCategoryMessage) {
+                if (!tempCategory || tempCategory.trim() === '' || errorCategoryMessage) {
                   resetTempCategory()
                 } else {
-                  onSubmit(event)
+                  onSubmitCategory(event)
                 }
               }}
             />

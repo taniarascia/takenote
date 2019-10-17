@@ -4,7 +4,6 @@ import { Folder } from 'constants/enums'
 import { sortByLastUpdated } from 'helpers'
 import { NoteItem, NoteState } from 'types'
 
-// TODO: Ugh
 const getNewActiveNoteId = (
   notes: NoteItem[],
   oldNoteId: string,
@@ -25,8 +24,8 @@ export const getFirstNoteId = (folder: Folder, notes: NoteItem[], categoryId?: s
   const firstNote = {
     [Folder.ALL]: () => notesNotTrash[0],
     [Folder.CATEGORY]: () => notesNotTrash.find(note => note.category === categoryId),
-    [Folder.FAVORITES]: () => notesNotTrash.find(note => note.favorite),
-    [Folder.TRASH]: () => notes.find(note => note.trash),
+    [Folder.FAVORITES]: () => notesNotTrash.find(note => !!note.favorite),
+    [Folder.TRASH]: () => notes.find(note => !!note.trash),
   }[folder]()
   return firstNote ? firstNote.id : ''
 }
@@ -38,6 +37,7 @@ const initialState: NoteState = {
   error: '',
   loading: true,
   notes: [],
+  searchValue: '',
 }
 
 const noteSlice: Slice<NoteState> = createSlice({
@@ -83,6 +83,10 @@ const noteSlice: Slice<NoteState> = createSlice({
     pruneNotes: state => ({
       ...state,
       notes: state.notes.filter(note => note.text !== '' || note.id === state.activeNoteId),
+    }),
+    searchNotes: (state, { payload }: PayloadAction<string>) => ({
+      ...state,
+      searchValue: payload,
     }),
     swapCategory: (state, { payload }: PayloadAction<string>) => ({
       ...state,
@@ -133,6 +137,7 @@ export const {
   loadNotesSuccess,
   pruneCategoryFromNotes,
   pruneNotes,
+  searchNotes,
   swapCategory,
   swapFolder,
   swapNote,

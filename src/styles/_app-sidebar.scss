@@ -4,6 +4,7 @@
   color: $light-font-color;
   display: flex;
   flex-direction: column;
+  border-right: 1px solid darken($app-sidebar-color, 10%);
 
   &-link {
     display: flex;
@@ -57,11 +58,11 @@
     cursor: pointer;
     display: flex;
     align-items: center;
-    justify-content: center;
-    background: #292929;
+    justify-content: space-between;
+    background: darken($app-sidebar-color, 3%);
     padding: 0.7rem;
     border-radius: 50%;
-    margin: 0 0.25rem;
+    margin: 0 0.5rem;
     border: none !important;
 
     &:hover .action-button-icon,

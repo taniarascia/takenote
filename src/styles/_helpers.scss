@@ -21,8 +21,8 @@
 .switch {
   position: relative;
   display: inline-block;
-  width: 60px;
-  height: 34px;
+  width: 50px;
+  height: 24px;
 
   input {
     opacity: 0;
@@ -57,8 +57,8 @@
   &:before {
     position: absolute;
     content: '';
-    height: 26px;
-    width: 26px;
+    height: 16px;
+    width: 16px;
     left: 4px;
     bottom: 4px;
     background: white;

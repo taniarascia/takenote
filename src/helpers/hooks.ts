@@ -16,7 +16,7 @@ export function useInterval(callback: () => void, delay: number | null) {
   // Set up the interval.
   useEffect(() => {
     const tick = () => savedCallback.current()
-    if (delay !== null) {
+    if (delay) {
       const id = setInterval(tick, delay)
 
       return () => clearInterval(id)
@@ -30,8 +30,9 @@ export function useKey(key: string, action: () => void) {
 
   useEffect(() => {
     mousetrap.bindGlobal(key, () => {
-      if (!actionRef.current) return
-      actionRef.current()
+      if (actionRef.current) {
+        actionRef.current()
+      }
     })
     return () => mousetrap.unbind(key)
   }, [key])

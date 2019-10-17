@@ -1,5 +1,4 @@
-import React, { ComponentType } from 'react'
-import { Props } from 'react-feather'
+import React from 'react'
 
 import { Folder } from 'constants/enums'
 import { syncState } from 'slices/sync'
@@ -40,6 +39,7 @@ export interface NoteState {
   activeCategoryId: string
   error: string
   loading: boolean
+  searchValue: string
 }
 
 export interface SettingsState {
@@ -65,15 +65,17 @@ export interface RootState {
 }
 
 //==============================================================================
-// Sagas
+// API
 //==============================================================================
+
+export interface SyncStatePayload {
+  categories: CategoryItem[]
+  notes: NoteItem[]
+}
 
 export interface SyncStateAction {
   type: typeof syncState.type
-  payload: {
-    categories: CategoryItem[]
-    notes: NoteItem[]
-  }
+  payload: SyncStatePayload
 }
 
 //==============================================================================
