@@ -1,4 +1,4 @@
-import kebabCase from 'lodash/kebabCase'
+import uuid from 'uuid/v4'
 import React, { useState } from 'react'
 import {
   Book,
@@ -90,9 +90,9 @@ const AppSidebar: React.FC = () => {
   const onSubmitCategory = (event: ReactSubmitEvent): void => {
     event.preventDefault()
 
-    const category = { id: kebabCase(tempCategory), name: tempCategory }
+    const category = { id: uuid(), name: tempCategory.trim() }
 
-    if (categories.find(cat => cat.id === kebabCase(tempCategory))) {
+    if (categories.find(cat => cat.name === tempCategory.trim())) {
       setErrorCategoryMessage('Category already exists!')
     } else {
       _addCategory(category)
@@ -229,7 +229,7 @@ const AppSidebar: React.FC = () => {
           <form className="category-form" onSubmit={onSubmitCategory}>
             <input
               autoFocus
-              maxLength={15}
+              maxLength={20}
               placeholder="New category..."
               onChange={event => {
                 setTempCategory(event.target.value)
