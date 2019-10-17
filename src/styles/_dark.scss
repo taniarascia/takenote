@@ -5,6 +5,7 @@ $dark-editor: #3f3f3f;
   .app-sidebar {
     border-right: 1px solid darken($dark-sidebar, 8%);
   }
+
   .note-sidebar {
     background: darken($dark-sidebar, 4%);
     border-right: 1px solid darken($dark-sidebar, 8%);
@@ -29,6 +30,24 @@ $dark-editor: #3f3f3f;
         }
       }
     }
+
+    .note-options-context-menu {
+      border: 1px solid darken($dark-sidebar, 8%);
+      background: $app-sidebar-color;
+
+      color: light-font-color select {
+        background: darken($dark-sidebar, 5%);
+        color: darken($light-font-color, 5%);
+      }
+    }
+
+    .note-options-nav {
+      .nav-item {
+        &:hover {
+          background: darken($app-sidebar-color, 5%);
+        }
+      }
+    }
   }
 
   .empty-editor {
@@ -38,6 +57,7 @@ $dark-editor: #3f3f3f;
   .editor .CodeMirror-activeline-background {
     background: #222 !important;
   }
+
   .settings-modal {
     background: $dark-sidebar;
     color: $light-font-color;

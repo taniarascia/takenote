@@ -55,7 +55,7 @@
           cursor: default;
           border-radius: 4px;
           position: absolute;
-          padding: 1rem;
+          padding: 0.5rem;
           color: $font-color;
           top: 32px;
           left: 200px;
@@ -65,22 +65,20 @@
           z-index: 3;
           box-shadow: $box-shadow;
 
-          h2 {
-            margin-top: 0;
-            font-size: 0.9rem;
-          }
-
-          .select-element {
+          .select {
             -webkit-appearance: none;
             font-size: 1rem;
             padding: 0.5rem;
-            width: 100%;
-            margin-bottom: 1rem;
+            width: calc(100% - 1rem);
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 0.25rem;
+            margin-bottom: 0.5rem;
           }
         }
 
         &-nav {
-          div {
+          .nav-item {
             cursor: pointer;
             display: flex;
             align-items: center;

@@ -99,10 +99,9 @@ const NoteList: React.FC = () => {
                 >
                   {!note.trash && (
                     <>
-                      <h2>Move to category</h2>
                       <select
                         defaultValue=""
-                        className="select-element"
+                        className="select"
                         onChange={event => {
                           _addCategoryToNote(event.target.value, note.id)
 
@@ -115,7 +114,7 @@ const NoteList: React.FC = () => {
                         }}
                       >
                         <option disabled value="">
-                          Select category
+                          Move to category...
                         </option>
                         {filteredCategories
                           .filter(category => category.id !== note.category)
