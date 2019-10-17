@@ -13,9 +13,10 @@
 
 ![Screenshot](./screenshot.png)
 
-## Setup
+## SETUP
 
-### Install
+### INSTALL
+--------------
 
 ```bash
 git clone git@github.com:taniarascia/takenote
@@ -23,24 +24,28 @@ cd takenote
 npm i
 ```
 
-### Run
+### RUN
+----------
 
 ```bash
 npm start
 ```
 
-### Run in Docker
+### RUN IN DOCKER
+----------------------
 
 ```bash
 docker build -t takenote .
 docker run -p 80:80 takenote
 ```
 
-### Seed data
+### SEED DATA
+------------------
 
 To seed the app with some test data, paste the contents of `seed.js` into your browser console and refresh.
 
-## Features
+## FEATURES
+----------------
 
 - [x] Plain text notes with Markdown highlighting and frontmatter metadata
 - [x] Add, update, download, temporarily delete and delete notes
@@ -51,13 +56,15 @@ To seed the app with some test data, paste the contents of `seed.js` into your b
 - [x] Search notes
 - [ ] Sync and store notes in GitHub gist (currently local storage)
 
-## Contributing
+## CONTRIBUTION
+-----------------------
 
 TakeNote is an open source project, and contributions of any kind are welcome! Open issues, bugs, and enhancements are all listed on the [issues](https://github.com/taniarascia/takenote/issues) tab and labeled accordingly. Feel free to open bug tickets and make feature requests. Easy bugs and features will be tagged with the `good first issue` label.
 
 The project is written in TypeScript, React and Redux. TypeScript is set to strict mode, with no implicit any allowed. The formatting style for the project is set by Prettier.
 
-## Contributors
+## CONTRIBUTORS
+-----------------------
 
 Thanks goes to these wonderful people:
 
@@ -91,10 +98,7 @@ Thanks goes to these wonderful people:
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
-## Author
 
-- [Tania Rascia](https://www.taniarascia.com)
-
-## License
-
+## LICENSE
+----------------
 This project is open source and available under the [MIT License](LICENSE).
