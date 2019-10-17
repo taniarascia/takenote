@@ -10,6 +10,10 @@
   overflow-y: auto;
 }
 
+.editor.vim-insert-mode {
+  cursor: cell;
+}
+
 .CodeMirror {
   -webkit-font-smoothing: subpixel-antialiased;
   padding: 1rem;
