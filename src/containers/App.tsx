@@ -40,7 +40,7 @@ const App: React.FC = () => {
           {' '}
           {activeFolder === Folder.CATEGORY
             ? activeCategory && activeCategory.name
-            : folderMap[activeFolder]}
+            : folderMap[activeFolder]}{' '}
           | TakeNote
         </title>
         <link rel="canonical" href="https://takenote.dev" />
