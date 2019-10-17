@@ -73,9 +73,15 @@ const AppSidebar: React.FC = () => {
   }
 
   const newNoteHandler = () => {
-    if ((activeNote && activeNote.text !== '') || !activeNote) {
-      const note = newNote(activeCategoryId, activeFolder)
+    if (activeFolder === Folder.TRASH) {
+      _swapFolder(Folder.ALL)
+    }
 
+    if ((activeNote && activeNote.text !== '') || !activeNote) {
+      const note = newNote(
+        activeCategoryId,
+        activeFolder === Folder.TRASH ? Folder.ALL : activeFolder
+      )
       _addNote(note)
       _swapNote(note.id)
     }
@@ -128,9 +134,7 @@ const AppSidebar: React.FC = () => {
   return (
     <aside className="app-sidebar">
       <section className="app-sidebar-actions">
-        {activeFolder !== Folder.TRASH && (
-          <AppSidebarAction handler={newNoteHandler} icon={Plus} label="Create new note" />
-        )}
+        <AppSidebarAction handler={newNoteHandler} icon={Plus} label="Create new note" />
         <AppSidebarAction
           handler={syncNotesHandler}
           icon={syncing ? Loader : UploadCloud}
