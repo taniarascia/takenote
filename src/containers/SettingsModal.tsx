@@ -55,17 +55,17 @@ const SettingsModal: React.FC = () => {
         <h2>Settings</h2>
 
         <div className="settings-options">
-          <div className="settings-label">Dark Mode</div>
-          <Switch toggle={toggleDarkThemeHandler} checked={dark} />
-        </div>
-
-        <div className="settings-options">
-          <div className="settings-label">Line highlight</div>
+          <div>Active line highlight</div>
           <Switch toggle={toggleLineHighlight} checked={codeMirrorOptions.styleActiveLine} />
         </div>
 
         <div className="settings-options">
-          <div className="settings-label">Vim Mode</div>
+          <div>Dark Mode</div>
+          <Switch toggle={toggleDarkThemeHandler} checked={dark} />
+        </div>
+
+        <div className="settings-options">
+          <div>Vim Mode</div>
           <Switch toggle={toggleVimMode} checked={codeMirrorOptions.keyMap === 'vim'} />
         </div>
 

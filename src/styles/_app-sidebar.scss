@@ -4,6 +4,7 @@
   color: $light-font-color;
   display: flex;
   flex-direction: column;
+  border-right: 1px solid darken($app-sidebar-color, 10%);
 
   &-link {
     display: flex;
