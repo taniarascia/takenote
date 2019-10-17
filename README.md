@@ -38,7 +38,7 @@ docker run -p 80:80 takenote
 
 ### Seed data
 
-To seed the app with some test data, paste the contents of `seed.js` into your browser console and refresh.
+To seed the app with some test data, paste the contents of `seed.js` into your browser console.
 
 ## Features
 
