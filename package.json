@@ -1,7 +1,9 @@
 {
   "name": "takenote",
   "version": "0.1.0",
-  "private": false,
+  "description": "A web-based note-taking app with GitHub sync and Markdown support",
+  "main": "./public/index.html",
+  "private": true,
   "scripts": {
     "build": "react-scripts build",
     "contributors:add": "all-contributors add",
@@ -12,6 +14,29 @@
     "start": "react-scripts start",
     "test": "react-scripts test"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/taniarascia/takenote"
+  },
+  "keywords": [
+    "notes",
+    "notes-app",
+    "markdown",
+    "markdown-editor",
+    "note-taking",
+    "redux",
+    "react",
+    "typescript",
+    "react-hooks",
+    "react-hooks-redux",
+    "gist"
+  ],
+  "author": "Tania Rascia",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/taniarascia/takenote/issues"
+  },
+  "homepage": "https://github.com/taniarascia/takenote#readme",
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
