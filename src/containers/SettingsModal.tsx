@@ -101,6 +101,12 @@ const SettingsModal: React.FC = () => {
               <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>S</kbd>
             </div>
           </div>
+          <div className="settings-shortcut">
+            <div>Dark mode</div>
+            <div>
+              <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>T</kbd>
+            </div>
+          </div>
         </section>
       </div>
     </div>
