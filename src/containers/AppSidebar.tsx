@@ -92,7 +92,9 @@ const AppSidebar: React.FC = () => {
 
     const category = { id: kebabCase(tempCategory), name: tempCategory }
 
-    if (category.name.length > 20) {
+    if (category.name.trim().length === 0) {
+      setErrorCategoryMessage('Category name is invalid')
+    } else if (category.name.length > 20) {
       setErrorCategoryMessage('Category name must not exceed 20 characters')
     } else if (categories.find(cat => cat.id === kebabCase(tempCategory))) {
       setErrorCategoryMessage('Category name has already been added')
