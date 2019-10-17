@@ -37,11 +37,11 @@ const App: React.FC = () => {
       <Helmet>
         <meta charSet="utf-8" />
         <title>
-          {' '}
           {activeFolder === Folder.CATEGORY
-            ? activeCategory && activeCategory.name
-            : folderMap[activeFolder]}{' '}
-          | TakeNote
+            ? activeCategory
+              ? `${activeCategory.name} | TakeNote`
+              : `TakeNote`
+            : `${folderMap[activeFolder]} | TakeNote`}
         </title>
         <link rel="canonical" href="https://takenote.dev" />
       </Helmet>
