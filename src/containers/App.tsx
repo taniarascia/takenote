@@ -37,7 +37,7 @@ const App: React.FC = () => {
       <Helmet>
         <meta charSet="utf-8" />
         <title>
-          {' '}
+          {` `}
           {activeFolder === Folder.CATEGORY
             ? activeCategory && activeCategory.name
             : folderMap[activeFolder]}{' '}
