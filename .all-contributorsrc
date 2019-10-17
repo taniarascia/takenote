@@ -141,6 +141,16 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "kleyu",
+      "name": "Jakub Naskręski",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/36169811?v=4",
+      "profile": "https://github.com/kleyu",
+      "contributions": [
+        "code",
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7
