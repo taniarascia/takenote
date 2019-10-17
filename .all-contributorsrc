@@ -170,6 +170,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "yikjin",
+      "name": "marshmallow",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/34995304?v=4",
+      "profile": "https://yikjin.github.io",
+      "contributions": [
+        "maintenance"
+      ]
     }
   ],
   "contributorsPerLine": 7
