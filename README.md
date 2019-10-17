@@ -29,6 +29,13 @@ npm i
 npm start
 ```
 
+### Run in Docker
+
+```bash
+docker build -t takenote .
+docker run -p 80:80 takenote
+```
+
 ### Seed data
 
 To seed the app with some test data, paste the contents of `seed.js` into your browser console and refresh.
