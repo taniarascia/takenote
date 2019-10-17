@@ -36,7 +36,7 @@
   "bugs": {
     "url": "https://github.com/taniarascia/takenote/issues"
   },
-  "homepage": "https://github.com/taniarascia/takenote#readme",
+  "homepage": "https://takenote.dev",
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
