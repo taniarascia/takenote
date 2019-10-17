@@ -6,7 +6,14 @@ import _ from 'lodash'
 import { Folder } from 'constants/enums'
 import NoteOptions from 'containers/NoteOptions'
 import { getNoteTitle, sortByLastUpdated } from 'helpers'
-import { addCategoryToNote, pruneNotes, swapCategory, swapNote, searchNotes } from 'slices/note'
+import {
+  addCategoryToNote,
+  pruneNotes,
+  swapCategory,
+  swapNote,
+  searchNotes,
+  swapFolder,
+} from 'slices/note'
 import { NoteItem, ReactDragEvent, ReactMouseEvent, RootState } from 'types'
 
 const NoteList: React.FC = () => {
@@ -38,6 +45,7 @@ const NoteList: React.FC = () => {
   const _swapNote = (noteId: string) => dispatch(swapNote(noteId))
   const _swapCategory = (categoryId: string) => dispatch(swapCategory(categoryId))
   const _searchNotes = (searchValue: string) => dispatch(searchNotes(searchValue))
+  const _swapFolder = (folder: Folder) => dispatch(swapFolder(folder))
 
   const [noteOptionsId, setNoteOptionsId] = useState('')
   const node = useRef<HTMLDivElement>(null)
@@ -115,7 +123,11 @@ const NoteList: React.FC = () => {
                           _addCategoryToNote(event.target.value, note.id)
 
                           if (event.target.value !== activeCategoryId) {
-                            _swapCategory(event.target.value)
+                            if (event.target.value === '') {
+                              _swapFolder(Folder.ALL)
+                            } else {
+                              _swapCategory(event.target.value)
+                            }
                             _swapNote(note.id)
                           }
 
