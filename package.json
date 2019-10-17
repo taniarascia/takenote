@@ -2,8 +2,7 @@
   "name": "takenote",
   "version": "0.1.0",
   "description": "A web-based note-taking app with GitHub sync and Markdown support",
-  "main": "./public/index.html",
-  "private": true,
+  "private": false,
   "scripts": {
     "build": "react-scripts build",
     "contributors:add": "all-contributors add",
