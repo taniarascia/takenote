@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Helmet } from 'react-helmet'
+import { Helmet, HelmetProvider } from 'react-helmet-async'
 
 import { Folder } from 'constants/enums'
 import { folderMap } from 'constants/index'
@@ -33,7 +33,7 @@ const App: React.FC = () => {
   useEffect(_loadCategories, [])
 
   return (
-    <>
+    <HelmetProvider>
       <Helmet>
         <meta charSet="utf-8" />
         <title>
@@ -55,7 +55,7 @@ const App: React.FC = () => {
           <SettingsModal />
         </TempStateProvider>
       </div>
-    </>
+    </HelmetProvider>
   )
 }
 
