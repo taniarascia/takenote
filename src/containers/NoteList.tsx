@@ -1,19 +1,22 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { MoreHorizontal } from 'react-feather'
+import _ from 'lodash'
 
 import { Folder } from 'constants/enums'
-import { folderMap } from 'constants/index'
 import NoteOptions from 'containers/NoteOptions'
 import { getNoteTitle, sortByLastUpdated } from 'helpers'
-import { addCategoryToNote, pruneNotes, swapCategory, swapNote } from 'slices/note'
+import { addCategoryToNote, pruneNotes, swapCategory, swapNote, searchNotes } from 'slices/note'
 import { NoteItem, ReactDragEvent, ReactMouseEvent, RootState } from 'types'
 
 const NoteList: React.FC = () => {
   const { categories } = useSelector((state: RootState) => state.categoryState)
-  const { activeCategoryId, activeFolder, activeNoteId, notes } = useSelector(
+  const { activeCategoryId, activeFolder, activeNoteId, notes, searchValue } = useSelector(
     (state: RootState) => state.noteState
   )
+
+  const re = new RegExp(_.escapeRegExp(searchValue), 'i')
+  const isMatch = (result: NoteItem) => re.test(result.text)
 
   const filter: Record<Folder, (note: NoteItem) => boolean> = {
     [Folder.CATEGORY]: note => !note.trash && note.category === activeCategoryId,
@@ -21,8 +24,10 @@ const NoteList: React.FC = () => {
     [Folder.TRASH]: note => !!note.trash,
     [Folder.ALL]: note => !note.trash,
   }
-  const filteredNotes: NoteItem[] = notes.filter(filter[activeFolder]).sort(sortByLastUpdated)
-  const activeCategory = categories.find(({ id }) => id === activeCategoryId)
+  const filteredNotes: NoteItem[] = notes
+    .filter(filter[activeFolder])
+    .filter(isMatch)
+    .sort(sortByLastUpdated)
   const filteredCategories = categories.filter(({ id }) => id !== activeCategoryId)
 
   const dispatch = useDispatch()
@@ -32,6 +37,7 @@ const NoteList: React.FC = () => {
   const _pruneNotes = () => dispatch(pruneNotes())
   const _swapNote = (noteId: string) => dispatch(swapNote(noteId))
   const _swapCategory = (categoryId: string) => dispatch(swapCategory(categoryId))
+  const _searchNotes = (searchValue: string) => dispatch(searchNotes(searchValue))
 
   const [noteOptionsId, setNoteOptionsId] = useState('')
   const node = useRef<HTMLDivElement>(null)
@@ -43,27 +49,30 @@ const NoteList: React.FC = () => {
     setNoteOptionsId(!noteOptionsId || noteOptionsId !== noteId ? noteId : '')
   }
 
-  useEffect(() => {
-    // add when mounted
-    document.addEventListener('mousedown', handleNoteOptionsClick)
-    // return function to be called when unmounted
-    return () => {
-      document.removeEventListener('mousedown', handleNoteOptionsClick)
-    }
-  })
-
   const handleDragStart = (event: ReactDragEvent, noteId: string = '') => {
     event.stopPropagation()
 
     event.dataTransfer.setData('text/plain', noteId)
   }
 
+  useEffect(() => {
+    document.addEventListener('mousedown', handleNoteOptionsClick)
+    return () => {
+      document.removeEventListener('mousedown', handleNoteOptionsClick)
+    }
+  })
+
   return (
     <aside className="note-sidebar">
       <div className="note-sidebar-header">
-        {activeFolder === Folder.CATEGORY
-          ? activeCategory && activeCategory.name
-          : folderMap[activeFolder]}
+        <input
+          type="search"
+          onChange={event => {
+            event.preventDefault()
+            _searchNotes(event.target.value)
+          }}
+          placeholder="Search for notes"
+        />
       </div>
       <div className="note-list">
         {filteredNotes.map(note => {

@@ -4,9 +4,12 @@
 
   &-header {
     padding: 0.5rem;
-    border-bottom: 1px solid darken($note-sidebar-color, 8%);
     text-align: center;
     font-weight: 700;
+
+    [type='search'] {
+      margin-bottom: 0;
+    }
   }
 
   .note-list {

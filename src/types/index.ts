@@ -39,6 +39,7 @@ export interface NoteState {
   activeCategoryId: string
   error: string
   loading: boolean
+  searchValue: string
 }
 
 export interface SettingsState {
