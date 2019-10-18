@@ -25,6 +25,10 @@
       font-size: 0.9rem;
       line-height: 1.3;
 
+      .note-favourite {
+        margin-left: 0.5rem;
+      }
+
       &:hover {
         background: darken($note-sidebar-color, 5%);
 
