@@ -37,7 +37,7 @@ const NoteList: React.FC = () => {
   const _pruneNotes = () => dispatch(pruneNotes())
   const _swapNote = (noteId: string) => dispatch(swapNote(noteId))
   const _swapCategory = (categoryId: string) => dispatch(swapCategory(categoryId))
-  const _searchNotes = (searchValue: string) => dispatch(searchNotes(searchValue))
+  const _searchNotes = _.debounce((searchValue: string) => dispatch(searchNotes(searchValue)), 200)
 
   const [noteOptionsId, setNoteOptionsId] = useState('')
   const node = useRef<HTMLDivElement>(null)
@@ -76,7 +76,24 @@ const NoteList: React.FC = () => {
       </div>
       <div className="note-list">
         {filteredNotes.map(note => {
-          const noteTitle = getNoteTitle(note.text)
+          let noteTitle: string | React.ReactElement = getNoteTitle(note.text)
+
+          if (searchValue) {
+            const highlightStart = noteTitle.search(re)
+
+            if (highlightStart !== -1) {
+              const highlightEnd = highlightStart + searchValue.length
+              noteTitle = (
+                <>
+                  {noteTitle.slice(0, highlightStart)}
+                  <strong style={{ color: '#3e64ff' }}>
+                    {noteTitle.slice(highlightStart, highlightEnd)}
+                  </strong>
+                  {noteTitle.slice(highlightEnd)}
+                </>
+              )
+            }
+          }
 
           return (
             <div
