@@ -19,7 +19,6 @@
 
   .note-list {
     &-each {
-      position: relative;
       cursor: pointer;
       padding: 0.25rem 0.5rem;
       border-bottom: 1px solid darken($note-sidebar-color, 8%);
