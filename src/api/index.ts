@@ -1,5 +1,7 @@
 import { CategoryItem, NoteItem } from 'types'
 
+import { exampleNote } from './exampleNote'
+
 export const requestNotes = () => {
   return new Promise((resolve, reject) => {
     const data = localStorage.getItem('notes') || '[]'
