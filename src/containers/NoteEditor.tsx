@@ -2,10 +2,11 @@ import moment from 'moment'
 import React from 'react'
 import { Controlled as CodeMirror } from 'react-codemirror2'
 import { useDispatch, useSelector } from 'react-redux'
+import { Dispatch } from 'redux'
 
 import { updateNote } from 'slices/note'
 import { updateVimStateMode } from 'slices/settings'
-import { RootState, NoteItem, VimModes } from 'types'
+import { NoteItem, RootState, VimModes } from 'types'
 
 import 'codemirror/lib/codemirror.css'
 import 'codemirror/theme/base16-light.css'
@@ -14,17 +15,29 @@ import 'codemirror/mode/gfm/gfm'
 import 'codemirror/addon/selection/active-line'
 import 'codemirror/keymap/vim'
 
-const NoteEditor: React.FC = () => {
+const useNotes = (dispatch: Dispatch) => {
   const { activeNoteId, loading, notes } = useSelector((state: RootState) => state.noteState)
+  return {
+    activeNote: notes.find(note => note.id === activeNoteId),
+    loading,
+    _updateNote: (note: NoteItem) => dispatch(updateNote(note)),
+  }
+}
+
+const useSettings = (dispatch: Dispatch) => {
   const { codeMirrorOptions, vimState } = useSelector((state: RootState) => state.settingsState)
+  return {
+    codeMirrorOptions,
+    vimMode: vimState.mode,
+    _updateVimStateMode: (vimMode: VimModes) => dispatch(updateVimStateMode(vimMode)),
+  }
+}
 
-  const activeNote = notes.find(note => note.id === activeNoteId)
-
+const NoteEditor: React.FC = () => {
   const dispatch = useDispatch()
 
-  const _updateNote = (note: NoteItem) => dispatch(updateNote(note))
-
-  const _updateVimStateMode = (vimMode: VimModes) => dispatch(updateVimStateMode(vimMode))
+  const { activeNote, loading, _updateNote } = useNotes(dispatch)
+  const { codeMirrorOptions, vimMode, _updateVimStateMode } = useSettings(dispatch)
 
   if (loading) {
     return <div className="empty-editor v-center">Loading...</div>
@@ -48,7 +61,7 @@ const NoteEditor: React.FC = () => {
           event.preventDefault()
           console.log(editor)
         }}
-        className={`editor mousetrap ${vimState.mode === VimModes.insert ? 'vim-insert-mode' : ''}`}
+        className={`editor mousetrap ${vimMode === VimModes.insert ? 'vim-insert-mode' : ''}`}
         value={activeNote.text}
         options={codeMirrorOptions}
         editorDidMount={editor => {
