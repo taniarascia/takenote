@@ -1,6 +1,11 @@
 .note-sidebar {
   background: $note-sidebar-color;
   border-right: 1px solid darken($note-sidebar-color, 10%);
+  overflow-y: hidden;
+
+  &:hover {
+    overflow-y: auto;
+  }
 
   &-header {
     padding: 0.5rem;
