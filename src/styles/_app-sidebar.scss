@@ -61,13 +61,23 @@
     justify-content: space-between;
     background: darken($app-sidebar-color, 3%);
     padding: 0.7rem;
-    border-radius: 50%;
     margin: 0 0.5rem;
     border: none !important;
 
-    &:hover .action-button-icon,
-    &:focus .action-button-icon {
-      stroke: $primary;
+    span {
+      height: 20px;
+      width: 20px;
+    }
+
+    &:hover,
+    &:focus {
+      background: $primary;
+      outline: none;
+
+      .action-button-icon,
+      .action-button-icon {
+        stroke: white;
+      }
     }
 
     .action-button-icon {
