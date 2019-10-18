@@ -44,7 +44,7 @@ const NoteList: React.FC = () => {
   const node = useRef<HTMLDivElement>(null)
 
   const handleNoteOptionsClick = (event: ReactMouseEvent, noteId: string = '') => {
-    if (event instanceof MouseEvent) {
+    if (event instanceof MouseEvent && event.target instanceof SVGElement) {
       setNoteOptionsPosition({ x: event.pageX, y: event.pageY })
     }
     event.stopPropagation()
