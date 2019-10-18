@@ -40,9 +40,13 @@ const NoteList: React.FC = () => {
   const _searchNotes = _.debounce((searchValue: string) => dispatch(searchNotes(searchValue)), 200)
 
   const [noteOptionsId, setNoteOptionsId] = useState('')
+  const [noteOptionsPosition, setNoteOptionsPosition] = useState({ x: 0, y: 0 })
   const node = useRef<HTMLDivElement>(null)
 
   const handleNoteOptionsClick = (event: ReactMouseEvent, noteId: string = '') => {
+    if (event instanceof MouseEvent) {
+      setNoteOptionsPosition({ x: event.pageX, y: event.pageY })
+    }
     event.stopPropagation()
 
     if (node.current && node.current.contains(event.target as HTMLDivElement)) return
@@ -119,6 +123,11 @@ const NoteList: React.FC = () => {
                 <div
                   ref={node}
                   className="note-options-context-menu"
+                  style={{
+                    position: 'absolute',
+                    top: noteOptionsPosition.y + 'px',
+                    left: noteOptionsPosition.x + 'px',
+                  }}
                   onClick={event => {
                     event.stopPropagation()
                   }}
