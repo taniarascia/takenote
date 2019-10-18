@@ -25,6 +25,9 @@
   max-width: 90%;
   user-select: text;
   z-index: 100;
+  margin: 1rem;
+  max-height: 90vh;
+  overflow: auto;
 
   h2 {
     margin-top: 0;
@@ -41,7 +44,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0.75rem 0;
+      padding: 0.5rem 0;
 
       &:last-of-type {
         border-bottom: 0;

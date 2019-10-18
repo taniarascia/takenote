@@ -1,6 +1,7 @@
 {
   "name": "takenote",
   "version": "0.1.0",
+  "description": "A web-based note-taking app with GitHub sync and Markdown support",
   "private": false,
   "scripts": {
     "build": "react-scripts build",
@@ -12,6 +13,29 @@
     "start": "react-scripts start",
     "test": "react-scripts test"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/taniarascia/takenote"
+  },
+  "keywords": [
+    "notes",
+    "notes-app",
+    "markdown",
+    "markdown-editor",
+    "note-taking",
+    "redux",
+    "react",
+    "typescript",
+    "react-hooks",
+    "react-hooks-redux",
+    "gist"
+  ],
+  "author": "Tania Rascia",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/taniarascia/takenote/issues"
+  },
+  "homepage": "https://takenote.dev",
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
@@ -93,6 +117,7 @@
     "@types/node": "12.7.8",
     "@types/react": "16.9.3",
     "@types/react-dom": "16.9.1",
+    "@types/react-helmet-async": "^1.0.1",
     "@types/react-redux": "^7.1.4",
     "@types/react-router-dom": "^5.1.0",
     "@types/uuid": "^3.4.5",
@@ -107,20 +132,19 @@
     "react-codemirror2": "^6.0.0",
     "react-dom": "^16.9.0",
     "react-feather": "^2.0.3",
+    "react-helmet-async": "^1.0.4",
     "react-redux": "^7.1.1",
     "react-router-dom": "^5.1.0",
     "react-scripts": "3.1.2",
     "redux": "^4.0.4",
     "redux-saga": "^1.1.1",
     "redux-starter-kit": "^0.7.0",
-    "typesafe-actions": "^4.4.2",
     "typescript": "3.6.3",
     "uuid": "^3.3.3"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^4.1.2",
     "@testing-library/react": "^9.3.0",
-    "all-contributors-cli": "^6.9.1",
     "coveralls": "^3.0.7",
     "eslint-config-prettier": "^6.4.0",
     "eslint-plugin-import": "^2.18.2",
@@ -129,7 +153,6 @@
     "jest": "^24.9.0",
     "lint-staged": "^9.4.2",
     "prettier": "^1.18.2",
-    "pretty-quick": "^2.0.0",
     "ts-jest": "^24.1.0"
   }
 }

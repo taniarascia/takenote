@@ -57,7 +57,8 @@
       "profile": "https://martinbrosenberg.com/",
       "contributions": [
         "code",
-        "bug"
+        "bug",
+        "maintenance"
       ]
     },
     {
@@ -131,6 +132,52 @@
       "profile": "https://github.com/dong-alex",
       "contributions": [
         "code"
+      ]
+    },
+    {
+      "login": "Publicker",
+      "name": "Publicker",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/52673485?v=4",
+      "profile": "https://github.com/Publicker",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "kleyu",
+      "name": "Jakub Naskręski",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/36169811?v=4",
+      "profile": "https://github.com/kleyu",
+      "contributions": [
+        "code",
+        "bug"
+      ]
+    },
+    {
+      "login": "opw0011",
+      "name": "Benny O",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/10897048?v=4",
+      "profile": "https://opw0011.github.io/",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "justDOindev",
+      "name": "Justin Payne",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/44042682?v=4",
+      "profile": "https://github.com/justDOindev",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "yikjin",
+      "name": "marshmallow",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/34995304?v=4",
+      "profile": "https://yikjin.github.io",
+      "contributions": [
+        "maintenance"
       ]
     }
   ],

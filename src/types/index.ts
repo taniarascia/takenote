@@ -1,3 +1,5 @@
+import React from 'react'
+
 import { Folder } from 'constants/enums'
 import { syncState } from 'slices/sync'
 
@@ -37,6 +39,7 @@ export interface NoteState {
   activeCategoryId: string
   error: string
   loading: boolean
+  searchValue: string
 }
 
 export interface SettingsState {
@@ -62,13 +65,28 @@ export interface RootState {
 }
 
 //==============================================================================
-// Sagas
+// API
 //==============================================================================
+
+export interface SyncStatePayload {
+  categories: CategoryItem[]
+  notes: NoteItem[]
+}
 
 export interface SyncStateAction {
   type: typeof syncState.type
-  payload: {
-    categories: CategoryItem[]
-    notes: NoteItem[]
-  }
+  payload: SyncStatePayload
 }
+
+//==============================================================================
+// Events
+//==============================================================================
+
+export type ReactDragEvent = React.DragEvent<HTMLDivElement>
+
+export type ReactMouseEvent =
+  | MouseEvent
+  | React.MouseEvent<HTMLDivElement>
+  | React.ChangeEvent<HTMLSelectElement>
+
+export type ReactSubmitEvent = React.FormEvent<HTMLFormElement> | React.FocusEvent<HTMLInputElement>

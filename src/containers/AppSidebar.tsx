@@ -1,19 +1,21 @@
-import kebabCase from 'lodash/kebabCase'
+import uuid from 'uuid/v4'
 import React, { useState } from 'react'
 import {
   Book,
   Bookmark,
   Folder as FolderIcon,
+  Loader,
   Plus,
   Settings,
   Trash2,
   UploadCloud,
   X,
-  Loader,
 } from 'react-feather'
 import { useDispatch, useSelector } from 'react-redux'
 
+import AppSidebarAction from 'components/AppSidebarAction'
 import { Folder } from 'constants/enums'
+import { iconColor } from 'constants/index'
 import { useTempState } from 'contexts/TempStateContext'
 import { newNote } from 'helpers'
 import { addCategory, updateCategory, deleteCategory } from 'slices/category'
@@ -29,9 +31,7 @@ import {
 } from 'slices/note'
 import { toggleSettingsModal } from 'slices/settings'
 import { syncState } from 'slices/sync'
-import { RootState, CategoryItem, NoteItem } from 'types'
-
-const iconColor = 'rgba(255, 255, 255, 0.25)'
+import { CategoryItem, NoteItem, ReactDragEvent, ReactSubmitEvent, RootState } from 'types'
 
 const AppSidebar: React.FC = () => {
   const { categories } = useSelector((state: RootState) => state.categoryState)
@@ -75,9 +75,15 @@ const AppSidebar: React.FC = () => {
   }
 
   const newNoteHandler = () => {
-    if ((activeNote && activeNote.text !== '') || !activeNote) {
-      const note = newNote(activeCategoryId, activeFolder)
+    if (activeFolder === Folder.TRASH) {
+      _swapFolder(Folder.ALL)
+    }
 
+    if ((activeNote && activeNote.text !== '') || !activeNote) {
+      const note = newNote(
+        activeCategoryId,
+        activeFolder === Folder.TRASH ? Folder.ALL : activeFolder
+      )
       _addNote(note)
       _swapNote(note.id)
     }
@@ -89,17 +95,13 @@ const AppSidebar: React.FC = () => {
     setErrorCategoryMessage('')
   }
 
-  const onSubmit = (
-    event: React.FormEvent<HTMLFormElement> | React.FocusEvent<HTMLInputElement>
-  ): void => {
+  const onSubmitCategory = (event: ReactSubmitEvent): void => {
     event.preventDefault()
 
-    const category = { id: kebabCase(tempCategory), name: tempCategory }
+    const category = { id: uuid(), name: tempCategory.trim() }
 
-    if (category.name.length > 20) {
-      setErrorCategoryMessage('Category name must not exceed 20 characters')
-    } else if (categories.find(cat => cat.id === kebabCase(tempCategory))) {
-      setErrorCategoryMessage('Category name has already been added')
+    if (categories.find(cat => cat.name === tempCategory.trim())) {
+      setErrorCategoryMessage('Category already exists!')
     } else {
       _addCategory(category)
 
@@ -115,17 +117,17 @@ const AppSidebar: React.FC = () => {
     _toggleSettingsModal()
   }
 
-  const allowDrop = (event: React.DragEvent<HTMLDivElement>) => {
+  const allowDrop = (event: ReactDragEvent) => {
     event.preventDefault()
   }
 
-  const trashNoteHandler = (event: React.DragEvent<HTMLDivElement>) => {
+  const trashNoteHandler = (event: ReactDragEvent) => {
     event.preventDefault()
 
     _toggleTrashedNote(event.dataTransfer.getData('text'))
   }
 
-  const favoriteNoteHandler = (event: React.DragEvent<HTMLDivElement>) => {
+  const favoriteNoteHandler = (event: ReactDragEvent) => {
     event.preventDefault()
 
     _toggleFavoriteNote(event.dataTransfer.getData('text'))
@@ -134,69 +136,13 @@ const AppSidebar: React.FC = () => {
   return (
     <aside className="app-sidebar">
       <section className="app-sidebar-actions">
-        <>
-          {activeFolder !== Folder.TRASH && (
-            <button
-              className="action-button"
-              aria-label="Create new note"
-              onClick={newNoteHandler}
-              title="Create note"
-            >
-              <span>
-                <Plus
-                  className="action-button-icon"
-                  size={18}
-                  color={iconColor}
-                  aria-hidden="true"
-                  focusable="false"
-                />
-              </span>
-            </button>
-          )}
-          <button
-            className="action-button"
-            aria-label="Sync notes"
-            onClick={syncNotesHandler}
-            disabled={syncing}
-            title="Sync notes"
-          >
-            <span>
-              {syncing ? (
-                <Loader
-                  size={18}
-                  className="action-button-icon"
-                  color={iconColor}
-                  aria-hidden="true"
-                  focusable="false"
-                />
-              ) : (
-                <UploadCloud
-                  size={18}
-                  className="action-button-icon"
-                  color={iconColor}
-                  aria-hidden="true"
-                  focusable="false"
-                />
-              )}
-            </span>
-          </button>
-          <button
-            className="action-button"
-            aria-label="Settings"
-            onClick={settingsHandler}
-            title="Settings"
-          >
-            <span>
-              <Settings
-                size={18}
-                className="action-button-icon"
-                color={iconColor}
-                aria-hidden="true"
-                focusable="false"
-              />
-            </span>
-          </button>
-        </>
+        <AppSidebarAction handler={newNoteHandler} icon={Plus} label="Create new note" />
+        <AppSidebarAction
+          handler={syncNotesHandler}
+          icon={syncing ? Loader : UploadCloud}
+          label="Sync notes"
+        />
+        <AppSidebarAction handler={settingsHandler} icon={Settings} label="Settings" />
       </section>
       <section className="app-sidebar-main">
         <div
@@ -307,18 +253,19 @@ const AppSidebar: React.FC = () => {
           })}
         </div>
         {addingTempCategory && (
-          <form className="category-form" onSubmit={onSubmit}>
+          <form className="category-form" onSubmit={onSubmitCategory}>
             <input
               autoFocus
+              maxLength={20}
               placeholder="New category..."
               onChange={event => {
                 setTempCategory(event.target.value)
               }}
               onBlur={event => {
-                if (!tempCategory || errorCategoryMessage) {
+                if (!tempCategory || tempCategory.trim() === '' || errorCategoryMessage) {
                   resetTempCategory()
                 } else {
-                  onSubmit(event)
+                  onSubmitCategory(event)
                 }
               }}
             />

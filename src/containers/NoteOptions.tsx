@@ -39,29 +39,29 @@ const NoteOptions: React.FC<NoteOptionsProps> = ({ clickedNote }) => {
     <nav className="note-options-nav" data-testid="note-options-nav">
       {clickedNote.trash ? (
         <>
-          <div className="nav-button" onClick={deleteNoteHandler}>
-            <X size={15} />
+          <div className="nav-item" onClick={deleteNoteHandler}>
+            <X size={18} />
             Delete permanently
           </div>
-          <div className="nav-button" onClick={trashNoteHandler}>
-            <ArrowUp size={15} />
+          <div className="nav-item" onClick={trashNoteHandler}>
+            <ArrowUp size={18} />
             Restore from trash
           </div>
         </>
       ) : (
         <>
-          <div className="nav-button" onClick={favoriteNoteHandler}>
-            <Bookmark size={15} />
+          <div className="nav-item" onClick={favoriteNoteHandler}>
+            <Bookmark size={18} />
             {clickedNote.favorite ? 'Remove Favorite' : 'Mark as Favorite'}
           </div>
-          <div className="nav-button" onClick={trashNoteHandler}>
-            <Trash size={15} />
+          <div className="nav-item" onClick={trashNoteHandler}>
+            <Trash size={18} />
             Move to trash
           </div>
         </>
       )}
-      <div className="nav-button" onClick={downloadNoteHandler}>
-        <Download size={15} />
+      <div className="nav-item" onClick={downloadNoteHandler}>
+        <Download size={18} />
         Download
       </div>
     </nav>
