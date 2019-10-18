@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState, CSSProperties } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { MoreHorizontal } from 'react-feather'
 import _ from 'lodash'
@@ -44,8 +44,19 @@ const NoteList: React.FC = () => {
   const node = useRef<HTMLDivElement>(null)
 
   const handleNoteOptionsClick = (event: ReactMouseEvent, noteId: string = '') => {
-    if (event instanceof MouseEvent && event.target instanceof SVGElement) {
-      setNoteOptionsPosition({ x: event.pageX, y: event.pageY })
+    if (
+      event instanceof MouseEvent &&
+      (event.target instanceof Element || event.target instanceof SVGElement)
+    ) {
+      console.log('event target:', event, event.target.classList.contains('note-options'))
+      if (event.target.classList.contains('note-options')) {
+        setNoteOptionsPosition({ x: event.pageX, y: event.pageY })
+      }
+      if (event.target.parentElement instanceof Element) {
+        if (event.target.parentElement.classList.contains('note-options')) {
+          setNoteOptionsPosition({ x: event.pageX, y: event.pageY })
+        }
+      }
     }
     event.stopPropagation()
 
