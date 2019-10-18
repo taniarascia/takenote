@@ -40,9 +40,24 @@ const NoteList: React.FC = () => {
   const _searchNotes = _.debounce((searchValue: string) => dispatch(searchNotes(searchValue)), 200)
 
   const [noteOptionsId, setNoteOptionsId] = useState('')
+  const [noteOptionsPosition, setNoteOptionsPosition] = useState({ x: 0, y: 0 })
   const node = useRef<HTMLDivElement>(null)
 
   const handleNoteOptionsClick = (event: ReactMouseEvent, noteId: string = '') => {
+    if (
+      event instanceof MouseEvent &&
+      (event.target instanceof Element || event.target instanceof SVGElement)
+    ) {
+      console.log('event target:', event, event.target.classList.contains('note-options'))
+      if (event.target.classList.contains('note-options')) {
+        setNoteOptionsPosition({ x: event.pageX, y: event.pageY })
+      }
+      if (event.target.parentElement instanceof Element) {
+        if (event.target.parentElement.classList.contains('note-options')) {
+          setNoteOptionsPosition({ x: event.pageX, y: event.pageY })
+        }
+      }
+    }
     event.stopPropagation()
 
     if (node.current && node.current.contains(event.target as HTMLDivElement)) return
@@ -53,6 +68,19 @@ const NoteList: React.FC = () => {
     event.stopPropagation()
 
     event.dataTransfer.setData('text/plain', noteId)
+  }
+
+  const getOptionsYPoisition = (): Number => {
+    // get the max window frame
+    const MaxY = window.innerHeight
+
+    // determine approximate options height based on root font-size of 15px, padding, and select box.
+    const optionsSize = 15 * 11
+
+    // if window position - noteOptions position isn't ibgger than options. flip it.
+    return MaxY - noteOptionsPosition.y > optionsSize
+      ? noteOptionsPosition.y
+      : noteOptionsPosition.y - optionsSize
   }
 
   useEffect(() => {
@@ -119,6 +147,11 @@ const NoteList: React.FC = () => {
                 <div
                   ref={node}
                   className="note-options-context-menu"
+                  style={{
+                    position: 'absolute',
+                    top: getOptionsYPoisition() + 'px',
+                    left: noteOptionsPosition.x + 'px',
+                  }}
                   onClick={event => {
                     event.stopPropagation()
                   }}
