@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Helmet, HelmetProvider } from 'react-helmet-async'
-import { useBeforeunload, Beforeunload } from 'react-beforeunload'
+import { useBeforeunload } from 'react-beforeunload'
 
 import { Folder } from 'constants/enums'
 import { folderMap } from 'constants/index'
@@ -30,7 +30,7 @@ const App: React.FC = () => {
     dispatch(loadCategories())
   }
 
-  useBeforeunload(() => "You may loose your Data if you didn't save it.")
+  useBeforeunload(() => "You may loose your Data if you didn't sync it.")
   useEffect(_loadNotes, [])
   useEffect(_loadCategories, [])
 
