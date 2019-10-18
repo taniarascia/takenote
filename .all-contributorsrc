@@ -189,6 +189,16 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "xboston",
+      "name": "Nikolay Kirsh",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/201306?v=4",
+      "profile": "https://xboston.dev",
+      "contributions": [
+        "bug",
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7
