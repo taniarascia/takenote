@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState, CSSProperties } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { MoreHorizontal } from 'react-feather'
 import _ from 'lodash'
@@ -57,6 +57,19 @@ const NoteList: React.FC = () => {
     event.stopPropagation()
 
     event.dataTransfer.setData('text/plain', noteId)
+  }
+
+  const getOptionsYPoisition = (): Number => {
+    // get the max window frame
+    const MaxY = window.innerHeight
+
+    // determine approximate options height based on root font-size of 15px, padding, and select box.
+    const optionsSize = 15 * 11
+
+    // if window position - noteOptions position isn't ibgger than options. flip it.
+    return MaxY - noteOptionsPosition.y > optionsSize
+      ? noteOptionsPosition.y
+      : noteOptionsPosition.y - optionsSize
   }
 
   useEffect(() => {
@@ -125,7 +138,7 @@ const NoteList: React.FC = () => {
                   className="note-options-context-menu"
                   style={{
                     position: 'absolute',
-                    top: noteOptionsPosition.y + 'px',
+                    top: getOptionsYPoisition() + 'px',
                     left: noteOptionsPosition.x + 'px',
                   }}
                   onClick={event => {
