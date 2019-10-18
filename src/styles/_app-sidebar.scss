@@ -130,21 +130,6 @@
       }
     }
 
-    &-form {
-      input {
-        -webkit-appearance: none;
-        border-radius: 4px;
-        background: darken($app-sidebar-color, 5%);
-        border: none;
-        padding: 0.5rem;
-        font-size: 0.9rem;
-        color: #eee;
-        line-height: 1;
-        margin: 0.5rem 0.5rem 0.5rem 1rem;
-        width: 150px;
-      }
-    }
-
     &-button {
       cursor: pointer;
       -webkit-appearance: none;
@@ -159,6 +144,31 @@
       svg:hover {
         stroke: white;
       }
+    }
+  }
+
+  [type='text'] {
+    -webkit-appearance: none;
+    border-radius: 4px;
+    background: darken($app-sidebar-color, 5%);
+    border: none;
+    padding: 0.5rem;
+    font-size: 0.9rem;
+    color: #eee;
+    line-height: 1;
+    margin: 0.5rem 0.5rem 0.5rem 1rem;
+    width: 150px;
+
+    &.category-edit {
+      padding: 0;
+      width: auto;
+      max-width: 100px;
+      margin: 0;
+    }
+
+    &:hover,
+    &:focus {
+      border: none;
     }
   }
 }
