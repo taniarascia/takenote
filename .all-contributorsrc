@@ -151,7 +151,8 @@
       "profile": "https://github.com/kleyu",
       "contributions": [
         "code",
-        "bug"
+        "bug",
+        "test"
       ]
     },
     {
@@ -187,6 +188,34 @@
       "avatar_url": "https://avatars2.githubusercontent.com/u/21092519?v=4",
       "profile": "http://jfelix.info",
       "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "xboston",
+      "name": "Nikolay Kirsh",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/201306?v=4",
+      "profile": "https://xboston.dev",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "Mudassar045",
+      "name": "Mudassar Ali",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/24487349?v=4",
+      "profile": "https://github.com/Mudassar045",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "NathanBland",
+      "name": "Nathan Bland",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/926111?v=4",
+      "profile": "https://nathanbland.github.io/",
+      "contributions": [
+        "bug",
         "code"
       ]
     }

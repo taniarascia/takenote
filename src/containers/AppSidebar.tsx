@@ -96,7 +96,7 @@ const AppSidebar: React.FC = () => {
 
     const category = { id: uuid(), name: tempCategoryName.trim() }
 
-    if (categories.find(cat => cat.name === tempCategoryName.trim())) {
+    if (categories.find(cat => cat.name === category.name) || category.name === '') {
       resetTempCategory()
     } else {
       _addCategory(category)
@@ -109,7 +109,7 @@ const AppSidebar: React.FC = () => {
 
     const category = { id: editingCategoryId, name: tempCategoryName.trim() }
 
-    if (categories.find(cat => cat.name === tempCategoryName.trim())) {
+    if (categories.find(cat => cat.name === category.name) || category.name === '') {
       resetTempCategory()
     } else {
       _updateCategory(category)
@@ -189,11 +189,15 @@ const AppSidebar: React.FC = () => {
 
         <div className="category-title v-between">
           <h2>Categories</h2>
-          <button className="category-button" onClick={newTempCategoryHandler}>
+          <button
+            className="category-button"
+            onClick={newTempCategoryHandler}
+            aria-label="Add category"
+          >
             <Plus size={15} color={iconColor} />
           </button>
         </div>
-        <div className="category-list">
+        <div className="category-list" aria-label="Category list">
           {categories.map(category => {
             return (
               <div
@@ -262,7 +266,7 @@ const AppSidebar: React.FC = () => {
                     _swapNote(newNoteId)
                   }}
                 >
-                  <X size={12} />
+                  <X size={12} aria-label="Remove category" />
                 </div>
               </div>
             )
@@ -271,6 +275,7 @@ const AppSidebar: React.FC = () => {
         {addingTempCategory && (
           <form className="category-form" onSubmit={onSubmitNewCategory}>
             <input
+              aria-label="Category name"
               type="text"
               autoFocus
               maxLength={20}

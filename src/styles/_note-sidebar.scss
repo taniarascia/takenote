@@ -1,6 +1,12 @@
 .note-sidebar {
   background: $note-sidebar-color;
   border-right: 1px solid darken($note-sidebar-color, 10%);
+  overflow-y: hidden;
+  height: 100vh;
+
+  &:hover {
+    overflow-y: auto;
+  }
 
   &-header {
     padding: 0.5rem;
@@ -14,7 +20,6 @@
 
   .note-list {
     &-each {
-      position: relative;
       cursor: pointer;
       padding: 0.25rem 0.5rem;
       border-bottom: 1px solid darken($note-sidebar-color, 8%);
