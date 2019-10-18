@@ -33,6 +33,7 @@ const App: React.FC = () => {
   useBeforeunload(() => "You may loose your Data if you didn't save it.")
   useEffect(_loadNotes, [])
   useEffect(_loadCategories, [])
+
   return (
     <HelmetProvider>
       <Helmet>
