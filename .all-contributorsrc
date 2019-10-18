@@ -199,6 +199,16 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "NathanBland",
+      "name": "Nathan Bland",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/926111?v=4",
+      "profile": "https://nathanbland.github.io/",
+      "contributions": [
+        "bug",
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7
