@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { X } from 'react-feather'
 
+import { useAuth0 } from 'auth'
 import {
   toggleSettingsModal,
   updateCodeMirrorOption,
@@ -12,6 +13,7 @@ import { ReactMouseEvent, RootState } from 'types'
 import Switch from 'components/Switch'
 
 const SettingsModal: React.FC = () => {
+  const { user, logout } = useAuth0()
   const { codeMirrorOptions, isOpen, previewMarkdown, darkTheme } = useSelector(
     (state: RootState) => state.settingsState
   )
@@ -71,6 +73,17 @@ const SettingsModal: React.FC = () => {
               }}
             />
           </div>
+        </div>
+
+        <div className="settings-options">
+          <img src={user.picture} height="50" width="50" /> Authenticated with GitHub
+          <button
+            onClick={() => {
+              logout()
+            }}
+          >
+            Log out
+          </button>
         </div>
 
         <div className="settings-options">
