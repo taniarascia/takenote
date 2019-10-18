@@ -11,6 +11,7 @@ $dark-editor: #3f3f3f;
     border-right: 1px solid darken($dark-sidebar, 8%);
 
     .note-sidebar-header {
+      background: darken($dark-sidebar, 4%);
       color: $light-font-color;
 
       [type='search'] {

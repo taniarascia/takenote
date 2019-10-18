@@ -3,6 +3,7 @@
   border-right: 1px solid darken($note-sidebar-color, 10%);
 
   &-header {
+    background: $note-sidebar-color;
     padding: 0.5rem;
     text-align: center;
     font-weight: 700;
@@ -61,7 +62,7 @@
           padding: 0.5rem;
           color: $font-color;
           top: 32px;
-          left: 200px;
+          left: 33px;
           min-width: 250px;
           background: white;
           border: 1px solid $accent-gray;
