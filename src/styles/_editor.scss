@@ -10,8 +10,12 @@
   overflow-y: auto;
 }
 
-.editor.vim-insert-mode {
+.editor.vim-insert-mode .CodeMirror {
   cursor: cell;
+
+  .CodeMirror-lines {
+    cursor: cell;
+  }
 }
 
 .CodeMirror {
