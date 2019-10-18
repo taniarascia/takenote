@@ -38,8 +38,6 @@ const AppSidebar: React.FC = () => {
   const { activeCategoryId, activeFolder, activeNoteId, notes } = useSelector(
     (state: RootState) => state.noteState
   )
-  const [editingCategoryId, setEditingCategoryId] = useState('')
-
   const activeNote = notes.find(note => note.id === activeNoteId)
 
   const dispatch = useDispatch()
@@ -61,13 +59,10 @@ const AppSidebar: React.FC = () => {
   const _addCategoryToNote = (categoryId: string, noteId: string) =>
     dispatch(addCategoryToNote({ categoryId, noteId }))
 
-  const {
-    errorCategoryMessage,
-    setErrorCategoryMessage,
-    addingTempCategory,
-    setAddingTempCategory,
-  } = useTempState()
-  const [tempCategory, setTempCategory] = useState('')
+  const { setErrorCategoryMessage, addingTempCategory, setAddingTempCategory } = useTempState()
+
+  const [editingCategoryId, setEditingCategoryId] = useState('')
+  const [tempCategoryName, setTempCategoryName] = useState('')
   const { syncing } = useSelector((state: RootState) => state.syncState)
 
   const newTempCategoryHandler = () => {
@@ -90,21 +85,34 @@ const AppSidebar: React.FC = () => {
   }
 
   const resetTempCategory = () => {
-    setTempCategory('')
+    setTempCategoryName('')
     setAddingTempCategory(false)
     setErrorCategoryMessage('')
+    setEditingCategoryId('')
   }
 
-  const onSubmitCategory = (event: ReactSubmitEvent): void => {
+  const onSubmitNewCategory = (event: ReactSubmitEvent): void => {
     event.preventDefault()
 
-    const category = { id: uuid(), name: tempCategory.trim() }
+    const category = { id: uuid(), name: tempCategoryName.trim() }
 
-    if (categories.find(cat => cat.name === tempCategory.trim())) {
-      setErrorCategoryMessage('Category already exists!')
+    if (categories.find(cat => cat.name === tempCategoryName.trim())) {
+      resetTempCategory()
     } else {
       _addCategory(category)
+      resetTempCategory()
+    }
+  }
 
+  const onSubmitUpdateCategory = (event: ReactSubmitEvent): void => {
+    event.preventDefault()
+
+    const category = { id: editingCategoryId, name: tempCategoryName.trim() }
+
+    if (categories.find(cat => cat.name === tempCategoryName.trim())) {
+      resetTempCategory()
+    } else {
+      _updateCategory(category)
       resetTempCategory()
     }
   }
@@ -184,9 +192,6 @@ const AppSidebar: React.FC = () => {
           </button>
         </div>
         <div className="category-list">
-          {errorCategoryMessage && (
-            <div className="category-error-message">{errorCategoryMessage}</div>
-          )}
           {categories.map(category => {
             return (
               <div
@@ -204,6 +209,7 @@ const AppSidebar: React.FC = () => {
                 }}
                 onDoubleClick={() => {
                   setEditingCategoryId(category.id)
+                  setTempCategoryName(category.name)
                 }}
                 onBlur={() => {
                   setEditingCategoryId('')
@@ -217,17 +223,25 @@ const AppSidebar: React.FC = () => {
               >
                 <form
                   className="category-list-name"
-                  onSubmit={e => {
+                  onSubmit={event => {
+                    event.preventDefault()
                     setEditingCategoryId('')
-                    e.preventDefault()
+                    onSubmitUpdateCategory(event)
                   }}
                 >
                   <FolderIcon size={15} className="app-sidebar-icon" color={iconColor} />
                   {editingCategoryId === category.id ? (
                     <input
-                      value={category.name}
+                      type="text"
+                      autoFocus
+                      maxLength={20}
+                      className="category-edit"
+                      value={tempCategoryName}
                       onChange={event => {
-                        _updateCategory({ ...category, name: event.target.value })
+                        setTempCategoryName(event.target.value)
+                      }}
+                      onBlur={event => {
+                        resetTempCategory()
                       }}
                     />
                   ) : (
@@ -253,19 +267,20 @@ const AppSidebar: React.FC = () => {
           })}
         </div>
         {addingTempCategory && (
-          <form className="category-form" onSubmit={onSubmitCategory}>
+          <form className="category-form" onSubmit={onSubmitNewCategory}>
             <input
+              type="text"
               autoFocus
               maxLength={20}
               placeholder="New category..."
               onChange={event => {
-                setTempCategory(event.target.value)
+                setTempCategoryName(event.target.value)
               }}
               onBlur={event => {
-                if (!tempCategory || tempCategory.trim() === '' || errorCategoryMessage) {
+                if (!tempCategoryName || tempCategoryName.trim() === '') {
                   resetTempCategory()
                 } else {
-                  onSubmitCategory(event)
+                  onSubmitNewCategory(event)
                 }
               }}
             />
