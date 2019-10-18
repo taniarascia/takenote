@@ -5,7 +5,7 @@ import _ from 'lodash'
 
 import { Folder } from 'constants/enums'
 import NoteOptions from 'containers/NoteOptions'
-import { getNoteTitle, sortByLastUpdated } from 'helpers'
+import { getNoteTitle, sortByFavouritesThenLastUpdated } from 'helpers'
 import { addCategoryToNote, pruneNotes, swapCategory, swapNote, searchNotes } from 'slices/note'
 import { NoteItem, ReactDragEvent, ReactMouseEvent, RootState } from 'types'
 
@@ -27,7 +27,7 @@ const NoteList: React.FC = () => {
   const filteredNotes: NoteItem[] = notes
     .filter(filter[activeFolder])
     .filter(isMatch)
-    .sort(sortByLastUpdated)
+    .sort(sortByFavouritesThenLastUpdated)
   const filteredCategories = categories.filter(({ id }) => id !== activeCategoryId)
 
   const dispatch = useDispatch()
@@ -115,6 +115,7 @@ const NoteList: React.FC = () => {
               >
                 <MoreHorizontal size={15} />
               </div>
+              {note.favorite && <span>⭐</span>}
               {noteOptionsId === note.id && (
                 <div
                   ref={node}
