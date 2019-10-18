@@ -26,7 +26,18 @@ const NoteEditor: React.FC = () => {
   if (loading) {
     return <div className="empty-editor v-center">Loading...</div>
   } else if (!activeNote) {
-    return <div className="empty-editor v-center" />
+    return (
+      <div className="empty-editor v-center">
+        <div className="empty-editor v-center">
+          <div className="text-center">
+            <p>Create a note</p>
+            <p>
+              <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>N</kbd>
+            </p>
+          </div>
+        </div>
+      </div>
+    )
   } else {
     return (
       <CodeMirror
