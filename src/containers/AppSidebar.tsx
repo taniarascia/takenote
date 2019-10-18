@@ -96,7 +96,7 @@ const AppSidebar: React.FC = () => {
 
     const category = { id: uuid(), name: tempCategoryName.trim() }
 
-    if (categories.find(cat => cat.name === tempCategoryName.trim())) {
+    if (categories.find(cat => cat.name === category.name) || category.name === '') {
       resetTempCategory()
     } else {
       _addCategory(category)
@@ -109,7 +109,7 @@ const AppSidebar: React.FC = () => {
 
     const category = { id: editingCategoryId, name: tempCategoryName.trim() }
 
-    if (categories.find(cat => cat.name === tempCategoryName.trim())) {
+    if (categories.find(cat => cat.name === category.name) || category.name === '') {
       resetTempCategory()
     } else {
       _updateCategory(category)

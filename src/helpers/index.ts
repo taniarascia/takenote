@@ -5,7 +5,7 @@ import { Folder } from 'constants/enums'
 import { NoteItem } from 'types'
 
 export const getNoteTitle = (text: string): string => {
-  const noteTitleRegEx = /[\w'?!., ]{1,50}/
+  const noteTitleRegEx = /[\p{Alpha}\p{M}\p{Nd}\p{Pc}\p{Join_C}'?!.,\s]{1,50}/gu
   const noteText = text.match(noteTitleRegEx)
   return noteText ? noteText[0] : 'New Note'
 }
