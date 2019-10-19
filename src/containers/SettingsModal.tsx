@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { X } from 'react-feather'
 
 import { toggleSettingsModal, updateCodeMirrorOption } from 'slices/settings'
 import { togglePreviewMarkdown } from 'slices/previewMarkdown'
@@ -55,7 +56,19 @@ const SettingsModal: React.FC = () => {
   return isOpen ? (
     <div className="dimmer">
       <div ref={node} className="settings-modal">
-        <h2>Settings</h2>
+        <div className="settings-header">
+          <h2>Settings</h2>
+          <div className="action-button">
+            <X
+              size={20}
+              onClick={() => {
+                if (isOpen) {
+                  _toggleSettingsModal()
+                }
+              }}
+            />
+          </div>
+        </div>
 
         <div className="settings-options">
           <div>Active line highlight</div>
@@ -68,7 +81,7 @@ const SettingsModal: React.FC = () => {
         </div>
 
         <div className="settings-options">
-          <div>Dark Mode</div>
+          <div>Dark mode</div>
           <Switch toggle={toggleDarkThemeHandler} checked={dark} />
         </div>
 
@@ -111,7 +124,7 @@ const SettingsModal: React.FC = () => {
             </div>
           </div>
           <div className="settings-shortcut">
-            <div>Dark mode</div>
+            <div>Toggle theme</div>
             <div>
               <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>K</kbd>
             </div>

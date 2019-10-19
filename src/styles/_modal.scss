@@ -30,11 +30,15 @@
   overflow: auto;
 
   h2 {
-    margin-top: 0;
-    margin-bottom: 1.5rem;
+    margin: 0;
   }
 
   .settings {
+    &-header {
+      @extend .v-between;
+      margin-bottom: 2rem;
+    }
+
     &-label {
       font-weight: 600;
       font-size: 1.05rem;
@@ -45,17 +49,21 @@
       align-items: center;
       justify-content: space-between;
       padding: 0.5rem 0;
-
-      &:last-of-type {
-        border-bottom: 0;
-      }
     }
 
     &-shortcut {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0.5rem 0;
+      padding: 0.3rem 0;
+
+      > div {
+        flex: 2.2;
+      }
+
+      > div:nth-of-type(even) {
+        flex: 1;
+      }
     }
 
     &-section {

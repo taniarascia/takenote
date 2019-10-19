@@ -116,6 +116,14 @@ $dark-editor: #3f3f3f;
     color: $light-font-color;
   }
 
+  kbd {
+    background: darken($dark-sidebar, 5%);
+    border: 1px solid darken($dark-sidebar, 10%);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2), 0 0 0 2px #222 inset;
+    color: darken($light-font-color, 10%);
+    text-shadow: 0 1px 0 #000;
+  }
+
   ::-webkit-scrollbar {
     width: 8px;
     background: darken($app-sidebar-color, 10%);
