@@ -85,7 +85,7 @@ const KeyboardShortcuts: React.FC = () => {
     downloadNoteHandler()
   })
 
-  useKey('alt+ctrl+t', () => {
+  useKey('alt+ctrl+k', () => {
     toggleDarkThemeHandler()
   })
 

@@ -49,7 +49,6 @@ const NoteList: React.FC = () => {
       event instanceof MouseEvent &&
       (event.target instanceof Element || event.target instanceof SVGElement)
     ) {
-      console.log('event target:', event, event.target.classList.contains('note-options'))
       if (event.target.classList.contains('note-options')) {
         setNoteOptionsPosition({ x: event.pageX, y: event.pageY })
       }
