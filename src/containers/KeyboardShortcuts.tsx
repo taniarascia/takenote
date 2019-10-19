@@ -65,27 +65,27 @@ const KeyboardShortcuts: React.FC = () => {
     _updateCodeMirrorOption('theme', dark ? 'base16-light' : 'zenburn')
   }
 
-  useKey('alt+ctrl+n', () => {
+  useKey('ctrl+alt+n', () => {
     newNoteHandler()
   })
 
-  useKey('alt+ctrl+c', () => {
+  useKey('ctrl+alt+c', () => {
     newTempCategoryHandler()
   })
 
-  useKey('alt+ctrl+w', () => {
+  useKey('ctrl+alt+w', () => {
     trashNoteHandler()
   })
 
-  useKey('alt+ctrl+s', () => {
+  useKey('ctrl+alt+s', () => {
     syncNotesHandler()
   })
 
-  useKey('alt+ctrl+d', () => {
+  useKey('ctrl+alt+d', () => {
     downloadNoteHandler()
   })
 
-  useKey('alt+ctrl+k', () => {
+  useKey('ctrl+alt+k', () => {
     toggleDarkThemeHandler()
   })
 
