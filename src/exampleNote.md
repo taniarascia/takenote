@@ -9,8 +9,8 @@ TakeNote is a web-based note-taking app with GitHub sync (soon™️) and Markdo
 - Drag and drop notes
 - Keybinding shortcuts for common actions
 - Light/dark mode
-- Vim mode
 - Multi-cursor editing
+- Markdown preview
 
 ## Keyboard shortcuts
 
@@ -21,6 +21,8 @@ TakeNote is a web-based note-taking app with GitHub sync (soon™️) and Markdo
 | Create category | `CTRL` + `ALT` + `C`   | `CONTROL` + `OPTION` + `C` |
 | Download note   | `CTRL` + `ALT` + `D`   | `CONTROL` + `OPTION` + `D` |
 | Sync note       | `CTRL` + `ALT` + `S`   | `CONTROL` + `OPTION` + `S` |
+| Preview note    | `CTRL` + `ALT` + `J`   | `CONTROL` + `OPTION` + `J` |
+| Dark mode       | `CTRL` + `ALT` + `K`   | `CONTROL` + `OPTION` + `K` |
 
 ## Sync
 
