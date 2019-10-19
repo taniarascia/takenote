@@ -4,6 +4,7 @@
   "description": "A web-based note-taking app with GitHub sync and Markdown support",
   "private": false,
   "scripts": {
+    "a11y:fix": "eslint src --ext tsx --config './a11y.json' --fix",
     "build": "react-scripts build",
     "contributors:add": "all-contributors add",
     "contributors:generate": "all-contributors generate",
@@ -154,6 +155,7 @@
     "cypress": "^3.4.1",
     "eslint-config-prettier": "^6.4.0",
     "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-prettier": "^3.1.1",
     "husky": "^3.0.9",
     "jest": "^24.9.0",

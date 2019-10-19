@@ -1,7 +1,8 @@
 import React from 'react'
-import { ArrowUp, Star, Download, Trash, X } from 'react-feather'
+import { ArrowUp, Download, Star, Trash, X } from 'react-feather'
 import { useDispatch } from 'react-redux'
 
+import NoteOptionsButton from 'components/NoteOptionsButton'
 import { downloadNote, getNoteTitle } from 'helpers'
 import { deleteNote, toggleFavoriteNote, toggleTrashedNote } from 'slices/note'
 import { NoteItem } from 'types'
@@ -39,35 +40,26 @@ const NoteOptions: React.FC<NoteOptionsProps> = ({ clickedNote }) => {
     <nav className="note-options-nav" data-testid="note-options-nav">
       {clickedNote.trash ? (
         <>
-          <div className="nav-item" onClick={deleteNoteHandler}>
-            <X size={18} />
-            Delete permanently
-          </div>
-          <div className="nav-item" onClick={trashNoteHandler}>
-            <ArrowUp size={18} />
-            Restore from trash
-          </div>
+          <NoteOptionsButton handler={deleteNoteHandler} icon={X} text="Delete permanently" />
+          <NoteOptionsButton handler={trashNoteHandler} icon={ArrowUp} text="Restore from trash" />
         </>
       ) : (
         <>
-          <div
-            className="nav-item"
-            onClick={favoriteNoteHandler}
+          <NoteOptionsButton
             data-cy="note-option-favorite-button"
-          >
-            <Star size={18} />
-            {clickedNote.favorite ? 'Remove favorite' : 'Mark as favorite'}
-          </div>
-          <div className="nav-item" onClick={trashNoteHandler} data-cy="note-option-trash-button">
-            <Trash size={18} />
-            Move to trash
-          </div>
+            handler={favoriteNoteHandler}
+            icon={Star}
+            text={clickedNote.favorite ? 'Remove favorite' : 'Mark as favorite'}
+          />
+          <NoteOptionsButton
+            data-cy="note-option-trash-button"
+            handler={trashNoteHandler}
+            icon={Trash}
+            text="Move to trash"
+          />
         </>
       )}
-      <div className="nav-item" onClick={downloadNoteHandler}>
-        <Download size={18} />
-        Download
-      </div>
+      <NoteOptionsButton handler={downloadNoteHandler} icon={Download} text="Download" />
     </nav>
   )
 }
