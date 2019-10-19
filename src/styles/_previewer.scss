@@ -7,21 +7,152 @@
   background: #f5f5f5;
   color: #202020;
   padding: 1rem;
-}
 
-.previewer::after {
-  position: absolute;
-  content: 'Preview';
-  background-color: $note-sidebar-color;
-  font-weight: 500;
-  top: 1rem;
-  right: 1rem;
-  padding: 0.5rem;
-  border-radius: 8px;
-}
+  a {
+    color: $primary;
+    text-decoration: none;
 
-.previewer img {
-  max-width: 20rem;
-  max-height: 20rem;
-  object-fit: cover;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  p,
+  ol,
+  ul,
+  dl,
+  table {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #404040;
+    margin: 0 0 1.5rem 0;
+  }
+
+  ul li ul {
+    margin-bottom: 0;
+  }
+
+  ol li ol {
+    margin-bottom: 0;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5 {
+    margin: 0 0 1.5rem 0;
+    font-weight: 700;
+    line-height: 1.2;
+    color: #202020;
+
+    &:not(:first-child) {
+      margin: 1.5rem 0;
+    }
+  }
+
+  // Increased margin on additional headings
+  h1:not(:first-child),
+  h2:not(:first-child),
+  h3:not(:first-child) {
+    margin-top: 2rem;
+  }
+
+  // Heading individual styles
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  h2 {
+    font-size: 1.6rem;
+  }
+
+  h3 {
+    font-size: 1.4rem;
+  }
+
+  h4 {
+    font-size: 1.2rem;
+  }
+
+  h5 {
+    font-size: 1rem;
+  }
+
+  // Blockquote
+  blockquote {
+    margin: 0 0 1.5rem 0;
+    border-left: 4px solid $light-font-color;
+    padding: 0 1.5rem;
+    font-size: 1.5rem;
+
+    cite {
+      display: block;
+      margin-top: 1.5rem;
+      font-size: 1rem;
+      text-align: right;
+    }
+  }
+
+  // Code block styling
+  pre {
+    border: 0;
+    border-radius: 4px;
+    background: $note-sidebar-color;
+    padding: 1rem;
+    tab-size: 2;
+    color: #404040;
+    margin: 0 0 1.5rem 0;
+
+    code {
+      line-height: 1.2;
+    }
+  }
+
+  hr {
+    height: 0;
+    border: 0;
+    border-top: 2px solid lighten($light-font-color, 10%);
+  }
+
+  img {
+    max-width: 100%;
+    max-height: 20rem;
+    object-fit: cover;
+  }
+
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    max-width: 100%;
+  }
+
+  thead th {
+    border-bottom: 2px solid $note-sidebar-color;
+  }
+
+  tfoot th {
+    border-top: 2px solid $note-sidebar-color;
+  }
+
+  td {
+    border-bottom: 1px solid $note-sidebar-color;
+  }
+
+  th,
+  td {
+    text-align: left;
+    padding: 0.5rem;
+  }
+
+  &::after {
+    position: absolute;
+    content: 'Preview';
+    background-color: $note-sidebar-color;
+    font-weight: 500;
+    top: 1rem;
+    right: 1rem;
+    padding: 0.5rem;
+    border-radius: 8px;
+  }
 }
