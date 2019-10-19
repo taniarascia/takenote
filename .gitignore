@@ -28,3 +28,4 @@ yarn-error.log*
 /private
 src/private
 config.*
+package-lock.json

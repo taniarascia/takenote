@@ -2,6 +2,7 @@ import moment from 'moment'
 import React from 'react'
 import { Controlled as CodeMirror } from 'react-codemirror2'
 import { useDispatch, useSelector } from 'react-redux'
+import ReactMarkdown from 'react-markdown'
 
 import { updateNote } from 'slices/note'
 import { updateVimStateMode } from 'slices/settings'
@@ -17,6 +18,7 @@ import 'codemirror/keymap/vim'
 const NoteEditor: React.FC = () => {
   const { activeNoteId, loading, notes } = useSelector((state: RootState) => state.noteState)
   const { codeMirrorOptions, vimState } = useSelector((state: RootState) => state.settingsState)
+  const { previewMarkdown } = useSelector((state: RootState) => state.previewMarkdown)
 
   const activeNote = notes.find(note => note.id === activeNoteId)
 
@@ -41,6 +43,8 @@ const NoteEditor: React.FC = () => {
         </div>
       </div>
     )
+  } else if (previewMarkdown) {
+    return <ReactMarkdown className="previewer" source={activeNote.text} />
   } else {
     return (
       <CodeMirror

@@ -2,17 +2,20 @@ import React, { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { toggleSettingsModal, updateCodeMirrorOption } from 'slices/settings'
+import { togglePreviewMarkdown } from 'slices/previewMarkdown'
 import { toggleDarkTheme } from 'slices/theme'
 import { ReactMouseEvent, RootState } from 'types'
 import Switch from 'components/Switch'
 
 const SettingsModal: React.FC = () => {
   const { codeMirrorOptions, isOpen } = useSelector((state: RootState) => state.settingsState)
+  const { previewMarkdown } = useSelector((state: RootState) => state.previewMarkdown)
   const { dark } = useSelector((state: RootState) => state.themeState)
 
   const dispatch = useDispatch()
 
   const _toggleSettingsModal = () => dispatch(toggleSettingsModal())
+  const _togglePreviewMarkdown = () => dispatch(togglePreviewMarkdown())
   const _toggleDarkTheme = () => dispatch(toggleDarkTheme())
   const _updateCodeMirrorOption = (key: string, value: any) =>
     dispatch(updateCodeMirrorOption({ key, value }))
@@ -27,6 +30,10 @@ const SettingsModal: React.FC = () => {
     if (isOpen) {
       _toggleSettingsModal()
     }
+  }
+
+  const togglePreviewMarkdownHandler = () => {
+    _togglePreviewMarkdown()
   }
 
   const toggleDarkThemeHandler = () => {
@@ -53,6 +60,11 @@ const SettingsModal: React.FC = () => {
         <div className="settings-options">
           <div>Active line highlight</div>
           <Switch toggle={toggleLineHighlight} checked={codeMirrorOptions.styleActiveLine} />
+        </div>
+
+        <div className="settings-options">
+          <div>Preview note</div>
+          <Switch toggle={togglePreviewMarkdownHandler} checked={previewMarkdown} />
         </div>
 
         <div className="settings-options">
@@ -90,6 +102,12 @@ const SettingsModal: React.FC = () => {
             <div>Sync note</div>
             <div>
               <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>S</kbd>
+            </div>
+          </div>
+          <div className="settings-shortcut">
+            <div>Preview note</div>
+            <div>
+              <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>J</kbd>
             </div>
           </div>
           <div className="settings-shortcut">
