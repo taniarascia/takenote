@@ -1,6 +1,6 @@
 .app {
   display: grid;
-  grid-template-areas: 'app-sidebar note-sidebar editor editor';
+  grid-template-areas: 'app-sidebar note-sidebar editor';
   grid-template-columns: $app-sidebar-width $note-sidebar-width auto;
   height: 100vh;
 }
