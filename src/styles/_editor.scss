@@ -1,11 +1,9 @@
 .empty-editor {
-  grid-area: editor;
   background: $light-theme-background;
   width: 100%;
 }
 
 .editor {
-  grid-area: editor;
   max-height: calc(100vh);
   overflow-y: auto;
 }

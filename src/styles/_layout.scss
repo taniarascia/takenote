@@ -31,3 +31,14 @@
     overflow-y: auto;
   }
 }
+
+.empty-editor,
+.editor,
+.previewer {
+  grid-area: editor;
+  display: none !important;
+
+  @include small-breakpoint {
+    display: block !important;
+  }
+}
