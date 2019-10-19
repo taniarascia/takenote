@@ -2,8 +2,19 @@ import { CategoryItem, NoteItem } from 'types'
 
 import { exampleNote } from './exampleNote'
 
-export const requestNotes = () => {
-  return new Promise((resolve, reject) => {
+export const requestCategories = () =>
+  new Promise((resolve, reject) => {
+    const data = localStorage.getItem('categories') || '[]'
+
+    if (data) {
+      resolve(JSON.parse(data))
+    } else {
+      reject({ message: 'Something went wrong' })
+    }
+  })
+
+export const requestNotes = () =>
+  new Promise((resolve, reject) => {
     const data = localStorage.getItem('notes')
 
     if (data === null) {
@@ -17,21 +28,6 @@ export const requestNotes = () => {
       })
     }
   })
-}
-
-export const requestCategories = () => {
-  return new Promise((resolve, reject) => {
-    const data = localStorage.getItem('categories') || '[]'
-
-    if (data) {
-      resolve(JSON.parse(data))
-    } else {
-      reject({
-        message: 'Something went wrong',
-      })
-    }
-  })
-}
 
 export const saveState = (notes: NoteItem[], categories: CategoryItem[]) => {
   return new Promise((resolve, reject) => {
