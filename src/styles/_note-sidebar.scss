@@ -87,6 +87,7 @@
         display: none;
 
         @include small-breakpoint {
+          display: block;
           font-size: 1rem;
           color: transparent;
           padding: 0.5rem;
