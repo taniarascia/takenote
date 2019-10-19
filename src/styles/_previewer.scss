@@ -155,15 +155,21 @@
     text-align: left;
     padding: 0.5rem;
   }
+}
 
-  &::after {
-    position: absolute;
-    content: 'Preview';
-    background-color: $note-sidebar-color;
-    font-weight: 500;
-    top: 1rem;
-    right: 1rem;
-    padding: 0.5rem;
-    border-radius: 8px;
+.preview-button {
+  color: #404040;
+  border: 1px solid rgba(0, 0, 0, 0.38) !important;
+  position: absolute;
+  content: 'Preview';
+  background-color: $note-sidebar-color;
+  font-weight: 500;
+  top: 1rem;
+  right: 1rem;
+  padding: 0.5rem;
+  border-radius: 8px !important;
+  &:hover {
+    background-color: #404040;
+    color: $note-sidebar-color;
   }
 }

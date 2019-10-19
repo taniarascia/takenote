@@ -7,12 +7,12 @@ import ReactMarkdown from 'react-markdown'
 import { updateNote } from 'slices/note'
 import { updateVimStateMode } from 'slices/settings'
 import { RootState, NoteItem, VimModes } from 'types'
-
 import 'codemirror/lib/codemirror.css'
 import 'codemirror/theme/base16-light.css'
 import 'codemirror/mode/gfm/gfm'
 import 'codemirror/addon/selection/active-line'
 import 'codemirror/keymap/vim'
+import { togglePreviewMarkdown } from 'slices/previewMarkdown'
 
 const NoteEditor: React.FC = () => {
   const { activeNoteId, loading, notes } = useSelector((state: RootState) => state.noteState)
@@ -24,7 +24,7 @@ const NoteEditor: React.FC = () => {
   const dispatch = useDispatch()
 
   const _updateNote = (note: NoteItem) => dispatch(updateNote(note))
-
+  const _togglePreviewMarkdown = () => dispatch(togglePreviewMarkdown())
   const _updateVimStateMode = (vimMode: VimModes) => dispatch(updateVimStateMode(vimMode))
 
   if (loading) {
@@ -43,7 +43,14 @@ const NoteEditor: React.FC = () => {
       </div>
     )
   } else if (previewMarkdown) {
-    return <ReactMarkdown className="previewer" source={activeNote.text} />
+    return (
+      <div style={{ position: 'relative' }}>
+        <ReactMarkdown className="previewer" source={activeNote.text} />
+        <button className="preview-button" onClick={_togglePreviewMarkdown}>
+          Preview Exit
+        </button>
+      </div>
+    )
   } else {
     return (
       <CodeMirror
