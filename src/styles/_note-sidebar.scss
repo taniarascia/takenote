@@ -8,7 +8,8 @@
     overflow-y: auto;
   }
 
-  &-header {
+  &-header,
+  &-footer {
     padding: 0.5rem;
     text-align: center;
     font-weight: 700;
