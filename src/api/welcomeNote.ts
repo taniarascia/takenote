@@ -1,12 +1,12 @@
 import uuid from 'uuid/v4'
 import moment from 'moment'
 
-import markdown from '../exampleNote.md'
+import markdown from '../welcomeNote.md'
 
-export const exampleNote = fetch(markdown)
+export const welcomeNote = fetch(markdown)
   .then(res => res.text())
   .then(text => {
-    const exampleNote = [
+    const welcomeNote = [
       {
         id: uuid(),
         text,
@@ -15,5 +15,5 @@ export const exampleNote = fetch(markdown)
         created: moment().format(),
       },
     ]
-    return exampleNote
+    return welcomeNote
   })

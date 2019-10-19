@@ -1,6 +1,6 @@
 import { SyncStatePayload } from 'types'
 
-import { exampleNote } from './exampleNote'
+import { welcomeNote } from './welcomeNote'
 
 export const requestCategories = () =>
   new Promise((resolve, reject) => {
@@ -19,7 +19,7 @@ export const requestNotes = () =>
 
     if (data === null) {
       localStorage.setItem('notes', '[]')
-      resolve(exampleNote)
+      resolve(welcomeNote)
     } else if (JSON.parse(data)) {
       resolve(JSON.parse(data))
     } else {
