@@ -1,5 +1,6 @@
 // eslint-disable-next-line import/named
 import { all, put, takeLatest } from 'redux-saga/effects'
+import moment from 'moment'
 
 import { requestCategories, requestNotes, saveState } from 'api'
 import { loadCategories, loadCategoriesError, loadCategoriesSuccess } from 'slices/category'
@@ -25,16 +26,16 @@ function* fetchCategories() {
   }
 }
 
-function* postState({ payload: { notes, categories } }: SyncStateAction) {
+function* postState({ payload }: SyncStateAction) {
   try {
-    yield saveState(notes, categories)
-    yield put(syncStateSuccess())
+    yield saveState(payload)
+    yield put(syncStateSuccess(moment().format()))
   } catch (error) {
     yield put(syncStateError(error.message))
   }
 }
 
-export function* allSagas() {
+function* rootSaga() {
   yield all([
     takeLatest(loadNotes.type, fetchNotes),
     takeLatest(loadCategories.type, fetchCategories),
@@ -42,4 +43,4 @@ export function* allSagas() {
   ])
 }
 
-export default allSagas
+export default rootSaga

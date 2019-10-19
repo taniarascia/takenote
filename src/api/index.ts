@@ -1,4 +1,4 @@
-import { CategoryItem, NoteItem } from 'types'
+import { SyncStatePayload } from 'types'
 
 import { exampleNote } from './exampleNote'
 
@@ -23,20 +23,17 @@ export const requestNotes = () =>
     } else if (JSON.parse(data)) {
       resolve(JSON.parse(data))
     } else {
-      reject({
-        message: 'Something went wrong',
-      })
+      reject({ message: 'Something went wrong' })
     }
   })
 
-export const saveState = (notes: NoteItem[], categories: CategoryItem[]) => {
-  return new Promise((resolve, reject) => {
-    localStorage.setItem('notes', JSON.stringify(notes))
+export const saveState = ({ categories, notes }: SyncStatePayload) =>
+  new Promise(resolve => {
     localStorage.setItem('categories', JSON.stringify(categories))
+    localStorage.setItem('notes', JSON.stringify(notes))
 
     resolve({
-      notes: JSON.parse(localStorage.getItem('notes') || '[]'),
       categories: JSON.parse(localStorage.getItem('categories') || '[]'),
+      notes: JSON.parse(localStorage.getItem('notes') || '[]'),
     })
   })
-}

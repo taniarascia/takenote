@@ -1,10 +1,9 @@
 import { createSlice, PayloadAction, Slice } from 'redux-starter-kit'
 
 import { Folder } from 'constants/enums'
-import { sortByLastUpdated } from 'helpers'
+import { sortByLastUpdated, sortByFavourites } from 'helpers'
 import { NoteItem, NoteState } from 'types'
 
-// TODO: Ugh
 const getNewActiveNoteId = (
   notes: NoteItem[],
   oldNoteId: string,
@@ -21,7 +20,10 @@ const getNewActiveNoteId = (
 }
 
 export const getFirstNoteId = (folder: Folder, notes: NoteItem[], categoryId?: string): string => {
-  const notesNotTrash = notes.filter(note => !note.trash).sort(sortByLastUpdated)
+  const notesNotTrash = notes
+    .filter(note => !note.trash)
+    .sort(sortByLastUpdated)
+    .sort(sortByFavourites)
   const firstNote = {
     [Folder.ALL]: () => notesNotTrash[0],
     [Folder.CATEGORY]: () => notesNotTrash.find(note => note.category === categoryId),
@@ -38,6 +40,7 @@ const initialState: NoteState = {
   error: '',
   loading: true,
   notes: [],
+  searchValue: '',
 }
 
 const noteSlice: Slice<NoteState> = createSlice({
@@ -83,6 +86,10 @@ const noteSlice: Slice<NoteState> = createSlice({
     pruneNotes: state => ({
       ...state,
       notes: state.notes.filter(note => note.text !== '' || note.id === state.activeNoteId),
+    }),
+    searchNotes: (state, { payload }: PayloadAction<string>) => ({
+      ...state,
+      searchValue: payload,
     }),
     swapCategory: (state, { payload }: PayloadAction<string>) => ({
       ...state,
@@ -133,6 +140,7 @@ export const {
   loadNotesSuccess,
   pruneCategoryFromNotes,
   pruneNotes,
+  searchNotes,
   swapCategory,
   swapFolder,
   swapNote,

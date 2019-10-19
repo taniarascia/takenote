@@ -5,6 +5,7 @@ import { SyncState } from 'types'
 const initialState: SyncState = {
   error: '',
   syncing: false,
+  lastSynced: '',
 }
 
 const syncSlice: Slice<SyncState> = createSlice({
@@ -16,11 +17,13 @@ const syncSlice: Slice<SyncState> = createSlice({
       syncing: true,
     }),
     syncStateError: (state, { payload }: PayloadAction<string>) => ({
+      ...state,
       error: payload,
       syncing: false,
     }),
-    syncStateSuccess: state => ({
+    syncStateSuccess: (state, { payload }: PayloadAction<string>) => ({
       ...state,
+      lastSynced: payload,
       syncing: false,
     }),
   },

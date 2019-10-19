@@ -1,8 +1,10 @@
 {
   "name": "takenote",
   "version": "0.1.0",
+  "description": "A web-based note-taking app with GitHub sync and Markdown support",
   "private": false,
   "scripts": {
+    "a11y:fix": "eslint src --ext tsx --config './a11y.json' --fix",
     "build": "react-scripts build",
     "contributors:add": "all-contributors add",
     "contributors:generate": "all-contributors generate",
@@ -10,8 +12,32 @@
     "eject": "react-scripts eject",
     "postinstall": "patch-package",
     "start": "react-scripts start",
-    "test": "react-scripts test"
+    "test": "react-scripts test",
+    "e2e": "cypress open"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/taniarascia/takenote"
+  },
+  "keywords": [
+    "notes",
+    "notes-app",
+    "markdown",
+    "markdown-editor",
+    "note-taking",
+    "redux",
+    "react",
+    "typescript",
+    "react-hooks",
+    "react-hooks-redux",
+    "gist"
+  ],
+  "author": "Tania Rascia",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/taniarascia/takenote/issues"
+  },
+  "homepage": "https://takenote.dev",
   "husky": {
     "hooks": {
       "pre-commit": "lint-staged"
@@ -93,6 +119,7 @@
     "@types/node": "12.7.8",
     "@types/react": "16.9.3",
     "@types/react-dom": "16.9.1",
+    "@types/react-helmet-async": "^1.0.1",
     "@types/react-redux": "^7.1.4",
     "@types/react-router-dom": "^5.1.0",
     "@types/uuid": "^3.4.5",
@@ -107,29 +134,33 @@
     "react-codemirror2": "^6.0.0",
     "react-dom": "^16.9.0",
     "react-feather": "^2.0.3",
+    "react-helmet-async": "^1.0.4",
+    "react-markdown": "^4.2.2",
     "react-redux": "^7.1.1",
     "react-router-dom": "^5.1.0",
     "react-scripts": "3.1.2",
     "redux": "^4.0.4",
     "redux-saga": "^1.1.1",
     "redux-starter-kit": "^0.7.0",
-    "typesafe-actions": "^4.4.2",
     "typescript": "3.6.3",
     "uuid": "^3.3.3"
   },
   "devDependencies": {
+    "@bahmutov/add-typescript-to-cypress": "^2.1.2",
+    "@testing-library/cypress": "^5.0.2",
     "@testing-library/jest-dom": "^4.1.2",
     "@testing-library/react": "^9.3.0",
-    "all-contributors-cli": "^6.9.1",
+    "all-contributors-cli": "^6.9.2",
     "coveralls": "^3.0.7",
+    "cypress": "^3.4.1",
     "eslint-config-prettier": "^6.4.0",
     "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-prettier": "^3.1.1",
     "husky": "^3.0.9",
     "jest": "^24.9.0",
     "lint-staged": "^9.4.2",
     "prettier": "^1.18.2",
-    "pretty-quick": "^2.0.0",
     "ts-jest": "^24.1.0"
   }
 }

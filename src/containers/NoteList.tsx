@@ -1,19 +1,22 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { MoreHorizontal } from 'react-feather'
+import { MoreHorizontal, Star } from 'react-feather'
+import _ from 'lodash'
 
 import { Folder } from 'constants/enums'
-import { folderMap } from 'constants/index'
 import NoteOptions from 'containers/NoteOptions'
-import { getNoteTitle, sortByLastUpdated } from 'helpers'
-import { addCategoryToNote, pruneNotes, swapCategory, swapNote } from 'slices/note'
-import { RootState, NoteItem } from 'types'
+import { getNoteTitle, sortByLastUpdated, sortByFavourites } from 'helpers'
+import { addCategoryToNote, pruneNotes, swapCategory, swapNote, searchNotes } from 'slices/note'
+import { NoteItem, ReactDragEvent, ReactMouseEvent, RootState } from 'types'
 
 const NoteList: React.FC = () => {
   const { categories } = useSelector((state: RootState) => state.categoryState)
-  const { activeCategoryId, activeFolder, activeNoteId, notes } = useSelector(
+  const { activeCategoryId, activeFolder, activeNoteId, notes, searchValue } = useSelector(
     (state: RootState) => state.noteState
   )
+
+  const re = new RegExp(_.escapeRegExp(searchValue), 'i')
+  const isMatch = (result: NoteItem) => re.test(result.text)
 
   const filter: Record<Folder, (note: NoteItem) => boolean> = {
     [Folder.CATEGORY]: note => !note.trash && note.category === activeCategoryId,
@@ -21,8 +24,11 @@ const NoteList: React.FC = () => {
     [Folder.TRASH]: note => !!note.trash,
     [Folder.ALL]: note => !note.trash,
   }
-  const filteredNotes: NoteItem[] = notes.filter(filter[activeFolder]).sort(sortByLastUpdated)
-  const activeCategory = categories.find(({ id }) => id === activeCategoryId)
+  const filteredNotes: NoteItem[] = notes
+    .filter(filter[activeFolder])
+    .filter(isMatch)
+    .sort(sortByLastUpdated)
+    .sort(sortByFavourites)
   const filteredCategories = categories.filter(({ id }) => id !== activeCategoryId)
 
   const dispatch = useDispatch()
@@ -32,45 +38,90 @@ const NoteList: React.FC = () => {
   const _pruneNotes = () => dispatch(pruneNotes())
   const _swapNote = (noteId: string) => dispatch(swapNote(noteId))
   const _swapCategory = (categoryId: string) => dispatch(swapCategory(categoryId))
+  const _searchNotes = _.debounce((searchValue: string) => dispatch(searchNotes(searchValue)), 200)
 
   const [noteOptionsId, setNoteOptionsId] = useState('')
+  const [noteOptionsPosition, setNoteOptionsPosition] = useState({ x: 0, y: 0 })
   const node = useRef<HTMLDivElement>(null)
 
-  const handleNoteOptionsClick = (
-    event: MouseEvent | React.MouseEvent<HTMLDivElement> | React.ChangeEvent<HTMLSelectElement>,
-    noteId: string = ''
-  ) => {
+  const handleNoteOptionsClick = (event: ReactMouseEvent, noteId: string = '') => {
+    if (
+      event instanceof MouseEvent &&
+      (event.target instanceof Element || event.target instanceof SVGElement)
+    ) {
+      if (event.target.classList.contains('note-options')) {
+        setNoteOptionsPosition({ x: event.pageX, y: event.pageY })
+      }
+      if (event.target.parentElement instanceof Element) {
+        if (event.target.parentElement.classList.contains('note-options')) {
+          setNoteOptionsPosition({ x: event.pageX, y: event.pageY })
+        }
+      }
+    }
     event.stopPropagation()
 
     if (node.current && node.current.contains(event.target as HTMLDivElement)) return
     setNoteOptionsId(!noteOptionsId || noteOptionsId !== noteId ? noteId : '')
   }
 
-  useEffect(() => {
-    // add when mounted
-    document.addEventListener('mousedown', handleNoteOptionsClick)
-    // return function to be called when unmounted
-    return () => {
-      document.removeEventListener('mousedown', handleNoteOptionsClick)
-    }
-  })
-
-  const handleDragStart = (event: React.DragEvent<HTMLDivElement>, noteId: string = '') => {
+  const handleDragStart = (event: ReactDragEvent, noteId: string = '') => {
     event.stopPropagation()
 
     event.dataTransfer.setData('text/plain', noteId)
   }
 
+  const getOptionsYPoisition = (): Number => {
+    // get the max window frame
+    const MaxY = window.innerHeight
+
+    // determine approximate options height based on root font-size of 15px, padding, and select box.
+    const optionsSize = 15 * 11
+
+    // if window position - noteOptions position isn't ibgger than options. flip it.
+    return MaxY - noteOptionsPosition.y > optionsSize
+      ? noteOptionsPosition.y
+      : noteOptionsPosition.y - optionsSize
+  }
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleNoteOptionsClick)
+    return () => {
+      document.removeEventListener('mousedown', handleNoteOptionsClick)
+    }
+  })
+
   return (
     <aside className="note-sidebar">
       <div className="note-sidebar-header">
-        {activeFolder === Folder.CATEGORY
-          ? activeCategory && activeCategory.name
-          : folderMap[activeFolder]}
+        <input
+          type="search"
+          onChange={event => {
+            event.preventDefault()
+            _searchNotes(event.target.value)
+          }}
+          placeholder="Search for notes"
+        />
       </div>
       <div className="note-list">
         {filteredNotes.map(note => {
-          const noteTitle = getNoteTitle(note.text)
+          let noteTitle: string | React.ReactElement = getNoteTitle(note.text)
+
+          if (searchValue) {
+            const highlightStart = noteTitle.search(re)
+
+            if (highlightStart !== -1) {
+              const highlightEnd = highlightStart + searchValue.length
+              noteTitle = (
+                <>
+                  {noteTitle.slice(0, highlightStart)}
+                  <strong className="highlighted">
+                    {noteTitle.slice(highlightStart, highlightEnd)}
+                  </strong>
+                  {noteTitle.slice(highlightEnd)}
+                </>
+              )
+            }
+          }
 
           return (
             <div
@@ -85,7 +136,21 @@ const NoteList: React.FC = () => {
               draggable
               onDragStart={event => handleDragStart(event, note.id)}
             >
-              <div>{noteTitle}</div>
+              <div className="note-title">
+                {note.favorite ? (
+                  <>
+                    <div className="icon">
+                      <Star className="note-favorite" size={12} />
+                    </div>
+                    <div> {noteTitle}</div>
+                  </>
+                ) : (
+                  <>
+                    <div className="icon"></div>
+                    <div> {noteTitle}</div>
+                  </>
+                )}
+              </div>
               <div
                 className={noteOptionsId === note.id ? 'note-options active ' : 'note-options'}
                 onClick={event => handleNoteOptionsClick(event, note.id)}
@@ -96,16 +161,20 @@ const NoteList: React.FC = () => {
                 <div
                   ref={node}
                   className="note-options-context-menu"
+                  style={{
+                    position: 'absolute',
+                    top: getOptionsYPoisition() + 'px',
+                    left: noteOptionsPosition.x + 'px',
+                  }}
                   onClick={event => {
                     event.stopPropagation()
                   }}
                 >
-                  {!note.trash && (
+                  {!note.trash && filteredCategories.length > 0 && (
                     <>
-                      <h2>Move to category</h2>
                       <select
                         defaultValue=""
-                        className="select-element"
+                        className="select"
                         onChange={event => {
                           _addCategoryToNote(event.target.value, note.id)
 
@@ -118,7 +187,7 @@ const NoteList: React.FC = () => {
                         }}
                       >
                         <option disabled value="">
-                          Select category
+                          Move to category...
                         </option>
                         {filteredCategories
                           .filter(category => category.id !== note.category)

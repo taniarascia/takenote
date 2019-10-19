@@ -1,19 +1,22 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { useKeyboard } from 'contexts/KeyboardContext'
+import { useTempState } from 'contexts/TempStateContext'
 import { downloadNote, getNoteTitle, newNote } from 'helpers'
 import { useKey, useInterval } from 'helpers/hooks'
 import { addNote, swapNote, toggleTrashedNote } from 'slices/note'
 import { syncState } from 'slices/sync'
+import { togglePreviewMarkdown } from 'slices/previewMarkdown'
 import { toggleDarkTheme } from 'slices/theme'
 import { RootState, CategoryItem, NoteItem } from 'types'
+import { updateCodeMirrorOption } from 'slices/settings'
 
 const KeyboardShortcuts: React.FC = () => {
   const { categories } = useSelector((state: RootState) => state.categoryState)
   const { activeCategoryId, activeFolder, activeNoteId, notes } = useSelector(
     (state: RootState) => state.noteState
   )
+  const { dark } = useSelector((state: RootState) => state.themeState)
 
   const activeNote = notes.find(note => note.id === activeNoteId)
 
@@ -24,9 +27,12 @@ const KeyboardShortcuts: React.FC = () => {
   const _toggleTrashedNote = (noteId: string) => dispatch(toggleTrashedNote(noteId))
   const _syncState = (notes: NoteItem[], categories: CategoryItem[]) =>
     dispatch(syncState({ notes, categories }))
+  const _togglePreviewMarkdown = () => dispatch(togglePreviewMarkdown())
   const _toggleDarkTheme = () => dispatch(toggleDarkTheme())
+  const _updateCodeMirrorOption = (key: string, value: string) =>
+    dispatch(updateCodeMirrorOption({ key, value }))
 
-  const { addingTempCategory, setAddingTempCategory } = useKeyboard()
+  const { addingTempCategory, setAddingTempCategory } = useTempState()
   const newNoteHandler = () => {
     const note = newNote(activeCategoryId, activeFolder)
 
@@ -56,31 +62,40 @@ const KeyboardShortcuts: React.FC = () => {
     }
   }
 
-  const toggleDarkThemeHandler = () => {
-    _toggleDarkTheme()
+  const togglePreviewMarkdownHandler = () => {
+    _togglePreviewMarkdown()
   }
 
-  useKey('alt+ctrl+n', () => {
+  const toggleDarkThemeHandler = () => {
+    _toggleDarkTheme()
+    _updateCodeMirrorOption('theme', dark ? 'base16-light' : 'zenburn')
+  }
+
+  useKey('ctrl+alt+o', () => {
     newNoteHandler()
   })
 
-  useKey('alt+ctrl+c', () => {
+  useKey('ctrl+alt+c', () => {
     newTempCategoryHandler()
   })
 
-  useKey('alt+ctrl+w', () => {
+  useKey('ctrl+alt+w', () => {
     trashNoteHandler()
   })
 
-  useKey('alt+ctrl+s', () => {
+  useKey('ctrl+alt+l', () => {
     syncNotesHandler()
   })
 
-  useKey('alt+ctrl+d', () => {
+  useKey('ctrl+alt+d', () => {
     downloadNoteHandler()
   })
 
-  useKey('alt+ctrl+t', () => {
+  useKey('alt+ctrl+j', () => {
+    togglePreviewMarkdownHandler()
+  })
+
+  useKey('alt+ctrl+k', () => {
     toggleDarkThemeHandler()
   })
 

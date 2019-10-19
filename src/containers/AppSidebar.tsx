@@ -1,22 +1,26 @@
-import kebabCase from 'lodash/kebabCase'
+import uuid from 'uuid/v4'
 import React, { useState } from 'react'
 import {
   Book,
-  Bookmark,
+  Star,
   Folder as FolderIcon,
+  Loader,
   Plus,
   Settings,
   Trash2,
   UploadCloud,
   X,
-  Loader,
+  Check,
 } from 'react-feather'
 import { useDispatch, useSelector } from 'react-redux'
+import moment from 'moment'
 
+import AppSidebarAction from 'components/AppSidebarAction'
 import { Folder } from 'constants/enums'
-import { useKeyboard } from 'contexts/KeyboardContext'
+import { iconColor } from 'constants/index'
+import { useTempState } from 'contexts/TempStateContext'
 import { newNote } from 'helpers'
-import { addCategory, deleteCategory } from 'slices/category'
+import { addCategory, updateCategory, deleteCategory } from 'slices/category'
 import {
   addCategoryToNote,
   addNote,
@@ -29,16 +33,13 @@ import {
 } from 'slices/note'
 import { toggleSettingsModal } from 'slices/settings'
 import { syncState } from 'slices/sync'
-import { RootState, CategoryItem, NoteItem } from 'types'
-
-const iconColor = 'rgba(255, 255, 255, 0.25)'
+import { CategoryItem, NoteItem, ReactDragEvent, ReactSubmitEvent, RootState } from 'types'
 
 const AppSidebar: React.FC = () => {
   const { categories } = useSelector((state: RootState) => state.categoryState)
   const { activeCategoryId, activeFolder, activeNoteId, notes } = useSelector(
     (state: RootState) => state.noteState
   )
-
   const activeNote = notes.find(note => note.id === activeNoteId)
 
   const dispatch = useDispatch()
@@ -48,6 +49,7 @@ const AppSidebar: React.FC = () => {
   const _swapCategory = (categoryId: string) => dispatch(swapCategory(categoryId))
   const _swapFolder = (folder: Folder) => dispatch(swapFolder(folder))
   const _addCategory = (category: CategoryItem) => dispatch(addCategory(category))
+  const _updateCategory = (category: CategoryItem) => dispatch(updateCategory(category))
   const _deleteCategory = (categoryId: string) => dispatch(deleteCategory(categoryId))
   const _pruneCategoryFromNotes = (categoryId: string) =>
     dispatch(pruneCategoryFromNotes(categoryId))
@@ -59,35 +61,61 @@ const AppSidebar: React.FC = () => {
   const _addCategoryToNote = (categoryId: string, noteId: string) =>
     dispatch(addCategoryToNote({ categoryId, noteId }))
 
-  const { addingTempCategory, setAddingTempCategory } = useKeyboard()
-  const [tempCategory, setTempCategory] = useState('')
-  const { syncing } = useSelector((state: RootState) => state.syncState)
+  const { setErrorCategoryMessage, addingTempCategory, setAddingTempCategory } = useTempState()
+
+  const [editingCategoryId, setEditingCategoryId] = useState('')
+  const [tempCategoryName, setTempCategoryName] = useState('')
+  const { syncing, lastSynced } = useSelector((state: RootState) => state.syncState)
 
   const newTempCategoryHandler = () => {
     !addingTempCategory && setAddingTempCategory(true)
   }
 
   const newNoteHandler = () => {
-    if ((activeNote && activeNote.text !== '') || !activeNote) {
-      const note = newNote(activeCategoryId, activeFolder)
+    if (activeFolder === Folder.TRASH) {
+      _swapFolder(Folder.ALL)
+    }
 
+    if ((activeNote && activeNote.text !== '') || !activeNote) {
+      const note = newNote(
+        activeCategoryId,
+        activeFolder === Folder.TRASH ? Folder.ALL : activeFolder
+      )
       _addNote(note)
       _swapNote(note.id)
     }
   }
 
-  const onSubmit = (
-    event: React.FormEvent<HTMLFormElement> | React.FocusEvent<HTMLInputElement>
-  ): void => {
+  const resetTempCategory = () => {
+    setTempCategoryName('')
+    setAddingTempCategory(false)
+    setErrorCategoryMessage('')
+    setEditingCategoryId('')
+  }
+
+  const onSubmitNewCategory = (event: ReactSubmitEvent): void => {
     event.preventDefault()
 
-    const category = { id: kebabCase(tempCategory), name: tempCategory }
+    const category = { id: uuid(), name: tempCategoryName.trim() }
 
-    if (!categories.find(cat => cat.id === kebabCase(tempCategory))) {
+    if (categories.find(cat => cat.name === category.name) || category.name === '') {
+      resetTempCategory()
+    } else {
       _addCategory(category)
+      resetTempCategory()
+    }
+  }
 
-      setTempCategory('')
-      setAddingTempCategory(false)
+  const onSubmitUpdateCategory = (event: ReactSubmitEvent): void => {
+    event.preventDefault()
+
+    const category = { id: editingCategoryId, name: tempCategoryName.trim() }
+
+    if (categories.find(cat => cat.name === category.name) || category.name === '') {
+      resetTempCategory()
+    } else {
+      _updateCategory(category)
+      resetTempCategory()
     }
   }
 
@@ -99,17 +127,17 @@ const AppSidebar: React.FC = () => {
     _toggleSettingsModal()
   }
 
-  const allowDrop = (event: React.DragEvent<HTMLDivElement>) => {
+  const allowDrop = (event: ReactDragEvent) => {
     event.preventDefault()
   }
 
-  const trashNoteHandler = (event: React.DragEvent<HTMLDivElement>) => {
+  const trashNoteHandler = (event: ReactDragEvent) => {
     event.preventDefault()
 
     _toggleTrashedNote(event.dataTransfer.getData('text'))
   }
 
-  const favoriteNoteHandler = (event: React.DragEvent<HTMLDivElement>) => {
+  const favoriteNoteHandler = (event: ReactDragEvent) => {
     event.preventDefault()
 
     _toggleFavoriteNote(event.dataTransfer.getData('text'))
@@ -118,69 +146,13 @@ const AppSidebar: React.FC = () => {
   return (
     <aside className="app-sidebar">
       <section className="app-sidebar-actions">
-        <>
-          {activeFolder !== Folder.TRASH && (
-            <button
-              className="action-button"
-              aria-label="Create new note"
-              onClick={newNoteHandler}
-              title="Create note"
-            >
-              <span>
-                <Plus
-                  className="action-button-icon"
-                  size={18}
-                  color={iconColor}
-                  aria-hidden="true"
-                  focusable="false"
-                />
-              </span>
-            </button>
-          )}
-          <button
-            className="action-button"
-            aria-label="Sync notes"
-            onClick={syncNotesHandler}
-            disabled={syncing}
-            title="Sync notes"
-          >
-            <span>
-              {syncing ? (
-                <Loader
-                  size={18}
-                  className="action-button-icon"
-                  color={iconColor}
-                  aria-hidden="true"
-                  focusable="false"
-                />
-              ) : (
-                <UploadCloud
-                  size={18}
-                  className="action-button-icon"
-                  color={iconColor}
-                  aria-hidden="true"
-                  focusable="false"
-                />
-              )}
-            </span>
-          </button>
-          <button
-            className="action-button"
-            aria-label="Settings"
-            onClick={settingsHandler}
-            title="Settings"
-          >
-            <span>
-              <Settings
-                size={18}
-                className="action-button-icon"
-                color={iconColor}
-                aria-hidden="true"
-                focusable="false"
-              />
-            </span>
-          </button>
-        </>
+        <AppSidebarAction handler={newNoteHandler} icon={Plus} label="Create new note" />
+        <AppSidebarAction
+          handler={syncNotesHandler}
+          icon={syncing ? Loader : UploadCloud}
+          label="Sync notes"
+        />
+        <AppSidebarAction handler={settingsHandler} icon={Settings} label="Settings" />
       </section>
       <section className="app-sidebar-main">
         <div
@@ -199,8 +171,9 @@ const AppSidebar: React.FC = () => {
           }}
           onDrop={favoriteNoteHandler}
           onDragOver={allowDrop}
+          data-cy="favorites"
         >
-          <Bookmark size={15} className="app-sidebar-icon" color={iconColor} />
+          <Star size={15} className="app-sidebar-icon" color={iconColor} />
           Favorites
         </div>
         <div
@@ -210,6 +183,7 @@ const AppSidebar: React.FC = () => {
           }}
           onDrop={trashNoteHandler}
           onDragOver={allowDrop}
+          data-cy="trash"
         >
           <Trash2 size={15} className="app-sidebar-icon" color={iconColor} />
           Trash
@@ -217,11 +191,15 @@ const AppSidebar: React.FC = () => {
 
         <div className="category-title v-between">
           <h2>Categories</h2>
-          <button className="category-button" onClick={newTempCategoryHandler}>
+          <button
+            className="category-button"
+            onClick={newTempCategoryHandler}
+            aria-label="Add category"
+          >
             <Plus size={15} color={iconColor} />
           </button>
         </div>
-        <div className="category-list">
+        <div className="category-list" aria-label="Category list">
           {categories.map(category => {
             return (
               <div
@@ -237,6 +215,13 @@ const AppSidebar: React.FC = () => {
                     _swapNote(newNoteId)
                   }
                 }}
+                onDoubleClick={() => {
+                  setEditingCategoryId(category.id)
+                  setTempCategoryName(category.name)
+                }}
+                onBlur={() => {
+                  setEditingCategoryId('')
+                }}
                 onDrop={event => {
                   event.preventDefault()
 
@@ -244,10 +229,33 @@ const AppSidebar: React.FC = () => {
                 }}
                 onDragOver={allowDrop}
               >
-                <div className="category-list-name">
+                <form
+                  className="category-list-name"
+                  onSubmit={event => {
+                    event.preventDefault()
+                    setEditingCategoryId('')
+                    onSubmitUpdateCategory(event)
+                  }}
+                >
                   <FolderIcon size={15} className="app-sidebar-icon" color={iconColor} />
-                  {category.name}
-                </div>
+                  {editingCategoryId === category.id ? (
+                    <input
+                      type="text"
+                      autoFocus
+                      maxLength={20}
+                      className="category-edit"
+                      value={tempCategoryName}
+                      onChange={event => {
+                        setTempCategoryName(event.target.value)
+                      }}
+                      onBlur={event => {
+                        resetTempCategory()
+                      }}
+                    />
+                  ) : (
+                    category.name
+                  )}
+                </form>
                 <div
                   className="category-options"
                   onClick={() => {
@@ -260,31 +268,42 @@ const AppSidebar: React.FC = () => {
                     _swapNote(newNoteId)
                   }}
                 >
-                  <X size={12} />
+                  <X size={12} aria-label="Remove category" />
                 </div>
               </div>
             )
           })}
         </div>
         {addingTempCategory && (
-          <form className="category-form" onSubmit={onSubmit}>
+          <form className="category-form" onSubmit={onSubmitNewCategory}>
             <input
+              aria-label="Category name"
+              type="text"
               autoFocus
+              maxLength={20}
               placeholder="New category..."
               onChange={event => {
-                setTempCategory(event.target.value)
+                setTempCategoryName(event.target.value)
               }}
               onBlur={event => {
-                if (!tempCategory) {
-                  setAddingTempCategory(false)
+                if (!tempCategoryName || tempCategoryName.trim() === '') {
+                  resetTempCategory()
                 } else {
-                  onSubmit(event)
+                  onSubmitNewCategory(event)
                 }
               }}
             />
           </form>
         )}
       </section>
+      {lastSynced && (
+        <section className="app-sidebar-synced">
+          <div className="v-center last-synced">
+            <Check size={14} className="app-sidebar-icon" />{' '}
+            {moment(lastSynced).format('h:mm A on M/D/Y')}
+          </div>
+        </section>
+      )}
     </aside>
   )
 }
