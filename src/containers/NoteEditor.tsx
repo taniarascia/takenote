@@ -10,7 +10,6 @@ import { RootState, NoteItem, VimModes } from 'types'
 
 import 'codemirror/lib/codemirror.css'
 import 'codemirror/theme/base16-light.css'
-import 'codemirror/theme/zenburn.css'
 import 'codemirror/mode/gfm/gfm'
 import 'codemirror/addon/selection/active-line'
 import 'codemirror/keymap/vim'
@@ -37,7 +36,7 @@ const NoteEditor: React.FC = () => {
           <div className="text-center">
             <p>Create a note</p>
             <p>
-              <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>N</kbd>
+              <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>O</kbd>
             </p>
           </div>
         </div>

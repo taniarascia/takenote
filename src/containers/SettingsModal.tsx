@@ -38,7 +38,7 @@ const SettingsModal: React.FC = () => {
 
   const toggleDarkThemeHandler = () => {
     _toggleDarkTheme()
-    _updateCodeMirrorOption('theme', dark ? 'base16-light' : 'zenburn')
+    _updateCodeMirrorOption('theme', dark ? 'base16-light' : 'new-moon')
   }
 
   const toggleLineHighlight = () => {

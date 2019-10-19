@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { useTempState } from 'contexts/TempStateContext'
 import { downloadNote, getNoteTitle, newNote } from 'helpers'
-import { useKey, useInterval } from 'helpers/hooks'
+import { useKey } from 'helpers/hooks'
 import { addNote, swapNote, toggleTrashedNote } from 'slices/note'
 import { syncState } from 'slices/sync'
 import { togglePreviewMarkdown } from 'slices/previewMarkdown'
@@ -68,7 +68,7 @@ const KeyboardShortcuts: React.FC = () => {
 
   const toggleDarkThemeHandler = () => {
     _toggleDarkTheme()
-    _updateCodeMirrorOption('theme', dark ? 'base16-light' : 'zenburn')
+    _updateCodeMirrorOption('theme', dark ? 'base16-light' : 'new-moon')
   }
 
   useKey('ctrl+alt+o', () => {
@@ -98,10 +98,6 @@ const KeyboardShortcuts: React.FC = () => {
   useKey('alt+ctrl+k', () => {
     toggleDarkThemeHandler()
   })
-
-  useInterval(() => {
-    _syncState(notes, categories)
-  }, 30000)
 
   return null
 }

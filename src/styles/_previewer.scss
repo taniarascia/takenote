@@ -81,8 +81,15 @@
   blockquote {
     margin: 0 0 1.5rem 0;
     border-left: 4px solid $light-font-color;
-    padding: 0 1.5rem;
-    font-size: 1.5rem;
+    padding: 0.5rem 1.5rem;
+
+    p {
+      font-size: 1.1rem;
+
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+    }
 
     cite {
       display: block;

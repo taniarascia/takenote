@@ -71,16 +71,39 @@ $dark-editor: #3f3f3f;
     color: $light-font-color;
     padding: 1rem;
 
+    a {
+      color: $tag;
+    }
+
     h1,
     h2,
     h3,
     h4,
     h5 {
-      color: white;
+      color: $attribute;
     }
 
     code {
       background: rgba(0, 0, 0, 0.2);
+    }
+
+    pre {
+      background: darken($dark-editor, 10%);
+
+      code {
+        color: $code-font-color;
+        background: transparent;
+      }
+    }
+
+    hr {
+      height: 0;
+      border: 0;
+      border-top: 2px solid darken($dark-editor, 5%);
+    }
+
+    blockquote {
+      border-color: darken($dark-editor, 10%);
     }
 
     &::after {
@@ -91,5 +114,15 @@ $dark-editor: #3f3f3f;
   .settings-modal {
     background: $dark-sidebar;
     color: $light-font-color;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    background: darken($app-sidebar-color, 10%);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: lighten($app-sidebar-color, 15%);
+    border-radius: 100px;
   }
 }
