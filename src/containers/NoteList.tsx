@@ -140,7 +140,7 @@ const NoteList: React.FC = () => {
                 {note.favorite ? (
                   <>
                     <div className="icon">
-                      <Star className="note-favorite" size={15} />
+                      <Star className="note-favorite" size={12} />
                     </div>
                     <div> {noteTitle}</div>
                   </>

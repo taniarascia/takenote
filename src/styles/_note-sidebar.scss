@@ -33,9 +33,10 @@
       .note-title {
         display: flex;
         align-items: center;
+        width: 100%;
 
         .icon {
-          flex: 0 0 26px;
+          flex: 0 0 20px;
         }
 
         .note-favorite {
@@ -106,6 +107,7 @@
 
         &-nav {
           font-size: 0.9rem;
+
           .nav-item {
             cursor: pointer;
             display: flex;

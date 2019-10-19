@@ -67,8 +67,24 @@ $dark-editor: #3f3f3f;
 
   .previewer {
     background: $dark-editor;
-    color: white;
+    color: $light-font-color;
     padding: 1rem;
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5 {
+      color: white;
+    }
+
+    code {
+      background: rgba(0, 0, 0, 0.2);
+    }
+
+    &::after {
+      background-color: $app-sidebar-color;
+    }
   }
 
   .settings-modal {

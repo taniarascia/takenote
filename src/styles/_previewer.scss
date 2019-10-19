@@ -5,7 +5,7 @@
   overflow-y: auto;
 
   background: #f5f5f5;
-  color: #202020;
+  color: #404040;
   padding: 1rem;
 
   a {
@@ -24,7 +24,6 @@
   table {
     font-size: 1rem;
     line-height: 1.5;
-    color: #404040;
     margin: 0 0 1.5rem 0;
   }
 
@@ -44,7 +43,6 @@
     margin: 0 0 1.5rem 0;
     font-weight: 700;
     line-height: 1.2;
-    color: #202020;
 
     &:not(:first-child) {
       margin: 1.5rem 0;
@@ -105,8 +103,15 @@
     margin: 0 0 1.5rem 0;
 
     code {
+      background: transparent;
       line-height: 1.2;
     }
+  }
+
+  code {
+    padding: 2px 4px;
+    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.08);
   }
 
   hr {

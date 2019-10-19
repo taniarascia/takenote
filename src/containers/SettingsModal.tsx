@@ -77,7 +77,7 @@ const SettingsModal: React.FC = () => {
           <div className="settings-shortcut">
             <div>Create note</div>
             <div>
-              <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>N</kbd>
+              <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>O</kbd>
             </div>
           </div>
           <div className="settings-shortcut">
@@ -101,7 +101,7 @@ const SettingsModal: React.FC = () => {
           <div className="settings-shortcut">
             <div>Sync note</div>
             <div>
-              <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>S</kbd>
+              <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>L</kbd>
             </div>
           </div>
           <div className="settings-shortcut">
@@ -113,7 +113,7 @@ const SettingsModal: React.FC = () => {
           <div className="settings-shortcut">
             <div>Dark mode</div>
             <div>
-              <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>T</kbd>
+              <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>K</kbd>
             </div>
           </div>
         </section>

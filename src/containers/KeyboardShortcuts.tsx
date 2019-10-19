@@ -71,7 +71,7 @@ const KeyboardShortcuts: React.FC = () => {
     _updateCodeMirrorOption('theme', dark ? 'base16-light' : 'zenburn')
   }
 
-  useKey('ctrl+alt+n', () => {
+  useKey('ctrl+alt+o', () => {
     newNoteHandler()
   })
 
@@ -83,7 +83,7 @@ const KeyboardShortcuts: React.FC = () => {
     trashNoteHandler()
   })
 
-  useKey('ctrl+alt+s', () => {
+  useKey('ctrl+alt+l', () => {
     syncNotesHandler()
   })
 
