@@ -136,9 +136,20 @@ const NoteList: React.FC = () => {
               draggable
               onDragStart={event => handleDragStart(event, note.id)}
             >
-              <div className="v-center">
-                {note.favorite && <Star className="note-favorite" size={15} />}
-                {noteTitle}
+              <div className="note-title">
+                {note.favorite ? (
+                  <>
+                    <div className="icon">
+                      <Star className="note-favorite" size={15} />
+                    </div>
+                    <div> {noteTitle}</div>
+                  </>
+                ) : (
+                  <>
+                    <div className="icon"></div>
+                    <div> {noteTitle}</div>
+                  </>
+                )}
               </div>
               <div
                 className={noteOptionsId === note.id ? 'note-options active ' : 'note-options'}
@@ -159,7 +170,7 @@ const NoteList: React.FC = () => {
                     event.stopPropagation()
                   }}
                 >
-                  {!note.trash && (
+                  {!note.trash && filteredCategories.length > 0 && (
                     <>
                       <select
                         defaultValue=""

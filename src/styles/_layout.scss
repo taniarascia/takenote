@@ -7,11 +7,21 @@
 
 .note-sidebar {
   grid-area: note-sidebar;
+
+  &::-webkit-scrollbar-thumb {
+    background: darken($note-sidebar-color, 10%);
+    border-radius: 100px;
+  }
 }
 
 .app-sidebar {
   grid-area: app-sidebar;
   overflow-y: hidden;
+
+  &::-webkit-scrollbar-thumb {
+    background: darken($app-sidebar-color, 10%);
+    border-radius: 100px;
+  }
 
   &:hover {
     overflow-y: auto;

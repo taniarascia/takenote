@@ -6,6 +6,7 @@ import { downloadNote, getNoteTitle, newNote } from 'helpers'
 import { useKey, useInterval } from 'helpers/hooks'
 import { addNote, swapNote, toggleTrashedNote } from 'slices/note'
 import { syncState } from 'slices/sync'
+import { togglePreviewMarkdown } from 'slices/previewMarkdown'
 import { toggleDarkTheme } from 'slices/theme'
 import { RootState, CategoryItem, NoteItem } from 'types'
 import { updateCodeMirrorOption } from 'slices/settings'
@@ -26,6 +27,7 @@ const KeyboardShortcuts: React.FC = () => {
   const _toggleTrashedNote = (noteId: string) => dispatch(toggleTrashedNote(noteId))
   const _syncState = (notes: NoteItem[], categories: CategoryItem[]) =>
     dispatch(syncState({ notes, categories }))
+  const _togglePreviewMarkdown = () => dispatch(togglePreviewMarkdown())
   const _toggleDarkTheme = () => dispatch(toggleDarkTheme())
   const _updateCodeMirrorOption = (key: string, value: string) =>
     dispatch(updateCodeMirrorOption({ key, value }))
@@ -60,6 +62,10 @@ const KeyboardShortcuts: React.FC = () => {
     }
   }
 
+  const togglePreviewMarkdownHandler = () => {
+    _togglePreviewMarkdown()
+  }
+
   const toggleDarkThemeHandler = () => {
     _toggleDarkTheme()
     _updateCodeMirrorOption('theme', dark ? 'base16-light' : 'zenburn')
@@ -85,7 +91,11 @@ const KeyboardShortcuts: React.FC = () => {
     downloadNoteHandler()
   })
 
-  useKey('ctrl+alt+k', () => {
+  useKey('alt+ctrl+j', () => {
+    togglePreviewMarkdownHandler()
+  })
+
+  useKey('alt+ctrl+k', () => {
     toggleDarkThemeHandler()
   })
 
