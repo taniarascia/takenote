@@ -4,12 +4,13 @@ import { exampleNote } from './exampleNote'
 
 export const requestNotes = () => {
   return new Promise((resolve, reject) => {
-    const data = localStorage.getItem('notes') || '[]'
+    const data = localStorage.getItem('notes')
 
-    if (JSON.parse(data).length > 0) {
-      resolve(JSON.parse(data))
-    } else if (JSON.parse(data).length === 0) {
+    if (data === null) {
+      localStorage.setItem('notes', '[]')
       resolve(exampleNote)
+    } else if (JSON.parse(data)) {
+      resolve(JSON.parse(data))
     } else {
       reject({
         message: 'Something went wrong',
