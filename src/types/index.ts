@@ -62,6 +62,10 @@ export interface SyncState {
   error: string
 }
 
+export interface PreviewMarkdownState {
+  previewMarkdown: boolean
+}
+
 export interface ThemeState {
   dark: boolean
 }
@@ -72,6 +76,7 @@ export interface RootState {
   settingsState: SettingsState
   syncState: SyncState
   themeState: ThemeState
+  previewMarkdown: PreviewMarkdownState
 }
 
 //==============================================================================
