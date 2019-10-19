@@ -59,6 +59,7 @@ $dark-editor: #3f3f3f;
 
   .empty-editor {
     background: $dark-editor;
+    color: $light-font-color;
   }
 
   .editor .CodeMirror-activeline-background {
