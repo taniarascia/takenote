@@ -38,6 +38,12 @@ export const downloadNote = (filename: string, note: NoteItem): void => {
   }
 }
 
+export const sortByFavourites = (a: NoteItem, b: NoteItem) => {
+  if (a.favorite && !b.favorite) return -1
+  if (!a.favorite && b.favorite) return 1
+  return 0
+}
+
 export const sortByLastUpdated = (a: NoteItem, b: NoteItem) => {
   let dateA = new Date(a.lastUpdated)
   let dateB = new Date(b.lastUpdated)
