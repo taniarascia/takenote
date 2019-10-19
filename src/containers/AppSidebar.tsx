@@ -189,15 +189,8 @@ const AppSidebar: React.FC = () => {
           Trash
         </div>
 
-        <div className="category-title v-between">
+        <div className="category-title">
           <h2>Categories</h2>
-          <button
-            className="category-button"
-            onClick={newTempCategoryHandler}
-            aria-label="Add category"
-          >
-            <Plus size={15} color={iconColor} />
-          </button>
         </div>
         <div className="category-list" aria-label="Category list">
           {categories.map(category => {
@@ -274,6 +267,16 @@ const AppSidebar: React.FC = () => {
             )
           })}
         </div>
+        {!addingTempCategory && (
+          <button
+            className="category-button"
+            onClick={newTempCategoryHandler}
+            aria-label="Add category"
+          >
+            <Plus size={15} color={iconColor} />
+            Add Category
+          </button>
+        )}
         {addingTempCategory && (
           <form className="category-form" onSubmit={onSubmitNewCategory}>
             <input

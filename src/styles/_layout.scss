@@ -37,7 +37,16 @@
 .previewer {
   grid-area: editor;
   display: none !important;
+}
 
+.empty-editor {
+  @include small-breakpoint {
+    display: flex !important;
+  }
+}
+
+.editor,
+.previewer {
   @include small-breakpoint {
     display: block !important;
   }

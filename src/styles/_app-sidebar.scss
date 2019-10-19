@@ -10,6 +10,7 @@
     display: none;
 
     @include small-breakpoint {
+      display: block;
       border-top: 1px solid darken($app-sidebar-color, 5%);
       position: absolute;
       bottom: 0;
@@ -166,16 +167,26 @@
     &-button {
       cursor: pointer;
       -webkit-appearance: none;
+      display: flex;
+      align-items: center;
       padding: 0;
-      color: $light-font-color;
+      color: darken($light-font-color, 25%);
       background: transparent;
-      font-size: 1rem;
+      font-size: 0.8rem;
       border: none;
       line-height: 1;
-      margin: 0;
+      margin: 1rem 0.5rem;
 
-      svg:hover {
-        stroke: white;
+      svg {
+        margin-right: 0.75rem;
+      }
+
+      &:hover {
+        color: white;
+
+        svg {
+          stroke: white;
+        }
       }
     }
   }
