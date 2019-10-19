@@ -43,8 +43,8 @@ const NoteList: React.FC = () => {
 
   const _addCategoryToNote = (categoryId: string, noteId: string) =>
     dispatch(addCategoryToNote({ categoryId, noteId }))
-  const _pruneNotes = () => dispatch(pruneNotes())
   const _emptyTrash = () => dispatch(emptyTrash())
+  const _pruneNotes = () => dispatch(pruneNotes())
   const _swapNote = (noteId: string) => dispatch(swapNote(noteId))
   const _swapCategory = (categoryId: string) => dispatch(swapCategory(categoryId))
   const _searchNotes = _.debounce((searchValue: string) => dispatch(searchNotes(searchValue)), 200)
