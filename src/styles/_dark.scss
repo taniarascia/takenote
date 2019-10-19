@@ -105,12 +105,11 @@ $dark-editor: #3f3f3f;
     blockquote {
       border-color: darken($dark-editor, 10%);
     }
-
-    &::after {
-      background-color: $app-sidebar-color;
-    }
   }
 
+  .preview-button {
+    background-color: $app-sidebar-color;
+  }
   .settings-modal {
     background: $dark-sidebar;
     color: $light-font-color;

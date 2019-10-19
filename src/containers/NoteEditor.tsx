@@ -44,7 +44,7 @@ const NoteEditor: React.FC = () => {
     )
   } else if (previewMarkdown) {
     return (
-      <div style={{ position: 'relative' }}>
+      <div className="previewer">
         <ReactMarkdown className="previewer" source={activeNote.text} />
         <button className="preview-button" onClick={_togglePreviewMarkdown}>
           Preview Exit
