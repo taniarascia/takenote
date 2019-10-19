@@ -65,6 +65,10 @@ const noteSlice: Slice<NoteState> = createSlice({
       notes: state.notes.filter(note => note.id !== payload),
       activeNoteId: getNewActiveNoteId(state.notes, payload, state.activeCategoryId),
     }),
+    emptyTrash: state => ({
+      ...state,
+      notes: state.notes.filter(note => !note.trash),
+    }),
     loadNotes: () => initialState,
     loadNotesError: (state, { payload }: PayloadAction<string>) => ({
       ...state,
@@ -135,6 +139,7 @@ export const {
   addCategoryToNote,
   addNote,
   deleteNote,
+  emptyTrash,
   loadNotes,
   loadNotesError,
   loadNotesSuccess,
