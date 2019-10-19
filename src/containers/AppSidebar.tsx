@@ -10,8 +10,10 @@ import {
   Trash2,
   UploadCloud,
   X,
+  Check,
 } from 'react-feather'
 import { useDispatch, useSelector } from 'react-redux'
+import moment from 'moment'
 
 import AppSidebarAction from 'components/AppSidebarAction'
 import { Folder } from 'constants/enums'
@@ -63,7 +65,7 @@ const AppSidebar: React.FC = () => {
 
   const [editingCategoryId, setEditingCategoryId] = useState('')
   const [tempCategoryName, setTempCategoryName] = useState('')
-  const { syncing } = useSelector((state: RootState) => state.syncState)
+  const { syncing, lastSynced } = useSelector((state: RootState) => state.syncState)
 
   const newTempCategoryHandler = () => {
     !addingTempCategory && setAddingTempCategory(true)
@@ -294,6 +296,14 @@ const AppSidebar: React.FC = () => {
           </form>
         )}
       </section>
+      {lastSynced && (
+        <section className="app-sidebar-synced">
+          <div className="v-center last-synced">
+            <Check size={14} className="app-sidebar-icon" />{' '}
+            {moment(lastSynced).format('h:mm A on M/D/Y')}
+          </div>
+        </section>
+      )}
     </aside>
   )
 }

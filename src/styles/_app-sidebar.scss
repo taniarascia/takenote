@@ -6,6 +6,20 @@
   flex-direction: column;
   border-right: 1px solid darken($app-sidebar-color, 10%);
 
+  &-synced {
+    border-top: 1px solid darken($app-sidebar-color, 5%);
+    position: absolute;
+    bottom: 0;
+    width: 200px;
+    padding: 0.5rem;
+    background: $app-sidebar-color;
+
+    .last-synced {
+      color: lighten($app-sidebar-color, 30%);
+      font-size: 0.75rem;
+    }
+  }
+
   &-link {
     display: flex;
     align-items: center;
@@ -29,6 +43,8 @@
 
   &-main {
     flex: 1;
+    position: relative;
+    padding-bottom: 3rem;
 
     p {
       padding: 0 0.5rem;

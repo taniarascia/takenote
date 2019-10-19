@@ -59,6 +59,7 @@ export interface VimState {
 
 export interface SyncState {
   syncing: boolean
+  lastSynced: string
   error: string
 }
 
