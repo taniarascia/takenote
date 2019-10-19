@@ -30,6 +30,10 @@
       font-size: 0.85rem;
       line-height: 1.3;
 
+      .highlighted {
+        color: #3e64ff;
+      }
+
       .note-title {
         display: flex;
         align-items: center;
@@ -56,6 +60,12 @@
       &.active {
         background: $primary;
         color: white;
+        border-bottom: 1px solid $primary;
+
+        .highlighted {
+          background: white;
+          color: $primary;
+        }
 
         &:hover {
           .note-options {
