@@ -7,18 +7,22 @@
   border-right: 1px solid darken($app-sidebar-color, 10%);
 
   &-synced {
-    border-top: 1px solid darken($app-sidebar-color, 5%);
-    position: absolute;
-    bottom: 0;
-    width: 200px;
-    padding: 0.5rem;
-    background: $app-sidebar-color;
+    display: none;
 
-    .last-synced {
-      display: flex;
-      align-items: center;
-      color: lighten($app-sidebar-color, 30%);
-      font-size: 0.75rem;
+    @include small-breakpoint {
+      border-top: 1px solid darken($app-sidebar-color, 5%);
+      position: absolute;
+      bottom: 0;
+      width: $app-sidebar-width;
+      padding: 0.5rem;
+      background: $app-sidebar-color;
+
+      .last-synced {
+        display: flex;
+        align-items: center;
+        color: lighten($app-sidebar-color, 30%);
+        font-size: 0.75rem;
+      }
     }
   }
 
@@ -70,7 +74,7 @@
     align-items: center;
     justify-content: center;
     margin-bottom: 1rem;
-    max-width: 191px;
+    max-width: calc(#{$app-sidebar-width} - 10px);
   }
 
   .action-button {

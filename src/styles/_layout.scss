@@ -1,8 +1,12 @@
 .app {
   display: grid;
   grid-template-areas: 'app-sidebar note-sidebar editor';
-  grid-template-columns: $app-sidebar-width $note-sidebar-width auto;
+  grid-template-columns: 0 auto 0;
   height: 100vh;
+
+  @include small-breakpoint {
+    grid-template-columns: $app-sidebar-width $note-sidebar-width auto;
+  }
 }
 
 .note-sidebar {
