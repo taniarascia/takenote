@@ -3,6 +3,7 @@ import React from 'react'
 import { Controlled as CodeMirror } from 'react-codemirror2'
 import ReactMarkdown from 'react-markdown'
 import { useDispatch, useSelector } from 'react-redux'
+import { X } from 'react-feather'
 
 import { updateNote } from 'slices/note'
 import { togglePreviewMarkdown } from 'slices/previewMarkdown'
@@ -45,12 +46,12 @@ const NoteEditor: React.FC = () => {
     )
   } else if (previewMarkdown) {
     return (
-      <div className="previewer">
+      <>
         <ReactMarkdown className="previewer" source={activeNote.text} />
         <button className="preview-button" onClick={_togglePreviewMarkdown}>
-          Preview Exit
+          Preview <X size={12} />
         </button>
-      </div>
+      </>
     )
   } else {
     return (

@@ -158,20 +158,27 @@
 }
 
 .preview-button {
-  color: inherit;
-  box-shadow: none;
-  border: 1px solid rgba(0, 0, 0, 0.38) !important;
+  display: flex;
+  align-items: center;
   position: absolute;
-  content: 'Preview';
-  background-color: $note-sidebar-color;
-  font-weight: 500;
+  color: $font-color;
   top: 1rem;
   right: 1rem;
+  box-shadow: none;
+  border: none;
+  background-color: $note-sidebar-color;
+  font-weight: 500;
   padding: 0.5rem;
-  border-radius: 8px !important;
+  font-size: 0.8rem;
+
+  svg {
+    margin-left: 0.5rem;
+  }
+
   &:hover,
   &:focus {
-    background-color: #404040;
-    color: $note-sidebar-color;
+    border: none;
+    color: darken($font-color, 10%);
+    background-color: darken($note-sidebar-color, 5%);
   }
 }
