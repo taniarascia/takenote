@@ -17,7 +17,7 @@ export const requestNotes = () =>
   new Promise((resolve, reject) => {
     const data = localStorage.getItem('notes')
 
-    if (data === null) {
+    if (!data) {
       localStorage.setItem('notes', '[]')
       resolve(welcomeNote)
     } else if (JSON.parse(data)) {
