@@ -21,8 +21,8 @@ describe('<NoteListButton />', () => {
       disabled: true,
     }
 
-    const { container } = render(<NoteListButton {...disabledProps} />)
-    const button = container.querySelector('[data-cy="Test"]')
+    const { getByTestId } = render(<NoteListButton {...disabledProps} />)
+    const button = getByTestId('Test')
     expect(button).toHaveAttribute('disabled')
   })
 })

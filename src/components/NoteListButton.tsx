@@ -15,7 +15,7 @@ const NoteListButton: React.FC<NoteListButtonProps> = props => {
       onClick={handler}
       disabled={disabled}
       title={label}
-      data-cy={label}
+      data-testid={label}
     >
       {label}
     </button>

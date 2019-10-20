@@ -19,7 +19,7 @@ const AppSidebarAction: React.FC<AppSidebarActionProps> = props => {
       onClick={handler}
       disabled={disabled}
       title={label}
-      data-cy={label}
+      data-testid={label}
     >
       <span>
         <IconCmp
