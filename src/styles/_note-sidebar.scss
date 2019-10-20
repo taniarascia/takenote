@@ -8,8 +8,7 @@
     overflow-y: auto;
   }
 
-  &-header,
-  &-footer {
+  &-header {
     padding: 0.5rem;
     text-align: center;
     font-weight: 700;
@@ -20,7 +19,7 @@
     align-items: center;
     justify-content: space-between;
     color: $font-color;
-    background: $accent-gray;
+    background: white;
     padding: 0.7rem;
     margin: 0 0.5rem;
     border: none !important;

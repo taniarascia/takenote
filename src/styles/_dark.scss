@@ -20,6 +20,18 @@ $dark-editor: #3f3f3f;
       }
     }
 
+    .list-button {
+      color: $light-font-color;
+      background: darken($dark-sidebar, 8%);
+      border: 1px solid darken($dark-sidebar, 1%);
+
+      &:hover,
+      &:focus {
+        color: white;
+        background: $primary;
+      }
+    }
+
     .note-list {
       .note-list-each {
         border-bottom: 1px solid darken($dark-sidebar, 8%);
