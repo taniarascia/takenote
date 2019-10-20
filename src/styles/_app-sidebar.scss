@@ -12,6 +12,7 @@
     @include small-breakpoint {
       display: block;
       border-top: 1px solid darken($app-sidebar-color, 5%);
+      border-right: 1px solid darken($app-sidebar-color, 10%);
       position: absolute;
       bottom: 0;
       width: $app-sidebar-width;

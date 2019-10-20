@@ -16,7 +16,7 @@ $dark-editor: #3f3f3f;
       [type='search'] {
         background: darken($dark-sidebar, 8%);
         color: $light-font-color;
-        border: 1px solid darken($dark-sidebar, 1%);
+        border: transparent;
       }
     }
 
@@ -43,7 +43,7 @@ $dark-editor: #3f3f3f;
 
         &.active {
           color: white;
-          background: darken($primary, 15%);
+          background: darken($primary, 20%);
         }
       }
     }
@@ -52,6 +52,7 @@ $dark-editor: #3f3f3f;
       border: 1px solid darken($dark-sidebar, 8%);
       background: $app-sidebar-color;
       color: $light-font-color;
+      box-shadow: 1px 3px 22px rgba(26, 16, 16, 0.6);
 
       select {
         background: lighten($dark-sidebar, 8%);
@@ -120,8 +121,14 @@ $dark-editor: #3f3f3f;
   }
 
   .preview-button {
-    background-color: $app-sidebar-color;
+    background: $app-sidebar-color;
+    color: #ccc;
+
+    &:hover {
+      background: darken($app-sidebar-color, 5%);
+    }
   }
+
   .settings-modal {
     background: $dark-sidebar;
     color: $light-font-color;
