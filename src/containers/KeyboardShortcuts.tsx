@@ -71,15 +71,15 @@ const KeyboardShortcuts: React.FC = () => {
     _updateCodeMirrorOption('theme', dark ? 'base16-light' : 'new-moon')
   }
 
-  useKey('ctrl+alt+o', () => {
+  useKey('ctrl+alt+n', () => {
     newNoteHandler()
   })
 
-  useKey('ctrl+alt+c', () => {
+  useKey('ctrl+alt+m', () => {
     newTempCategoryHandler()
   })
 
-  useKey('ctrl+alt+w', () => {
+  useKey('ctrl+alt+u', () => {
     trashNoteHandler()
   })
 
@@ -87,7 +87,7 @@ const KeyboardShortcuts: React.FC = () => {
     syncNotesHandler()
   })
 
-  useKey('ctrl+alt+d', () => {
+  useKey('ctrl+alt+p', () => {
     downloadNoteHandler()
   })
 

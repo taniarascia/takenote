@@ -39,7 +39,7 @@ const NoteEditor: React.FC = () => {
             <strong>Create a note</strong>
           </p>
           <p>
-            <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>O</kbd>
+            <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>N</kbd>
           </p>
         </div>
       </div>
