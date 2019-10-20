@@ -15,13 +15,13 @@
 
 ### Simple
 
-TakeNote was made by developers for developers - a simple, plain-text note-taking app for the web with Markdown support. What you paste is what you see. No WYSIWIG, no formatting pasted from the web, and no features you don't need or want.
+TakeNote was made by developers for developers - a simple, plain-text note-taking app for the web with Markdown support. What you see is what you paste. No WYSIWIG, no formatting pasted from the web, and no features you don't need or want.
 
 ### Organized
 
 Drag-and-drop notes into categories, instantly search through notes, and pin your favorites to the top.
 
-## Beautiful
+### Beautiful
 
 Beautiful, clean design with light and dark themes.
 
@@ -31,7 +31,7 @@ In progress!
 
 ## Reviews
 
-> "I think the lack of extra crap is a feature." — Craig Lam
+> _"I think the lack of extra crap is a feature."_ — Craig Lam
 
 ## Setup
 
