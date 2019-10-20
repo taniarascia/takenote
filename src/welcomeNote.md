@@ -16,11 +16,11 @@ TakeNote is a web-based note-taking app with GitHub sync (soon™️) and Markdo
 
 | Action          | Windows/Linux Shortcut | Mac Shortcut               |
 | --------------- | ---------------------- | -------------------------- |
-| Create note     | `CTRL` + `ALT` + `N`   | `CONTROL` + `OPTION` + `N` |
+| Create note     | `CTRL` + `ALT` + `O`   | `CONTROL` + `OPTION` + `O` |
 | Delete note     | `CTRL` + `ALT` + `W`   | `CONTROL` + `OPTION` + `W` |
 | Create category | `CTRL` + `ALT` + `C`   | `CONTROL` + `OPTION` + `C` |
 | Download note   | `CTRL` + `ALT` + `D`   | `CONTROL` + `OPTION` + `D` |
-| Sync note       | `CTRL` + `ALT` + `S`   | `CONTROL` + `OPTION` + `S` |
+| Sync note       | `CTRL` + `ALT` + `L`   | `CONTROL` + `OPTION` + `L` |
 | Preview note    | `CTRL` + `ALT` + `J`   | `CONTROL` + `OPTION` + `J` |
 | Dark mode       | `CTRL` + `ALT` + `K`   | `CONTROL` + `OPTION` + `K` |
 
