@@ -114,6 +114,13 @@ const NoteList: React.FC = () => {
         />
       </div>
       <div className="note-list">
+        {showEmptyTrash && (
+          <div className="note-sidebar-footer">
+            <NoteListButton label="Empty Trash" handler={() => _emptyTrash()}>
+              Empty Trash
+            </NoteListButton>
+          </div>
+        )}
         {filteredNotes.map(note => {
           let noteTitle: string | React.ReactElement = getNoteTitle(note.text)
 
@@ -221,13 +228,6 @@ const NoteList: React.FC = () => {
             </div>
           )
         })}
-        {showEmptyTrash && (
-          <div className="note-sidebar-footer">
-            <NoteListButton label="Empty Trash" handler={() => _emptyTrash()}>
-              Empty Trash
-            </NoteListButton>
-          </div>
-        )}
       </div>
     </aside>
   )
