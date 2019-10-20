@@ -28,7 +28,7 @@ $dark-editor: #3f3f3f;
       &:hover,
       &:focus {
         color: white;
-        background: $primary;
+        background: darken($variable, 10%);
       }
     }
 
