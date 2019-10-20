@@ -4,7 +4,7 @@
 
 <p align="center">
  <img src="https://img.shields.io/badge/License-MIT-blue.svg">
-  <a href="#contributors"><img src="https://img.shields.io/badge/all_contributors-22-orange.svg?style=flat-square)"></a>
+  <a href="#contributors"><img src="https://img.shields.io/badge/all_contributors-23-orange.svg?style=flat-square)"></a>
   <a href="https://travis-ci.org/taniarascia/takenote"><img src="https://travis-ci.org/taniarascia/takenote.svg?branch=master"></a>
   <a href="https://coveralls.io/github/taniarascia/takenote?branch=master"><img src="https://coveralls.io/repos/github/taniarascia/takenote/badge.svg?branch=master"></a>
 </p>
@@ -12,6 +12,26 @@
 <p align="center">A web-based note-taking app with GitHub sync and Markdown support. (WIP)</p>
 
 ![Screenshot](./screenshot.png)
+
+### Simple
+
+TakeNote was made by developers for developers - a simple, plain-text note-taking app for the web with Markdown support. What you paste is what you see. No WYSIWIG, no formatting pasted from the web, and no features you don't need or want.
+
+### Organized
+
+Drag-and-drop notes into categories, instantly search through notes, and pin your favorites to the top.
+
+## Beautiful
+
+Beautiful, clean design with light and dark themes.
+
+### Sync to GitHub
+
+In progress!
+
+## Reviews
+
+> "I think the lack of extra crap is a feature." — Craig Lam
 
 ## Setup
 
@@ -39,17 +59,6 @@ docker run -p 80:80 takenote
 ### Seed data
 
 To seed the app with some test data, paste the contents of `seed.js` into your browser console.
-
-## Features
-
-- [x] Plain text notes with Markdown highlighting and frontmatter metadata
-- [x] Add, update, download, temporarily delete and delete notes
-- [x] Add, update, and delete categories
-- [x] Add notes to categories or mark note as favorite
-- [x] Keybinding shortcuts for common actions
-- [x] Settings for light/dark mode, sync frequency, and Vim mode
-- [x] Search notes
-- [ ] Sync and store notes in GitHub gist (currently local storage)
 
 ## Contributing
 
@@ -98,6 +107,10 @@ Thanks goes to these wonderful people:
 </table>
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
+
+## Acknowledgements
+
+- A big thank you to [David Bock](https://dkbock.com/) for logo design
 
 ## Author
 
