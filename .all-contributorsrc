@@ -218,6 +218,17 @@
         "bug",
         "code"
       ]
+    },
+    {
+      "login": "siliconeidolon",
+      "name": "Craig Lam",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/8170456?v=4",
+      "profile": "http://craiglam.com",
+      "contributions": [
+        "code",
+        "bug",
+        "test"
+      ]
     }
   ],
   "contributorsPerLine": 7
