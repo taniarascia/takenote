@@ -4,9 +4,17 @@ import { MoreHorizontal, Star } from 'react-feather'
 import _ from 'lodash'
 
 import { Folder } from 'constants/enums'
+import NoteListButton from 'components/NoteListButton'
 import NoteOptions from 'containers/NoteOptions'
 import { getNoteTitle, sortByLastUpdated, sortByFavourites } from 'helpers'
-import { addCategoryToNote, pruneNotes, swapCategory, swapNote, searchNotes } from 'slices/note'
+import {
+  addCategoryToNote,
+  emptyTrash,
+  pruneNotes,
+  swapCategory,
+  swapNote,
+  searchNotes,
+} from 'slices/note'
 import { NoteItem, ReactDragEvent, ReactMouseEvent, RootState } from 'types'
 
 const NoteList: React.FC = () => {
@@ -35,6 +43,7 @@ const NoteList: React.FC = () => {
 
   const _addCategoryToNote = (categoryId: string, noteId: string) =>
     dispatch(addCategoryToNote({ categoryId, noteId }))
+  const _emptyTrash = () => dispatch(emptyTrash())
   const _pruneNotes = () => dispatch(pruneNotes())
   const _swapNote = (noteId: string) => dispatch(swapNote(noteId))
   const _swapCategory = (categoryId: string) => dispatch(swapCategory(categoryId))
@@ -90,6 +99,8 @@ const NoteList: React.FC = () => {
     }
   })
 
+  const showEmptyTrash = activeFolder === Folder.TRASH && filteredNotes.length > 0
+
   return (
     <aside className="note-sidebar">
       <div className="note-sidebar-header">
@@ -101,6 +112,11 @@ const NoteList: React.FC = () => {
           }}
           placeholder="Search for notes"
         />
+        {showEmptyTrash && (
+          <NoteListButton label="Empty Trash" handler={() => _emptyTrash()}>
+            Empty Trash
+          </NoteListButton>
+        )}
       </div>
       <div className="note-list">
         {filteredNotes.map(note => {

@@ -12,9 +12,23 @@
     padding: 0.5rem;
     text-align: center;
     font-weight: 700;
+  }
 
-    [type='search'] {
-      margin-bottom: 0;
+  .list-button {
+    cursor: pointer;
+    align-items: center;
+    justify-content: space-between;
+    color: $font-color;
+    background: white;
+    padding: 0.7rem;
+    margin: 0 0.5rem;
+    border: none !important;
+
+    &:hover,
+    &:focus {
+      color: white;
+      background: $primary;
+      outline: none;
     }
   }
 

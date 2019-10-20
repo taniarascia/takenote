@@ -27,7 +27,7 @@ describe('Create note test', () => {
       .should('have.length', 1)
   })
 
-  it('shoukld send a note to trash', () => {
+  it('should send a note to trash', () => {
     cy.get('.note-list-each.active .note-options').click()
     cy.get('[data-cy="note-option-trash-button"]').click()
     cy.get('.note-list')
@@ -38,5 +38,15 @@ describe('Create note test', () => {
       .children()
       .should('have.length', 1)
     cy.get('.note-list-each.active').should('contain', 'New Note')
+  })
+
+  it('should empty notes in trash', () => {
+    cy.get('.note-list')
+      .children()
+      .should('have.length', 1)
+    cy.get('[data-cy="Empty Trash"]').click()
+    cy.get('.note-list')
+      .children()
+      .should('have.length', 0)
   })
 })
