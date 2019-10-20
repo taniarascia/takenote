@@ -46,13 +46,13 @@ const NoteOptions: React.FC<NoteOptionsProps> = ({ clickedNote }) => {
       ) : (
         <>
           <NoteOptionsButton
-            data-cy="note-option-favorite-button"
+            data-testid="note-option-favorite-button"
             handler={favoriteNoteHandler}
             icon={Star}
             text={clickedNote.favorite ? 'Remove favorite' : 'Mark as favorite'}
           />
           <NoteOptionsButton
-            data-cy="note-option-trash-button"
+            data-testid="note-option-trash-button"
             handler={trashNoteHandler}
             icon={Trash}
             text="Move to trash"

@@ -171,7 +171,7 @@ const AppSidebar: React.FC = () => {
           }}
           onDrop={favoriteNoteHandler}
           onDragOver={allowDrop}
-          data-cy="favorites"
+          data-testid="favorites"
         >
           <Star size={15} className="app-sidebar-icon" color={iconColor} />
           Favorites
@@ -183,7 +183,7 @@ const AppSidebar: React.FC = () => {
           }}
           onDrop={trashNoteHandler}
           onDragOver={allowDrop}
-          data-cy="trash"
+          data-testid="trash"
         >
           <Trash2 size={15} className="app-sidebar-icon" color={iconColor} />
           Trash
