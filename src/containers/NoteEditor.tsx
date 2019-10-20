@@ -1,10 +1,12 @@
 import moment from 'moment'
 import React from 'react'
 import { Controlled as CodeMirror } from 'react-codemirror2'
-import { useDispatch, useSelector } from 'react-redux'
 import ReactMarkdown from 'react-markdown'
+import { useDispatch, useSelector } from 'react-redux'
+import { X } from 'react-feather'
 
 import { updateNote } from 'slices/note'
+import { togglePreviewMarkdown } from 'slices/previewMarkdown'
 import { updateVimStateMode } from 'slices/settings'
 import { RootState, NoteItem, VimModes } from 'types'
 
@@ -23,8 +25,8 @@ const NoteEditor: React.FC = () => {
 
   const dispatch = useDispatch()
 
+  const _togglePreviewMarkdown = () => dispatch(togglePreviewMarkdown())
   const _updateNote = (note: NoteItem) => dispatch(updateNote(note))
-
   const _updateVimStateMode = (vimMode: VimModes) => dispatch(updateVimStateMode(vimMode))
 
   if (loading) {
@@ -43,7 +45,14 @@ const NoteEditor: React.FC = () => {
       </div>
     )
   } else if (previewMarkdown) {
-    return <ReactMarkdown className="previewer" source={activeNote.text} />
+    return (
+      <>
+        <ReactMarkdown className="previewer" source={activeNote.text} />
+        <button className="preview-button" onClick={_togglePreviewMarkdown}>
+          Preview <X size={12} />
+        </button>
+      </>
+    )
   } else {
     return (
       <CodeMirror

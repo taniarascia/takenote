@@ -155,15 +155,30 @@
     text-align: left;
     padding: 0.5rem;
   }
+}
 
-  &::after {
-    position: absolute;
-    content: 'Preview';
-    background-color: $note-sidebar-color;
-    font-weight: 500;
-    top: 1rem;
-    right: 1rem;
-    padding: 0.5rem;
-    border-radius: 8px;
+.preview-button {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  color: $font-color;
+  top: 1rem;
+  right: 1rem;
+  box-shadow: none;
+  border: none;
+  background-color: $note-sidebar-color;
+  font-weight: 500;
+  padding: 0.5rem;
+  font-size: 0.8rem;
+
+  svg {
+    margin-left: 0.5rem;
+  }
+
+  &:hover,
+  &:focus {
+    border: none;
+    color: darken($font-color, 10%);
+    background-color: darken($note-sidebar-color, 5%);
   }
 }
