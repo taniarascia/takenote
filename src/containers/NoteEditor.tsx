@@ -77,7 +77,7 @@ const NoteEditor: React.FC = () => {
           })
         }}
         onChange={(editor, data, value) => {
-          if (value) {
+          if (!value) {
             editor.focus()
           }
         }}
