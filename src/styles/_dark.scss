@@ -16,7 +16,7 @@ $dark-editor: #3f3f3f;
       [type='search'] {
         background: darken($dark-sidebar, 8%);
         color: $light-font-color;
-        border: transparent;
+        border: 1px solid darken($dark-sidebar, 8%);
       }
     }
 

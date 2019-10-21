@@ -17,6 +17,7 @@ const KeyboardShortcuts: React.FC = () => {
     (state: RootState) => state.noteState
   )
   const { dark } = useSelector((state: RootState) => state.themeState)
+  const { previewMarkdown } = useSelector((state: RootState) => state.previewMarkdown)
 
   const activeNote = notes.find(note => note.id === activeNoteId)
 
@@ -72,10 +73,13 @@ const KeyboardShortcuts: React.FC = () => {
   }
 
   useKey('ctrl+alt+n', () => {
+    if (previewMarkdown) {
+      togglePreviewMarkdownHandler()
+    }
     newNoteHandler()
   })
 
-  useKey('ctrl+alt+m', () => {
+  useKey('ctrl+alt+c', () => {
     newTempCategoryHandler()
   })
 

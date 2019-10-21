@@ -102,7 +102,7 @@ const SettingsModal: React.FC = () => {
           <div className="settings-shortcut">
             <div>Create category</div>
             <div>
-              <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>M</kbd>
+              <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>C</kbd>
             </div>
           </div>
           <div className="settings-shortcut">
