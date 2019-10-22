@@ -1,9 +1,12 @@
 import { createSlice, PayloadAction, Slice } from 'redux-starter-kit'
 
-import { SettingsState } from 'types'
+import { SettingsState, VimModes } from 'types'
 
 const initialState: SettingsState = {
   isOpen: false,
+  vimState: {
+    mode: VimModes.default,
+  },
   codeMirrorOptions: {
     mode: 'gfm',
     theme: 'base16-light',
@@ -24,6 +27,12 @@ const settingsSlice: Slice<SettingsState> = createSlice({
       ...state,
       isOpen: !state.isOpen,
     }),
+    updateVimStateMode: (state, { payload }: PayloadAction<VimModes>) => ({
+      ...state,
+      vimState: {
+        mode: payload,
+      },
+    }),
     updateCodeMirrorOption: (
       state,
       { payload }: PayloadAction<{ key: string; value: string }>
@@ -37,6 +46,11 @@ const settingsSlice: Slice<SettingsState> = createSlice({
   },
 })
 
-export const { toggleSettingsModal, updateCodeMirrorOption } = settingsSlice.actions
+export const {
+  toggleSettingsModal,
+  toggleVimInsertMode,
+  updateVimStateMode,
+  updateCodeMirrorOption,
+} = settingsSlice.actions
 
 export default settingsSlice.reducer

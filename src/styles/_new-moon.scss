@@ -1,0 +1,122 @@
+.cm-s-new-moon .CodeMirror-gutters {
+  background: #2d2d2d !important;
+}
+
+.cm-s-new-moon .CodeMirror-foldgutter-open,
+.CodeMirror-foldgutter-folded {
+  color: #999;
+}
+
+.cm-s-new-moon .CodeMirror-cursor {
+  border-left: 1px solid white;
+}
+
+.cm-s-new-moon {
+  background-color: #2d2d2d;
+  color: $code-font-color;
+}
+
+.cm-s-new-moon span.cm-builtin {
+  color: $attribute;
+  font-weight: bold;
+}
+
+.cm-s-new-moon span.cm-comment {
+  color: $comment;
+}
+
+.cm-s-new-moon span.cm-keyword {
+  color: $keyword;
+  font-weight: bold;
+}
+
+.cm-s-new-moon span.cm-atom {
+  color: #bfebbf;
+}
+
+.cm-s-new-moon span.cm-def {
+  color: $attribute;
+}
+
+.cm-s-new-moon span.cm-variable {
+  color: $variable;
+}
+
+.cm-s-new-moon span.cm-variable-2 {
+  color: $tag;
+}
+
+.cm-s-new-moon span.cm-string {
+  color: $string;
+}
+
+.cm-s-new-moon span.cm-string-2 {
+  color: $string;
+}
+
+.cm-s-new-moon span.cm-number {
+  color: $number;
+}
+
+.cm-s-new-moon span.cm-tag {
+  color: $tag;
+}
+
+.cm-s-new-moon span.cm-property {
+  color: $punctuation;
+}
+
+.cm-s-new-moon span.cm-attribute {
+  color: $attribute;
+}
+
+.cm-s-new-moon span.cm-qualifier {
+  color: $function;
+}
+
+.cm-s-new-moon span.cm-meta {
+  color: $keyword;
+}
+
+.cm-s-new-moon span.cm-header {
+  color: $attribute;
+}
+
+.cm-s-new-moon span.cm-quote {
+  color: $class;
+}
+
+.cm-s-new-moon span.cm-strong {
+  color: $function;
+}
+
+.cm-s-new-moon span.cm-operator {
+  color: $operator;
+}
+
+.cm-s-new-moon span.CodeMirror-matchingbracket {
+  box-sizing: border-box;
+  background: transparent;
+  border-bottom: 1px solid;
+}
+
+.cm-s-new-moon span.CodeMirror-nonmatchingbracket {
+  border-bottom: 1px solid;
+  background: none;
+}
+
+.cm-s-new-moon .CodeMirror-activeline {
+  background: #000000;
+}
+
+.cm-s-new-moon .CodeMirror-activeline-background {
+  background: #000000;
+}
+
+.cm-s-new-moon div.CodeMirror-selected {
+  background: #545454;
+}
+
+.cm-s-new-moon .CodeMirror-focused div.CodeMirror-selected {
+  background: #4f4f4f;
+}

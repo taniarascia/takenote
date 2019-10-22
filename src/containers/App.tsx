@@ -10,14 +10,18 @@ import NoteEditor from 'containers/NoteEditor'
 import NoteList from 'containers/NoteList'
 import SettingsModal from 'containers/SettingsModal'
 import { TempStateProvider } from 'contexts/TempStateContext'
+import { useInterval } from 'helpers/hooks'
 import { loadCategories } from 'slices/category'
 import { loadNotes } from 'slices/note'
-import { RootState } from 'types'
+import { syncState } from 'slices/sync'
+import { RootState, NoteItem, CategoryItem } from 'types'
 
 const App: React.FC = () => {
   const dispatch = useDispatch()
   const { dark } = useSelector((state: RootState) => state.themeState)
-  const { activeFolder, activeCategoryId } = useSelector((state: RootState) => state.noteState)
+  const { activeFolder, activeCategoryId, notes } = useSelector(
+    (state: RootState) => state.noteState
+  )
   const { categories } = useSelector((state: RootState) => state.categoryState)
 
   const activeCategory = categories.find(({ id }) => id === activeCategoryId)
@@ -32,16 +36,23 @@ const App: React.FC = () => {
   useEffect(_loadNotes, [])
   useEffect(_loadCategories, [])
 
+  const _syncState = (notes: NoteItem[], categories: CategoryItem[]) =>
+    dispatch(syncState({ notes, categories }))
+
+  useInterval(() => {
+    _syncState(notes, categories)
+  }, 20000)
+
   return (
     <HelmetProvider>
       <Helmet>
         <meta charSet="utf-8" />
         <title>
-          {` `}
           {activeFolder === Folder.CATEGORY
-            ? activeCategory && activeCategory.name
-            : folderMap[activeFolder]}{' '}
-          | TakeNote
+            ? activeCategory
+              ? `${activeCategory.name} | TakeNote`
+              : `TakeNote`
+            : `${folderMap[activeFolder]} | TakeNote`}
         </title>
         <link rel="canonical" href="https://takenote.dev" />
       </Helmet>

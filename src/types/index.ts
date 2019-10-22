@@ -45,11 +45,26 @@ export interface NoteState {
 export interface SettingsState {
   isOpen: boolean
   codeMirrorOptions: { [key: string]: any }
+  vimState: VimState
+}
+
+export enum VimModes {
+  default = '?',
+  insert = 'i',
+}
+
+export interface VimState {
+  mode: VimModes
 }
 
 export interface SyncState {
   syncing: boolean
+  lastSynced: string
   error: string
+}
+
+export interface PreviewMarkdownState {
+  previewMarkdown: boolean
 }
 
 export interface ThemeState {
@@ -62,6 +77,7 @@ export interface RootState {
   settingsState: SettingsState
   syncState: SyncState
   themeState: ThemeState
+  previewMarkdown: PreviewMarkdownState
 }
 
 //==============================================================================

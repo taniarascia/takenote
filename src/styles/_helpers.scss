@@ -18,6 +18,14 @@
   margin-bottom: 1rem;
 }
 
+.ml-1 {
+  margin-left: 1rem;
+}
+
+.text-center {
+  text-align: center;
+}
+
 .switch {
   position: relative;
   display: inline-block;
@@ -75,9 +83,35 @@ kbd {
   color: #333;
   display: inline-block;
   font-family: Helvetica, Arial, sans-serif;
-  font-size: 13px;
+  font-size: 12px;
   line-height: 1.4;
   margin: 0 0.1em;
   padding: 0.1em 0.6em;
   text-shadow: 0 1px 0 #fff;
+}
+
+.action-button {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: transparent;
+  padding: 0.7rem;
+  margin: 0 0.5rem;
+  border: none !important;
+}
+
+::-webkit-scrollbar-corner {
+  width: 8px;
+  background: transparent;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: darken($note-sidebar-color, 10%);
+  border-radius: 100px;
 }

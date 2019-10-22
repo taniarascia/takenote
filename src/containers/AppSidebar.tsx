@@ -2,7 +2,7 @@ import uuid from 'uuid/v4'
 import React, { useState } from 'react'
 import {
   Book,
-  Bookmark,
+  Star,
   Folder as FolderIcon,
   Loader,
   Plus,
@@ -10,15 +10,17 @@ import {
   Trash2,
   UploadCloud,
   X,
+  Check,
 } from 'react-feather'
 import { useDispatch, useSelector } from 'react-redux'
+import moment from 'moment'
 
 import AppSidebarAction from 'components/AppSidebarAction'
 import { Folder } from 'constants/enums'
 import { iconColor } from 'constants/index'
 import { useTempState } from 'contexts/TempStateContext'
 import { newNote } from 'helpers'
-import { addCategory, deleteCategory } from 'slices/category'
+import { addCategory, updateCategory, deleteCategory } from 'slices/category'
 import {
   addCategoryToNote,
   addNote,
@@ -38,7 +40,6 @@ const AppSidebar: React.FC = () => {
   const { activeCategoryId, activeFolder, activeNoteId, notes } = useSelector(
     (state: RootState) => state.noteState
   )
-
   const activeNote = notes.find(note => note.id === activeNoteId)
 
   const dispatch = useDispatch()
@@ -48,6 +49,7 @@ const AppSidebar: React.FC = () => {
   const _swapCategory = (categoryId: string) => dispatch(swapCategory(categoryId))
   const _swapFolder = (folder: Folder) => dispatch(swapFolder(folder))
   const _addCategory = (category: CategoryItem) => dispatch(addCategory(category))
+  const _updateCategory = (category: CategoryItem) => dispatch(updateCategory(category))
   const _deleteCategory = (categoryId: string) => dispatch(deleteCategory(categoryId))
   const _pruneCategoryFromNotes = (categoryId: string) =>
     dispatch(pruneCategoryFromNotes(categoryId))
@@ -59,14 +61,11 @@ const AppSidebar: React.FC = () => {
   const _addCategoryToNote = (categoryId: string, noteId: string) =>
     dispatch(addCategoryToNote({ categoryId, noteId }))
 
-  const {
-    errorCategoryMessage,
-    setErrorCategoryMessage,
-    addingTempCategory,
-    setAddingTempCategory,
-  } = useTempState()
-  const [tempCategory, setTempCategory] = useState('')
-  const { syncing } = useSelector((state: RootState) => state.syncState)
+  const { setErrorCategoryMessage, addingTempCategory, setAddingTempCategory } = useTempState()
+
+  const [editingCategoryId, setEditingCategoryId] = useState('')
+  const [tempCategoryName, setTempCategoryName] = useState('')
+  const { syncing, lastSynced } = useSelector((state: RootState) => state.syncState)
 
   const newTempCategoryHandler = () => {
     !addingTempCategory && setAddingTempCategory(true)
@@ -88,21 +87,34 @@ const AppSidebar: React.FC = () => {
   }
 
   const resetTempCategory = () => {
-    setTempCategory('')
+    setTempCategoryName('')
     setAddingTempCategory(false)
     setErrorCategoryMessage('')
+    setEditingCategoryId('')
   }
 
-  const onSubmitCategory = (event: ReactSubmitEvent): void => {
+  const onSubmitNewCategory = (event: ReactSubmitEvent): void => {
     event.preventDefault()
 
-    const category = { id: uuid(), name: tempCategory.trim() }
+    const category = { id: uuid(), name: tempCategoryName.trim() }
 
-    if (categories.find(cat => cat.name === tempCategory.trim())) {
-      setErrorCategoryMessage('Category already exists!')
+    if (categories.find(cat => cat.name === category.name) || category.name === '') {
+      resetTempCategory()
     } else {
       _addCategory(category)
+      resetTempCategory()
+    }
+  }
 
+  const onSubmitUpdateCategory = (event: ReactSubmitEvent): void => {
+    event.preventDefault()
+
+    const category = { id: editingCategoryId, name: tempCategoryName.trim() }
+
+    if (categories.find(cat => cat.name === category.name) || category.name === '') {
+      resetTempCategory()
+    } else {
+      _updateCategory(category)
       resetTempCategory()
     }
   }
@@ -159,8 +171,9 @@ const AppSidebar: React.FC = () => {
           }}
           onDrop={favoriteNoteHandler}
           onDragOver={allowDrop}
+          data-testid="favorites"
         >
-          <Bookmark size={15} className="app-sidebar-icon" color={iconColor} />
+          <Star size={15} className="app-sidebar-icon" color={iconColor} />
           Favorites
         </div>
         <div
@@ -170,21 +183,16 @@ const AppSidebar: React.FC = () => {
           }}
           onDrop={trashNoteHandler}
           onDragOver={allowDrop}
+          data-testid="trash"
         >
           <Trash2 size={15} className="app-sidebar-icon" color={iconColor} />
           Trash
         </div>
 
-        <div className="category-title v-between">
+        <div className="category-title">
           <h2>Categories</h2>
-          <button className="category-button" onClick={newTempCategoryHandler}>
-            <Plus size={15} color={iconColor} />
-          </button>
         </div>
-        <div className="category-list">
-          {errorCategoryMessage && (
-            <div className="category-error-message">{errorCategoryMessage}</div>
-          )}
+        <div className="category-list" aria-label="Category list">
           {categories.map(category => {
             return (
               <div
@@ -200,6 +208,13 @@ const AppSidebar: React.FC = () => {
                     _swapNote(newNoteId)
                   }
                 }}
+                onDoubleClick={() => {
+                  setEditingCategoryId(category.id)
+                  setTempCategoryName(category.name)
+                }}
+                onBlur={() => {
+                  setEditingCategoryId('')
+                }}
                 onDrop={event => {
                   event.preventDefault()
 
@@ -207,10 +222,33 @@ const AppSidebar: React.FC = () => {
                 }}
                 onDragOver={allowDrop}
               >
-                <div className="category-list-name">
+                <form
+                  className="category-list-name"
+                  onSubmit={event => {
+                    event.preventDefault()
+                    setEditingCategoryId('')
+                    onSubmitUpdateCategory(event)
+                  }}
+                >
                   <FolderIcon size={15} className="app-sidebar-icon" color={iconColor} />
-                  {category.name}
-                </div>
+                  {editingCategoryId === category.id ? (
+                    <input
+                      type="text"
+                      autoFocus
+                      maxLength={20}
+                      className="category-edit"
+                      value={tempCategoryName}
+                      onChange={event => {
+                        setTempCategoryName(event.target.value)
+                      }}
+                      onBlur={event => {
+                        resetTempCategory()
+                      }}
+                    />
+                  ) : (
+                    category.name
+                  )}
+                </form>
                 <div
                   className="category-options"
                   onClick={() => {
@@ -223,32 +261,52 @@ const AppSidebar: React.FC = () => {
                     _swapNote(newNoteId)
                   }}
                 >
-                  <X size={12} />
+                  <X size={12} aria-label="Remove category" />
                 </div>
               </div>
             )
           })}
         </div>
+        {!addingTempCategory && (
+          <button
+            className="category-button"
+            onClick={newTempCategoryHandler}
+            aria-label="Add category"
+          >
+            <Plus size={15} color={iconColor} />
+            Add Category
+          </button>
+        )}
         {addingTempCategory && (
-          <form className="category-form" onSubmit={onSubmitCategory}>
+          <form className="category-form" onSubmit={onSubmitNewCategory}>
             <input
+              aria-label="Category name"
+              type="text"
               autoFocus
               maxLength={20}
               placeholder="New category..."
               onChange={event => {
-                setTempCategory(event.target.value)
+                setTempCategoryName(event.target.value)
               }}
               onBlur={event => {
-                if (!tempCategory || tempCategory.trim() === '' || errorCategoryMessage) {
+                if (!tempCategoryName || tempCategoryName.trim() === '') {
                   resetTempCategory()
                 } else {
-                  onSubmitCategory(event)
+                  onSubmitNewCategory(event)
                 }
               }}
             />
           </form>
         )}
       </section>
+      {lastSynced && (
+        <section className="app-sidebar-synced">
+          <div className="last-synced">
+            <Check size={14} className="app-sidebar-icon" />{' '}
+            {moment(lastSynced).format('h:mm A on M/D/Y')}
+          </div>
+        </section>
+      )}
     </aside>
   )
 }

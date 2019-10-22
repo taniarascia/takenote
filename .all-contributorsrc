@@ -28,7 +28,8 @@
       "profile": "https://github.com/hankolsen",
       "contributions": [
         "code",
-        "bug"
+        "bug",
+        "test"
       ]
     },
     {
@@ -150,7 +151,8 @@
       "profile": "https://github.com/kleyu",
       "contributions": [
         "code",
-        "bug"
+        "bug",
+        "test"
       ]
     },
     {
@@ -169,6 +171,63 @@
       "profile": "https://github.com/justDOindev",
       "contributions": [
         "code"
+      ]
+    },
+    {
+      "login": "yikjin",
+      "name": "marshmallow",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/34995304?v=4",
+      "profile": "https://yikjin.github.io",
+      "contributions": [
+        "maintenance"
+      ]
+    },
+    {
+      "login": "Jfelix61",
+      "name": "Jose Felix ",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/21092519?v=4",
+      "profile": "http://jfelix.info",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "xboston",
+      "name": "Nikolay Kirsh",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/201306?v=4",
+      "profile": "https://xboston.dev",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "Mudassar045",
+      "name": "Mudassar Ali",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/24487349?v=4",
+      "profile": "https://github.com/Mudassar045",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "NathanBland",
+      "name": "Nathan Bland",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/926111?v=4",
+      "profile": "https://nathanbland.github.io/",
+      "contributions": [
+        "bug",
+        "code"
+      ]
+    },
+    {
+      "login": "siliconeidolon",
+      "name": "Craig Lam",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/8170456?v=4",
+      "profile": "http://craiglam.com",
+      "contributions": [
+        "code",
+        "bug",
+        "test"
       ]
     }
   ],

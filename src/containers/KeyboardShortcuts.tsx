@@ -3,9 +3,10 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { useTempState } from 'contexts/TempStateContext'
 import { downloadNote, getNoteTitle, newNote } from 'helpers'
-import { useKey, useInterval } from 'helpers/hooks'
+import { useKey } from 'helpers/hooks'
 import { addNote, swapNote, toggleTrashedNote } from 'slices/note'
 import { syncState } from 'slices/sync'
+import { togglePreviewMarkdown } from 'slices/previewMarkdown'
 import { toggleDarkTheme } from 'slices/theme'
 import { RootState, CategoryItem, NoteItem } from 'types'
 import { updateCodeMirrorOption } from 'slices/settings'
@@ -16,6 +17,7 @@ const KeyboardShortcuts: React.FC = () => {
     (state: RootState) => state.noteState
   )
   const { dark } = useSelector((state: RootState) => state.themeState)
+  const { previewMarkdown } = useSelector((state: RootState) => state.previewMarkdown)
 
   const activeNote = notes.find(note => note.id === activeNoteId)
 
@@ -26,6 +28,7 @@ const KeyboardShortcuts: React.FC = () => {
   const _toggleTrashedNote = (noteId: string) => dispatch(toggleTrashedNote(noteId))
   const _syncState = (notes: NoteItem[], categories: CategoryItem[]) =>
     dispatch(syncState({ notes, categories }))
+  const _togglePreviewMarkdown = () => dispatch(togglePreviewMarkdown())
   const _toggleDarkTheme = () => dispatch(toggleDarkTheme())
   const _updateCodeMirrorOption = (key: string, value: string) =>
     dispatch(updateCodeMirrorOption({ key, value }))
@@ -60,38 +63,45 @@ const KeyboardShortcuts: React.FC = () => {
     }
   }
 
-  const toggleDarkThemeHandler = () => {
-    _toggleDarkTheme()
-    _updateCodeMirrorOption('theme', dark ? 'base16-light' : 'zenburn')
+  const togglePreviewMarkdownHandler = () => {
+    _togglePreviewMarkdown()
   }
 
-  useKey('alt+ctrl+n', () => {
+  const toggleDarkThemeHandler = () => {
+    _toggleDarkTheme()
+    _updateCodeMirrorOption('theme', dark ? 'base16-light' : 'new-moon')
+  }
+
+  useKey('ctrl+alt+n', () => {
+    if (previewMarkdown) {
+      togglePreviewMarkdownHandler()
+    }
     newNoteHandler()
   })
 
-  useKey('alt+ctrl+c', () => {
+  useKey('ctrl+alt+c', () => {
     newTempCategoryHandler()
   })
 
-  useKey('alt+ctrl+w', () => {
+  useKey('ctrl+alt+u', () => {
     trashNoteHandler()
   })
 
-  useKey('alt+ctrl+s', () => {
+  useKey('ctrl+alt+l', () => {
     syncNotesHandler()
   })
 
-  useKey('alt+ctrl+d', () => {
+  useKey('ctrl+alt+p', () => {
     downloadNoteHandler()
   })
 
-  useKey('alt+ctrl+t', () => {
-    toggleDarkThemeHandler()
+  useKey('alt+ctrl+j', () => {
+    togglePreviewMarkdownHandler()
   })
 
-  useInterval(() => {
-    _syncState(notes, categories)
-  }, 30000)
+  useKey('alt+ctrl+k', () => {
+    toggleDarkThemeHandler()
+  })
 
   return null
 }
