@@ -20,7 +20,9 @@ import { RootState, NoteItem, CategoryItem } from 'types'
 const TakeNote: React.FC = () => {
   const dispatch = useDispatch()
   const { darkTheme } = useSelector((state: RootState) => state.settingsState)
-  const { activeFolder, activeCategoryId } = useSelector((state: RootState) => state.noteState)
+  const { activeFolder, activeCategoryId, notes } = useSelector(
+    (state: RootState) => state.noteState
+  )
   const { categories } = useSelector((state: RootState) => state.categoryState)
 
   const activeCategory = categories.find(({ id }) => id === activeCategoryId)
@@ -31,7 +33,6 @@ const TakeNote: React.FC = () => {
   const _loadCategories = () => {
     dispatch(loadCategories())
   }
-
   const _loadSettings = () => {
     dispatch(loadSettings())
   }

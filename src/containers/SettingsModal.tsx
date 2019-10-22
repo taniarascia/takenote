@@ -76,7 +76,7 @@ const SettingsModal: React.FC = () => {
         </div>
 
         <div className="settings-options">
-          <img src={user.picture} height="50" width="50" /> Authenticated with GitHub
+          <img src={user.picture} alt="Profile" height="50" width="50" /> Authenticated with GitHub
           <button
             onClick={() => {
               logout()
