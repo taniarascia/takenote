@@ -9,6 +9,8 @@
   <a href="https://coveralls.io/github/taniarascia/takenote?branch=master"><img src="https://coveralls.io/repos/github/taniarascia/takenote/badge.svg?branch=master"></a>
 </p>
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/a0e055de-cab8-4217-80dd-5bd769b7d478/deploy-status)](https://app.netlify.com/sites/tnote/deploys)
+
 <p align="center">A web-based note-taking app with GitHub sync and Markdown support. (WIP)</p>
 
 ![Screenshot](./screenshot.png)
