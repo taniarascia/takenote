@@ -171,10 +171,8 @@
   font-weight: 500;
   padding: 0.5rem;
   font-size: 0.8rem;
-
-  svg {
-    margin-left: 0.5rem;
-  }
+  z-index: 2;
+  box-shadow: $box-shadow;
 
   &:hover,
   &:focus {
