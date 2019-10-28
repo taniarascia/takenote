@@ -3,7 +3,6 @@ import React from 'react'
 import { Controlled as CodeMirror } from 'react-codemirror2'
 import ReactMarkdown from 'react-markdown'
 import { useDispatch, useSelector } from 'react-redux'
-import { X } from 'react-feather'
 
 import { updateNote } from 'slices/note'
 import { togglePreviewMarkdown } from 'slices/previewMarkdown'
@@ -49,39 +48,46 @@ const NoteEditor: React.FC = () => {
       <>
         <ReactMarkdown className="previewer" source={activeNote.text} />
         <button className="preview-button" onClick={_togglePreviewMarkdown}>
-          Preview <X size={12} />
+          Preview
         </button>
       </>
     )
   } else {
     return (
-      <CodeMirror
-        className={`editor mousetrap ${vimState.mode === VimModes.insert ? 'vim-insert-mode' : ''}`}
-        value={activeNote.text}
-        options={codeMirrorOptions}
-        editorDidMount={editor => {
-          editor.focus()
-          editor.setCursor(0)
-        }}
-        onKeyUp={editor => {
-          if (editor.state.vim) {
-            _updateVimStateMode(editor.state.vim.insertMode ? VimModes.insert : VimModes.default)
-          }
-        }}
-        onBeforeChange={(editor, data, value) => {
-          _updateNote({
-            id: activeNote.id,
-            text: value,
-            created: activeNote.created,
-            lastUpdated: moment().format(),
-          })
-        }}
-        onChange={(editor, data, value) => {
-          if (!value) {
+      <>
+        <CodeMirror
+          className={`editor mousetrap ${
+            vimState.mode === VimModes.insert ? 'vim-insert-mode' : ''
+          }`}
+          value={activeNote.text}
+          options={codeMirrorOptions}
+          editorDidMount={editor => {
             editor.focus()
-          }
-        }}
-      />
+            editor.setCursor(0)
+          }}
+          onKeyUp={editor => {
+            if (editor.state.vim) {
+              _updateVimStateMode(editor.state.vim.insertMode ? VimModes.insert : VimModes.default)
+            }
+          }}
+          onBeforeChange={(editor, data, value) => {
+            _updateNote({
+              id: activeNote.id,
+              text: value,
+              created: activeNote.created,
+              lastUpdated: moment().format(),
+            })
+          }}
+          onChange={(editor, data, value) => {
+            if (!value) {
+              editor.focus()
+            }
+          }}
+        />
+        <button className="preview-button" onClick={_togglePreviewMarkdown}>
+          Preview
+        </button>
+      </>
     )
   }
 }
