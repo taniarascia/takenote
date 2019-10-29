@@ -15,6 +15,9 @@ import { loadCategories } from 'slices/category'
 import { loadNotes } from 'slices/note'
 import { syncState } from 'slices/sync'
 import { RootState, NoteItem, CategoryItem } from 'types'
+import { loadTheme } from 'slices/theme'
+import { loadPreviewMarkdown } from 'slices/previewMarkdown'
+import { loadCodeMirrorOption } from 'slices/settings'
 
 const App: React.FC = () => {
   const dispatch = useDispatch()
@@ -32,9 +35,21 @@ const App: React.FC = () => {
   const _loadCategories = () => {
     dispatch(loadCategories())
   }
+  const _loadTheme = () => {
+    dispatch(loadTheme())
+  }
+  const _loadPreviewMarkdown = () => {
+    dispatch(loadPreviewMarkdown())
+  }
+  const _loadCodeMirrorOption = () => {
+    dispatch(loadCodeMirrorOption())
+  }
 
   useEffect(_loadNotes, [])
   useEffect(_loadCategories, [])
+  useEffect(_loadPreviewMarkdown, [])
+  useEffect(_loadTheme, [])
+  useEffect(_loadCodeMirrorOption, [])
 
   const _syncState = (notes: NoteItem[], categories: CategoryItem[]) =>
     dispatch(syncState({ notes, categories }))

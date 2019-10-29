@@ -1,4 +1,4 @@
-import { createSlice, Slice } from 'redux-starter-kit'
+import { createSlice, Slice, PayloadAction } from 'redux-starter-kit'
 
 import { ThemeState } from 'types'
 
@@ -14,9 +14,16 @@ const themeSlice: Slice<ThemeState> = createSlice({
       ...state,
       dark: !state.dark,
     }),
+    loadTheme: () => initialState,
+    loadThemeError: state => ({
+      ...state,
+    }),
+    loadThemeSuccess: (_, { payload }: PayloadAction<ThemeState>) => ({
+      ...payload,
+    }),
   },
 })
 
-export const { toggleDarkTheme } = themeSlice.actions
+export const { toggleDarkTheme, loadTheme, loadThemeError, loadThemeSuccess } = themeSlice.actions
 
 export default themeSlice.reducer

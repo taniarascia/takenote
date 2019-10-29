@@ -43,6 +43,14 @@ const settingsSlice: Slice<SettingsState> = createSlice({
         [payload.key]: payload.value,
       },
     }),
+    loadCodeMirrorOption: () => initialState,
+    loadCodeMirrorOptionError: state => ({
+      ...state,
+    }),
+    loadCodeMirrorOptionSuccess: (state, { payload }: PayloadAction<{ [key: string]: any }>) => ({
+      ...state,
+      codeMirrorOptions: payload,
+    }),
   },
 })
 
@@ -51,6 +59,9 @@ export const {
   toggleVimInsertMode,
   updateVimStateMode,
   updateCodeMirrorOption,
+  loadCodeMirrorOption,
+  loadCodeMirrorOptionError,
+  loadCodeMirrorOptionSuccess,
 } = settingsSlice.actions
 
 export default settingsSlice.reducer

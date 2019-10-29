@@ -94,6 +94,11 @@ export interface SyncStateAction {
   payload: SyncStatePayload
 }
 
+export interface SyncSettingPayload {
+  previewMarkdown: PreviewMarkdownState
+  codeMirrorOption: { [key: string]: any }
+  theme: ThemeState
+}
 //==============================================================================
 // Events
 //==============================================================================
