@@ -15,13 +15,11 @@ import { loadCategories } from 'slices/category'
 import { loadNotes } from 'slices/note'
 import { syncState } from 'slices/sync'
 import { RootState, NoteItem, CategoryItem } from 'types'
-import { loadTheme } from 'slices/theme'
-import { loadPreviewMarkdown } from 'slices/previewMarkdown'
-import { loadCodeMirrorOption } from 'slices/settings'
+import { loadSettings } from 'slices/settings'
 
 const App: React.FC = () => {
   const dispatch = useDispatch()
-  const { dark } = useSelector((state: RootState) => state.themeState)
+  const { darkTheme } = useSelector((state: RootState) => state.settingsState)
   const { activeFolder, activeCategoryId, notes } = useSelector(
     (state: RootState) => state.noteState
   )
@@ -35,21 +33,13 @@ const App: React.FC = () => {
   const _loadCategories = () => {
     dispatch(loadCategories())
   }
-  const _loadTheme = () => {
-    dispatch(loadTheme())
-  }
-  const _loadPreviewMarkdown = () => {
-    dispatch(loadPreviewMarkdown())
-  }
-  const _loadCodeMirrorOption = () => {
-    dispatch(loadCodeMirrorOption())
+  const _loadSettings = () => {
+    dispatch(loadSettings())
   }
 
   useEffect(_loadNotes, [])
   useEffect(_loadCategories, [])
-  useEffect(_loadPreviewMarkdown, [])
-  useEffect(_loadTheme, [])
-  useEffect(_loadCodeMirrorOption, [])
+  useEffect(_loadSettings, [])
 
   const _syncState = (notes: NoteItem[], categories: CategoryItem[]) =>
     dispatch(syncState({ notes, categories }))
@@ -72,7 +62,7 @@ const App: React.FC = () => {
         <link rel="canonical" href="https://takenote.dev" />
       </Helmet>
 
-      <div className={`app ${dark ? 'dark' : ''}`}>
+      <div className={`app ${darkTheme ? 'dark' : ''}`}>
         <TempStateProvider>
           <AppSidebar />
           <NoteList />

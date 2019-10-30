@@ -1,4 +1,4 @@
-import { SyncStatePayload, SyncSettingPayload } from 'types'
+import { SyncStatePayload, SettingsState } from 'types'
 
 export const requestCategories = () =>
   new Promise((resolve, reject) => {
@@ -33,45 +33,15 @@ export const saveState = ({ categories, notes }: SyncStatePayload) =>
     })
   })
 
-export const saveSettings = ({ previewMarkdown, codeMirrorOption, theme }: SyncSettingPayload) =>
-  new Promise(resolve => {
-    localStorage.setItem('previewMarkdown', JSON.stringify(previewMarkdown))
-    localStorage.setItem('codeMirrorOption', JSON.stringify(codeMirrorOption))
-    localStorage.setItem('theme', JSON.stringify(theme))
+export const saveSettings = (settings: SettingsState) =>
+  Promise.resolve(localStorage.setItem('settings', JSON.stringify(settings)))
 
-    resolve({
-      previewMarkdown: localStorage.getItem('previewMarkdown'),
-      codeMirrorOption: localStorage.getItem('codeMirrorOption'),
-      theme: localStorage.getItem('theme'),
-    })
-  })
-
-export const requestPreviewMarkdown = () =>
+export const requestSettings = () =>
   new Promise((resolve, reject) => {
-    const previewMarkdown = localStorage.getItem('previewMarkdown')
-    if (previewMarkdown) {
-      resolve(JSON.parse(previewMarkdown))
-    } else {
-      reject({ message: `Could not load previewMarkdown. An error occurred` })
-    }
-  })
-
-export const requestCodeMirrorOption = () =>
-  new Promise((resolve, reject) => {
-    const codeMirrorOption = localStorage.getItem('codeMirrorOption')
-    if (codeMirrorOption) {
-      resolve(JSON.parse(codeMirrorOption))
+    const settings = localStorage.getItem('settings')
+    if (settings) {
+      resolve(JSON.parse(settings))
     } else {
       reject({ message: `Could not load code mirror options. An error occurred` })
-    }
-  })
-
-export const requestTheme = () =>
-  new Promise((resolve, reject) => {
-    const theme = localStorage.getItem('theme')
-    if (theme) {
-      resolve(JSON.parse(theme))
-    } else {
-      reject({ message: `Could not load theme. An error occurred` })
     }
   })

@@ -6,8 +6,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { X } from 'react-feather'
 
 import { updateNote } from 'slices/note'
-import { togglePreviewMarkdown } from 'slices/previewMarkdown'
-import { updateVimStateMode } from 'slices/settings'
+import { updateVimStateMode, togglePreviewMarkdown } from 'slices/settings'
 import { RootState, NoteItem, VimModes } from 'types'
 
 import 'codemirror/lib/codemirror.css'
@@ -18,8 +17,9 @@ import 'codemirror/keymap/vim'
 
 const NoteEditor: React.FC = () => {
   const { activeNoteId, loading, notes } = useSelector((state: RootState) => state.noteState)
-  const { codeMirrorOptions, vimState } = useSelector((state: RootState) => state.settingsState)
-  const { previewMarkdown } = useSelector((state: RootState) => state.previewMarkdown)
+  const { codeMirrorOptions, vimState, previewMarkdown } = useSelector(
+    (state: RootState) => state.settingsState
+  )
 
   const activeNote = notes.find(note => note.id === activeNoteId)
 

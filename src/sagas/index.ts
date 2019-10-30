@@ -2,34 +2,22 @@
 import { all, put, takeLatest, select } from 'redux-saga/effects'
 import moment from 'moment'
 
-import {
-  requestCategories,
-  requestNotes,
-  saveState,
-  saveSettings,
-  requestCodeMirrorOption,
-  requestPreviewMarkdown,
-  requestTheme,
-} from 'api'
+import { requestCategories, requestNotes, saveState, saveSettings, requestSettings } from 'api'
 import { loadCategories, loadCategoriesError, loadCategoriesSuccess } from 'slices/category'
 import { loadNotes, loadNotesError, loadNotesSuccess } from 'slices/note'
 import { syncState, syncStateError, syncStateSuccess } from 'slices/sync'
-import { toggleDarkTheme, loadThemeSuccess, loadThemeError, loadTheme } from 'slices/theme'
 import {
   updateCodeMirrorOption,
   updateVimStateMode,
-  loadCodeMirrorOptionSuccess,
-  loadCodeMirrorOptionError,
-  loadCodeMirrorOption,
-} from 'slices/settings'
-import {
+  loadSettingsSuccess,
+  loadSettingsError,
+  loadSettings,
+  toggleDarkTheme,
   togglePreviewMarkdown,
-  loadPreviewMarkdownSuccess,
-  loadPreviewMarkdownError,
-  loadPreviewMarkdown,
-} from 'slices/previewMarkdown'
+  toggleSettingsModal,
+} from 'slices/settings'
 import { SyncStateAction } from 'types'
-import { getCodeMirrorOption, getTheme, getpreviewMarkdown } from 'selectors'
+import { getSettings } from 'selectors'
 
 function* fetchNotes() {
   try {
@@ -60,37 +48,17 @@ function* postState({ payload }: SyncStateAction) {
 
 function* syncSettings() {
   try {
-    const previewMarkdown = yield select(getpreviewMarkdown)
-    const codeMirrorOption = yield select(getCodeMirrorOption)
-    const theme = yield select(getTheme)
-    yield saveSettings({ previewMarkdown, codeMirrorOption, theme })
+    const settings = yield select(getSettings)
+    yield saveSettings(settings)
   } catch {}
 }
 
-function* fetchCodeMirrorOption() {
+function* fetchSettings() {
   try {
-    const codeMirrorOption = yield requestCodeMirrorOption()
-    yield put(loadCodeMirrorOptionSuccess(codeMirrorOption))
+    const settings = yield requestSettings()
+    yield put(loadSettingsSuccess(settings))
   } catch {
-    yield put(loadCodeMirrorOptionError())
-  }
-}
-
-function* fetchPreviewMarkdown() {
-  try {
-    const previewMarkdown = yield requestPreviewMarkdown()
-    yield put(loadPreviewMarkdownSuccess(previewMarkdown))
-  } catch {
-    yield put(loadPreviewMarkdownError())
-  }
-}
-
-function* fetchTheme() {
-  try {
-    const theme = yield requestTheme()
-    yield put(loadThemeSuccess(theme))
-  } catch {
-    yield put(loadThemeError())
+    yield put(loadSettingsError())
   }
 }
 
@@ -98,9 +66,7 @@ function* rootSaga() {
   yield all([
     takeLatest(loadNotes.type, fetchNotes),
     takeLatest(loadCategories.type, fetchCategories),
-    takeLatest(loadCodeMirrorOption.type, fetchCodeMirrorOption),
-    takeLatest(loadPreviewMarkdown.type, fetchPreviewMarkdown),
-    takeLatest(loadTheme.type, fetchTheme),
+    takeLatest(loadSettings.type, fetchSettings),
     takeLatest(syncState.type, postState),
     takeLatest(
       [
@@ -108,6 +74,7 @@ function* rootSaga() {
         togglePreviewMarkdown.type,
         updateCodeMirrorOption.type,
         updateVimStateMode.type,
+        toggleSettingsModal.type,
       ],
       syncSettings
     ),
