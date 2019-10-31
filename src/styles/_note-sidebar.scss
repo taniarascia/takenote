@@ -26,9 +26,6 @@
         display: none;
       }
     }
-
-    @include small-breakpoint {
-    }
   }
 
   .list-button {
@@ -95,24 +92,26 @@
         }
       }
 
-      &.active {
-        background: $primary;
-        color: white;
-        border-bottom: 1px solid $primary;
+      @include small-breakpoint {
+        &.active {
+          background: $primary;
+          color: white;
+          border-bottom: 1px solid $primary;
 
-        .highlighted {
-          background: white;
-          color: $primary;
-        }
-
-        &:hover {
-          .note-options {
-            color: white;
+          .highlighted {
+            background: white;
+            color: $primary;
           }
-        }
 
-        .note-favorite {
-          stroke: white;
+          &:hover {
+            .note-options {
+              color: white;
+            }
+          }
+
+          .note-favorite {
+            stroke: white;
+          }
         }
       }
 

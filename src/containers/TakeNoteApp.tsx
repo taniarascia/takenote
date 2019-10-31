@@ -24,7 +24,6 @@ const TakeNoteApp: React.FC = () => {
     (state: RootState) => state.noteState
   )
   const { categories } = useSelector((state: RootState) => state.categoryState)
-
   const activeCategory = categories.find(({ id }) => id === activeCategoryId)
 
   const _loadNotes = () => {
@@ -62,15 +61,15 @@ const TakeNoteApp: React.FC = () => {
         <link rel="canonical" href="https://takenote.dev" />
       </Helmet>
 
-      <div className={`app ${darkTheme ? 'dark' : ''}`}>
-        <TempStateProvider>
+      <TempStateProvider>
+        <div className={`app ${darkTheme ? 'dark' : ''}`}>
           <AppSidebar />
           <NoteList />
           <NoteEditor />
           <KeyboardShortcuts />
           <SettingsModal />
-        </TempStateProvider>
-      </div>
+        </div>
+      </TempStateProvider>
     </HelmetProvider>
   )
 }

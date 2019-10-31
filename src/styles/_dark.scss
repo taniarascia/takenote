@@ -41,9 +41,11 @@ $dark-editor: #3f3f3f;
           background: darken($dark-sidebar, 5%);
         }
 
-        &.active {
-          color: white;
-          background: darken($primary, 20%);
+        @include small-breakpoint {
+          &.active {
+            color: white;
+            background: darken($primary, 20%);
+          }
         }
       }
     }

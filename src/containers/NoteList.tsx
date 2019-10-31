@@ -50,7 +50,7 @@ const NoteList: React.FC = () => {
   const _swapCategory = (categoryId: string) => dispatch(swapCategory(categoryId))
   const _searchNotes = _.debounce((searchValue: string) => dispatch(searchNotes(searchValue)), 200)
 
-  const { navOpen, setNavOpen } = useTempState()
+  const { navOpen, setNavOpen, noteOpen, setNoteOpen } = useTempState()
 
   const [noteOptionsId, setNoteOptionsId] = useState('')
   const [noteOptionsPosition, setNoteOptionsPosition] = useState({ x: 0, y: 0 })
@@ -105,7 +105,7 @@ const NoteList: React.FC = () => {
   const showEmptyTrash = activeFolder === Folder.TRASH && filteredNotes.length > 0
 
   return (
-    <aside className="note-sidebar">
+    <aside className={`note-sidebar ${noteOpen ? 'note-open' : ''}`}>
       <div className="note-sidebar-header">
         <div className="mobile-sidebar-options">
           <button
@@ -157,6 +157,7 @@ const NoteList: React.FC = () => {
               className={note.id === activeNoteId ? 'note-list-each active' : 'note-list-each'}
               key={note.id}
               onClick={() => {
+                setNoteOpen(true)
                 if (note.id !== activeNoteId) {
                   _swapNote(note.id)
                   _pruneNotes()
