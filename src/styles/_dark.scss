@@ -132,6 +132,15 @@ $dark-editor: #3f3f3f;
   .settings-modal {
     background: $dark-sidebar;
     color: $light-font-color;
+
+    .action-button {
+      background: darken($dark-sidebar, 3%);
+
+      &:hover,
+      &:active {
+        background: darken($dark-sidebar, 5%);
+      }
+    }
   }
 
   kbd {

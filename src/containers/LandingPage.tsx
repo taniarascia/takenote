@@ -2,7 +2,7 @@ import React from 'react'
 
 import { useAuth0 } from 'auth'
 
-const Prompt: React.FC = () => {
+const LandingPage: React.FC = () => {
   const { isAuthenticated, loginWithRedirect, logout } = useAuth0()
 
   return (
@@ -16,4 +16,4 @@ const Prompt: React.FC = () => {
   )
 }
 
-export default Prompt
+export default LandingPage

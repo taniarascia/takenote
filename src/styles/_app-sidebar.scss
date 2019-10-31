@@ -41,6 +41,7 @@
     }
 
     &.active {
+      color: white;
       background: darken($app-sidebar-color, 5%);
 
       svg {

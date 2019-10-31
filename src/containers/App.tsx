@@ -4,8 +4,8 @@ import { Helmet, HelmetProvider } from 'react-helmet-async'
 
 import { useAuth0 } from 'auth'
 import PrivateRoute from 'routes/PrivateRoute'
-import Prompt from 'containers/Prompt'
-import TakeNote from 'containers/TakeNote'
+import LandingPage from 'containers/LandingPage'
+import TakeNoteApp from 'containers/TakeNoteApp'
 
 const App: React.FC = () => {
   const { loading, isAuthenticated } = useAuth0()
@@ -24,9 +24,9 @@ const App: React.FC = () => {
 
       <Switch>
         {!isAuthenticated ? (
-          <Route exact path="/" component={Prompt} />
+          <Route exact path="/" component={LandingPage} />
         ) : (
-          <PrivateRoute path="/" component={TakeNote} />
+          <PrivateRoute path="/" component={TakeNoteApp} />
         )}
       </Switch>
     </HelmetProvider>

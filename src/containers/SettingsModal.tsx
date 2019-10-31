@@ -58,6 +58,8 @@ const SettingsModal: React.FC = () => {
     }
   })
 
+  console.log(user)
+
   return isOpen ? (
     <div className="dimmer">
       <div ref={node} className="settings-modal">
@@ -76,14 +78,22 @@ const SettingsModal: React.FC = () => {
         </div>
 
         <div className="settings-options">
-          <img src={user.picture} alt="Profile" height="50" width="50" /> Authenticated with GitHub
-          <button
-            onClick={() => {
-              logout()
-            }}
-          >
-            Log out
-          </button>
+          <section className="profile flex">
+            <div>
+              <img src={user.picture} alt="Profile" className="profile-picture" />
+            </div>
+            <div className="profile-details">
+              <h3>{user.name}</h3>
+              <div className="subtitle">{user.email}</div>
+              <button
+                onClick={() => {
+                  logout()
+                }}
+              >
+                Log out
+              </button>
+            </div>
+          </section>
         </div>
 
         <div className="settings-options">

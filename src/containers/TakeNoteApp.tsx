@@ -17,7 +17,7 @@ import { syncState } from 'slices/sync'
 import { loadSettings } from 'slices/settings'
 import { RootState, NoteItem, CategoryItem } from 'types'
 
-const TakeNote: React.FC = () => {
+const TakeNoteApp: React.FC = () => {
   const dispatch = useDispatch()
   const { darkTheme } = useSelector((state: RootState) => state.settingsState)
   const { activeFolder, activeCategoryId, notes } = useSelector(
@@ -75,4 +75,4 @@ const TakeNote: React.FC = () => {
   )
 }
 
-export default TakeNote
+export default TakeNoteApp
