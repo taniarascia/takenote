@@ -4,6 +4,9 @@ import { SettingsState, VimModes } from 'types'
 
 const initialState: SettingsState = {
   isOpen: false,
+  loading: false,
+  previewMarkdown: false,
+  darkTheme: false,
   vimState: {
     mode: VimModes.default,
   },
@@ -43,6 +46,26 @@ const settingsSlice: Slice<SettingsState> = createSlice({
         [payload.key]: payload.value,
       },
     }),
+    togglePreviewMarkdown: state => ({
+      ...state,
+      previewMarkdown: !state.previewMarkdown,
+    }),
+    toggleDarkTheme: state => ({
+      ...state,
+      darkTheme: !state.darkTheme,
+    }),
+    loadSettings: state => ({
+      ...state,
+      loading: true,
+    }),
+    loadSettingsError: state => ({
+      ...state,
+      loading: false,
+    }),
+    loadSettingsSuccess: (_, { payload }: PayloadAction<SettingsState>) => ({
+      ...payload,
+      loading: false,
+    }),
   },
 })
 
@@ -51,6 +74,11 @@ export const {
   toggleVimInsertMode,
   updateVimStateMode,
   updateCodeMirrorOption,
+  toggleDarkTheme,
+  togglePreviewMarkdown,
+  loadSettings,
+  loadSettingsError,
+  loadSettingsSuccess,
 } = settingsSlice.actions
 
 export default settingsSlice.reducer

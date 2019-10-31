@@ -15,10 +15,11 @@ import { loadCategories } from 'slices/category'
 import { loadNotes } from 'slices/note'
 import { syncState } from 'slices/sync'
 import { RootState, NoteItem, CategoryItem } from 'types'
+import { loadSettings } from 'slices/settings'
 
 const App: React.FC = () => {
   const dispatch = useDispatch()
-  const { dark } = useSelector((state: RootState) => state.themeState)
+  const { darkTheme } = useSelector((state: RootState) => state.settingsState)
   const { activeFolder, activeCategoryId, notes } = useSelector(
     (state: RootState) => state.noteState
   )
@@ -32,9 +33,13 @@ const App: React.FC = () => {
   const _loadCategories = () => {
     dispatch(loadCategories())
   }
+  const _loadSettings = () => {
+    dispatch(loadSettings())
+  }
 
   useEffect(_loadNotes, [])
   useEffect(_loadCategories, [])
+  useEffect(_loadSettings, [])
 
   const _syncState = (notes: NoteItem[], categories: CategoryItem[]) =>
     dispatch(syncState({ notes, categories }))
@@ -57,7 +62,7 @@ const App: React.FC = () => {
         <link rel="canonical" href="https://takenote.dev" />
       </Helmet>
 
-      <div className={`app ${dark ? 'dark' : ''}`}>
+      <div className={`app ${darkTheme ? 'dark' : ''}`}>
         <TempStateProvider>
           <AppSidebar />
           <NoteList />

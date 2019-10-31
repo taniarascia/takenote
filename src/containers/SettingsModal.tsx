@@ -2,16 +2,19 @@ import React, { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { X } from 'react-feather'
 
-import { toggleSettingsModal, updateCodeMirrorOption } from 'slices/settings'
-import { togglePreviewMarkdown } from 'slices/previewMarkdown'
-import { toggleDarkTheme } from 'slices/theme'
+import {
+  toggleSettingsModal,
+  updateCodeMirrorOption,
+  togglePreviewMarkdown,
+  toggleDarkTheme,
+} from 'slices/settings'
 import { ReactMouseEvent, RootState } from 'types'
 import Switch from 'components/Switch'
 
 const SettingsModal: React.FC = () => {
-  const { codeMirrorOptions, isOpen } = useSelector((state: RootState) => state.settingsState)
-  const { previewMarkdown } = useSelector((state: RootState) => state.previewMarkdown)
-  const { dark } = useSelector((state: RootState) => state.themeState)
+  const { codeMirrorOptions, isOpen, previewMarkdown, darkTheme } = useSelector(
+    (state: RootState) => state.settingsState
+  )
 
   const dispatch = useDispatch()
 
@@ -39,7 +42,7 @@ const SettingsModal: React.FC = () => {
 
   const toggleDarkThemeHandler = () => {
     _toggleDarkTheme()
-    _updateCodeMirrorOption('theme', dark ? 'base16-light' : 'new-moon')
+    _updateCodeMirrorOption('theme', darkTheme ? 'base16-light' : 'new-moon')
   }
 
   const toggleLineHighlight = () => {
@@ -82,7 +85,7 @@ const SettingsModal: React.FC = () => {
 
         <div className="settings-options">
           <div>Dark mode</div>
-          <Switch toggle={toggleDarkThemeHandler} checked={dark} />
+          <Switch toggle={toggleDarkThemeHandler} checked={darkTheme} />
         </div>
 
         <section className="settings-section">

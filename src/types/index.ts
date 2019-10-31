@@ -44,6 +44,9 @@ export interface NoteState {
 
 export interface SettingsState {
   isOpen: boolean
+  previewMarkdown: boolean
+  loading: boolean
+  darkTheme: boolean
   codeMirrorOptions: { [key: string]: any }
   vimState: VimState
 }
@@ -63,21 +66,11 @@ export interface SyncState {
   error: string
 }
 
-export interface PreviewMarkdownState {
-  previewMarkdown: boolean
-}
-
-export interface ThemeState {
-  dark: boolean
-}
-
 export interface RootState {
   categoryState: CategoryState
   noteState: NoteState
   settingsState: SettingsState
   syncState: SyncState
-  themeState: ThemeState
-  previewMarkdown: PreviewMarkdownState
 }
 
 //==============================================================================
