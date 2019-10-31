@@ -12,6 +12,23 @@
     padding: 0.5rem;
     text-align: center;
     font-weight: 700;
+
+    .mobile-sidebar-options {
+      display: flex;
+    }
+
+    .toggle-mobile-nav {
+      display: block;
+      padding: 0.25rem 1rem;
+      margin-right: 0.5rem;
+
+      @include small-breakpoint {
+        display: none;
+      }
+    }
+
+    @include small-breakpoint {
+    }
   }
 
   .list-button {

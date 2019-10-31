@@ -2,16 +2,20 @@ import React, { createContext, FunctionComponent, useContext, useState } from 'r
 
 interface TempStateContextInterface {
   addingTempCategory: boolean
-  errorCategoryMessage: string
   setAddingTempCategory(adding: boolean): void
+  errorCategoryMessage: string
   setErrorCategoryMessage(message: string): void
+  navOpen: boolean
+  setNavOpen(open: boolean): void
 }
 
 const initialContextValue = {
-  errorCategoryMessage: '',
   addingTempCategory: false,
   setAddingTempCategory: (adding: boolean) => undefined,
+  errorCategoryMessage: '',
   setErrorCategoryMessage: (message: string) => undefined,
+  navOpen: false,
+  setNavOpen: (adding: boolean) => undefined,
 }
 
 const TempStateContext = createContext<TempStateContextInterface>(initialContextValue)
@@ -24,10 +28,13 @@ const useTempState = () => {
   return context
 }
 const TempStateProvider: FunctionComponent = ({ children }) => {
+  const [navOpen, setNavOpen] = useState(false)
   const [addingTempCategory, setAddingTempCategory] = useState(false)
   const [errorCategoryMessage, setErrorCategoryMessage] = useState('')
 
   const value: TempStateContextInterface = {
+    navOpen,
+    setNavOpen,
     addingTempCategory,
     setAddingTempCategory,
     errorCategoryMessage,

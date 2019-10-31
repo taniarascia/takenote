@@ -1,26 +1,23 @@
 .app {
-  display: grid;
-  grid-template-areas: 'app-sidebar note-sidebar editor';
-  grid-template-columns: 0 auto 0;
+  display: flex;
   height: 100vh;
-
-  @include small-breakpoint {
-    grid-template-columns: $app-sidebar-width $note-sidebar-width auto;
-  }
-}
-
-.note-sidebar {
-  grid-area: note-sidebar;
-
-  &::-webkit-scrollbar-thumb {
-    background: darken($note-sidebar-color, 10%);
-    border-radius: 100px;
-  }
 }
 
 .app-sidebar {
-  grid-area: app-sidebar;
+  flex: 0;
   overflow-y: hidden;
+  transform: translate3D(-300px, 0, 0);
+
+  @include small-breakpoint {
+    flex: 0 0 200px;
+    transform: translate3D(0, 0, 0);
+  }
+
+  &.open {
+    flex: 0 0 300px;
+    transition: all 0.3s ease;
+    transform: translate3D(0, 0, 0);
+  }
 
   &::-webkit-scrollbar-thumb {
     background: darken($app-sidebar-color, 10%);
@@ -32,10 +29,23 @@
   }
 }
 
+.note-sidebar {
+  flex: 1;
+
+  @include small-breakpoint {
+    flex: 0 0 300px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: darken($note-sidebar-color, 10%);
+    border-radius: 100px;
+  }
+}
+
 .empty-editor,
 .editor,
 .previewer {
-  grid-area: editor;
+  flex: 1;
   display: none !important;
 }
 

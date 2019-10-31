@@ -58,8 +58,6 @@ const SettingsModal: React.FC = () => {
     }
   })
 
-  console.log(user)
-
   return isOpen ? (
     <div className="dimmer">
       <div ref={node} className="settings-modal">
@@ -102,7 +100,7 @@ const SettingsModal: React.FC = () => {
         </div>
 
         <div className="settings-options">
-          <div>Preview note</div>
+          <div>Markdown preview</div>
           <Switch toggle={togglePreviewMarkdownHandler} checked={previewMarkdown} />
         </div>
 
@@ -144,7 +142,7 @@ const SettingsModal: React.FC = () => {
             </div>
           </div>
           <div className="settings-shortcut">
-            <div>Preview note</div>
+            <div>Markdown preview</div>
             <div>
               <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>J</kbd>
             </div>
