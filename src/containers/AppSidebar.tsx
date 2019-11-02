@@ -69,7 +69,12 @@ const AppSidebar: React.FC = () => {
   const _addCategoryToNote = (categoryId: string, noteId: string) =>
     dispatch(addCategoryToNote({ categoryId, noteId }))
 
-  const { setErrorCategoryMessage, addingTempCategory, setAddingTempCategory } = useTempState()
+  const {
+    setErrorCategoryMessage,
+    addingTempCategory,
+    setAddingTempCategory,
+    navOpen,
+  } = useTempState()
 
   const [editingCategoryId, setEditingCategoryId] = useState('')
   const [tempCategoryName, setTempCategoryName] = useState('')
@@ -159,7 +164,7 @@ const AppSidebar: React.FC = () => {
   }
 
   return (
-    <aside className="app-sidebar">
+    <aside className={navOpen ? 'app-sidebar open' : 'app-sidebar'}>
       <section className="app-sidebar-actions">
         <AppSidebarAction handler={newNoteHandler} icon={Plus} label="Create new note" />
         <AppSidebarAction

@@ -34,6 +34,10 @@
     margin-bottom: 0;
   }
 
+  ul li [type='checkbox'] {
+    margin-right: 0.75rem;
+  }
+
   h1,
   h2,
   h3,
@@ -107,6 +111,9 @@
     tab-size: 2;
     color: #404040;
     margin: 0 0 1.5rem 0;
+    white-space: pre-wrap;
+    word-spacing: normal;
+    word-break: normal;
 
     code {
       padding: 0;
@@ -159,25 +166,29 @@
 }
 
 .preview-button {
-  display: flex;
-  align-items: center;
-  position: absolute;
-  color: $font-color;
-  top: 1rem;
-  right: 1rem;
-  box-shadow: none;
-  border: none;
-  background-color: $note-sidebar-color;
-  font-weight: 500;
-  padding: 0.5rem;
-  font-size: 0.8rem;
-  z-index: 2;
-  box-shadow: $box-shadow;
+  display: none;
 
-  &:hover,
-  &:focus {
+  @include small-breakpoint {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    color: $font-color;
+    top: 1rem;
+    right: 1rem;
+    box-shadow: none;
     border: none;
-    color: darken($font-color, 10%);
-    background-color: darken($note-sidebar-color, 5%);
+    background-color: $note-sidebar-color;
+    font-weight: 500;
+    padding: 0.5rem;
+    font-size: 0.8rem;
+    z-index: 2;
+    box-shadow: $box-shadow;
+
+    &:hover,
+    &:focus {
+      border: none;
+      color: darken($font-color, 10%);
+      background-color: darken($note-sidebar-color, 5%);
+    }
   }
 }

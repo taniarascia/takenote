@@ -1,76 +1,42 @@
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import React from 'react'
+import { Switch, Route } from 'react-router-dom'
 import { Helmet, HelmetProvider } from 'react-helmet-async'
 
-import { Folder } from 'constants/enums'
-import { folderMap } from 'constants/index'
-import AppSidebar from 'containers/AppSidebar'
-import KeyboardShortcuts from 'containers/KeyboardShortcuts'
-import NoteEditor from 'containers/NoteEditor'
-import NoteList from 'containers/NoteList'
-import SettingsModal from 'containers/SettingsModal'
-import { TempStateProvider } from 'contexts/TempStateContext'
-import { useInterval } from 'helpers/hooks'
-import { loadCategories } from 'slices/category'
-import { loadNotes } from 'slices/note'
-import { syncState } from 'slices/sync'
-import { RootState, NoteItem, CategoryItem } from 'types'
-import { loadSettings } from 'slices/settings'
+import { useAuth0 } from 'auth'
+import PrivateRoute from 'routes/PrivateRoute'
+import LandingPage from 'containers/LandingPage'
+import TakeNoteApp from 'containers/TakeNoteApp'
 
 const App: React.FC = () => {
-  const dispatch = useDispatch()
-  const { darkTheme } = useSelector((state: RootState) => state.settingsState)
-  const { activeFolder, activeCategoryId, notes } = useSelector(
-    (state: RootState) => state.noteState
-  )
-  const { categories } = useSelector((state: RootState) => state.categoryState)
+  const { loading, isAuthenticated } = useAuth0()
 
-  const activeCategory = categories.find(({ id }) => id === activeCategoryId)
-
-  const _loadNotes = () => {
-    dispatch(loadNotes())
+  if (loading) {
+    return (
+      <div className="loading">
+        <div className="la-ball-beat">
+          <div />
+          <div />
+          <div />
+        </div>
+      </div>
+    )
   }
-  const _loadCategories = () => {
-    dispatch(loadCategories())
-  }
-  const _loadSettings = () => {
-    dispatch(loadSettings())
-  }
-
-  useEffect(_loadNotes, [])
-  useEffect(_loadCategories, [])
-  useEffect(_loadSettings, [])
-
-  const _syncState = (notes: NoteItem[], categories: CategoryItem[]) =>
-    dispatch(syncState({ notes, categories }))
-
-  useInterval(() => {
-    _syncState(notes, categories)
-  }, 20000)
 
   return (
     <HelmetProvider>
       <Helmet>
         <meta charSet="utf-8" />
-        <title>
-          {activeFolder === Folder.CATEGORY
-            ? activeCategory
-              ? `${activeCategory.name} | TakeNote`
-              : `TakeNote`
-            : `${folderMap[activeFolder]} | TakeNote`}
-        </title>
+        <title>TakeNote</title>
         <link rel="canonical" href="https://takenote.dev" />
       </Helmet>
 
-      <div className={`app ${darkTheme ? 'dark' : ''}`}>
-        <TempStateProvider>
-          <AppSidebar />
-          <NoteList />
-          <NoteEditor />
-          <KeyboardShortcuts />
-          <SettingsModal />
-        </TempStateProvider>
-      </div>
+      <Switch>
+        {!isAuthenticated ? (
+          <Route exact path="/" component={LandingPage} />
+        ) : (
+          <PrivateRoute path="/" component={TakeNoteApp} />
+        )}
+      </Switch>
     </HelmetProvider>
   )
 }

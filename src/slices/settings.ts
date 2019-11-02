@@ -64,6 +64,7 @@ const settingsSlice: Slice<SettingsState> = createSlice({
     }),
     loadSettingsSuccess: (_, { payload }: PayloadAction<SettingsState>) => ({
       ...payload,
+      isOpen: false,
       loading: false,
     }),
   },

@@ -17,33 +17,44 @@
 }
 
 %buttons-hover {
-  border: 2px solid $primary;
-  border-radius: 4px;
-  background: $primary;
+  border: 2px solid darken($primary, 5%);
+  background: darken($primary, 5%);
   text-decoration: none;
 }
 
 %buttons-focus {
-  border: 2px solid $primary;
-  border-radius: 4px;
-  background: $primary;
+  border: 2px solid darken($primary, 10%);
+  background: darken($primary, 10%);
   text-decoration: none;
+  outline: none;
 }
 
 #{$buttons} {
   @extend %buttons;
+
+  &.secondary {
+    background: darken($note-sidebar-color, 8%);
+    border: 2px solid darken($note-sidebar-color, 8%);
+    color: #666;
+
+    &:hover {
+      background: darken($note-sidebar-color, 12%);
+      border: 2px solid darken($note-sidebar-color, 12%);
+      color: #555;
+    }
+  }
 
   &::-moz-focus-inner {
     border: 0;
     padding: 0;
   }
 
-  &:hover {
+  &:hover,
+  &:active {
     @extend %buttons-hover;
   }
 
-  &:focus,
-  &:active {
+  &:focus {
     @extend %buttons-focus;
   }
 }

@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { MoreHorizontal, Star } from 'react-feather'
+import { MoreHorizontal, Star, Menu } from 'react-feather'
 import _ from 'lodash'
 
 import { Folder } from 'constants/enums'
 import NoteListButton from 'components/NoteListButton'
 import NoteOptions from 'containers/NoteOptions'
+import { useTempState } from 'contexts/TempStateContext'
 import { getNoteTitle, sortByLastUpdated, sortByFavourites } from 'helpers'
 import {
   addCategoryToNote,
@@ -48,6 +49,8 @@ const NoteList: React.FC = () => {
   const _swapNote = (noteId: string) => dispatch(swapNote(noteId))
   const _swapCategory = (categoryId: string) => dispatch(swapCategory(categoryId))
   const _searchNotes = _.debounce((searchValue: string) => dispatch(searchNotes(searchValue)), 200)
+
+  const { navOpen, setNavOpen, noteOpen, setNoteOpen } = useTempState()
 
   const [noteOptionsId, setNoteOptionsId] = useState('')
   const [noteOptionsPosition, setNoteOptionsPosition] = useState({ x: 0, y: 0 })
@@ -102,16 +105,26 @@ const NoteList: React.FC = () => {
   const showEmptyTrash = activeFolder === Folder.TRASH && filteredNotes.length > 0
 
   return (
-    <aside className="note-sidebar">
+    <aside className={`note-sidebar ${noteOpen ? 'note-open' : ''}`}>
       <div className="note-sidebar-header">
-        <input
-          type="search"
-          onChange={event => {
-            event.preventDefault()
-            _searchNotes(event.target.value)
-          }}
-          placeholder="Search for notes"
-        />
+        <div className="mobile-sidebar-options">
+          <button
+            className="toggle-mobile-nav"
+            onClick={() => {
+              setNavOpen(!navOpen)
+            }}
+          >
+            <Menu />
+          </button>
+          <input
+            type="search"
+            onChange={event => {
+              event.preventDefault()
+              _searchNotes(event.target.value)
+            }}
+            placeholder="Search for notes"
+          />
+        </div>
         {showEmptyTrash && (
           <NoteListButton label="Empty Trash" handler={() => _emptyTrash()}>
             Empty Trash
@@ -144,6 +157,7 @@ const NoteList: React.FC = () => {
               className={note.id === activeNoteId ? 'note-list-each active' : 'note-list-each'}
               key={note.id}
               onClick={() => {
+                setNoteOpen(true)
                 if (note.id !== activeNoteId) {
                   _swapNote(note.id)
                   _pruneNotes()

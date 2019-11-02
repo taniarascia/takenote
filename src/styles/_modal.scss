@@ -36,7 +36,7 @@
   .settings {
     &-header {
       @extend .v-between;
-      margin-bottom: 2rem;
+      margin-bottom: 1rem;
     }
 
     &-label {
@@ -68,6 +68,39 @@
 
     &-section {
       padding: 1.25rem 0;
+    }
+  }
+
+  .action-button {
+    margin: 0;
+    background: $light-theme-background;
+
+    &:hover,
+    &:active {
+      background: darken($light-theme-background, 3%);
+    }
+  }
+
+  .profile {
+    align-items: center;
+  }
+
+  .profile-picture {
+    height: 100px;
+    width: 100px;
+    border-radius: 12px;
+  }
+
+  .profile-details {
+    padding: 0 1.5rem;
+
+    h3 {
+      margin: 0.5rem 0;
+    }
+
+    .subtitle {
+      color: lighten($font-color, 15%);
+      margin-bottom: 0.75rem;
     }
   }
 }
