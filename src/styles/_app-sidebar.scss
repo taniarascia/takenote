@@ -7,6 +7,7 @@
   flex-direction: column;
   border-right: 1px solid darken($app-sidebar-color, 10%);
   overflow-x: hidden;
+  z-index: 5;
 
   &-synced {
     display: none;

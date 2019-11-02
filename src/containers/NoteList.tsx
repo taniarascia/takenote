@@ -1,19 +1,20 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { MoreHorizontal, Star, Menu } from 'react-feather'
+import { MoreHorizontal, Star, Menu, Plus } from 'react-feather'
 import _ from 'lodash'
 
 import { Folder } from 'constants/enums'
 import NoteListButton from 'components/NoteListButton'
 import NoteOptions from 'containers/NoteOptions'
 import { useTempState } from 'contexts/TempStateContext'
-import { getNoteTitle, sortByLastUpdated, sortByFavourites } from 'helpers'
+import { getNoteTitle, sortByLastUpdated, sortByFavourites, newNote } from 'helpers'
 import {
   addCategoryToNote,
   emptyTrash,
   pruneNotes,
   swapCategory,
   swapNote,
+  addNote,
   searchNotes,
 } from 'slices/note'
 import { NoteItem, ReactDragEvent, ReactMouseEvent, RootState } from 'types'
@@ -46,11 +47,13 @@ const NoteList: React.FC = () => {
     dispatch(addCategoryToNote({ categoryId, noteId }))
   const _emptyTrash = () => dispatch(emptyTrash())
   const _pruneNotes = () => dispatch(pruneNotes())
+  const _addNote = (note: NoteItem) => dispatch(addNote(note))
   const _swapNote = (noteId: string) => dispatch(swapNote(noteId))
   const _swapCategory = (categoryId: string) => dispatch(swapCategory(categoryId))
   const _searchNotes = _.debounce((searchValue: string) => dispatch(searchNotes(searchValue)), 200)
 
   const { navOpen, setNavOpen, noteOpen, setNoteOpen } = useTempState()
+  const activeNote = notes.find(note => note.id === activeNoteId)
 
   const [noteOptionsId, setNoteOptionsId] = useState('')
   const [noteOptionsPosition, setNoteOptionsPosition] = useState({ x: 0, y: 0 })
@@ -101,6 +104,15 @@ const NoteList: React.FC = () => {
       document.removeEventListener('mousedown', handleNoteOptionsClick)
     }
   })
+
+  const newNoteHandler = () => {
+    const note = newNote(activeCategoryId, activeFolder)
+
+    if ((activeNote && activeNote.text !== '' && !activeNote.trash) || !activeNote) {
+      _addNote(note)
+      _swapNote(note.id)
+    }
+  }
 
   const showEmptyTrash = activeFolder === Folder.TRASH && filteredNotes.length > 0
 
@@ -240,6 +252,16 @@ const NoteList: React.FC = () => {
             </div>
           )
         })}
+      </div>
+      <div className="mobile-add-note">
+        <button
+          onClick={() => {
+            setNoteOpen(true)
+            newNoteHandler()
+          }}
+        >
+          <Plus />
+        </button>
       </div>
     </aside>
   )
