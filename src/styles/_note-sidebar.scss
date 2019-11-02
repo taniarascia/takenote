@@ -1,4 +1,5 @@
 .note-sidebar {
+  position: relative;
   background: $note-sidebar-color;
   border-right: 1px solid darken($note-sidebar-color, 10%);
   overflow-y: hidden;
@@ -178,5 +179,19 @@
         }
       }
     }
+  }
+}
+
+.mobile-add-note {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+
+  button {
+    margin: 0;
+  }
+
+  @include small-breakpoint {
+    display: none;
   }
 }

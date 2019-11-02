@@ -2,7 +2,6 @@ import React from 'react'
 
 import { useAuth0 } from 'auth'
 import screenshot from 'assets/screenshot.png'
-import logo from 'assets/logo-color.svg'
 import icon from 'assets/logo-square-color.svg'
 
 const LandingPage: React.FC = () => {
@@ -38,6 +37,7 @@ const LandingPage: React.FC = () => {
             <a
               href="https://github.com/taniarascia/takenote"
               target="_blank"
+              rel="noopener noreferrer"
               className="button secondary"
             >
               View Source
