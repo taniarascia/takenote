@@ -20,7 +20,13 @@ import { Folder } from 'constants/enums'
 import { iconColor } from 'constants/index'
 import { useTempState } from 'contexts/TempStateContext'
 import { newNote } from 'helpers'
-import { addCategory, updateCategory, deleteCategory } from 'slices/category'
+import {
+  addCategory,
+  categoryDragEnter,
+  categoryDragLeave,
+  updateCategory,
+  deleteCategory,
+} from 'slices/category'
 import {
   addCategoryToNote,
   addNote,
@@ -49,6 +55,8 @@ const AppSidebar: React.FC = () => {
   const _swapCategory = (categoryId: string) => dispatch(swapCategory(categoryId))
   const _swapFolder = (folder: Folder) => dispatch(swapFolder(folder))
   const _addCategory = (category: CategoryItem) => dispatch(addCategory(category))
+  const _categoryDragEnter = (category: CategoryItem) => dispatch(categoryDragEnter(category))
+  const _categoryDragLeave = (category: CategoryItem) => dispatch(categoryDragLeave(category))
   const _updateCategory = (category: CategoryItem) => dispatch(updateCategory(category))
   const _deleteCategory = (categoryId: string) => dispatch(deleteCategory(categoryId))
   const _pruneCategoryFromNotes = (categoryId: string) =>
@@ -96,7 +104,7 @@ const AppSidebar: React.FC = () => {
   const onSubmitNewCategory = (event: ReactSubmitEvent): void => {
     event.preventDefault()
 
-    const category = { id: uuid(), name: tempCategoryName.trim() }
+    const category = { id: uuid(), name: tempCategoryName.trim(), draggedOver: false }
 
     if (categories.find(cat => cat.name === category.name) || category.name === '') {
       resetTempCategory()
@@ -109,7 +117,7 @@ const AppSidebar: React.FC = () => {
   const onSubmitUpdateCategory = (event: ReactSubmitEvent): void => {
     event.preventDefault()
 
-    const category = { id: editingCategoryId, name: tempCategoryName.trim() }
+    const category = { id: editingCategoryId, name: tempCategoryName.trim(), draggedOver: false }
 
     if (categories.find(cat => cat.name === category.name) || category.name === '') {
       resetTempCategory()
@@ -197,7 +205,9 @@ const AppSidebar: React.FC = () => {
             return (
               <div
                 key={category.id}
-                className={`category-list-each ${category.id === activeCategoryId ? 'active' : ''}`}
+                className={`category-list-each ${
+                  category.id === activeCategoryId || category.draggedOver ? 'active' : ''
+                }`}
                 onClick={() => {
                   const notesForNewCategory = notes.filter(
                     note => !note.trash && note.category === category.id
@@ -219,8 +229,15 @@ const AppSidebar: React.FC = () => {
                   event.preventDefault()
 
                   _addCategoryToNote(category.id, event.dataTransfer.getData('text'))
+                  _categoryDragLeave(category)
                 }}
                 onDragOver={allowDrop}
+                onDragEnter={() => {
+                  _categoryDragEnter(category)
+                }}
+                onDragLeave={() => {
+                  _categoryDragLeave(category)
+                }}
               >
                 <form
                   className="category-list-name"

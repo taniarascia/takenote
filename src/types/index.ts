@@ -20,6 +20,7 @@ export interface NoteItem {
 export interface CategoryItem {
   id: string
   name: string
+  draggedOver: boolean
 }
 
 //==============================================================================
