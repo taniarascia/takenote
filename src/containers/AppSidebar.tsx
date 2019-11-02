@@ -73,6 +73,11 @@ const AppSidebar: React.FC = () => {
 
   const [editingCategoryId, setEditingCategoryId] = useState('')
   const [tempCategoryName, setTempCategoryName] = useState('')
+  const [mainSectionDragState, setMainSectionDragState] = useState({
+    All: false,
+    FAVORITES: false,
+    TRASH: false,
+  })
   const { syncing, lastSynced } = useSelector((state: RootState) => state.syncState)
 
   const newTempCategoryHandler = () => {
@@ -143,12 +148,14 @@ const AppSidebar: React.FC = () => {
     event.preventDefault()
 
     _toggleTrashedNote(event.dataTransfer.getData('text'))
+    setMainSectionDragState({ ...mainSectionDragState, TRASH: false })
   }
 
   const favoriteNoteHandler = (event: ReactDragEvent) => {
     event.preventDefault()
 
     _toggleFavoriteNote(event.dataTransfer.getData('text'))
+    setMainSectionDragState({ ...mainSectionDragState, FAVORITES: false })
   }
 
   return (
@@ -173,25 +180,41 @@ const AppSidebar: React.FC = () => {
           All Notes
         </div>
         <div
-          className={`app-sidebar-link ${activeFolder === Folder.FAVORITES ? 'active' : ''}`}
+          className={`app-sidebar-link ${
+            activeFolder === Folder.FAVORITES || mainSectionDragState.FAVORITES ? 'active' : ''
+          }`}
           onClick={() => {
             _swapFolder(Folder.FAVORITES)
           }}
           onDrop={favoriteNoteHandler}
           onDragOver={allowDrop}
           data-testid="favorites"
+          onDragEnter={e => {
+            setMainSectionDragState({ ...mainSectionDragState, FAVORITES: true })
+          }}
+          onDragLeave={() => {
+            setMainSectionDragState({ ...mainSectionDragState, FAVORITES: false })
+          }}
         >
           <Star size={15} className="app-sidebar-icon" color={iconColor} />
           Favorites
         </div>
         <div
-          className={`app-sidebar-link ${activeFolder === Folder.TRASH ? 'active' : ''}`}
+          className={`app-sidebar-link ${
+            activeFolder === Folder.TRASH || mainSectionDragState.TRASH ? 'active' : ''
+          }`}
           onClick={() => {
             _swapFolder(Folder.TRASH)
           }}
           onDrop={trashNoteHandler}
           onDragOver={allowDrop}
           data-testid="trash"
+          onDragEnter={e => {
+            setMainSectionDragState({ ...mainSectionDragState, TRASH: true })
+          }}
+          onDragLeave={() => {
+            setMainSectionDragState({ ...mainSectionDragState, TRASH: false })
+          }}
         >
           <Trash2 size={15} className="app-sidebar-icon" color={iconColor} />
           Trash
