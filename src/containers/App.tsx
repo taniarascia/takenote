@@ -11,7 +11,15 @@ const App: React.FC = () => {
   const { loading, isAuthenticated } = useAuth0()
 
   if (loading) {
-    return <div>Loading...</div>
+    return (
+      <div className="loading">
+        <div className="la-ball-beat">
+          <div />
+          <div />
+          <div />
+        </div>
+      </div>
+    )
   }
 
   return (

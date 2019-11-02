@@ -1,3 +1,16 @@
+.loading {
+  background: $primary;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    max-width: 200px;
+  }
+}
+
 .app {
   display: flex;
   height: 100vh;

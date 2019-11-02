@@ -24,8 +24,4 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .coveralls.yml
-*/private
-/private
-src/private
-config.*
 package-lock.json
