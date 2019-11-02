@@ -34,6 +34,10 @@
     margin-bottom: 0;
   }
 
+  ul li [type='checkbox'] {
+    margin-right: 0.75rem;
+  }
+
   h1,
   h2,
   h3,
@@ -107,6 +111,9 @@
     tab-size: 2;
     color: #404040;
     margin: 0 0 1.5rem 0;
+    white-space: pre-wrap;
+    word-spacing: normal;
+    word-break: normal;
 
     code {
       padding: 0;
