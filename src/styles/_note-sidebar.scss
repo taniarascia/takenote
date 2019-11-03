@@ -4,6 +4,10 @@
   border-right: 1px solid darken($note-sidebar-color, 10%);
   overflow-y: hidden;
   height: 100vh;
+  
+  @include small-breakpoint {
+    position: static;
+  }
 
   &:hover {
     overflow-y: auto;
