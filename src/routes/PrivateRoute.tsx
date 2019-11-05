@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import { Route } from 'react-router-dom'
+import React, { useEffect, Component } from 'react'
+import { Route, RouteComponentProps } from 'react-router-dom'
 
 import { useAuth0 } from 'auth'
 
@@ -29,7 +29,9 @@ const PrivateRoute = ({ component, path, ...rest }: PrivateRouteOptions) => {
     fn()
   }, [isAuthenticated, loading, loginWithRedirect, path])
 
-  return <Route path={path} component={component} {...rest} />
+  const render = (props: RouteComponentProps<{}>) => <Component {...props} />
+
+  return <Route exact path={path} render={render} component={component} {...rest} />
 }
 
 export default PrivateRoute
