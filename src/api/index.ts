@@ -1,4 +1,4 @@
-import { SyncStatePayload } from 'types'
+import { SyncStatePayload, SettingsState } from 'types'
 
 export const requestCategories = () =>
   new Promise((resolve, reject) => {
@@ -31,4 +31,17 @@ export const saveState = ({ categories, notes }: SyncStatePayload) =>
       categories: JSON.parse(localStorage.getItem('categories') || '[]'),
       notes: JSON.parse(localStorage.getItem('notes') || '[]'),
     })
+  })
+
+export const saveSettings = (settings: SettingsState) =>
+  Promise.resolve(localStorage.setItem('settings', JSON.stringify(settings)))
+
+export const requestSettings = () =>
+  new Promise((resolve, reject) => {
+    const settings = localStorage.getItem('settings')
+    if (settings) {
+      resolve(JSON.parse(settings))
+    } else {
+      reject({ message: `Could not load code mirror options. An error occurred` })
+    }
   })

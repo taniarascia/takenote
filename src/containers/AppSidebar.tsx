@@ -20,7 +20,13 @@ import { Folder } from 'constants/enums'
 import { iconColor } from 'constants/index'
 import { useTempState } from 'contexts/TempStateContext'
 import { newNote } from 'helpers'
-import { addCategory, updateCategory, deleteCategory } from 'slices/category'
+import {
+  addCategory,
+  categoryDragEnter,
+  categoryDragLeave,
+  updateCategory,
+  deleteCategory,
+} from 'slices/category'
 import {
   addCategoryToNote,
   addNote,
@@ -49,6 +55,8 @@ const AppSidebar: React.FC = () => {
   const _swapCategory = (categoryId: string) => dispatch(swapCategory(categoryId))
   const _swapFolder = (folder: Folder) => dispatch(swapFolder(folder))
   const _addCategory = (category: CategoryItem) => dispatch(addCategory(category))
+  const _categoryDragEnter = (category: CategoryItem) => dispatch(categoryDragEnter(category))
+  const _categoryDragLeave = (category: CategoryItem) => dispatch(categoryDragLeave(category))
   const _updateCategory = (category: CategoryItem) => dispatch(updateCategory(category))
   const _deleteCategory = (categoryId: string) => dispatch(deleteCategory(categoryId))
   const _pruneCategoryFromNotes = (categoryId: string) =>
@@ -61,10 +69,20 @@ const AppSidebar: React.FC = () => {
   const _addCategoryToNote = (categoryId: string, noteId: string) =>
     dispatch(addCategoryToNote({ categoryId, noteId }))
 
-  const { setErrorCategoryMessage, addingTempCategory, setAddingTempCategory } = useTempState()
+  const {
+    setErrorCategoryMessage,
+    addingTempCategory,
+    setAddingTempCategory,
+    navOpen,
+  } = useTempState()
 
   const [editingCategoryId, setEditingCategoryId] = useState('')
   const [tempCategoryName, setTempCategoryName] = useState('')
+  const [mainSectionDragState, setMainSectionDragState] = useState({
+    All: false,
+    FAVORITES: false,
+    TRASH: false,
+  })
   const { syncing, lastSynced } = useSelector((state: RootState) => state.syncState)
 
   const newTempCategoryHandler = () => {
@@ -96,7 +114,7 @@ const AppSidebar: React.FC = () => {
   const onSubmitNewCategory = (event: ReactSubmitEvent): void => {
     event.preventDefault()
 
-    const category = { id: uuid(), name: tempCategoryName.trim() }
+    const category = { id: uuid(), name: tempCategoryName.trim(), draggedOver: false }
 
     if (categories.find(cat => cat.name === category.name) || category.name === '') {
       resetTempCategory()
@@ -109,7 +127,7 @@ const AppSidebar: React.FC = () => {
   const onSubmitUpdateCategory = (event: ReactSubmitEvent): void => {
     event.preventDefault()
 
-    const category = { id: editingCategoryId, name: tempCategoryName.trim() }
+    const category = { id: editingCategoryId, name: tempCategoryName.trim(), draggedOver: false }
 
     if (categories.find(cat => cat.name === category.name) || category.name === '') {
       resetTempCategory()
@@ -135,16 +153,18 @@ const AppSidebar: React.FC = () => {
     event.preventDefault()
 
     _toggleTrashedNote(event.dataTransfer.getData('text'))
+    setMainSectionDragState({ ...mainSectionDragState, TRASH: false })
   }
 
   const favoriteNoteHandler = (event: ReactDragEvent) => {
     event.preventDefault()
 
     _toggleFavoriteNote(event.dataTransfer.getData('text'))
+    setMainSectionDragState({ ...mainSectionDragState, FAVORITES: false })
   }
 
   return (
-    <aside className="app-sidebar">
+    <aside className={navOpen ? 'app-sidebar open' : 'app-sidebar'}>
       <section className="app-sidebar-actions">
         <AppSidebarAction handler={newNoteHandler} icon={Plus} label="Create new note" />
         <AppSidebarAction
@@ -165,25 +185,41 @@ const AppSidebar: React.FC = () => {
           All Notes
         </div>
         <div
-          className={`app-sidebar-link ${activeFolder === Folder.FAVORITES ? 'active' : ''}`}
+          className={`app-sidebar-link ${
+            activeFolder === Folder.FAVORITES || mainSectionDragState.FAVORITES ? 'active' : ''
+          }`}
           onClick={() => {
             _swapFolder(Folder.FAVORITES)
           }}
           onDrop={favoriteNoteHandler}
           onDragOver={allowDrop}
           data-testid="favorites"
+          onDragEnter={e => {
+            setMainSectionDragState({ ...mainSectionDragState, FAVORITES: true })
+          }}
+          onDragLeave={() => {
+            setMainSectionDragState({ ...mainSectionDragState, FAVORITES: false })
+          }}
         >
           <Star size={15} className="app-sidebar-icon" color={iconColor} />
           Favorites
         </div>
         <div
-          className={`app-sidebar-link ${activeFolder === Folder.TRASH ? 'active' : ''}`}
+          className={`app-sidebar-link ${
+            activeFolder === Folder.TRASH || mainSectionDragState.TRASH ? 'active' : ''
+          }`}
           onClick={() => {
             _swapFolder(Folder.TRASH)
           }}
           onDrop={trashNoteHandler}
           onDragOver={allowDrop}
           data-testid="trash"
+          onDragEnter={e => {
+            setMainSectionDragState({ ...mainSectionDragState, TRASH: true })
+          }}
+          onDragLeave={() => {
+            setMainSectionDragState({ ...mainSectionDragState, TRASH: false })
+          }}
         >
           <Trash2 size={15} className="app-sidebar-icon" color={iconColor} />
           Trash
@@ -197,7 +233,9 @@ const AppSidebar: React.FC = () => {
             return (
               <div
                 key={category.id}
-                className={`category-list-each ${category.id === activeCategoryId ? 'active' : ''}`}
+                className={`category-list-each ${
+                  category.id === activeCategoryId || category.draggedOver ? 'active' : ''
+                }`}
                 onClick={() => {
                   const notesForNewCategory = notes.filter(
                     note => !note.trash && note.category === category.id
@@ -219,8 +257,15 @@ const AppSidebar: React.FC = () => {
                   event.preventDefault()
 
                   _addCategoryToNote(category.id, event.dataTransfer.getData('text'))
+                  _categoryDragLeave(category)
                 }}
                 onDragOver={allowDrop}
+                onDragEnter={() => {
+                  _categoryDragEnter(category)
+                }}
+                onDragLeave={() => {
+                  _categoryDragLeave(category)
+                }}
               >
                 <form
                   className="category-list-name"

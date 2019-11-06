@@ -2,16 +2,21 @@ import React, { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { X } from 'react-feather'
 
-import { toggleSettingsModal, updateCodeMirrorOption } from 'slices/settings'
-import { togglePreviewMarkdown } from 'slices/previewMarkdown'
-import { toggleDarkTheme } from 'slices/theme'
+import { useAuth0 } from 'auth'
+import {
+  toggleSettingsModal,
+  updateCodeMirrorOption,
+  togglePreviewMarkdown,
+  toggleDarkTheme,
+} from 'slices/settings'
 import { ReactMouseEvent, RootState } from 'types'
 import Switch from 'components/Switch'
 
 const SettingsModal: React.FC = () => {
-  const { codeMirrorOptions, isOpen } = useSelector((state: RootState) => state.settingsState)
-  const { previewMarkdown } = useSelector((state: RootState) => state.previewMarkdown)
-  const { dark } = useSelector((state: RootState) => state.themeState)
+  const { user, logout } = useAuth0()
+  const { codeMirrorOptions, isOpen, previewMarkdown, darkTheme } = useSelector(
+    (state: RootState) => state.settingsState
+  )
 
   const dispatch = useDispatch()
 
@@ -39,7 +44,7 @@ const SettingsModal: React.FC = () => {
 
   const toggleDarkThemeHandler = () => {
     _toggleDarkTheme()
-    _updateCodeMirrorOption('theme', dark ? 'base16-light' : 'new-moon')
+    _updateCodeMirrorOption('theme', darkTheme ? 'base16-light' : 'new-moon')
   }
 
   const toggleLineHighlight = () => {
@@ -71,18 +76,37 @@ const SettingsModal: React.FC = () => {
         </div>
 
         <div className="settings-options">
+          <section className="profile flex">
+            <div>
+              <img src={user.picture} alt="Profile" className="profile-picture" />
+            </div>
+            <div className="profile-details">
+              <h3>{user.name}</h3>
+              <div className="subtitle">{user.email}</div>
+              <button
+                onClick={() => {
+                  logout()
+                }}
+              >
+                Log out
+              </button>
+            </div>
+          </section>
+        </div>
+
+        <div className="settings-options">
           <div>Active line highlight</div>
           <Switch toggle={toggleLineHighlight} checked={codeMirrorOptions.styleActiveLine} />
         </div>
 
         <div className="settings-options">
-          <div>Preview note</div>
+          <div>Markdown preview</div>
           <Switch toggle={togglePreviewMarkdownHandler} checked={previewMarkdown} />
         </div>
 
         <div className="settings-options">
           <div>Dark mode</div>
-          <Switch toggle={toggleDarkThemeHandler} checked={dark} />
+          <Switch toggle={toggleDarkThemeHandler} checked={darkTheme} />
         </div>
 
         <section className="settings-section">
@@ -118,7 +142,7 @@ const SettingsModal: React.FC = () => {
             </div>
           </div>
           <div className="settings-shortcut">
-            <div>Preview note</div>
+            <div>Markdown preview</div>
             <div>
               <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>J</kbd>
             </div>

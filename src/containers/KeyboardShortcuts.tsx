@@ -6,18 +6,15 @@ import { downloadNote, getNoteTitle, newNote } from 'helpers'
 import { useKey } from 'helpers/hooks'
 import { addNote, swapNote, toggleTrashedNote } from 'slices/note'
 import { syncState } from 'slices/sync'
-import { togglePreviewMarkdown } from 'slices/previewMarkdown'
-import { toggleDarkTheme } from 'slices/theme'
 import { RootState, CategoryItem, NoteItem } from 'types'
-import { updateCodeMirrorOption } from 'slices/settings'
+import { updateCodeMirrorOption, togglePreviewMarkdown, toggleDarkTheme } from 'slices/settings'
 
 const KeyboardShortcuts: React.FC = () => {
   const { categories } = useSelector((state: RootState) => state.categoryState)
   const { activeCategoryId, activeFolder, activeNoteId, notes } = useSelector(
     (state: RootState) => state.noteState
   )
-  const { dark } = useSelector((state: RootState) => state.themeState)
-  const { previewMarkdown } = useSelector((state: RootState) => state.previewMarkdown)
+  const { darkTheme, previewMarkdown } = useSelector((state: RootState) => state.settingsState)
 
   const activeNote = notes.find(note => note.id === activeNoteId)
 
@@ -69,7 +66,7 @@ const KeyboardShortcuts: React.FC = () => {
 
   const toggleDarkThemeHandler = () => {
     _toggleDarkTheme()
-    _updateCodeMirrorOption('theme', dark ? 'base16-light' : 'new-moon')
+    _updateCodeMirrorOption('theme', darkTheme ? 'base16-light' : 'new-moon')
   }
 
   useKey('ctrl+alt+n', () => {
