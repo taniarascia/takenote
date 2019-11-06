@@ -27,8 +27,8 @@ export const getFirstNoteId = (folder: Folder, notes: NoteItem[], categoryId?: s
   const firstNote = {
     [Folder.ALL]: () => notesNotTrash[0],
     [Folder.CATEGORY]: () => notesNotTrash.find(note => note.category === categoryId),
-    [Folder.FAVORITES]: () => notesNotTrash.find(note => !!note.favorite),
-    [Folder.TRASH]: () => notes.find(note => !!note.trash),
+    [Folder.FAVORITES]: () => notesNotTrash.find(note => note.favorite),
+    [Folder.TRASH]: () => notes.find(note => note.trash),
   }[folder]()
   return firstNote ? firstNote.id : ''
 }
