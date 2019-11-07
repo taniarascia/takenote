@@ -1,6 +1,14 @@
 import { SyncStatePayload, SettingsState } from 'types'
 
-const getLocalStorage = (key: string, errorMsg: string = 'Something went wrong') => (resolve, reject) => {
+type PromiseCallbackFun = (value?: any) => void
+type GetLocalStorage = (
+  key: string,
+  errorMsg?: string
+) => (resolve: PromiseCallbackFun, reject: PromiseCallbackFun) => void
+const getLocalStorage: GetLocalStorage = (key, errorMsg = 'Something went wrong') => (
+  resolve,
+  reject
+) => {
   const data = localStorage.getItem(key)
 
   if (data) {
@@ -16,7 +24,8 @@ export const requestNotes = () => new Promise(getLocalStorage('notes'))
 
 export const requestCategories = () => new Promise(getLocalStorage('categories'))
 
-export const requestSettings = () => new Promise(getLocalStorage('settings', 'Could not load code mirror options. An error occurred'))
+export const requestSettings = () =>
+  new Promise(getLocalStorage('settings', 'Could not load code mirror options. An error occurred'))
 
 export const saveState = ({ categories, notes }: SyncStatePayload) =>
   new Promise(resolve => {
