@@ -51,10 +51,19 @@ const SettingsModal: React.FC = () => {
     _updateCodeMirrorOption('styleActiveLine', !codeMirrorOptions.styleActiveLine)
   }
 
+  const handleEscPress = (event: KeyboardEvent) => {
+    event.stopPropagation()
+    if (event.key === 'Escape' && isOpen) {
+      _toggleSettingsModal()
+    }
+  }
+
   useEffect(() => {
     document.addEventListener('mousedown', handleDomClick)
+    document.addEventListener('keydown', handleEscPress)
     return () => {
       document.removeEventListener('mousedown', handleDomClick)
+      document.removeEventListener('keydown', handleEscPress)
     }
   })
 
