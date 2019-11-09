@@ -51,7 +51,7 @@ const NoteEditor: React.FC = () => {
         <>
           <ReactMarkdown className="previewer" source={activeNote.text} />
           <button className="preview-button" onClick={_togglePreviewMarkdown}>
-            Preview
+            Edit
           </button>
         </>
       )
