@@ -10,6 +10,7 @@ import config from 'config/config.json'
 import App from 'containers/App'
 import rootSaga from 'sagas'
 import rootReducer from 'slices'
+import * as serviceWorker from 'serviceWorker'
 
 import 'styles/index.scss'
 
@@ -44,3 +45,5 @@ render(
   </Auth0Provider>,
   document.getElementById('root')
 )
+
+serviceWorker.register()
