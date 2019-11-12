@@ -162,6 +162,12 @@ const SettingsModal: React.FC = () => {
               <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>K</kbd>
             </div>
           </div>
+          <div className="settings-shortcut">
+            <div>Focus search</div>
+            <div>
+              <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>F</kbd>
+            </div>
+          </div>
         </section>
       </div>
     </div>
