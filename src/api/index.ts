@@ -1,26 +1,31 @@
 import { SyncStatePayload, SettingsState } from 'types'
 
-export const requestCategories = () =>
-  new Promise((resolve, reject) => {
-    const data = localStorage.getItem('categories') || '[]'
+type PromiseCallbackFun = (value?: any) => void
+type GetLocalStorage = (
+  key: string,
+  errorMsg?: string
+) => (resolve: PromiseCallbackFun, reject: PromiseCallbackFun) => void
+const getLocalStorage: GetLocalStorage = (key, errorMsg = 'Something went wrong') => (
+  resolve,
+  reject
+) => {
+  const data = localStorage.getItem(key)
 
-    if (data) {
-      resolve(JSON.parse(data))
-    } else {
-      reject({ message: 'Something went wrong' })
-    }
-  })
+  if (data) {
+    resolve(JSON.parse(data))
+  } else {
+    reject({
+      message: errorMsg,
+    })
+  }
+}
 
-export const requestNotes = () =>
-  new Promise((resolve, reject) => {
-    const data = localStorage.getItem('notes') || '[]'
+export const requestNotes = () => new Promise(getLocalStorage('notes'))
 
-    if (data) {
-      resolve(JSON.parse(data))
-    } else {
-      reject({ message: 'Something went wrong' })
-    }
-  })
+export const requestCategories = () => new Promise(getLocalStorage('categories'))
+
+export const requestSettings = () =>
+  new Promise(getLocalStorage('settings', 'Could not load code mirror options. An error occurred'))
 
 export const saveState = ({ categories, notes }: SyncStatePayload) =>
   new Promise(resolve => {
@@ -35,13 +40,3 @@ export const saveState = ({ categories, notes }: SyncStatePayload) =>
 
 export const saveSettings = (settings: SettingsState) =>
   Promise.resolve(localStorage.setItem('settings', JSON.stringify(settings)))
-
-export const requestSettings = () =>
-  new Promise((resolve, reject) => {
-    const settings = localStorage.getItem('settings')
-    if (settings) {
-      resolve(JSON.parse(settings))
-    } else {
-      reject({ message: `Could not load code mirror options. An error occurred` })
-    }
-  })
