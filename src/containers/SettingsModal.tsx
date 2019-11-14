@@ -72,15 +72,15 @@ const SettingsModal: React.FC = () => {
       <div ref={node} className="settings-modal">
         <div className="settings-header">
           <h2>Settings</h2>
-          <div className="action-button">
-            <X
-              size={20}
-              onClick={() => {
-                if (isOpen) {
-                  _toggleSettingsModal()
-                }
-              }}
-            />
+          <div
+            className="action-button"
+            onClick={() => {
+              if (isOpen) {
+                _toggleSettingsModal()
+              }
+            }}
+          >
+            <X size={20} />
           </div>
         </div>
 
