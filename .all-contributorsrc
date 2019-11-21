@@ -266,6 +266,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "yogan",
+      "name": "Frank Blendinger",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/122564?v=4",
+      "profile": "https://zogan.de/",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7
