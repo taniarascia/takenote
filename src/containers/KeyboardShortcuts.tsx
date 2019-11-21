@@ -69,13 +69,6 @@ const KeyboardShortcuts: React.FC = () => {
     _updateCodeMirrorOption('theme', darkTheme ? 'base16-light' : 'new-moon')
   }
 
-  const focusSearch = () => {
-    const searchBox = document.querySelector<HTMLInputElement>(".note-search")
-    if (searchBox !== null) {
-      searchBox.focus()
-    }
-  }
-
   useKey('ctrl+alt+n', () => {
     if (previewMarkdown) {
       togglePreviewMarkdownHandler()
@@ -105,10 +98,6 @@ const KeyboardShortcuts: React.FC = () => {
 
   useKey('alt+ctrl+k', () => {
     toggleDarkThemeHandler()
-  })
-
-  useKey('alt+ctrl+f', () => {
-    focusSearch()
   })
 
   return null
