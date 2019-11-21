@@ -8,6 +8,7 @@ import NoteListButton from 'components/NoteListButton'
 import NoteOptions from 'containers/NoteOptions'
 import { useTempState } from 'contexts/TempStateContext'
 import { getNoteTitle, sortByLastUpdated, sortByFavourites, newNote } from 'helpers'
+import { useKey } from 'helpers/hooks'
 import {
   addCategoryToNote,
   emptyTrash,
@@ -20,6 +21,7 @@ import {
 import { NoteItem, ReactDragEvent, ReactMouseEvent, RootState } from 'types'
 
 const NoteList: React.FC = () => {
+  const searchRef = React.useRef() as React.MutableRefObject<HTMLInputElement>
   const { categories } = useSelector((state: RootState) => state.categoryState)
   const { activeCategoryId, activeFolder, activeNoteId, notes, searchValue } = useSelector(
     (state: RootState) => state.noteState
@@ -98,6 +100,14 @@ const NoteList: React.FC = () => {
       : noteOptionsPosition.y - optionsSize
   }
 
+  const focusSearch = () => {
+    searchRef.current.focus()
+  }
+
+  useKey('alt+ctrl+f', () => {
+    focusSearch()
+  })
+
   useEffect(() => {
     document.addEventListener('mousedown', handleNoteOptionsClick)
     return () => {
@@ -129,6 +139,7 @@ const NoteList: React.FC = () => {
             <Menu />
           </button>
           <input
+            ref={searchRef}
             className="note-search"
             type="search"
             onChange={event => {
