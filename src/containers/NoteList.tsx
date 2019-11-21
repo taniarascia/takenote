@@ -129,6 +129,7 @@ const NoteList: React.FC = () => {
             <Menu />
           </button>
           <input
+            className="note-search"
             type="search"
             onChange={event => {
               event.preventDefault()
