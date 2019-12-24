@@ -4,7 +4,7 @@
 
 <p align="center">
  <img src="https://img.shields.io/badge/License-MIT-blue.svg">
-  <a href="#contributors"><img src="https://img.shields.io/badge/all_contributors-25-orange.svg?style=flat-square)"></a>
+  <a href="#contributors"><img src="https://img.shields.io/badge/all_contributors-31-orange.svg?style=flat-square)"></a>
    <a href="https://travis-ci.org/taniarascia/takenote"><img src="https://travis-ci.org/taniarascia/takenote.svg?branch=master"></a>
   <a href="https://app.netlify.com/sites/tnote/deploys"><img src="https://api.netlify.com/api/v1/badges/a0e055de-cab8-4217-80dd-5bd769b7d478/deploy-status"></a>
 </p>
@@ -40,16 +40,16 @@ In progress!
 In order to work on TakeNote locally, you must create your own local Auth0 application.
 
 - [Create Auth0 account](https://auth0.com/)
-- Create application with the following settings:
-    - Domain: .auth0.com
-    - Application Type: Single Page Application
-    - Allowed Callback URLs: http://localhost:3000
-    - Allowed Web Origins: http://localhost:3000
-    - Allowed Logout URLs: http://localhost:3000
-    - Allowed Origins (CORS): http://localhost:3000
-- Change config.json to:
+- Create an application with the following settings:
+  - **Domain**: `xxx.auth0.com`
+  - **Application Type**: Single Page Application
+  - **Allowed Callback URLs**: `http://localhost:3000`
+  - **Allowed Web Origins**: `http://localhost:3000`
+  - **Allowed Logout URLs**: `http://localhost:3000`
+  - **Allowed Origins (CORS)**: `http://localhost:3000`
+- Change config.json:
 
-```
+```json
 {
   "domain": "your-username.auth0.com",
   "clientId": "your-client-id"
@@ -57,8 +57,7 @@ In order to work on TakeNote locally, you must create your own local Auth0 appli
 ```
 
 - Go to Universal Login - Select "New".
-- Ensure "GitHub" permissions is the "Connections".
-
+- Ensure "GitHub" permissions is in the "Connections".
 
 ### Install
 
@@ -142,6 +141,7 @@ Thanks goes to these wonderful people:
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 ## Acknowledgements
