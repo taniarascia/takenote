@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction, Slice } from 'redux-starter-kit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { Folder } from 'constants/enums'
 import { sortByLastUpdated, sortByFavourites } from 'helpers'
@@ -43,8 +43,8 @@ const initialState: NoteState = {
   searchValue: '',
 }
 
-const noteSlice: Slice<NoteState> = createSlice({
-  slice: 'note',
+const noteSlice = createSlice({
+  name: 'note',
   initialState,
   reducers: {
     addCategoryToNote: (

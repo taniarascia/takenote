@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction, Slice } from 'redux-starter-kit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { CategoryItem, CategoryState } from 'types'
 
@@ -8,8 +8,8 @@ const initialState: CategoryState = {
   loading: true,
 }
 
-const categorySlice: Slice<CategoryState> = createSlice({
-  slice: 'category',
+const categorySlice = createSlice({
+  name: 'category',
   initialState,
   reducers: {
     addCategory: (state, { payload }: PayloadAction<CategoryItem>) => ({
