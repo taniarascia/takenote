@@ -275,7 +275,17 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "osiux",
+      "name": "Eduardo Reveles",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/204463?v=4",
+      "profile": "https://www.osiux.ws",
+      "contributions": [
+        "code"
+      ]
     }
   ],
-  "contributorsPerLine": 7
+  "contributorsPerLine": 7,
+  "skipCi": true
 }
