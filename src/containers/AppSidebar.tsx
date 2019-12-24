@@ -61,7 +61,8 @@ const AppSidebar: React.FC = () => {
   const _deleteCategory = (categoryId: string) => dispatch(deleteCategory(categoryId))
   const _pruneCategoryFromNotes = (categoryId: string) =>
     dispatch(pruneCategoryFromNotes(categoryId))
-  const _syncState = (notes: NoteItem[], categories: CategoryItem[]) => dispatch(syncState())
+  const _syncState = (notes: NoteItem[], categories: CategoryItem[]) =>
+    dispatch(syncState({ notes, categories }))
   const _toggleSettingsModal = () => dispatch(toggleSettingsModal())
   const _toggleTrashedNote = (noteId: string) => dispatch(toggleTrashedNote(noteId))
   const _toggleFavoriteNote = (noteId: string) => dispatch(toggleFavoriteNote(noteId))
