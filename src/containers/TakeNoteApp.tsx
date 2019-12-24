@@ -40,8 +40,7 @@ const TakeNoteApp: React.FC = () => {
   useEffect(_loadCategories, [])
   useEffect(_loadSettings, [])
 
-  const _syncState = (notes: NoteItem[], categories: CategoryItem[]) =>
-    dispatch(syncState({ notes, categories }))
+  const _syncState = (notes: NoteItem[], categories: CategoryItem[]) => dispatch(syncState())
 
   useInterval(() => {
     _syncState(notes, categories)

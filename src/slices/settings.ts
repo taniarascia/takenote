@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction, Slice } from 'redux-starter-kit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { SettingsState, VimModes } from 'types'
 
@@ -22,8 +22,8 @@ const initialState: SettingsState = {
   },
 }
 
-const settingsSlice: Slice<SettingsState> = createSlice({
-  slice: 'settings',
+const settingsSlice = createSlice({
+  name: 'settings',
   initialState,
   reducers: {
     toggleSettingsModal: state => ({
@@ -72,7 +72,6 @@ const settingsSlice: Slice<SettingsState> = createSlice({
 
 export const {
   toggleSettingsModal,
-  toggleVimInsertMode,
   updateVimStateMode,
   updateCodeMirrorOption,
   toggleDarkTheme,

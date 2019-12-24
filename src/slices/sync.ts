@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction, Slice } from 'redux-starter-kit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { SyncState } from 'types'
 
@@ -8,8 +8,8 @@ const initialState: SyncState = {
   lastSynced: '',
 }
 
-const syncSlice: Slice<SyncState> = createSlice({
-  slice: 'sync',
+const syncSlice = createSlice({
+  name: 'sync',
   initialState,
   reducers: {
     syncState: state => ({

@@ -3,7 +3,7 @@ import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { BrowserRouter as Router } from 'react-router-dom'
 import createSagaMiddleware from 'redux-saga'
-import { configureStore, getDefaultMiddleware } from 'redux-starter-kit'
+import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
 
 import { Auth0Provider } from 'auth'
 import config from 'config/config.json'

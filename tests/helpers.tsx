@@ -4,7 +4,7 @@ import React, { ReactNode } from 'react'
 import { Provider } from 'react-redux'
 import { MemoryRouter } from 'react-router-dom'
 import createSagaMiddleware from 'redux-saga'
-import { configureStore, getDefaultMiddleware } from 'redux-starter-kit'
+import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
 
 import rootSaga from 'sagas'
 import rootReducer from 'slices'

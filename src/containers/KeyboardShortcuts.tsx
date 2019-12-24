@@ -23,8 +23,7 @@ const KeyboardShortcuts: React.FC = () => {
   const _addNote = (note: NoteItem) => dispatch(addNote(note))
   const _swapNote = (noteId: string) => dispatch(swapNote(noteId))
   const _toggleTrashedNote = (noteId: string) => dispatch(toggleTrashedNote(noteId))
-  const _syncState = (notes: NoteItem[], categories: CategoryItem[]) =>
-    dispatch(syncState({ notes, categories }))
+  const _syncState = (notes: NoteItem[], categories: CategoryItem[]) => dispatch(syncState())
   const _togglePreviewMarkdown = () => dispatch(togglePreviewMarkdown())
   const _toggleDarkTheme = () => dispatch(toggleDarkTheme())
   const _updateCodeMirrorOption = (key: string, value: string) =>
