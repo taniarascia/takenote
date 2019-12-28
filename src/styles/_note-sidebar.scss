@@ -4,7 +4,7 @@
   border-right: 1px solid darken($note-sidebar-color, 10%);
   overflow-y: hidden;
   height: 100vh;
-  
+
   @include small-breakpoint {
     position: static;
   }
@@ -159,6 +159,23 @@
             margin-right: auto;
             margin-top: 0.25rem;
             margin-bottom: 0.5rem;
+          }
+
+          .remove-category {
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            padding: 0.5rem;
+            border-radius: 2px;
+            font-size: 0.9rem;
+
+            &:hover {
+              background: #262626;
+            }
+
+            svg {
+              margin-right: 0.5em;
+            }
           }
         }
 
