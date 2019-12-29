@@ -250,11 +250,6 @@ const NoteList: React.FC = () => {
                               {category.name}
                             </option>
                           ))}
-                        {note.category && (
-                          <option key="none" value="">
-                            Remove category
-                          </option>
-                        )}
                       </select>
                     </>
                   )}
