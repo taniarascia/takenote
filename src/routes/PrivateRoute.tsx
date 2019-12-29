@@ -1,37 +1,34 @@
-import React, { useEffect, Component } from 'react'
-import { Route, RouteComponentProps } from 'react-router-dom'
+import React, { useEffect } from 'react'
+import { Route, RouteComponentProps, RouteProps } from 'react-router-dom'
 
 import { useAuth0 } from 'auth'
 
-interface IPrivateRouteOptions {
-  component: React.FC
+interface PrivateRouteProps extends Omit<RouteProps, 'component'> {
+  component: React.ElementType
   path: string
 }
 
-type PrivateRouteOptions = IPrivateRouteOptions
-
-const PrivateRoute = ({ component, path, ...rest }: PrivateRouteOptions) => {
+const PrivateRoute: React.FC<PrivateRouteProps> = ({ component: Component, path, ...rest }) => {
   const { loading, isAuthenticated, loginWithRedirect } = useAuth0()
 
   useEffect(() => {
-    const fn = async () => {
-      if (loading || !loginWithRedirect) {
-        return
-      }
-
-      if (!isAuthenticated) {
-        await loginWithRedirect({
-          redirect_uri: '',
-          appState: { targetUrl: path },
-        })
-      }
+    if (loading || isAuthenticated) {
+      return
     }
+
+    const fn = async () => {
+      await loginWithRedirect({
+        appState: { targetUrl: path },
+      })
+    }
+
     fn()
   }, [isAuthenticated, loading, loginWithRedirect, path])
 
-  const render = (props: RouteComponentProps<{}>) => <Component {...props} />
+  const render = (props: RouteComponentProps<{}>) =>
+    isAuthenticated === true ? <Component {...props} /> : null
 
-  return <Route exact path={path} render={render} component={component} {...rest} />
+  return <Route path={path} render={render} {...rest} />
 }
 
 export default PrivateRoute
