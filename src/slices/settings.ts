@@ -1,15 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { SettingsState, VimModes } from 'types'
+import { SettingsState } from 'types'
 
 const initialState: SettingsState = {
   isOpen: false,
   loading: false,
   previewMarkdown: false,
   darkTheme: false,
-  vimState: {
-    mode: VimModes.default,
-  },
   codeMirrorOptions: {
     mode: 'gfm',
     theme: 'base16-light',
@@ -29,12 +26,6 @@ const settingsSlice = createSlice({
     toggleSettingsModal: state => ({
       ...state,
       isOpen: !state.isOpen,
-    }),
-    updateVimStateMode: (state, { payload }: PayloadAction<VimModes>) => ({
-      ...state,
-      vimState: {
-        mode: payload,
-      },
     }),
     updateCodeMirrorOption: (
       state,
@@ -72,7 +63,6 @@ const settingsSlice = createSlice({
 
 export const {
   toggleSettingsModal,
-  updateVimStateMode,
   updateCodeMirrorOption,
   toggleDarkTheme,
   togglePreviewMarkdown,

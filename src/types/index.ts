@@ -49,16 +49,6 @@ export interface SettingsState {
   loading: boolean
   darkTheme: boolean
   codeMirrorOptions: { [key: string]: any }
-  vimState: VimState
-}
-
-export enum VimModes {
-  default = '?',
-  insert = 'i',
-}
-
-export interface VimState {
-  mode: VimModes
 }
 
 export interface SyncState {

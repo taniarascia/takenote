@@ -1,13 +1,8 @@
 .note-sidebar {
-  position: relative;
   background: $note-sidebar-color;
   border-right: 1px solid darken($note-sidebar-color, 10%);
   overflow-y: hidden;
   height: 100vh;
-
-  @include small-breakpoint {
-    position: static;
-  }
 
   &:hover {
     overflow-y: auto;
@@ -17,20 +12,6 @@
     padding: 0.5rem;
     text-align: center;
     font-weight: 700;
-
-    .mobile-sidebar-options {
-      display: flex;
-    }
-
-    .toggle-mobile-nav {
-      display: block;
-      padding: 0.25rem 1rem;
-      margin-right: 0.5rem;
-
-      @include small-breakpoint {
-        display: none;
-      }
-    }
   }
 
   .list-button {
@@ -56,19 +37,14 @@
   .note-list {
     &-each {
       cursor: pointer;
-      padding: 1rem 0.5rem;
+      padding: 0.5rem;
       border-bottom: 1px solid darken($note-sidebar-color, 8%);
       display: flex;
       align-items: center;
       justify-content: space-between;
       font-weight: 500;
-      font-size: 1rem;
+      font-size: 0.85rem;
       line-height: 1.3;
-
-      @include small-breakpoint {
-        padding: 0.5rem;
-        font-size: 0.85rem;
-      }
 
       .highlighted {
         color: #3e64ff;
@@ -97,40 +73,34 @@
         }
       }
 
-      @include small-breakpoint {
-        &.active {
-          background: $primary;
-          color: white;
-          border-bottom: 1px solid $primary;
+      &.active {
+        background: $primary;
+        color: white;
+        border-bottom: 1px solid $primary;
 
-          .highlighted {
-            background: white;
-            color: $primary;
-          }
+        .highlighted {
+          background: white;
+          color: $primary;
+        }
 
-          &:hover {
-            .note-options {
-              color: white;
-            }
+        &:hover {
+          .note-options {
+            color: white;
           }
+        }
 
-          .note-favorite {
-            stroke: white;
-          }
+        .note-favorite {
+          stroke: white;
         }
       }
 
       .note-options {
-        display: none;
-
-        @include small-breakpoint {
-          display: block;
-          font-size: 1rem;
-          color: transparent;
-          padding: 0.5rem;
-          z-index: 1;
-          cursor: pointer;
-        }
+        display: block;
+        font-size: 1rem;
+        color: transparent;
+        padding: 0.5rem;
+        z-index: 1;
+        cursor: pointer;
 
         &.active {
           color: $font-color;
@@ -183,19 +153,5 @@
         }
       }
     }
-  }
-}
-
-.mobile-add-note {
-  position: absolute;
-  bottom: 1rem;
-  right: 1rem;
-
-  button {
-    margin: 0;
-  }
-
-  @include small-breakpoint {
-    display: none;
   }
 }

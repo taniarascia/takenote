@@ -10,24 +10,21 @@
   z-index: 5;
 
   &-synced {
-    display: none;
+    display: block;
+    border-top: 1px solid darken($app-sidebar-color, 5%);
+    border-right: 1px solid darken($app-sidebar-color, 10%);
+    position: absolute;
+    bottom: 0;
+    width: $app-sidebar-width;
+    padding: 0.5rem;
+    background: $app-sidebar-color;
+    z-index: 6;
 
-    @include small-breakpoint {
-      display: block;
-      border-top: 1px solid darken($app-sidebar-color, 5%);
-      border-right: 1px solid darken($app-sidebar-color, 10%);
-      position: absolute;
-      bottom: 0;
-      width: $app-sidebar-width;
-      padding: 0.5rem;
-      background: $app-sidebar-color;
-
-      .last-synced {
-        display: flex;
-        align-items: center;
-        color: lighten($app-sidebar-color, 30%);
-        font-size: 0.75rem;
-      }
+    .last-synced {
+      display: flex;
+      align-items: center;
+      color: lighten($app-sidebar-color, 30%);
+      font-size: 0.75rem;
     }
   }
 
@@ -56,7 +53,7 @@
   &-main {
     flex: 1;
     position: relative;
-    padding-bottom: 3rem;
+    padding-bottom: 2rem;
 
     p {
       padding: 0 0.5rem;

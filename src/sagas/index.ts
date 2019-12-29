@@ -8,7 +8,6 @@ import { loadNotes, loadNotesError, loadNotesSuccess } from 'slices/note'
 import { syncState, syncStateError, syncStateSuccess } from 'slices/sync'
 import {
   updateCodeMirrorOption,
-  updateVimStateMode,
   loadSettingsSuccess,
   loadSettingsError,
   loadSettings,
@@ -73,7 +72,6 @@ function* rootSaga() {
         toggleDarkTheme.type,
         togglePreviewMarkdown.type,
         updateCodeMirrorOption.type,
-        updateVimStateMode.type,
         toggleSettingsModal.type,
       ],
       syncSettings

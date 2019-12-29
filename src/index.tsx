@@ -6,11 +6,12 @@ import createSagaMiddleware from 'redux-saga'
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
 
 import { Auth0Provider } from 'auth'
-import config from 'config/config.json'
+import config from 'config/config-local.json'
 import App from 'containers/App'
 import rootSaga from 'sagas'
 import rootReducer from 'slices'
 import * as serviceWorker from 'serviceWorker'
+import history from 'helpers/history'
 
 import 'styles/index.scss'
 
@@ -23,11 +24,7 @@ const store = configureStore({
 sagaMiddleware.run(rootSaga)
 
 const onRedirectCallback = (appState: any) => {
-  window.history.replaceState(
-    {},
-    document.title,
-    appState && appState.targetUrl ? appState.targetUrl : window.location.pathname
-  )
+  history.push(appState && appState.targetUrl ? appState.targetUrl : window.location.pathname)
 }
 
 render(
