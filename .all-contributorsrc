@@ -284,6 +284,16 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "leofrozenyogurt",
+      "name": "Leo Royzengurt",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/2198384?v=4",
+      "profile": "https://github.com/leofrozenyogurt",
+      "contributions": [
+        "code",
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
