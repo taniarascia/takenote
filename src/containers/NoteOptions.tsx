@@ -4,7 +4,14 @@ import { useDispatch } from 'react-redux'
 
 import NoteOptionsButton from 'components/NoteOptionsButton'
 import { downloadNote, getNoteTitle } from 'helpers'
-import { deleteNote, toggleFavoriteNote, toggleTrashedNote } from 'slices/note'
+import {
+  deleteNote,
+  toggleFavoriteNote,
+  toggleTrashedNote,
+  addCategoryToNote,
+  swapCategory,
+  swapNote,
+} from 'slices/note'
 import { NoteItem } from 'types'
 
 export interface NoteOptionsProps {
@@ -17,6 +24,10 @@ const NoteOptions: React.FC<NoteOptionsProps> = ({ clickedNote }) => {
   const _deleteNote = (noteId: string) => dispatch(deleteNote(noteId))
   const _toggleTrashedNote = (noteId: string) => dispatch(toggleTrashedNote(noteId))
   const _toggleFavoriteNote = (noteId: string) => dispatch(toggleFavoriteNote(noteId))
+  const _addCategoryToNote = (categoryId: string, noteId: string) =>
+    dispatch(addCategoryToNote({ categoryId, noteId }))
+  const _swapNote = (noteId: string) => dispatch(swapNote(noteId))
+  const _swapCategory = (categoryId: string) => dispatch(swapCategory(categoryId))
 
   const deleteNoteHandler = () => {
     _deleteNote(clickedNote.id)
@@ -34,6 +45,12 @@ const NoteOptions: React.FC<NoteOptionsProps> = ({ clickedNote }) => {
 
   const trashNoteHandler = () => {
     _toggleTrashedNote(clickedNote.id)
+  }
+
+  const removeCategoryHandler = () => {
+    _addCategoryToNote('', clickedNote.id)
+    _swapCategory('')
+    _swapNote(clickedNote.id)
   }
 
   return (
@@ -60,6 +77,14 @@ const NoteOptions: React.FC<NoteOptionsProps> = ({ clickedNote }) => {
         </>
       )}
       <NoteOptionsButton handler={downloadNoteHandler} icon={Download} text="Download" />
+      {clickedNote.category && (
+        <NoteOptionsButton
+          data-testid="note-option-remove-category-button"
+          handler={removeCategoryHandler}
+          icon={X}
+          text="Remove category"
+        />
+      )}
     </nav>
   )
 }

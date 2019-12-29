@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { MoreHorizontal, Star, Menu, Plus, X } from 'react-feather'
+import { MoreHorizontal, Star, Menu, Plus } from 'react-feather'
 import _ from 'lodash'
 
 import { Folder } from 'constants/enums'
@@ -224,7 +224,7 @@ const NoteList: React.FC = () => {
                     event.stopPropagation()
                   }}
                 >
-                  {!note.trash && filteredCategories.length > 0 ? (
+                  {!note.trash && filteredCategories.length > 0 && (
                     <>
                       <select
                         defaultValue=""
@@ -250,26 +250,8 @@ const NoteList: React.FC = () => {
                               {category.name}
                             </option>
                           ))}
-                        {note.category && (
-                          <option key="none" value="">
-                            Remove category
-                          </option>
-                        )}
                       </select>
                     </>
-                  ) : (
-                    <div
-                      className="remove-category"
-                      onClick={event => {
-                        _addCategoryToNote('', note.id)
-                        _swapCategory('')
-                        _swapNote(note.id)
-                        setNoteOptionsId('')
-                      }}
-                    >
-                      <X size={18} />
-                      Remove From Category
-                    </div>
                   )}
                   <NoteOptions clickedNote={note} />
                 </div>
