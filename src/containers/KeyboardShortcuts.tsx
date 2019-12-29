@@ -2,9 +2,10 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { useTempState } from 'contexts/TempStateContext'
+import { Folder } from 'constants/enums'
 import { downloadNote, getNoteTitle, newNote } from 'helpers'
 import { useKey } from 'helpers/hooks'
-import { addNote, swapNote, toggleTrashedNote } from 'slices/note'
+import { addNote, swapNote, toggleTrashedNote, swapFolder } from 'slices/note'
 import { syncState } from 'slices/sync'
 import { RootState, CategoryItem, NoteItem } from 'types'
 import { updateCodeMirrorOption, togglePreviewMarkdown, toggleDarkTheme } from 'slices/settings'
@@ -22,6 +23,7 @@ const KeyboardShortcuts: React.FC = () => {
 
   const _addNote = (note: NoteItem) => dispatch(addNote(note))
   const _swapNote = (noteId: string) => dispatch(swapNote(noteId))
+  const _swapFolder = (folder: Folder) => dispatch(swapFolder(folder))
   const _toggleTrashedNote = (noteId: string) => dispatch(toggleTrashedNote(noteId))
   const _syncState = (notes: NoteItem[], categories: CategoryItem[]) =>
     dispatch(syncState({ notes, categories }))
@@ -31,10 +33,21 @@ const KeyboardShortcuts: React.FC = () => {
     dispatch(updateCodeMirrorOption({ key, value }))
 
   const { addingTempCategory, setAddingTempCategory } = useTempState()
-  const newNoteHandler = () => {
-    const note = newNote(activeCategoryId, activeFolder)
 
-    if ((activeNote && activeNote.text !== '' && !activeNote.trash) || !activeNote) {
+  const newNoteHandler = () => {
+    if (activeFolder === Folder.TRASH) {
+      _swapFolder(Folder.ALL)
+    }
+
+    if (previewMarkdown) {
+      _togglePreviewMarkdown()
+    }
+
+    if ((activeNote && activeNote.text !== '') || !activeNote) {
+      const note = newNote(
+        activeCategoryId,
+        activeFolder === Folder.TRASH ? Folder.ALL : activeFolder
+      )
       _addNote(note)
       _swapNote(note.id)
     }
@@ -70,9 +83,6 @@ const KeyboardShortcuts: React.FC = () => {
   }
 
   useKey('ctrl+alt+n', () => {
-    if (previewMarkdown) {
-      togglePreviewMarkdownHandler()
-    }
     newNoteHandler()
   })
 

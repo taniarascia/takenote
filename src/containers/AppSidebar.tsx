@@ -37,7 +37,7 @@ import {
   toggleFavoriteNote,
   toggleTrashedNote,
 } from 'slices/note'
-import { toggleSettingsModal } from 'slices/settings'
+import { toggleSettingsModal, togglePreviewMarkdown } from 'slices/settings'
 import { syncState } from 'slices/sync'
 import { CategoryItem, NoteItem, ReactDragEvent, ReactSubmitEvent, RootState } from 'types'
 
@@ -46,6 +46,8 @@ const AppSidebar: React.FC = () => {
   const { activeCategoryId, activeFolder, activeNoteId, notes } = useSelector(
     (state: RootState) => state.noteState
   )
+  const { previewMarkdown } = useSelector((state: RootState) => state.settingsState)
+
   const activeNote = notes.find(note => note.id === activeNoteId)
 
   const dispatch = useDispatch()
@@ -64,17 +66,13 @@ const AppSidebar: React.FC = () => {
   const _syncState = (notes: NoteItem[], categories: CategoryItem[]) =>
     dispatch(syncState({ notes, categories }))
   const _toggleSettingsModal = () => dispatch(toggleSettingsModal())
+  const _togglePreviewMarkdown = () => dispatch(togglePreviewMarkdown())
   const _toggleTrashedNote = (noteId: string) => dispatch(toggleTrashedNote(noteId))
   const _toggleFavoriteNote = (noteId: string) => dispatch(toggleFavoriteNote(noteId))
   const _addCategoryToNote = (categoryId: string, noteId: string) =>
     dispatch(addCategoryToNote({ categoryId, noteId }))
 
-  const {
-    setErrorCategoryMessage,
-    addingTempCategory,
-    setAddingTempCategory,
-    navOpen,
-  } = useTempState()
+  const { addingTempCategory, setAddingTempCategory } = useTempState()
 
   const [editingCategoryId, setEditingCategoryId] = useState('')
   const [tempCategoryName, setTempCategoryName] = useState('')
@@ -94,6 +92,10 @@ const AppSidebar: React.FC = () => {
       _swapFolder(Folder.ALL)
     }
 
+    if (previewMarkdown) {
+      _togglePreviewMarkdown()
+    }
+
     if ((activeNote && activeNote.text !== '') || !activeNote) {
       const note = newNote(
         activeCategoryId,
@@ -107,7 +109,6 @@ const AppSidebar: React.FC = () => {
   const resetTempCategory = () => {
     setTempCategoryName('')
     setAddingTempCategory(false)
-    setErrorCategoryMessage('')
     setEditingCategoryId('')
   }
 
@@ -164,186 +165,189 @@ const AppSidebar: React.FC = () => {
   }
 
   return (
-    <aside className={navOpen ? 'app-sidebar open' : 'app-sidebar'}>
-      <section className="app-sidebar-actions">
-        <AppSidebarAction handler={newNoteHandler} icon={Plus} label="Create new note" />
-        <AppSidebarAction
-          handler={syncNotesHandler}
-          icon={syncing ? Loader : UploadCloud}
-          label="Sync notes"
-        />
-        <AppSidebarAction handler={settingsHandler} icon={Settings} label="Settings" />
-      </section>
-      <section className="app-sidebar-main">
-        <div
-          className={`app-sidebar-link ${activeFolder === Folder.ALL ? 'active' : ''}`}
-          onClick={() => {
-            _swapFolder(Folder.ALL)
-          }}
-        >
-          <Book size={15} className="app-sidebar-icon" color={iconColor} />
-          All Notes
-        </div>
-        <div
-          className={`app-sidebar-link ${
-            activeFolder === Folder.FAVORITES || mainSectionDragState.FAVORITES ? 'active' : ''
-          }`}
-          onClick={() => {
-            _swapFolder(Folder.FAVORITES)
-          }}
-          onDrop={favoriteNoteHandler}
-          onDragOver={allowDrop}
-          data-testid="favorites"
-          onDragEnter={e => {
-            setMainSectionDragState({ ...mainSectionDragState, FAVORITES: true })
-          }}
-          onDragLeave={() => {
-            setMainSectionDragState({ ...mainSectionDragState, FAVORITES: false })
-          }}
-        >
-          <Star size={15} className="app-sidebar-icon" color={iconColor} />
-          Favorites
-        </div>
-        <div
-          className={`app-sidebar-link ${
-            activeFolder === Folder.TRASH || mainSectionDragState.TRASH ? 'active' : ''
-          }`}
-          onClick={() => {
-            _swapFolder(Folder.TRASH)
-          }}
-          onDrop={trashNoteHandler}
-          onDragOver={allowDrop}
-          data-testid="trash"
-          onDragEnter={e => {
-            setMainSectionDragState({ ...mainSectionDragState, TRASH: true })
-          }}
-          onDragLeave={() => {
-            setMainSectionDragState({ ...mainSectionDragState, TRASH: false })
-          }}
-        >
-          <Trash2 size={15} className="app-sidebar-icon" color={iconColor} />
-          Trash
-        </div>
+    <>
+      <aside className="app-sidebar">
+        <section className="app-sidebar-actions">
+          <AppSidebarAction handler={newNoteHandler} icon={Plus} label="Create new note" />
+          <AppSidebarAction
+            handler={syncNotesHandler}
+            icon={syncing ? Loader : UploadCloud}
+            label="Sync notes"
+          />
+          <AppSidebarAction handler={settingsHandler} icon={Settings} label="Settings" />
+        </section>
+        <section className="app-sidebar-main">
+          <div
+            className={`app-sidebar-link ${activeFolder === Folder.ALL ? 'active' : ''}`}
+            onClick={() => {
+              _swapFolder(Folder.ALL)
+            }}
+          >
+            <Book size={15} className="app-sidebar-icon" color={iconColor} />
+            All Notes
+          </div>
+          <div
+            className={`app-sidebar-link ${
+              activeFolder === Folder.FAVORITES || mainSectionDragState.FAVORITES ? 'active' : ''
+            }`}
+            onClick={() => {
+              _swapFolder(Folder.FAVORITES)
+            }}
+            onDrop={favoriteNoteHandler}
+            onDragOver={allowDrop}
+            data-testid="favorites"
+            onDragEnter={e => {
+              setMainSectionDragState({ ...mainSectionDragState, FAVORITES: true })
+            }}
+            onDragLeave={() => {
+              setMainSectionDragState({ ...mainSectionDragState, FAVORITES: false })
+            }}
+          >
+            <Star size={15} className="app-sidebar-icon" color={iconColor} />
+            Favorites
+          </div>
+          <div
+            className={`app-sidebar-link ${
+              activeFolder === Folder.TRASH || mainSectionDragState.TRASH ? 'active' : ''
+            }`}
+            onClick={() => {
+              _swapFolder(Folder.TRASH)
+            }}
+            onDrop={trashNoteHandler}
+            onDragOver={allowDrop}
+            data-testid="trash"
+            onDragEnter={e => {
+              setMainSectionDragState({ ...mainSectionDragState, TRASH: true })
+            }}
+            onDragLeave={() => {
+              setMainSectionDragState({ ...mainSectionDragState, TRASH: false })
+            }}
+          >
+            <Trash2 size={15} className="app-sidebar-icon" color={iconColor} />
+            Trash
+          </div>
 
-        <div className="category-title">
-          <h2>Categories</h2>
-        </div>
-        <div className="category-list" aria-label="Category list">
-          {categories.map(category => {
-            return (
-              <div
-                key={category.id}
-                className={`category-list-each ${
-                  category.id === activeCategoryId || category.draggedOver ? 'active' : ''
-                }`}
-                onClick={() => {
-                  const notesForNewCategory = notes.filter(
-                    note => !note.trash && note.category === category.id
-                  )
-                  const newNoteId = notesForNewCategory.length > 0 ? notesForNewCategory[0].id : ''
-                  if (category.id !== activeCategoryId) {
-                    _swapCategory(category.id)
-                    _swapNote(newNoteId)
+          <div className="category-title">
+            <h2>Categories</h2>
+          </div>
+          <div className="category-list" aria-label="Category list">
+            {categories.map(category => {
+              return (
+                <div
+                  key={category.id}
+                  className={`category-list-each ${
+                    category.id === activeCategoryId || category.draggedOver ? 'active' : ''
+                  }`}
+                  onClick={() => {
+                    const notesForNewCategory = notes.filter(
+                      note => !note.trash && note.category === category.id
+                    )
+                    const newNoteId =
+                      notesForNewCategory.length > 0 ? notesForNewCategory[0].id : ''
+                    if (category.id !== activeCategoryId) {
+                      _swapCategory(category.id)
+                      _swapNote(newNoteId)
+                    }
+                  }}
+                  onDoubleClick={() => {
+                    setEditingCategoryId(category.id)
+                    setTempCategoryName(category.name)
+                  }}
+                  onBlur={() => {
+                    setEditingCategoryId('')
+                  }}
+                  onDrop={event => {
+                    event.preventDefault()
+
+                    _addCategoryToNote(category.id, event.dataTransfer.getData('text'))
+                    _categoryDragLeave(category)
+                  }}
+                  onDragOver={allowDrop}
+                  onDragEnter={() => {
+                    _categoryDragEnter(category)
+                  }}
+                  onDragLeave={() => {
+                    _categoryDragLeave(category)
+                  }}
+                >
+                  <form
+                    className="category-list-name"
+                    onSubmit={event => {
+                      event.preventDefault()
+                      setEditingCategoryId('')
+                      onSubmitUpdateCategory(event)
+                    }}
+                  >
+                    <FolderIcon size={15} className="app-sidebar-icon" color={iconColor} />
+                    {editingCategoryId === category.id ? (
+                      <input
+                        type="text"
+                        autoFocus
+                        maxLength={20}
+                        className="category-edit"
+                        value={tempCategoryName}
+                        onChange={event => {
+                          setTempCategoryName(event.target.value)
+                        }}
+                        onBlur={event => {
+                          resetTempCategory()
+                        }}
+                      />
+                    ) : (
+                      category.name
+                    )}
+                  </form>
+                  <div
+                    className="category-options"
+                    onClick={() => {
+                      const notesNotTrash = notes.filter(note => !note.trash)
+                      const newNoteId = notesNotTrash.length > 0 ? notesNotTrash[0].id : ''
+
+                      _deleteCategory(category.id)
+                      _pruneCategoryFromNotes(category.id)
+                      _swapFolder(Folder.ALL)
+                      _swapNote(newNoteId)
+                    }}
+                  >
+                    <X size={12} aria-label="Remove category" />
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+          {!addingTempCategory && (
+            <button
+              className="category-button"
+              onClick={newTempCategoryHandler}
+              aria-label="Add category"
+            >
+              <Plus size={15} color={iconColor} />
+              Add Category
+            </button>
+          )}
+          {addingTempCategory && (
+            <form className="category-form" onSubmit={onSubmitNewCategory}>
+              <input
+                aria-label="Category name"
+                type="text"
+                autoFocus
+                maxLength={20}
+                placeholder="New category..."
+                onChange={event => {
+                  setTempCategoryName(event.target.value)
+                }}
+                onBlur={event => {
+                  if (!tempCategoryName || tempCategoryName.trim() === '') {
+                    resetTempCategory()
+                  } else {
+                    onSubmitNewCategory(event)
                   }
                 }}
-                onDoubleClick={() => {
-                  setEditingCategoryId(category.id)
-                  setTempCategoryName(category.name)
-                }}
-                onBlur={() => {
-                  setEditingCategoryId('')
-                }}
-                onDrop={event => {
-                  event.preventDefault()
-
-                  _addCategoryToNote(category.id, event.dataTransfer.getData('text'))
-                  _categoryDragLeave(category)
-                }}
-                onDragOver={allowDrop}
-                onDragEnter={() => {
-                  _categoryDragEnter(category)
-                }}
-                onDragLeave={() => {
-                  _categoryDragLeave(category)
-                }}
-              >
-                <form
-                  className="category-list-name"
-                  onSubmit={event => {
-                    event.preventDefault()
-                    setEditingCategoryId('')
-                    onSubmitUpdateCategory(event)
-                  }}
-                >
-                  <FolderIcon size={15} className="app-sidebar-icon" color={iconColor} />
-                  {editingCategoryId === category.id ? (
-                    <input
-                      type="text"
-                      autoFocus
-                      maxLength={20}
-                      className="category-edit"
-                      value={tempCategoryName}
-                      onChange={event => {
-                        setTempCategoryName(event.target.value)
-                      }}
-                      onBlur={event => {
-                        resetTempCategory()
-                      }}
-                    />
-                  ) : (
-                    category.name
-                  )}
-                </form>
-                <div
-                  className="category-options"
-                  onClick={() => {
-                    const notesNotTrash = notes.filter(note => !note.trash)
-                    const newNoteId = notesNotTrash.length > 0 ? notesNotTrash[0].id : ''
-
-                    _deleteCategory(category.id)
-                    _pruneCategoryFromNotes(category.id)
-                    _swapFolder(Folder.ALL)
-                    _swapNote(newNoteId)
-                  }}
-                >
-                  <X size={12} aria-label="Remove category" />
-                </div>
-              </div>
-            )
-          })}
-        </div>
-        {!addingTempCategory && (
-          <button
-            className="category-button"
-            onClick={newTempCategoryHandler}
-            aria-label="Add category"
-          >
-            <Plus size={15} color={iconColor} />
-            Add Category
-          </button>
-        )}
-        {addingTempCategory && (
-          <form className="category-form" onSubmit={onSubmitNewCategory}>
-            <input
-              aria-label="Category name"
-              type="text"
-              autoFocus
-              maxLength={20}
-              placeholder="New category..."
-              onChange={event => {
-                setTempCategoryName(event.target.value)
-              }}
-              onBlur={event => {
-                if (!tempCategoryName || tempCategoryName.trim() === '') {
-                  resetTempCategory()
-                } else {
-                  onSubmitNewCategory(event)
-                }
-              }}
-            />
-          </form>
-        )}
-      </section>
+              />
+            </form>
+          )}
+        </section>
+      </aside>
       {lastSynced && (
         <section className="app-sidebar-synced">
           <div className="last-synced">
@@ -352,7 +356,7 @@ const AppSidebar: React.FC = () => {
           </div>
         </section>
       )}
-    </aside>
+    </>
   )
 }
 

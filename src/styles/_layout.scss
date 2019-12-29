@@ -12,25 +12,15 @@
 }
 
 .app {
+  position: relative;
   display: flex;
   height: 100vh;
 }
 
 .app-sidebar {
-  flex: 0;
+  flex: 0 0 $app-sidebar-width;
+  transform: translate3D(0, 0, 0);
   overflow-y: hidden;
-  transform: translate3D(-300px, 0, 0);
-
-  @include small-breakpoint {
-    flex: 0 0 $app-sidebar-width;
-    transform: translate3D(0, 0, 0);
-  }
-
-  &.open {
-    flex: 0 0 $note-sidebar-width;
-    transition: all 0.3s ease;
-    transform: translate3D(0, 0, 0);
-  }
 
   &::-webkit-scrollbar-thumb {
     background: darken($app-sidebar-color, 10%);
@@ -43,20 +33,8 @@
 }
 
 .note-sidebar {
-  flex: 1;
+  flex: 0 0 $note-sidebar-width;
   width: 100%;
-
-  &.note-open {
-    flex: 0;
-  }
-
-  @include small-breakpoint {
-    flex: 0 0 $note-sidebar-width;
-
-    &.note-open {
-      flex: 0 0 $note-sidebar-width;
-    }
-  }
 
   &::-webkit-scrollbar-thumb {
     background: darken($note-sidebar-color, 10%);
@@ -65,42 +43,21 @@
 }
 
 .note-editor {
-  flex: 0;
+  flex: 1;
   width: 0;
-
-  &.note-open {
-    flex: 1;
-    width: 100%;
-
-    footer {
-      height: $note-header-height;
-    }
-  }
-
-  @include small-breakpoint {
-    flex: 1;
-  }
 
   .empty-editor,
   .editor,
   .previewer {
-    height: calc(100vh - #{$note-header-height});
-
-    @include small-breakpoint {
-      height: calc(100vh);
-    }
+    height: calc(100vh);
   }
 }
 
 .empty-editor {
-  @include small-breakpoint {
-    display: flex !important;
-  }
+  display: flex !important;
 }
 
 .editor,
 .previewer {
-  @include small-breakpoint {
-    display: block !important;
-  }
+  display: block !important;
 }
