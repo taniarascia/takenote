@@ -1,12 +1,10 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
-import { useAuth0 } from 'auth'
 import screenshot from 'assets/screenshot.png'
 import icon from 'assets/logo-square-color.svg'
 
 const LandingPage: React.FC = () => {
-  const { isAuthenticated, loginWithRedirect } = useAuth0()
-
   return (
     <div className="landing-page">
       <div className="app-navigation">
@@ -20,7 +18,9 @@ const LandingPage: React.FC = () => {
               <a href="https://github.com/taniarascia/takenote">GitHub</a>
             </div>
             <div>
-              {!isAuthenticated && <button onClick={() => loginWithRedirect({})}>Sign in</button>}
+              <Link to="/app" className="button">
+                Sign In
+              </Link>
             </div>
           </div>
         </div>
@@ -33,7 +33,9 @@ const LandingPage: React.FC = () => {
             features you need, and nothing you don't.
           </p>
           <p className="cta">
-            {!isAuthenticated && <button onClick={() => loginWithRedirect({})}>Sign up</button>}
+            <Link to="/app" className="button">
+              Sign up
+            </Link>
             <a
               href="https://github.com/taniarascia/takenote"
               target="_blank"

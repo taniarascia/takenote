@@ -3,7 +3,6 @@
   height: 80px;
   display: flex;
   align-items: center;
-
   border-bottom: 1px solid $note-sidebar-color;
 
   .container {
@@ -23,7 +22,11 @@
 
     span {
       font-weight: 700;
-      font-size: 1.2rem;
+      font-size: 1.1rem;
+
+      @include small-breakpoint {
+        font-size: 1.2rem;
+      }
     }
   }
 
@@ -44,8 +47,9 @@
       }
     }
 
-    button {
+    a.button {
       font-size: 1.1rem;
+      color: white;
       margin: 0;
     }
   }
@@ -59,16 +63,24 @@
     margin-top: 0;
     text-align: center;
     font-weight: 600;
-    font-size: 2.6rem;
+    font-size: 2rem;
+
+    @include small-breakpoint {
+      font-size: 2.6rem;
+    }
   }
 
   .subtitle {
     color: #888;
     line-height: 1.6;
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     max-width: 600px;
     margin: 1rem auto 1.5rem;
     text-align: center;
+
+    @include small-breakpoint {
+      font-size: 1.3rem;
+    }
   }
 
   .cta {
@@ -77,9 +89,14 @@
 
     button,
     a.button {
-      font-size: 1.2rem;
-      padding: 1rem 1.5rem;
+      font-size: 1.1rem;
+      padding: 0.7rem 1rem;
       margin: 0 0.25rem;
+
+      @include small-breakpoint {
+        font-size: 1.2rem;
+        padding: 1rem 1.5rem;
+      }
     }
   }
 }
@@ -104,7 +121,11 @@
 
   div {
     padding: 0 1rem;
-    flex: 1 1 50%;
+    flex: 1 1 100%;
+
+    @include small-breakpoint {
+      flex: 1 1 50%;
+    }
 
     h2 {
       font-weight: 600;

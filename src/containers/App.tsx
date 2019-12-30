@@ -8,7 +8,7 @@ import LandingPage from 'containers/LandingPage'
 import TakeNoteApp from 'containers/TakeNoteApp'
 
 const App: React.FC = () => {
-  const { loading, isAuthenticated } = useAuth0()
+  const { loading } = useAuth0()
 
   if (loading) {
     return (
@@ -31,11 +31,8 @@ const App: React.FC = () => {
       </Helmet>
 
       <Switch>
-        {!isAuthenticated ? (
-          <Route exact path="/" component={LandingPage} />
-        ) : (
-          <PrivateRoute path="/" component={TakeNoteApp} />
-        )}
+        <Route exact path="/" component={LandingPage} />
+        <PrivateRoute path="/app" component={TakeNoteApp} />
       </Switch>
     </HelmetProvider>
   )
