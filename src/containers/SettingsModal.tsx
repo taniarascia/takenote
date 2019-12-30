@@ -145,7 +145,7 @@ const SettingsModal: React.FC = () => {
             </div>
           </div>
           <div className="settings-shortcut">
-            <div>Sync note</div>
+            <div>Sync notes</div>
             <div>
               <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>L</kbd>
             </div>

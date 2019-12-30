@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Route, RouteComponentProps, RouteProps, Redirect } from 'react-router-dom'
+import { Route, RouteComponentProps, RouteProps } from 'react-router-dom'
 
 import { useAuth0 } from 'auth'
 
@@ -26,7 +26,7 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ component: Component, path,
   }, [isAuthenticated, loading, loginWithRedirect, path])
 
   const render = (props: RouteComponentProps<{}>) =>
-    isAuthenticated === true ? <Component {...props} /> : <Redirect to="/" />
+    isAuthenticated === true ? <Component {...props} /> : null
 
   return <Route path={path} render={render} {...rest} />
 }

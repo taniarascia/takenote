@@ -43,9 +43,9 @@ In order to work on TakeNote locally, you must create your own local Auth0 appli
 
 - [Create Auth0 account](https://auth0.com/)
 - Create an application with the following settings:
-  - **Domain**: `xxx.auth0.com`
+  - **Domain**: `your-username.auth0.com`
   - **Application Type**: Single Page Application
-  - **Allowed Callback URLs**: `http://localhost:3000`
+  - **Allowed Callback URLs**: `http://localhost:3000`, `http://localhost:3000/app`
   - **Allowed Web Origins**: `http://localhost:3000`
   - **Allowed Logout URLs**: `http://localhost:3000`
   - **Allowed Origins (CORS)**: `http://localhost:3000`
@@ -144,6 +144,7 @@ Thanks goes to these wonderful people:
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 ## Acknowledgements

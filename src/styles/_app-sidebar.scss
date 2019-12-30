@@ -144,6 +144,7 @@
 
         &.active {
           background: darken($app-sidebar-color, 5%);
+          color: white;
 
           .category-list-name {
             svg {
@@ -195,7 +196,7 @@
 
   [type='text'] {
     -webkit-appearance: none;
-    border-radius: 4px;
+    border-radius: 0;
     background: darken($app-sidebar-color, 5%);
     border: none;
     padding: 0.5rem;

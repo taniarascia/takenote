@@ -23,8 +23,8 @@
   overflow-y: hidden;
 
   &::-webkit-scrollbar-thumb {
-    background: darken($app-sidebar-color, 10%);
-    border-radius: 100px;
+    background: lighten($app-sidebar-color, 15%);
+    border-radius: 0;
   }
 
   &:hover {
@@ -38,7 +38,7 @@
 
   &::-webkit-scrollbar-thumb {
     background: darken($note-sidebar-color, 10%);
-    border-radius: 100px;
+    border-radius: 0;
   }
 }
 
