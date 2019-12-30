@@ -49,7 +49,7 @@ const NoteList: React.FC = () => {
   const _pruneNotes = () => dispatch(pruneNotes())
   const _swapNote = (noteId: string) => dispatch(swapNote(noteId))
   const _swapCategory = (categoryId: string) => dispatch(swapCategory(categoryId))
-  const _searchNotes = _.debounce((searchValue: string) => dispatch(searchNotes(searchValue)), 200)
+  const _searchNotes = _.debounce((searchValue: string) => dispatch(searchNotes(searchValue)), 100)
 
   const [noteOptionsId, setNoteOptionsId] = useState('')
   const [noteOptionsPosition, setNoteOptionsPosition] = useState({ x: 0, y: 0 })
@@ -63,12 +63,18 @@ const NoteList: React.FC = () => {
       if (event.target.classList.contains('note-options')) {
         setNoteOptionsPosition({ x: event.pageX, y: event.pageY })
       }
+
       if (event.target.parentElement instanceof Element) {
         if (event.target.parentElement.classList.contains('note-options')) {
           setNoteOptionsPosition({ x: event.pageX, y: event.pageY })
         }
       }
+
+      if (event.target.tagName === 'circle') {
+        setNoteOptionsPosition({ x: event.pageX, y: event.pageY })
+      }
     }
+
     event.stopPropagation()
 
     if (node.current && node.current.contains(event.target as HTMLDivElement)) return
@@ -81,14 +87,14 @@ const NoteList: React.FC = () => {
     event.dataTransfer.setData('text/plain', noteId)
   }
 
-  const getOptionsYPoisition = (): Number => {
+  const getOptionsYPosition = (): Number => {
     // get the max window frame
     const MaxY = window.innerHeight
 
     // determine approximate options height based on root font-size of 15px, padding, and select box.
     const optionsSize = 15 * 11
 
-    // if window position - noteOptions position isn't ibgger than options. flip it.
+    // if window position - noteOptions position isn't bigger than options, flip it.
     return MaxY - noteOptionsPosition.y > optionsSize
       ? noteOptionsPosition.y
       : noteOptionsPosition.y - optionsSize
@@ -130,7 +136,7 @@ const NoteList: React.FC = () => {
           </NoteListButton>
         )}
       </div>
-      <div className="note-list">
+      <div className="note-list" style={{ marginTop: showEmptyTrash ? '103px' : '60px' }}>
         {filteredNotes.map(note => {
           let noteTitle: string | React.ReactElement = getNoteTitle(note.text)
 
@@ -191,10 +197,12 @@ const NoteList: React.FC = () => {
                   className="note-options-context-menu"
                   style={{
                     position: 'absolute',
-                    top: getOptionsYPoisition() + 'px',
+                    top: getOptionsYPosition() + 'px',
                     left: noteOptionsPosition.x + 'px',
                   }}
                   onClick={event => {
+                    console.log('test')
+                    console.log(event)
                     event.stopPropagation()
                   }}
                 >

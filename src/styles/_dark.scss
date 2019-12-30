@@ -12,6 +12,8 @@ $dark-editor: #3f3f3f;
 
     .note-sidebar-header {
       color: $light-font-color;
+      background: darken($dark-sidebar, 4%);
+      border-color: darken($dark-sidebar, 8%);
 
       [type='search'] {
         background: darken($dark-sidebar, 8%);
@@ -37,13 +39,24 @@ $dark-editor: #3f3f3f;
         border-bottom: 1px solid darken($dark-sidebar, 8%);
         color: darken($light-font-color, 10%);
 
+        &.active:hover .note-options {
+          color: white;
+        }
+
         &:hover {
           background: darken($dark-sidebar, 5%);
+          .note-options {
+            color: #888;
+          }
+
+          .active.note-options {
+            color: white;
+          }
         }
 
         &.active {
+          background: $primary;
           color: white;
-          background: darken($primary, 20%);
         }
       }
     }
@@ -52,12 +65,12 @@ $dark-editor: #3f3f3f;
       border: 1px solid darken($dark-sidebar, 8%);
       background: $app-sidebar-color;
       color: $light-font-color;
-      box-shadow: 1px 3px 22px rgba(26, 16, 16, 0.6);
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 5px 5px rgba(0, 0, 0, 0.25);
 
       select {
         background: lighten($dark-sidebar, 8%);
         color: $light-font-color;
-        border: 1px solid $dark-sidebar;
+        border: 1px solid darken($dark-sidebar, 5%);
       }
     }
 
@@ -153,11 +166,11 @@ $dark-editor: #3f3f3f;
 
   ::-webkit-scrollbar {
     width: 8px;
-    background: darken($app-sidebar-color, 10%);
+    background: $app-sidebar-color;
   }
 
   ::-webkit-scrollbar-thumb {
-    background: lighten($app-sidebar-color, 15%);
-    border-radius: 100px;
+    background: lighten($app-sidebar-color, 8%);
+    border-radius: 0;
   }
 }

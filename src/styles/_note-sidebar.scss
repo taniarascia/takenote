@@ -12,6 +12,15 @@
     padding: 0.5rem;
     text-align: center;
     font-weight: 700;
+    position: fixed;
+    top: 0;
+    background: $note-sidebar-color;
+    width: $note-sidebar-width;
+    border-bottom: 1px solid darken($note-sidebar-color, 10%);
+    border-right: 1px solid darken($note-sidebar-color, 10%);
+    input {
+      margin: 0;
+    }
   }
 
   .list-button {
@@ -21,7 +30,7 @@
     color: $font-color;
     background: darken($note-sidebar-color, 8%);
     padding: 0.7rem;
-    margin: 0 0.5rem;
+    margin: 0.5rem 0 0;
     font-size: 0.85rem;
     font-weight: 500;
     border: none !important;
@@ -35,6 +44,8 @@
   }
 
   .note-list {
+    margin-top: 60px;
+
     &-each {
       cursor: pointer;
       padding: 0.5rem;
@@ -78,13 +89,18 @@
         color: white;
         border-bottom: 1px solid $primary;
 
-        .highlighted {
-          background: white;
-          color: $primary;
-        }
-
         &:hover {
           .note-options {
+            color: white;
+          }
+        }
+
+        .highlighted {
+          background: white;
+        }
+
+        .note-options {
+          &.active {
             color: white;
           }
         }
@@ -108,7 +124,7 @@
 
         &-context-menu {
           cursor: default;
-          border-radius: 4px;
+          border-radius: 0;
           position: absolute;
           padding: 0.5rem;
           color: $font-color;
@@ -118,16 +134,16 @@
           background: white;
           border: 1px solid $accent-gray;
           z-index: 3;
-          box-shadow: $box-shadow;
+          box-shadow: 0 10px 15px rgba(0, 0, 0, 0.07), 0 5px 5px rgba(0, 0, 0, 0.2);
 
           .select {
             -webkit-appearance: none;
             font-size: 1rem;
             padding: 0.5rem;
-            width: calc(100% - 1rem);
-            margin-left: auto;
-            margin-right: auto;
-            margin-top: 0.25rem;
+            width: 100%;
+            margin-left: 0;
+            margin-right: 0;
+            margin-top: 0;
             margin-bottom: 0.5rem;
           }
         }
@@ -140,7 +156,7 @@
             display: flex;
             align-items: center;
             padding: 0.5rem;
-            border-radius: 2px;
+            border-radius: 0;
 
             &:hover {
               background: #f0f0f0;

@@ -117,7 +117,7 @@ kbd {
 
 ::-webkit-scrollbar-thumb {
   background: darken($note-sidebar-color, 10%);
-  border-radius: 100px;
+  border-radius: 0;
 }
 
 /*!
@@ -159,17 +159,11 @@ kbd {
   width: 10px;
   height: 10px;
   margin: 4px;
-  border-radius: 100%;
-  -webkit-animation: ball-beat 0.7s -0.15s infinite linear;
-  -moz-animation: ball-beat 0.7s -0.15s infinite linear;
-  -o-animation: ball-beat 0.7s -0.15s infinite linear;
+  border-radius: 0;
   animation: ball-beat 0.7s -0.15s infinite linear;
 }
 
 .la-ball-beat > div:nth-child(2n-1) {
-  -webkit-animation-delay: -0.5s;
-  -moz-animation-delay: -0.5s;
-  -o-animation-delay: -0.5s;
   animation-delay: -0.5s;
 }
 
@@ -206,65 +200,14 @@ kbd {
   margin: 12px;
 }
 
-/*
-  * Animation
-  */
-@-webkit-keyframes ball-beat {
-  50% {
-    opacity: 0.2;
-    -webkit-transform: scale(0.75);
-    transform: scale(0.75);
-  }
-
-  100% {
-    opacity: 1;
-    -webkit-transform: scale(1);
-    transform: scale(1);
-  }
-}
-
-@-moz-keyframes ball-beat {
-  50% {
-    opacity: 0.2;
-    -moz-transform: scale(0.75);
-    transform: scale(0.75);
-  }
-
-  100% {
-    opacity: 1;
-    -moz-transform: scale(1);
-    transform: scale(1);
-  }
-}
-
-@-o-keyframes ball-beat {
-  50% {
-    opacity: 0.2;
-    -o-transform: scale(0.75);
-    transform: scale(0.75);
-  }
-
-  100% {
-    opacity: 1;
-    -o-transform: scale(1);
-    transform: scale(1);
-  }
-}
-
 @keyframes ball-beat {
   50% {
     opacity: 0.2;
-    -webkit-transform: scale(0.75);
-    -moz-transform: scale(0.75);
-    -o-transform: scale(0.75);
     transform: scale(0.75);
   }
 
   100% {
     opacity: 1;
-    -webkit-transform: scale(1);
-    -moz-transform: scale(1);
-    -o-transform: scale(1);
     transform: scale(1);
   }
 }

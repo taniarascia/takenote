@@ -1,5 +1,5 @@
 import React from 'react'
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route, Redirect } from 'react-router-dom'
 import { Helmet, HelmetProvider } from 'react-helmet-async'
 
 import { useAuth0 } from 'auth'
@@ -32,7 +32,8 @@ const App: React.FC = () => {
 
       <Switch>
         <Route exact path="/" component={LandingPage} />
-        <PrivateRoute path="/app" component={TakeNoteApp} />
+        <PrivateRoute exact path="/app" component={TakeNoteApp} />
+        <Redirect to="/" />
       </Switch>
     </HelmetProvider>
   )
