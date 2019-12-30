@@ -69,6 +69,7 @@ export const Auth0Provider = ({
 
     return result
   }
+
   return (
     <Auth0Context.Provider
       value={{
