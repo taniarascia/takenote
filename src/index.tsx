@@ -6,7 +6,7 @@ import createSagaMiddleware from 'redux-saga'
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
 
 import { Auth0Provider } from 'auth'
-import config from 'config/config.json'
+import config from 'config/config-local.json'
 import App from 'containers/App'
 import rootSaga from 'sagas'
 import rootReducer from 'slices'

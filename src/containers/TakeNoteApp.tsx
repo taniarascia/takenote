@@ -1,7 +1,9 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Helmet, HelmetProvider } from 'react-helmet-async'
+import axios from 'axios'
 
+import { useAuth0 } from 'auth'
 import { Folder } from 'constants/enums'
 import { folderMap } from 'constants/index'
 import AppSidebar from 'containers/AppSidebar'
@@ -25,6 +27,7 @@ const TakeNoteApp: React.FC = () => {
   )
   const { categories } = useSelector((state: RootState) => state.categoryState)
   const activeCategory = categories.find(({ id }) => id === activeCategoryId)
+  const { getTokenSilently } = useAuth0()
 
   const _loadNotes = () => {
     dispatch(loadNotes())
@@ -36,9 +39,34 @@ const TakeNoteApp: React.FC = () => {
     dispatch(loadSettings())
   }
 
+  const getRepos = () => {
+    const fn = async () => {
+      const accessToken = await getTokenSilently({
+        scope: 'repo, user',
+        audience: 'https://taniarascia.auth0.com/api/v2/',
+        ignoreCache: true,
+      })
+
+      try {
+        const response = await axios.get('https://api.github.com/user/repos', {
+          headers: {
+            Authorization: 'token ' + accessToken,
+          },
+        })
+
+        console.log(response)
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+    fn()
+  }
+
   useEffect(_loadNotes, [])
   useEffect(_loadCategories, [])
   useEffect(_loadSettings, [])
+  useEffect(getRepos, [])
 
   const _syncState = (notes: NoteItem[], categories: CategoryItem[]) =>
     dispatch(syncState({ notes, categories }))
