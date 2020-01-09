@@ -8,6 +8,7 @@ interface Auth0Context {
   loading: boolean
   handleRedirectCallback(): Promise<RedirectLoginResult>
   getIdTokenClaims(o?: getIdTokenClaimsOptions): Promise<IdToken>
+  getUser(o?: GetUserOptions): Promise<any>
   loginWithRedirect(o: RedirectLoginOptions): Promise<void>
   getTokenSilently(o?: GetTokenSilentlyOptions): Promise<string | undefined>
   logout(o?: LogoutOptions): void
@@ -79,6 +80,7 @@ export const Auth0Provider = ({
         handleRedirectCallback,
         getIdTokenClaims: (o: getIdTokenClaimsOptions | undefined) =>
           auth0Client!.getIdTokenClaims(o),
+        getUser: (o: GetUserOptions | undefined) => auth0Client!.getUser(o),
         loginWithRedirect: (o: RedirectLoginOptions) => auth0Client!.loginWithRedirect(o),
         getTokenSilently: (o: GetTokenSilentlyOptions | undefined) =>
           auth0Client!.getTokenSilently(o),

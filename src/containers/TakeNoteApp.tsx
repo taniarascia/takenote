@@ -27,7 +27,7 @@ const TakeNoteApp: React.FC = () => {
   )
   const { categories } = useSelector((state: RootState) => state.categoryState)
   const activeCategory = categories.find(({ id }) => id === activeCategoryId)
-  const { getTokenSilently } = useAuth0()
+  const { getUser } = useAuth0()
 
   const _loadNotes = () => {
     dispatch(loadNotes())
@@ -41,19 +41,20 @@ const TakeNoteApp: React.FC = () => {
 
   const getRepos = () => {
     const fn = async () => {
-      const accessToken = await getTokenSilently({
-        scope: 'repo, user',
-        audience: 'https://taniarascia.auth0.com/api/v2/',
-        ignoreCache: true,
-      })
-
+      const user = await getUser()
+      // this is my serverless endpoint , should be set in the config
+      const githubToken = await axios.post(
+        'https://gnf8fv6tue.execute-api.us-east-1.amazonaws.com/dev/auth0',
+        {
+          user: user.sub,
+        }
+      )
       try {
         const response = await axios.get('https://api.github.com/user/repos', {
           headers: {
-            Authorization: 'token ' + accessToken,
+            Authorization: 'token ' + githubToken.data.token,
           },
         })
-
         console.log(response)
       } catch (error) {
         console.log(error)
