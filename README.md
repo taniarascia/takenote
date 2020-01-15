@@ -37,29 +37,7 @@ In progress!
 
 ## Setup
 
-### Local authentication
-
-In order to work on TakeNote locally, you must create your own local Auth0 application.
-
-- [Create Auth0 account](https://auth0.com/)
-- Create an application with the following settings:
-  - **Domain**: `your-username.auth0.com`
-  - **Application Type**: Single Page Application
-  - **Allowed Callback URLs**: `http://localhost:3000`, `http://localhost:3000/app`
-  - **Allowed Web Origins**: `http://localhost:3000`
-  - **Allowed Logout URLs**: `http://localhost:3000`
-  - **Allowed Origins (CORS)**: `http://localhost:3000`
-- Change config.json:
-
-```json
-{
-  "domain": "your-username.auth0.com",
-  "clientId": "your-client-id"
-}
-```
-
-- Go to Universal Login - Select "New".
-- Ensure "GitHub" permissions is in the "Connections".
+> **Note**: The authentication will be changing soon. For now, it requires an Auth0 account to develop locally, but Auth0 will be removed shortly.
 
 ### Install
 
