@@ -2,7 +2,6 @@ import React, { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { X } from 'react-feather'
 
-import { useAuth0 } from 'auth'
 import {
   toggleSettingsModal,
   updateCodeMirrorOption,
@@ -13,7 +12,6 @@ import { ReactMouseEvent, RootState } from 'types'
 import Switch from 'components/Switch'
 
 const SettingsModal: React.FC = () => {
-  const { user, logout } = useAuth0()
   const { codeMirrorOptions, isOpen, previewMarkdown, darkTheme } = useSelector(
     (state: RootState) => state.settingsState
   )
@@ -70,7 +68,7 @@ const SettingsModal: React.FC = () => {
   return isOpen ? (
     <div className="dimmer">
       <div ref={node} className="settings-modal">
-        <div className="settings-header">
+        <div className="settings-header mb-1">
           <h2>Settings</h2>
           <div
             className="action-button"
@@ -84,24 +82,7 @@ const SettingsModal: React.FC = () => {
           </div>
         </div>
 
-        <div className="settings-options">
-          <section className="profile flex">
-            <div>
-              <img src={user.picture} alt="Profile" className="profile-picture" />
-            </div>
-            <div className="profile-details">
-              <h3>{user.name}</h3>
-              <div className="subtitle">{user.email}</div>
-              <button
-                onClick={() => {
-                  logout()
-                }}
-              >
-                Log out
-              </button>
-            </div>
-          </section>
-        </div>
+        <div className="settings-label mb-1">Options</div>
 
         <div className="settings-options">
           <div>Active line highlight</div>

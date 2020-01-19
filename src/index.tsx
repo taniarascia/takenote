@@ -5,8 +5,6 @@ import { Router } from 'react-router-dom'
 import createSagaMiddleware from 'redux-saga'
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
 
-import { Auth0Provider } from 'auth'
-import config from 'config/config.json'
 import App from 'containers/App'
 import rootSaga from 'sagas'
 import rootReducer from 'slices'
@@ -23,23 +21,12 @@ const store = configureStore({
 
 sagaMiddleware.run(rootSaga)
 
-const onRedirectCallback = (appState: any) => {
-  history.push(appState && appState.targetUrl ? appState.targetUrl : window.location.pathname)
-}
-
 render(
-  <Auth0Provider
-    domain={config.domain}
-    client_id={config.clientId}
-    redirect_uri={window.location.href}
-    onRedirectCallback={onRedirectCallback}
-  >
-    <Provider store={store}>
-      <Router history={history}>
-        <App />
-      </Router>
-    </Provider>
-  </Auth0Provider>,
+  <Provider store={store}>
+    <Router history={history}>
+      <App />
+    </Router>
+  </Provider>,
   document.getElementById('root')
 )
 
