@@ -19,7 +19,7 @@ const LandingPage: React.FC = () => {
             </div>
             <div>
               <Link to="/app" className="button">
-                Sign In
+                Use App
               </Link>
             </div>
           </div>
@@ -29,12 +29,12 @@ const LandingPage: React.FC = () => {
         <div className="container">
           <h1>The Note-Taking App for Developers</h1>
           <p className="subtitle">
-            TakeNote is a free, open-source, plain-text note-taking app for the web. All the
-            features you need, and nothing you don't.
+            TakeNote is a free, open-source, Markdown note-taking app for the web. All the features
+            you need, and nothing you don't.
           </p>
           <p className="cta">
             <Link to="/app" className="button">
-              Sign up
+              Check it out
             </Link>
             <a
               href="https://github.com/taniarascia/takenote"
@@ -53,7 +53,7 @@ const LandingPage: React.FC = () => {
             <div>
               <h2>Fast, clean, and simple</h2>
               <p>
-                What you see is what you paste. No WYSIWIG, no formatting applied from the web, and
+                What you paste is what you see. No WYSIWIG, no formatting applied from the web, and
                 no features you don't need or want.
               </p>
             </div>

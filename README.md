@@ -37,8 +37,6 @@ In progress!
 
 ## Setup
 
-> **Note**: The authentication will be changing soon. For now, it requires an Auth0 account to develop locally, but Auth0 will be removed shortly.
-
 ### Install
 
 ```bash
