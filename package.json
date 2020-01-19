@@ -115,7 +115,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^1.1.0",
     "@types/codemirror": "0.0.78",
-    "@types/jest": "2s4.0.18",
+    "@types/jest": "^24.9.0",
     "@types/lodash": "^4.14.141",
     "@types/node": "12.7.8",
     "@types/react": "16.9.3",
@@ -129,7 +129,7 @@
     "moment": "^2.24.0",
     "mousetrap": "^1.6.3",
     "mousetrap-global-bind": "^1.1.0",
-    "node-sass": "^4.12.0",
+    "node-sass": "^4.13.1",
     "patch-package": "^6.2.0",
     "react": "^16.9.0",
     "react-codemirror2": "^6.0.0",
