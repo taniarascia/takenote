@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./logo/logo-color-sm.png">
+  <img src="./logo.png">
 </p>
 
 <p align="center">
@@ -45,10 +45,20 @@ cd takenote
 npm i
 ```
 
-### Run
+### Development
+
+Node/Express server on port `5000` and hot webpack server on port `3000`.
 
 ```bash
-npm start
+npm run dev
+```
+
+### Production
+
+Express serves React on port `5000`.
+
+```bash
+npm run build && npm run start
 ```
 
 ### Run in Docker
