@@ -1,8 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { Folder } from '~/constants/enums'
-import { sortByLastUpdated, sortByFavourites } from '~/helpers'
-import { NoteItem, NoteState } from '~/types'
+import { Folder } from '@/constants/enums'
+import { sortByLastUpdated, sortByFavourites } from '@/helpers'
+import { NoteItem, NoteState } from '@/types'
 
 const getNewActiveNoteId = (
   notes: NoteItem[],

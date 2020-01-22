@@ -1,8 +1,8 @@
 import moment from 'moment'
 import uuid from 'uuid/v4'
 
-import { Folder } from '~/constants/enums'
-import { NoteItem } from '~/types'
+import { Folder } from '@/constants/enums'
+import { NoteItem } from '@/types'
 
 export const getNoteTitle = (text: string): string => {
   const noteText = text.trim().match(/[^#]{1,50}/)

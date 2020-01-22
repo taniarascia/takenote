@@ -6,8 +6,8 @@ import { MemoryRouter } from 'react-router-dom'
 import createSagaMiddleware from 'redux-saga'
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
 
-import rootSaga from '~/sagas'
-import rootReducer from '~/slices'
+import rootSaga from '@/sagas'
+import rootReducer from '@/slices'
 
 interface RenderWithRouterOptions {
   route: string

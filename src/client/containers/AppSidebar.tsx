@@ -15,18 +15,18 @@ import {
 import { useDispatch, useSelector } from 'react-redux'
 import moment from 'moment'
 
-import AppSidebarAction from '~/components/AppSidebarAction'
-import { Folder } from '~/constants/enums'
-import { iconColor } from '~/constants/index'
-import { useTempState } from '~/contexts/TempStateContext'
-import { newNote } from '~/helpers'
+import AppSidebarAction from '@/components/AppSidebarAction'
+import { Folder } from '@/constants/enums'
+import { iconColor } from '@/constants/index'
+import { useTempState } from '@/contexts/TempStateContext'
+import { newNote } from '@/helpers'
 import {
   addCategory,
   categoryDragEnter,
   categoryDragLeave,
   updateCategory,
   deleteCategory,
-} from '~/slices/category'
+} from '@/slices/category'
 import {
   addCategoryToNote,
   addNote,
@@ -36,10 +36,10 @@ import {
   swapNote,
   toggleFavoriteNote,
   toggleTrashedNote,
-} from '~/slices/note'
-import { toggleSettingsModal, togglePreviewMarkdown } from '~/slices/settings'
-import { syncState } from '~/slices/sync'
-import { CategoryItem, NoteItem, ReactDragEvent, ReactSubmitEvent, RootState } from '~/types'
+} from '@/slices/note'
+import { toggleSettingsModal, togglePreviewMarkdown } from '@/slices/settings'
+import { syncState } from '@/slices/sync'
+import { CategoryItem, NoteItem, ReactDragEvent, ReactSubmitEvent, RootState } from '@/types'
 
 const AppSidebar: React.FC = () => {
   const { categories } = useSelector((state: RootState) => state.categoryState)

@@ -3,11 +3,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { MoreHorizontal, Star } from 'react-feather'
 import _ from 'lodash'
 
-import { Folder } from '~/constants/enums'
-import NoteListButton from '~/components/NoteListButton'
-import NoteOptions from '~/containers/NoteOptions'
-import { getNoteTitle, sortByLastUpdated, sortByFavourites } from '~/helpers'
-import { useKey } from '~/helpers/hooks'
+import { Folder } from '@/constants/enums'
+import NoteListButton from '@/components/NoteListButton'
+import NoteOptions from '@/containers/NoteOptions'
+import { getNoteTitle, sortByLastUpdated, sortByFavourites } from '@/helpers'
+import { useKey } from '@/helpers/hooks'
 import {
   addCategoryToNote,
   emptyTrash,
@@ -15,8 +15,8 @@ import {
   swapCategory,
   swapNote,
   searchNotes,
-} from '~/slices/note'
-import { NoteItem, ReactDragEvent, ReactMouseEvent, RootState } from '~/types'
+} from '@/slices/note'
+import { NoteItem, ReactDragEvent, ReactMouseEvent, RootState } from '@/types'
 
 const NoteList: React.FC = () => {
   const searchRef = React.useRef() as React.MutableRefObject<HTMLInputElement>
@@ -201,8 +201,6 @@ const NoteList: React.FC = () => {
                     left: noteOptionsPosition.x + 'px',
                   }}
                   onClick={event => {
-                    console.log('test')
-                    console.log(event)
                     event.stopPropagation()
                   }}
                 >

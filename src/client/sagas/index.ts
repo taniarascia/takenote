@@ -2,10 +2,10 @@
 import { all, put, takeLatest, select } from 'redux-saga/effects'
 import moment from 'moment'
 
-import { requestCategories, requestNotes, saveState, saveSettings, requestSettings } from '~/api'
-import { loadCategories, loadCategoriesError, loadCategoriesSuccess } from '~/slices/category'
-import { loadNotes, loadNotesError, loadNotesSuccess } from '~/slices/note'
-import { syncState, syncStateError, syncStateSuccess } from '~/slices/sync'
+import { requestCategories, requestNotes, saveState, saveSettings, requestSettings } from '@/api'
+import { loadCategories, loadCategoriesError, loadCategoriesSuccess } from '@/slices/category'
+import { loadNotes, loadNotesError, loadNotesSuccess } from '@/slices/note'
+import { syncState, syncStateError, syncStateSuccess } from '@/slices/sync'
 import {
   updateCodeMirrorOption,
   loadSettingsSuccess,
@@ -14,9 +14,9 @@ import {
   toggleDarkTheme,
   togglePreviewMarkdown,
   toggleSettingsModal,
-} from '~/slices/settings'
-import { SyncStateAction } from '~/types'
-import { getSettings } from '~/selectors'
+} from '@/slices/settings'
+import { SyncStateAction } from '@/types'
+import { getSettings } from '@/selectors'
 
 function* fetchNotes() {
   try {

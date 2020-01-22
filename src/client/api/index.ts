@@ -1,4 +1,4 @@
-import { SyncStatePayload, SettingsState } from '~/types'
+import { SyncStatePayload, SettingsState } from '@/types'
 
 type PromiseCallbackFun = (value?: any) => void
 type GetLocalStorage = (

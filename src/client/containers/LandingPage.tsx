@@ -1,8 +1,8 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
-import screenshot from '~/assets/screenshot.png'
-import icon from '~/assets/logo-square-color.svg'
+import screenshot from '@/assets/screenshot.png'
+import icon from '@/assets/logo-square-color.svg'
 
 const LandingPage: React.FC = () => {
   return (
@@ -29,8 +29,8 @@ const LandingPage: React.FC = () => {
         <div className="container">
           <h1>The Note-Taking App for Developers</h1>
           <p className="subtitle">
-            TakeNote is a free, open-source, Markdown note-taking app for the web. All the features
-            you need, and nothing you don't.
+            {`TakeNote is a free, open-source, Markdown note-taking app for the web. All the features
+            you need, and nothing you don't.`}
           </p>
           <p className="cta">
             <a
@@ -56,8 +56,8 @@ const LandingPage: React.FC = () => {
             <div>
               <h2>Fast, clean, and simple</h2>
               <p>
-                What you paste is what you see. No WYSIWIG, no formatting applied from the web, and
-                no features you don't need or want.
+                {`What you paste is what you see. No WYSIWIG, no formatting applied from the web, and
+                no features you don't need or want.`}
               </p>
             </div>
             <div>

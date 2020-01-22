@@ -1,7 +1,8 @@
+const path = require('path')
+
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const path = require('path')
 
 module.exports = {
   entry: ['./src/client/index.tsx'],
@@ -28,9 +29,9 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: ['*', '.js', '.ts', '.tsx'],
+    extensions: ['*', '.js', '.jsx', '.ts', '.tsx'],
     alias: {
-      '~': path.resolve(__dirname, '..', 'src', 'client'),
+      '@': path.resolve(__dirname, '../src/client'),
     },
   },
   plugins: [

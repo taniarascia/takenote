@@ -4,9 +4,10 @@ module.exports = {
     '^.+\\.tsx?$': 'ts-jest',
   },
   setupFilesAfterEnv: ['@testing-library/jest-dom/extend-expect'],
-  testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$',
-  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
+
+  // Allow `@/` to map to `src/client/` in Jest tests
   moduleNameMapper: {
-    '~(.*)$': '<rootDir>/src/client/$1',
+    '@/(.*)$': '<rootDir>/src/client/$1',
   },
 }

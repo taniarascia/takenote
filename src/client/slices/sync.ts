@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { SyncState, SyncStatePayload } from '~/types'
+import { SyncState, SyncStatePayload } from '@/types'
 
 const initialState: SyncState = {
   error: '',

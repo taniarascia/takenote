@@ -1,14 +1,14 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { useTempState } from '~/contexts/TempStateContext'
-import { Folder } from '~/constants/enums'
-import { downloadNote, getNoteTitle, newNote } from '~/helpers'
-import { useKey } from '~/helpers/hooks'
-import { addNote, swapNote, toggleTrashedNote, swapFolder } from '~/slices/note'
-import { syncState } from '~/slices/sync'
-import { RootState, CategoryItem, NoteItem } from '~/types'
-import { updateCodeMirrorOption, togglePreviewMarkdown, toggleDarkTheme } from '~/slices/settings'
+import { useTempState } from '@/contexts/TempStateContext'
+import { Folder } from '@/constants/enums'
+import { downloadNote, getNoteTitle, newNote } from '@/helpers'
+import { useKey } from '@/helpers/hooks'
+import { addNote, swapNote, toggleTrashedNote, swapFolder } from '@/slices/note'
+import { syncState } from '@/slices/sync'
+import { RootState, CategoryItem, NoteItem } from '@/types'
+import { updateCodeMirrorOption, togglePreviewMarkdown, toggleDarkTheme } from '@/slices/settings'
 
 const KeyboardShortcuts: React.FC = () => {
   const { categories } = useSelector((state: RootState) => state.categoryState)

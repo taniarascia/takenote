@@ -1,7 +1,7 @@
 import React, { MouseEventHandler } from 'react'
 import { Icon } from 'react-feather'
 
-import { iconColor } from '~/constants/index'
+import { iconColor } from '@/constants'
 
 export interface AppSidebarActionProps {
   disabled?: boolean

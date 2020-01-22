@@ -4,9 +4,9 @@ import { Controlled as CodeMirror } from 'react-codemirror2'
 import ReactMarkdown from 'react-markdown'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { updateNote } from '~/slices/note'
-import { togglePreviewMarkdown } from '~/slices/settings'
-import { RootState, NoteItem } from '~/types'
+import { updateNote } from '@/slices/note'
+import { togglePreviewMarkdown } from '@/slices/settings'
+import { RootState, NoteItem } from '@/types'
 
 import 'codemirror/lib/codemirror.css'
 import 'codemirror/theme/base16-light.css'

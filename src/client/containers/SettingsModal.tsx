@@ -7,9 +7,9 @@ import {
   updateCodeMirrorOption,
   togglePreviewMarkdown,
   toggleDarkTheme,
-} from '~/slices/settings'
-import { ReactMouseEvent, RootState } from '~/types'
-import Switch from '~/components/Switch'
+} from '@/slices/settings'
+import { ReactMouseEvent, RootState } from '@/types'
+import Switch from '@/components/Switch'
 
 const SettingsModal: React.FC = () => {
   const { codeMirrorOptions, isOpen, previewMarkdown, darkTheme } = useSelector(

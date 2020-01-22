@@ -2,8 +2,8 @@ import React from 'react'
 import { ArrowUp, Download, Star, Trash, X } from 'react-feather'
 import { useDispatch } from 'react-redux'
 
-import NoteOptionsButton from '~/components/NoteOptionsButton'
-import { downloadNote, getNoteTitle } from '~/helpers'
+import NoteOptionsButton from '@/components/NoteOptionsButton'
+import { downloadNote, getNoteTitle } from '@/helpers'
 import {
   deleteNote,
   toggleFavoriteNote,
@@ -11,8 +11,8 @@ import {
   addCategoryToNote,
   swapCategory,
   swapNote,
-} from '~/slices/note'
-import { NoteItem } from '~/types'
+} from '@/slices/note'
+import { NoteItem } from '@/types'
 
 export interface NoteOptionsProps {
   clickedNote: NoteItem

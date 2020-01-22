@@ -4,5 +4,5 @@
     "lib": ["esnext"],
     "noUnusedLocals": false
   },
-  "include": ["tests/**/*.{ts|tsx}", "src/**/*.{ts|tsx}", "src/**/*.test.{ts|tsx}"]
+  "include": ["src/**/*.{ts|tsx}", "src/**/*.test.{ts|tsx}"]
 }
