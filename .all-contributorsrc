@@ -294,6 +294,16 @@
         "code",
         "bug"
       ]
+    },
+    {
+      "login": "kcvgan",
+      "name": "kcvgan",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/13578888?v=4",
+      "profile": "https://github.com/kcvgan",
+      "contributions": [
+        "code",
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
