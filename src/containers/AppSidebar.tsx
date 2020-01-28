@@ -19,7 +19,7 @@ import AppSidebarAction from 'components/AppSidebarAction'
 import { Folder } from 'constants/enums'
 import { iconColor } from 'constants/index'
 import { useTempState } from 'contexts/TempStateContext'
-import { newNote } from 'helpers'
+import { newNoteHandlerHelper } from 'helpers'
 import {
   addCategory,
   categoryDragEnter,
@@ -87,24 +87,17 @@ const AppSidebar: React.FC = () => {
     !addingTempCategory && setAddingTempCategory(true)
   }
 
-  const newNoteHandler = () => {
-    if (activeFolder === Folder.TRASH) {
-      _swapFolder(Folder.ALL)
-    }
-
-    if (previewMarkdown) {
-      _togglePreviewMarkdown()
-    }
-
-    if ((activeNote && activeNote.text !== '') || !activeNote) {
-      const note = newNote(
-        activeCategoryId,
-        activeFolder === Folder.TRASH ? Folder.ALL : activeFolder
-      )
-      _addNote(note)
-      _swapNote(note.id)
-    }
-  }
+  const newNoteHandler = () =>
+    newNoteHandlerHelper(
+      activeFolder,
+      previewMarkdown,
+      activeNote,
+      activeCategoryId,
+      _swapFolder,
+      _togglePreviewMarkdown,
+      _addNote,
+      _swapNote
+    )
 
   const resetTempCategory = () => {
     setTempCategoryName('')
