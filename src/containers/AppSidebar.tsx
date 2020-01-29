@@ -160,6 +160,7 @@ const AppSidebar: React.FC = () => {
           onClick={() => {
             _swapFolder(Folder.ALL)
           }}
+          data-cy="all"
         >
           <Book size={15} className="app-sidebar-icon" color={iconColor} />
           All Notes

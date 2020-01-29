@@ -40,7 +40,12 @@ const NoteOptions: React.FC<NoteOptionsProps> = ({ clickedNote }) => {
     <nav className="note-options-nav" data-testid="note-options-nav">
       {clickedNote.trash ? (
         <>
-          <NoteOptionsButton handler={deleteNoteHandler} icon={X} text="Delete permanently" />
+          <NoteOptionsButton
+            data-cy="note-option-delete-permanently-button"
+            handler={deleteNoteHandler}
+            icon={X}
+            text="Delete permanently"
+          />
           <NoteOptionsButton handler={trashNoteHandler} icon={ArrowUp} text="Restore from trash" />
         </>
       ) : (
