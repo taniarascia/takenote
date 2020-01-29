@@ -1,16 +1,20 @@
 import React, { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { X } from 'react-feather'
 
-import { toggleSettingsModal, updateCodeMirrorOption } from 'slices/settings'
-import { togglePreviewMarkdown } from 'slices/previewMarkdown'
-import { toggleDarkTheme } from 'slices/theme'
+import {
+  toggleSettingsModal,
+  updateCodeMirrorOption,
+  togglePreviewMarkdown,
+  toggleDarkTheme,
+} from 'slices/settings'
 import { ReactMouseEvent, RootState } from 'types'
 import Switch from 'components/Switch'
 
 const SettingsModal: React.FC = () => {
-  const { codeMirrorOptions, isOpen } = useSelector((state: RootState) => state.settingsState)
-  const { previewMarkdown } = useSelector((state: RootState) => state.previewMarkdown)
-  const { dark } = useSelector((state: RootState) => state.themeState)
+  const { codeMirrorOptions, isOpen, previewMarkdown, darkTheme } = useSelector(
+    (state: RootState) => state.settingsState
+  )
 
   const dispatch = useDispatch()
 
@@ -38,24 +42,47 @@ const SettingsModal: React.FC = () => {
 
   const toggleDarkThemeHandler = () => {
     _toggleDarkTheme()
-    _updateCodeMirrorOption('theme', dark ? 'base16-light' : 'zenburn')
+    _updateCodeMirrorOption('theme', darkTheme ? 'base16-light' : 'new-moon')
   }
 
   const toggleLineHighlight = () => {
     _updateCodeMirrorOption('styleActiveLine', !codeMirrorOptions.styleActiveLine)
   }
 
+  const handleEscPress = (event: KeyboardEvent) => {
+    event.stopPropagation()
+    if (event.key === 'Escape' && isOpen) {
+      _toggleSettingsModal()
+    }
+  }
+
   useEffect(() => {
     document.addEventListener('mousedown', handleDomClick)
+    document.addEventListener('keydown', handleEscPress)
     return () => {
       document.removeEventListener('mousedown', handleDomClick)
+      document.removeEventListener('keydown', handleEscPress)
     }
   })
 
   return isOpen ? (
     <div className="dimmer">
       <div ref={node} className="settings-modal">
-        <h2>Settings</h2>
+        <div className="settings-header mb-1">
+          <h2>Settings</h2>
+          <div
+            className="action-button"
+            onClick={() => {
+              if (isOpen) {
+                _toggleSettingsModal()
+              }
+            }}
+          >
+            <X size={20} />
+          </div>
+        </div>
+
+        <div className="settings-label mb-1">Options</div>
 
         <div className="settings-options">
           <div>Active line highlight</div>
@@ -63,13 +90,13 @@ const SettingsModal: React.FC = () => {
         </div>
 
         <div className="settings-options">
-          <div>Preview note</div>
+          <div>Markdown preview</div>
           <Switch toggle={togglePreviewMarkdownHandler} checked={previewMarkdown} />
         </div>
 
         <div className="settings-options">
-          <div>Dark Mode</div>
-          <Switch toggle={toggleDarkThemeHandler} checked={dark} />
+          <div>Dark mode</div>
+          <Switch toggle={toggleDarkThemeHandler} checked={darkTheme} />
         </div>
 
         <section className="settings-section">
@@ -77,13 +104,13 @@ const SettingsModal: React.FC = () => {
           <div className="settings-shortcut">
             <div>Create note</div>
             <div>
-              <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>O</kbd>
+              <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>N</kbd>
             </div>
           </div>
           <div className="settings-shortcut">
             <div>Delete note</div>
             <div>
-              <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>W</kbd>
+              <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>U</kbd>
             </div>
           </div>
           <div className="settings-shortcut">
@@ -95,25 +122,31 @@ const SettingsModal: React.FC = () => {
           <div className="settings-shortcut">
             <div>Download note</div>
             <div>
-              <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>D</kbd>
+              <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>P</kbd>
             </div>
           </div>
           <div className="settings-shortcut">
-            <div>Sync note</div>
+            <div>Sync notes</div>
             <div>
               <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>L</kbd>
             </div>
           </div>
           <div className="settings-shortcut">
-            <div>Preview note</div>
+            <div>Markdown preview</div>
             <div>
               <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>J</kbd>
             </div>
           </div>
           <div className="settings-shortcut">
-            <div>Dark mode</div>
+            <div>Toggle theme</div>
             <div>
               <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>K</kbd>
+            </div>
+          </div>
+          <div className="settings-shortcut">
+            <div>Focus search</div>
+            <div>
+              <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>F</kbd>
             </div>
           </div>
         </section>

@@ -1,12 +1,12 @@
-import { createSlice, PayloadAction, Slice } from 'redux-starter-kit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { SettingsState, VimModes } from 'types'
+import { SettingsState } from 'types'
 
 const initialState: SettingsState = {
   isOpen: false,
-  vimState: {
-    mode: VimModes.default,
-  },
+  loading: false,
+  previewMarkdown: false,
+  darkTheme: false,
   codeMirrorOptions: {
     mode: 'gfm',
     theme: 'base16-light',
@@ -19,19 +19,13 @@ const initialState: SettingsState = {
   },
 }
 
-const settingsSlice: Slice<SettingsState> = createSlice({
-  slice: 'settings',
+const settingsSlice = createSlice({
+  name: 'settings',
   initialState,
   reducers: {
     toggleSettingsModal: state => ({
       ...state,
       isOpen: !state.isOpen,
-    }),
-    updateVimStateMode: (state, { payload }: PayloadAction<VimModes>) => ({
-      ...state,
-      vimState: {
-        mode: payload,
-      },
     }),
     updateCodeMirrorOption: (
       state,
@@ -43,14 +37,38 @@ const settingsSlice: Slice<SettingsState> = createSlice({
         [payload.key]: payload.value,
       },
     }),
+    togglePreviewMarkdown: state => ({
+      ...state,
+      previewMarkdown: !state.previewMarkdown,
+    }),
+    toggleDarkTheme: state => ({
+      ...state,
+      darkTheme: !state.darkTheme,
+    }),
+    loadSettings: state => ({
+      ...state,
+      loading: true,
+    }),
+    loadSettingsError: state => ({
+      ...state,
+      loading: false,
+    }),
+    loadSettingsSuccess: (_, { payload }: PayloadAction<SettingsState>) => ({
+      ...payload,
+      isOpen: false,
+      loading: false,
+    }),
   },
 })
 
 export const {
   toggleSettingsModal,
-  toggleVimInsertMode,
-  updateVimStateMode,
   updateCodeMirrorOption,
+  toggleDarkTheme,
+  togglePreviewMarkdown,
+  loadSettings,
+  loadSettingsError,
+  loadSettingsSuccess,
 } = settingsSlice.actions
 
 export default settingsSlice.reducer

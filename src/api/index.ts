@@ -1,31 +1,48 @@
-import { SyncStatePayload } from 'types'
+import { SyncStatePayload, SettingsState } from 'types'
 
 import { welcomeNote } from './welcomeNote'
 
-export const requestCategories = () =>
-  new Promise((resolve, reject) => {
-    const data = localStorage.getItem('categories') || '[]'
+type PromiseCallbackFun = (value?: any) => void
+type GetLocalStorage = (
+  key: string,
+  errorMsg?: string
+) => (resolve: PromiseCallbackFun, reject: PromiseCallbackFun) => void
+const getLocalStorage: GetLocalStorage = (key, errorMsg = 'Something went wrong') => (
+  resolve,
+  reject
+) => {
+  const data = localStorage.getItem(key)
 
-    if (data) {
-      resolve(JSON.parse(data))
-    } else {
-      reject({ message: 'Something went wrong' })
-    }
-  })
+  if (data) {
+    resolve(JSON.parse(data))
+  } else {
+    reject({
+      message: errorMsg,
+    })
+  }
+}
 
-export const requestNotes = () =>
-  new Promise((resolve, reject) => {
-    const data = localStorage.getItem('notes')
+type GetUserNotes = () => (resolve: PromiseCallbackFun, reject: PromiseCallbackFun) => void
+const getUserNotes: GetUserNotes = () => (resolve, reject) => {
+  const notes = localStorage.getItem('notes')
 
-    if (!data) {
-      localStorage.setItem('notes', '[]')
-      resolve(welcomeNote)
-    } else if (JSON.parse(data)) {
-      resolve(JSON.parse(data))
-    } else {
-      reject({ message: 'Something went wrong' })
-    }
-  })
+  if (!notes) {
+    resolve(welcomeNote)
+  } else if (JSON.parse(notes)) {
+    resolve(JSON.parse(notes))
+  } else {
+    reject({
+      message: 'Something went wrong',
+    })
+  }
+}
+
+export const requestNotes = () => new Promise(getUserNotes())
+
+export const requestCategories = () => new Promise(getLocalStorage('categories'))
+
+export const requestSettings = () =>
+  new Promise(getLocalStorage('settings', 'Could not load code mirror options. An error occurred'))
 
 export const saveState = ({ categories, notes }: SyncStatePayload) =>
   new Promise(resolve => {
@@ -37,3 +54,6 @@ export const saveState = ({ categories, notes }: SyncStatePayload) =>
       notes: JSON.parse(localStorage.getItem('notes') || '[]'),
     })
   })
+
+export const saveSettings = (settings: SettingsState) =>
+  Promise.resolve(localStorage.setItem('settings', JSON.stringify(settings)))

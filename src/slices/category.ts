@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction, Slice } from 'redux-starter-kit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { CategoryItem, CategoryState } from 'types'
 
@@ -8,13 +8,25 @@ const initialState: CategoryState = {
   loading: true,
 }
 
-const categorySlice: Slice<CategoryState> = createSlice({
-  slice: 'category',
+const categorySlice = createSlice({
+  name: 'category',
   initialState,
   reducers: {
     addCategory: (state, { payload }: PayloadAction<CategoryItem>) => ({
       ...state,
       categories: [...state.categories, payload],
+    }),
+    categoryDragEnter: (state, { payload }: PayloadAction<CategoryItem>) => ({
+      ...state,
+      categories: state.categories.map(category =>
+        category.id === payload.id ? { ...category, draggedOver: true } : category
+      ),
+    }),
+    categoryDragLeave: (state, { payload }: PayloadAction<CategoryItem>) => ({
+      ...state,
+      categories: state.categories.map(category =>
+        category.id === payload.id ? { ...category, draggedOver: false } : category
+      ),
     }),
     deleteCategory: (state, { payload }: PayloadAction<string>) => ({
       ...state,
@@ -34,7 +46,7 @@ const categorySlice: Slice<CategoryState> = createSlice({
     updateCategory: (state, { payload }: PayloadAction<CategoryItem>) => ({
       ...state,
       categories: state.categories.map(category =>
-        category.id === payload.id ? { id: category.id, name: payload.name } : category
+        category.id === payload.id ? { ...category, name: payload.name } : category
       ),
     }),
   },
@@ -42,6 +54,8 @@ const categorySlice: Slice<CategoryState> = createSlice({
 
 export const {
   addCategory,
+  categoryDragEnter,
+  categoryDragLeave,
   deleteCategory,
   loadCategories,
   loadCategoriesError,

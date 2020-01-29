@@ -2,21 +2,20 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { useTempState } from 'contexts/TempStateContext'
+import { Folder } from 'constants/enums'
 import { downloadNote, getNoteTitle, newNote } from 'helpers'
-import { useKey, useInterval } from 'helpers/hooks'
-import { addNote, swapNote, toggleTrashedNote } from 'slices/note'
+import { useKey } from 'helpers/hooks'
+import { addNote, swapNote, toggleTrashedNote, swapFolder } from 'slices/note'
 import { syncState } from 'slices/sync'
-import { togglePreviewMarkdown } from 'slices/previewMarkdown'
-import { toggleDarkTheme } from 'slices/theme'
 import { RootState, CategoryItem, NoteItem } from 'types'
-import { updateCodeMirrorOption } from 'slices/settings'
+import { updateCodeMirrorOption, togglePreviewMarkdown, toggleDarkTheme } from 'slices/settings'
 
 const KeyboardShortcuts: React.FC = () => {
   const { categories } = useSelector((state: RootState) => state.categoryState)
   const { activeCategoryId, activeFolder, activeNoteId, notes } = useSelector(
     (state: RootState) => state.noteState
   )
-  const { dark } = useSelector((state: RootState) => state.themeState)
+  const { darkTheme, previewMarkdown } = useSelector((state: RootState) => state.settingsState)
 
   const activeNote = notes.find(note => note.id === activeNoteId)
 
@@ -24,6 +23,7 @@ const KeyboardShortcuts: React.FC = () => {
 
   const _addNote = (note: NoteItem) => dispatch(addNote(note))
   const _swapNote = (noteId: string) => dispatch(swapNote(noteId))
+  const _swapFolder = (folder: Folder) => dispatch(swapFolder(folder))
   const _toggleTrashedNote = (noteId: string) => dispatch(toggleTrashedNote(noteId))
   const _syncState = (notes: NoteItem[], categories: CategoryItem[]) =>
     dispatch(syncState({ notes, categories }))
@@ -33,10 +33,21 @@ const KeyboardShortcuts: React.FC = () => {
     dispatch(updateCodeMirrorOption({ key, value }))
 
   const { addingTempCategory, setAddingTempCategory } = useTempState()
-  const newNoteHandler = () => {
-    const note = newNote(activeCategoryId, activeFolder)
 
-    if ((activeNote && activeNote.text !== '' && !activeNote.trash) || !activeNote) {
+  const newNoteHandler = () => {
+    if (activeFolder === Folder.TRASH) {
+      _swapFolder(Folder.ALL)
+    }
+
+    if (previewMarkdown) {
+      _togglePreviewMarkdown()
+    }
+
+    if ((activeNote && activeNote.text !== '') || !activeNote) {
+      const note = newNote(
+        activeCategoryId,
+        activeFolder === Folder.TRASH ? Folder.ALL : activeFolder
+      )
       _addNote(note)
       _swapNote(note.id)
     }
@@ -68,10 +79,10 @@ const KeyboardShortcuts: React.FC = () => {
 
   const toggleDarkThemeHandler = () => {
     _toggleDarkTheme()
-    _updateCodeMirrorOption('theme', dark ? 'base16-light' : 'zenburn')
+    _updateCodeMirrorOption('theme', darkTheme ? 'base16-light' : 'new-moon')
   }
 
-  useKey('ctrl+alt+o', () => {
+  useKey('ctrl+alt+n', () => {
     newNoteHandler()
   })
 
@@ -79,7 +90,7 @@ const KeyboardShortcuts: React.FC = () => {
     newTempCategoryHandler()
   })
 
-  useKey('ctrl+alt+w', () => {
+  useKey('ctrl+alt+u', () => {
     trashNoteHandler()
   })
 
@@ -87,7 +98,7 @@ const KeyboardShortcuts: React.FC = () => {
     syncNotesHandler()
   })
 
-  useKey('ctrl+alt+d', () => {
+  useKey('ctrl+alt+p', () => {
     downloadNoteHandler()
   })
 
@@ -98,10 +109,6 @@ const KeyboardShortcuts: React.FC = () => {
   useKey('alt+ctrl+k', () => {
     toggleDarkThemeHandler()
   })
-
-  useInterval(() => {
-    _syncState(notes, categories)
-  }, 30000)
 
   return null
 }

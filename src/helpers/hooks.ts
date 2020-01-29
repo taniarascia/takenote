@@ -29,7 +29,8 @@ export function useKey(key: string, action: () => void) {
   actionRef.current = action
 
   useEffect(() => {
-    mousetrap.bindGlobal(key, () => {
+    mousetrap.bindGlobal(key, (event: Event) => {
+      event.preventDefault()
       if (actionRef.current) {
         actionRef.current()
       }

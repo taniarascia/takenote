@@ -1,12 +1,22 @@
 // eslint-disable-next-line import/named
-import { all, put, takeLatest } from 'redux-saga/effects'
+import { all, put, takeLatest, select } from 'redux-saga/effects'
 import moment from 'moment'
 
-import { requestCategories, requestNotes, saveState } from 'api'
+import { requestCategories, requestNotes, saveState, saveSettings, requestSettings } from 'api'
 import { loadCategories, loadCategoriesError, loadCategoriesSuccess } from 'slices/category'
 import { loadNotes, loadNotesError, loadNotesSuccess } from 'slices/note'
 import { syncState, syncStateError, syncStateSuccess } from 'slices/sync'
+import {
+  updateCodeMirrorOption,
+  loadSettingsSuccess,
+  loadSettingsError,
+  loadSettings,
+  toggleDarkTheme,
+  togglePreviewMarkdown,
+  toggleSettingsModal,
+} from 'slices/settings'
 import { SyncStateAction } from 'types'
+import { getSettings } from 'selectors'
 
 function* fetchNotes() {
   try {
@@ -35,11 +45,37 @@ function* postState({ payload }: SyncStateAction) {
   }
 }
 
+function* syncSettings() {
+  try {
+    const settings = yield select(getSettings)
+    yield saveSettings(settings)
+  } catch {}
+}
+
+function* fetchSettings() {
+  try {
+    const settings = yield requestSettings()
+    yield put(loadSettingsSuccess(settings))
+  } catch {
+    yield put(loadSettingsError())
+  }
+}
+
 function* rootSaga() {
   yield all([
     takeLatest(loadNotes.type, fetchNotes),
     takeLatest(loadCategories.type, fetchCategories),
+    takeLatest(loadSettings.type, fetchSettings),
     takeLatest(syncState.type, postState),
+    takeLatest(
+      [
+        toggleDarkTheme.type,
+        togglePreviewMarkdown.type,
+        updateCodeMirrorOption.type,
+        toggleSettingsModal.type,
+      ],
+      syncSettings
+    ),
   ])
 }
 

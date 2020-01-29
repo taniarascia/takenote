@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction, Slice } from 'redux-starter-kit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { Folder } from 'constants/enums'
 import { sortByLastUpdated, sortByFavourites } from 'helpers'
@@ -43,8 +43,8 @@ const initialState: NoteState = {
   searchValue: '',
 }
 
-const noteSlice: Slice<NoteState> = createSlice({
-  slice: 'note',
+const noteSlice = createSlice({
+  name: 'note',
   initialState,
   reducers: {
     addCategoryToNote: (
@@ -64,6 +64,10 @@ const noteSlice: Slice<NoteState> = createSlice({
       ...state,
       notes: state.notes.filter(note => note.id !== payload),
       activeNoteId: getNewActiveNoteId(state.notes, payload, state.activeCategoryId),
+    }),
+    emptyTrash: state => ({
+      ...state,
+      notes: state.notes.filter(note => !note.trash),
     }),
     loadNotes: () => initialState,
     loadNotesError: (state, { payload }: PayloadAction<string>) => ({
@@ -135,6 +139,7 @@ export const {
   addCategoryToNote,
   addNote,
   deleteNote,
+  emptyTrash,
   loadNotes,
   loadNotesError,
   loadNotesSuccess,

@@ -4,12 +4,22 @@ import { MoreHorizontal, Star } from 'react-feather'
 import _ from 'lodash'
 
 import { Folder } from 'constants/enums'
+import NoteListButton from 'components/NoteListButton'
 import NoteOptions from 'containers/NoteOptions'
 import { getNoteTitle, sortByLastUpdated, sortByFavourites } from 'helpers'
-import { addCategoryToNote, pruneNotes, swapCategory, swapNote, searchNotes } from 'slices/note'
+import { useKey } from 'helpers/hooks'
+import {
+  addCategoryToNote,
+  emptyTrash,
+  pruneNotes,
+  swapCategory,
+  swapNote,
+  searchNotes,
+} from 'slices/note'
 import { NoteItem, ReactDragEvent, ReactMouseEvent, RootState } from 'types'
 
 const NoteList: React.FC = () => {
+  const searchRef = React.useRef() as React.MutableRefObject<HTMLInputElement>
   const { categories } = useSelector((state: RootState) => state.categoryState)
   const { activeCategoryId, activeFolder, activeNoteId, notes, searchValue } = useSelector(
     (state: RootState) => state.noteState
@@ -35,10 +45,11 @@ const NoteList: React.FC = () => {
 
   const _addCategoryToNote = (categoryId: string, noteId: string) =>
     dispatch(addCategoryToNote({ categoryId, noteId }))
+  const _emptyTrash = () => dispatch(emptyTrash())
   const _pruneNotes = () => dispatch(pruneNotes())
   const _swapNote = (noteId: string) => dispatch(swapNote(noteId))
   const _swapCategory = (categoryId: string) => dispatch(swapCategory(categoryId))
-  const _searchNotes = _.debounce((searchValue: string) => dispatch(searchNotes(searchValue)), 200)
+  const _searchNotes = _.debounce((searchValue: string) => dispatch(searchNotes(searchValue)), 100)
 
   const [noteOptionsId, setNoteOptionsId] = useState('')
   const [noteOptionsPosition, setNoteOptionsPosition] = useState({ x: 0, y: 0 })
@@ -52,12 +63,18 @@ const NoteList: React.FC = () => {
       if (event.target.classList.contains('note-options')) {
         setNoteOptionsPosition({ x: event.pageX, y: event.pageY })
       }
+
       if (event.target.parentElement instanceof Element) {
         if (event.target.parentElement.classList.contains('note-options')) {
           setNoteOptionsPosition({ x: event.pageX, y: event.pageY })
         }
       }
+
+      if (event.target.tagName === 'circle') {
+        setNoteOptionsPosition({ x: event.pageX, y: event.pageY })
+      }
     }
+
     event.stopPropagation()
 
     if (node.current && node.current.contains(event.target as HTMLDivElement)) return
@@ -70,18 +87,26 @@ const NoteList: React.FC = () => {
     event.dataTransfer.setData('text/plain', noteId)
   }
 
-  const getOptionsYPoisition = (): Number => {
+  const getOptionsYPosition = (): Number => {
     // get the max window frame
     const MaxY = window.innerHeight
 
     // determine approximate options height based on root font-size of 15px, padding, and select box.
     const optionsSize = 15 * 11
 
-    // if window position - noteOptions position isn't ibgger than options. flip it.
+    // if window position - noteOptions position isn't bigger than options, flip it.
     return MaxY - noteOptionsPosition.y > optionsSize
       ? noteOptionsPosition.y
       : noteOptionsPosition.y - optionsSize
   }
+
+  const focusSearch = () => {
+    searchRef.current.focus()
+  }
+
+  useKey('alt+ctrl+f', () => {
+    focusSearch()
+  })
 
   useEffect(() => {
     document.addEventListener('mousedown', handleNoteOptionsClick)
@@ -90,10 +115,14 @@ const NoteList: React.FC = () => {
     }
   })
 
+  const showEmptyTrash = activeFolder === Folder.TRASH && filteredNotes.length > 0
+
   return (
     <aside className="note-sidebar">
       <div className="note-sidebar-header">
         <input
+          ref={searchRef}
+          className="note-search"
           type="search"
           onChange={event => {
             event.preventDefault()
@@ -101,8 +130,13 @@ const NoteList: React.FC = () => {
           }}
           placeholder="Search for notes"
         />
+        {showEmptyTrash && (
+          <NoteListButton label="Empty Trash" handler={() => _emptyTrash()}>
+            Empty Trash
+          </NoteListButton>
+        )}
       </div>
-      <div className="note-list">
+      <div className="note-list" style={{ marginTop: showEmptyTrash ? '103px' : '60px' }}>
         {filteredNotes.map(note => {
           let noteTitle: string | React.ReactElement = getNoteTitle(note.text)
 
@@ -163,10 +197,12 @@ const NoteList: React.FC = () => {
                   className="note-options-context-menu"
                   style={{
                     position: 'absolute',
-                    top: getOptionsYPoisition() + 'px',
+                    top: getOptionsYPosition() + 'px',
                     left: noteOptionsPosition.x + 'px',
                   }}
                   onClick={event => {
+                    console.log('test')
+                    console.log(event)
                     event.stopPropagation()
                   }}
                 >
@@ -196,11 +232,6 @@ const NoteList: React.FC = () => {
                               {category.name}
                             </option>
                           ))}
-                        {note.category && (
-                          <option key="none" value="">
-                            Remove category
-                          </option>
-                        )}
                       </select>
                     </>
                   )}

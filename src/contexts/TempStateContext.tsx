@@ -2,16 +2,12 @@ import React, { createContext, FunctionComponent, useContext, useState } from 'r
 
 interface TempStateContextInterface {
   addingTempCategory: boolean
-  errorCategoryMessage: string
   setAddingTempCategory(adding: boolean): void
-  setErrorCategoryMessage(message: string): void
 }
 
 const initialContextValue = {
-  errorCategoryMessage: '',
   addingTempCategory: false,
   setAddingTempCategory: (adding: boolean) => undefined,
-  setErrorCategoryMessage: (message: string) => undefined,
 }
 
 const TempStateContext = createContext<TempStateContextInterface>(initialContextValue)
@@ -25,13 +21,10 @@ const useTempState = () => {
 }
 const TempStateProvider: FunctionComponent = ({ children }) => {
   const [addingTempCategory, setAddingTempCategory] = useState(false)
-  const [errorCategoryMessage, setErrorCategoryMessage] = useState('')
 
   const value: TempStateContextInterface = {
     addingTempCategory,
     setAddingTempCategory,
-    errorCategoryMessage,
-    setErrorCategoryMessage,
   }
   return <TempStateContext.Provider value={value}>{children}</TempStateContext.Provider>
 }

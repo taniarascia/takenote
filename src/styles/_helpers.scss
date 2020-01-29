@@ -14,6 +14,10 @@
   justify-content: space-between;
 }
 
+.flex {
+  display: flex;
+}
+
 .mb-1 {
   margin-bottom: 1rem;
 }
@@ -83,11 +87,22 @@ kbd {
   color: #333;
   display: inline-block;
   font-family: Helvetica, Arial, sans-serif;
-  font-size: 13px;
+  font-size: 12px;
   line-height: 1.4;
   margin: 0 0.1em;
   padding: 0.1em 0.6em;
   text-shadow: 0 1px 0 #fff;
+}
+
+.action-button {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: transparent;
+  padding: 0.7rem;
+  margin: 0 0.5rem;
+  border: none !important;
 }
 
 ::-webkit-scrollbar-corner {
@@ -102,5 +117,97 @@ kbd {
 
 ::-webkit-scrollbar-thumb {
   background: darken($note-sidebar-color, 10%);
-  border-radius: 100px;
+  border-radius: 0;
+}
+
+/*!
+ * Load Awesome v1.1.0 (http://github.danielcardoso.net/load-awesome/)
+ * Copyright 2015 Daniel Cardoso <@DanielCardoso>
+ * Licensed under MIT
+ */
+.la-ball-beat,
+.la-ball-beat > div {
+  position: relative;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.la-ball-beat {
+  display: block;
+  font-size: 0;
+  color: $primary;
+}
+
+.la-ball-beat.la-dark {
+  color: #333;
+}
+
+.la-ball-beat > div {
+  display: inline-block;
+  float: none;
+  background-color: currentColor;
+  border: 0 solid currentColor;
+}
+
+.la-ball-beat {
+  width: 54px;
+  height: 18px;
+}
+
+.la-ball-beat > div {
+  width: 10px;
+  height: 10px;
+  margin: 4px;
+  border-radius: 0;
+  animation: ball-beat 0.7s -0.15s infinite linear;
+}
+
+.la-ball-beat > div:nth-child(2n-1) {
+  animation-delay: -0.5s;
+}
+
+.la-ball-beat.la-sm {
+  width: 26px;
+  height: 8px;
+}
+
+.la-ball-beat.la-sm > div {
+  width: 4px;
+  height: 4px;
+  margin: 2px;
+}
+
+.la-ball-beat.la-2x {
+  width: 108px;
+  height: 36px;
+}
+
+.la-ball-beat.la-2x > div {
+  width: 20px;
+  height: 20px;
+  margin: 8px;
+}
+
+.la-ball-beat.la-3x {
+  width: 162px;
+  height: 54px;
+}
+
+.la-ball-beat.la-3x > div {
+  width: 30px;
+  height: 30px;
+  margin: 12px;
+}
+
+@keyframes ball-beat {
+  50% {
+    opacity: 0.2;
+    transform: scale(0.75);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
 }

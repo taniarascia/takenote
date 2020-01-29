@@ -218,7 +218,94 @@
         "bug",
         "code"
       ]
+    },
+    {
+      "login": "siliconeidolon",
+      "name": "Craig Lam",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/8170456?v=4",
+      "profile": "http://craiglam.com",
+      "contributions": [
+        "code",
+        "bug",
+        "test"
+      ]
+    },
+    {
+      "login": "ashinzekene",
+      "name": "Ashinze Ekene",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/20991583?v=4",
+      "profile": "https://twitter.com/ashinzekene",
+      "contributions": [
+        "bug",
+        "code"
+      ]
+    },
+    {
+      "login": "harrySullivan",
+      "name": "Harry Sullivan",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/38230536?v=4",
+      "profile": "https://adityasriram.ga",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "moudev",
+      "name": "Mauricio Martínez",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/13499566?v=4",
+      "profile": "https://github.com/moudev",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "BlackHole1",
+      "name": "Black-Hole",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/8198408?v=4",
+      "profile": "http://www.bugs.cc/",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "yogan",
+      "name": "Frank Blendinger",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/122564?v=4",
+      "profile": "https://zogan.de/",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "osiux",
+      "name": "Eduardo Reveles",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/204463?v=4",
+      "profile": "https://www.osiux.ws",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "leofrozenyogurt",
+      "name": "Leo Royzengurt",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/2198384?v=4",
+      "profile": "https://github.com/leofrozenyogurt",
+      "contributions": [
+        "code",
+        "bug"
+      ]
+    },
+    {
+      "login": "kcvgan",
+      "name": "kcvgan",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/13578888?v=4",
+      "profile": "https://github.com/kcvgan",
+      "contributions": [
+        "code",
+        "bug"
+      ]
     }
   ],
-  "contributorsPerLine": 7
+  "contributorsPerLine": 7,
+  "skipCi": true
 }

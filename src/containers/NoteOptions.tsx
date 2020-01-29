@@ -4,7 +4,14 @@ import { useDispatch } from 'react-redux'
 
 import NoteOptionsButton from 'components/NoteOptionsButton'
 import { downloadNote, getNoteTitle } from 'helpers'
-import { deleteNote, toggleFavoriteNote, toggleTrashedNote } from 'slices/note'
+import {
+  deleteNote,
+  toggleFavoriteNote,
+  toggleTrashedNote,
+  addCategoryToNote,
+  swapCategory,
+  swapNote,
+} from 'slices/note'
 import { NoteItem } from 'types'
 
 export interface NoteOptionsProps {
@@ -17,6 +24,10 @@ const NoteOptions: React.FC<NoteOptionsProps> = ({ clickedNote }) => {
   const _deleteNote = (noteId: string) => dispatch(deleteNote(noteId))
   const _toggleTrashedNote = (noteId: string) => dispatch(toggleTrashedNote(noteId))
   const _toggleFavoriteNote = (noteId: string) => dispatch(toggleFavoriteNote(noteId))
+  const _addCategoryToNote = (categoryId: string, noteId: string) =>
+    dispatch(addCategoryToNote({ categoryId, noteId }))
+  const _swapNote = (noteId: string) => dispatch(swapNote(noteId))
+  const _swapCategory = (categoryId: string) => dispatch(swapCategory(categoryId))
 
   const deleteNoteHandler = () => {
     _deleteNote(clickedNote.id)
@@ -36,12 +47,18 @@ const NoteOptions: React.FC<NoteOptionsProps> = ({ clickedNote }) => {
     _toggleTrashedNote(clickedNote.id)
   }
 
+  const removeCategoryHandler = () => {
+    _addCategoryToNote('', clickedNote.id)
+    _swapCategory('')
+    _swapNote(clickedNote.id)
+  }
+
   return (
     <nav className="note-options-nav" data-testid="note-options-nav">
       {clickedNote.trash ? (
         <>
           <NoteOptionsButton
-            data-cy="note-option-delete-permanently-button"
+            data-testid="note-option-delete-permanently-button"
             handler={deleteNoteHandler}
             icon={X}
             text="Delete permanently"
@@ -51,13 +68,13 @@ const NoteOptions: React.FC<NoteOptionsProps> = ({ clickedNote }) => {
       ) : (
         <>
           <NoteOptionsButton
-            data-cy="note-option-favorite-button"
+            data-testid="note-option-favorite-button"
             handler={favoriteNoteHandler}
             icon={Star}
             text={clickedNote.favorite ? 'Remove favorite' : 'Mark as favorite'}
           />
           <NoteOptionsButton
-            data-cy="note-option-trash-button"
+            data-testid="note-option-trash-button"
             handler={trashNoteHandler}
             icon={Trash}
             text="Move to trash"
@@ -65,6 +82,14 @@ const NoteOptions: React.FC<NoteOptionsProps> = ({ clickedNote }) => {
         </>
       )}
       <NoteOptionsButton handler={downloadNoteHandler} icon={Download} text="Download" />
+      {clickedNote.category && (
+        <NoteOptionsButton
+          data-testid="note-option-remove-category-button"
+          handler={removeCategoryHandler}
+          icon={X}
+          text="Remove category"
+        />
+      )}
     </nav>
   )
 }

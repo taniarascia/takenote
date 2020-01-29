@@ -1,6 +1,5 @@
 .previewer {
   position: relative;
-  grid-area: editor;
   max-height: calc(100vh);
   overflow-y: auto;
 
@@ -33,6 +32,10 @@
 
   ol li ol {
     margin-bottom: 0;
+  }
+
+  ul li [type='checkbox'] {
+    margin-right: 0.75rem;
   }
 
   h1,
@@ -81,8 +84,15 @@
   blockquote {
     margin: 0 0 1.5rem 0;
     border-left: 4px solid $light-font-color;
-    padding: 0 1.5rem;
-    font-size: 1.5rem;
+    padding: 0.5rem 1.5rem;
+
+    p {
+      font-size: 1.1rem;
+
+      &:last-of-type {
+        margin-bottom: 0;
+      }
+    }
 
     cite {
       display: block;
@@ -95,14 +105,18 @@
   // Code block styling
   pre {
     border: 0;
-    border-radius: 4px;
+    border-radius: 0;
     background: $note-sidebar-color;
     padding: 1rem;
     tab-size: 2;
     color: #404040;
     margin: 0 0 1.5rem 0;
+    white-space: pre-wrap;
+    word-spacing: normal;
+    word-break: normal;
 
     code {
+      padding: 0;
       background: transparent;
       line-height: 1.2;
     }
@@ -110,7 +124,7 @@
 
   code {
     padding: 2px 4px;
-    border-radius: 4px;
+    border-radius: 0;
     background: rgba(0, 0, 0, 0.08);
   }
 
@@ -149,15 +163,28 @@
     text-align: left;
     padding: 0.5rem;
   }
+}
 
-  &::after {
-    position: absolute;
-    content: 'Preview';
-    background-color: $note-sidebar-color;
-    font-weight: 500;
-    top: 1rem;
-    right: 1rem;
-    padding: 0.5rem;
-    border-radius: 8px;
+.preview-button {
+  display: flex;
+  align-items: center;
+  position: absolute;
+  color: $font-color;
+  top: 0;
+  right: 1rem;
+  box-shadow: none;
+  border: none;
+  background-color: $note-sidebar-color;
+  font-weight: 500;
+  padding: 0.5rem;
+  font-size: 0.8rem;
+  z-index: 2;
+  box-shadow: $box-shadow;
+
+  &:hover,
+  &:focus {
+    border: none;
+    color: darken($font-color, 10%);
+    background-color: darken($note-sidebar-color, 5%);
   }
 }

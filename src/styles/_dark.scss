@@ -12,11 +12,25 @@ $dark-editor: #3f3f3f;
 
     .note-sidebar-header {
       color: $light-font-color;
+      background: darken($dark-sidebar, 4%);
+      border-color: darken($dark-sidebar, 8%);
 
       [type='search'] {
-        background: lighten($dark-sidebar, 8%);
+        background: darken($dark-sidebar, 8%);
         color: $light-font-color;
-        border: 1px solid $dark-sidebar;
+        border: 1px solid darken($dark-sidebar, 8%);
+      }
+    }
+
+    .list-button {
+      color: $light-font-color;
+      background: darken($dark-sidebar, 8%);
+      border: 1px solid darken($dark-sidebar, 1%);
+
+      &:hover,
+      &:focus {
+        color: white;
+        background: darken($variable, 10%);
       }
     }
 
@@ -25,13 +39,24 @@ $dark-editor: #3f3f3f;
         border-bottom: 1px solid darken($dark-sidebar, 8%);
         color: darken($light-font-color, 10%);
 
+        &.active:hover .note-options {
+          color: white;
+        }
+
         &:hover {
           background: darken($dark-sidebar, 5%);
+          .note-options {
+            color: #888;
+          }
+
+          .active.note-options {
+            color: white;
+          }
         }
 
         &.active {
+          background: $primary;
           color: white;
-          background: darken($primary, 15%);
         }
       }
     }
@@ -40,11 +65,12 @@ $dark-editor: #3f3f3f;
       border: 1px solid darken($dark-sidebar, 8%);
       background: $app-sidebar-color;
       color: $light-font-color;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 5px 5px rgba(0, 0, 0, 0.25);
 
       select {
         background: lighten($dark-sidebar, 8%);
         color: $light-font-color;
-        border: 1px solid $dark-sidebar;
+        border: 1px solid darken($dark-sidebar, 5%);
       }
     }
 
@@ -59,6 +85,7 @@ $dark-editor: #3f3f3f;
 
   .empty-editor {
     background: $dark-editor;
+    color: $light-font-color;
   }
 
   .editor .CodeMirror-activeline-background {
@@ -70,25 +97,80 @@ $dark-editor: #3f3f3f;
     color: $light-font-color;
     padding: 1rem;
 
+    a {
+      color: $tag;
+    }
+
     h1,
     h2,
     h3,
     h4,
     h5 {
-      color: white;
+      color: $attribute;
     }
 
     code {
       background: rgba(0, 0, 0, 0.2);
     }
 
-    &::after {
-      background-color: $app-sidebar-color;
+    pre {
+      background: darken($dark-editor, 10%);
+
+      code {
+        color: $code-font-color;
+        background: transparent;
+      }
+    }
+
+    hr {
+      height: 0;
+      border: 0;
+      border-top: 2px solid darken($dark-editor, 5%);
+    }
+
+    blockquote {
+      border-color: darken($dark-editor, 10%);
+    }
+  }
+
+  .preview-button {
+    background: $app-sidebar-color;
+    color: #ccc;
+
+    &:hover {
+      background: darken($app-sidebar-color, 5%);
     }
   }
 
   .settings-modal {
     background: $dark-sidebar;
     color: $light-font-color;
+
+    .action-button {
+      background: darken($dark-sidebar, 3%);
+
+      &:hover,
+      &:active {
+        background: darken($dark-sidebar, 5%);
+      }
+    }
+  }
+
+  kbd {
+    background: darken($dark-sidebar, 5%);
+    border: 1px solid darken($dark-sidebar, 10%);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.2), 0 0 0 2px #222 inset;
+    color: darken($light-font-color, 10%);
+    text-shadow: 0 1px 0 #000;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    background: $app-sidebar-color;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: lighten($app-sidebar-color, 8%);
+    border-radius: 0;
   }
 }
