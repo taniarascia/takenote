@@ -4,6 +4,7 @@ import { Icon } from 'react-feather'
 import { iconColor } from 'constants/index'
 
 export interface AppSidebarActionProps {
+  dataTestID: string
   disabled?: boolean
   handler: MouseEventHandler
   icon: Icon
@@ -11,15 +12,15 @@ export interface AppSidebarActionProps {
 }
 
 const AppSidebarAction: React.FC<AppSidebarActionProps> = props => {
-  const { disabled = false, handler, icon: IconCmp, label } = props
+  const { dataTestID, disabled = false, handler, icon: IconCmp, label } = props
   return (
     <button
+      data-testid={dataTestID}
       className="action-button"
       aria-label={label}
       onClick={handler}
       disabled={disabled}
       title={label}
-      data-testid={label}
     >
       <span>
         <IconCmp
