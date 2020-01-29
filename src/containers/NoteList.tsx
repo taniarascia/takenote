@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Star } from 'react-feather'
+import { MoreHorizontal, Star } from 'react-feather'
 import _ from 'lodash'
 
 import { Folder } from 'constants/enums'
@@ -202,7 +202,9 @@ const NoteList: React.FC = () => {
                 data-testid={'note-options-div-' + activeOrInactiveTestIDQualifier}
                 className={noteOptionsId === note.id ? 'note-options active ' : 'note-options'}
                 onClick={event => handleNoteOptionsClick(event, note.id)}
-              ></div>
+              >
+                <MoreHorizontal size={15} />
+              </div>
               {noteOptionsId === note.id && (
                 <div
                   ref={node}
