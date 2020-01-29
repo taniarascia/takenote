@@ -14,9 +14,11 @@ import {
   assertNoteListLengthGTE,
   assertNoteOptionsOpened,
   clickCreateNewNote,
-  clickFavoriteNoteOption,
+  clickNoteOptionDeleteNotePermanently,
+  clickNoteOptionFavorite,
+  clickNoteOptionRestoreFromTrash,
+  clickNoteOptionTrash,
   clickNoteOptions,
-  clickTrashNoteOption,
 } from './utils/testNotesHelperUtils'
 
 describe('Manage notes test', () => {
@@ -55,7 +57,7 @@ describe('Manage notes test', () => {
     clickTestID(TestIDEnum.ALL_NOTES)
     clickNoteOptions()
     testIDShouldContain(TestIDEnum.NOTE_OPTION_FAVORITE, TextEnum.MARK_AS_FAVORITE)
-    clickFavoriteNoteOption()
+    clickNoteOptionFavorite()
 
     // assert there is 1 favorited note
     clickTestID(TestIDEnum.FAVORITES)
@@ -64,7 +66,7 @@ describe('Manage notes test', () => {
     // assert button now says 'Remove'
     clickNoteOptions()
     testIDShouldContain(TestIDEnum.NOTE_OPTION_FAVORITE, TextEnum.REMOVE_FAVORITE)
-    clickFavoriteNoteOption()
+    clickNoteOptionFavorite()
 
     // assert favorites is empty
     clickTestID(TestIDEnum.FAVORITES)
@@ -80,7 +82,7 @@ describe('Manage notes test', () => {
     clickTestID(TestIDEnum.ALL_NOTES)
     clickNoteOptions()
     testIDShouldContain(TestIDEnum.NOTE_OPTION_TRASH, TextEnum.MOVE_TO_TRASH)
-    clickTrashNoteOption()
+    clickNoteOptionTrash()
     testIDShouldNotExist(TestIDEnum.NOTE_OPTION_TRASH)
 
     // make sure the new note is in the trash
@@ -92,7 +94,7 @@ describe('Manage notes test', () => {
   it('should empty notes in trash', () => {
     // move note to trash
     clickNoteOptions()
-    clickTrashNoteOption()
+    clickNoteOptionTrash()
 
     // make sure there is a note in the trash and empty it
     clickTestID(TestIDEnum.NOTE_TRASH)
@@ -102,5 +104,42 @@ describe('Manage notes test', () => {
 
     // assert the empty trash button is gone
     testIDShouldNotExist(TestIDEnum.EMPTY_TRASH_BUTTON)
+  })
+
+  it('should delete the active note in the trash permanently', () => {
+    // move note to trash
+    clickNoteOptions()
+    clickNoteOptionTrash()
+
+    // navigate to trash and delete the active note permanently
+    clickTestID(TestIDEnum.NOTE_TRASH)
+    clickNoteOptions()
+    testIDShouldContain(TestIDEnum.NOTE_OPTION_DELETE_PERMANENTLY, TextEnum.DELETE_PERMANENTLY)
+    clickNoteOptionDeleteNotePermanently()
+    assertNoteListLengthEquals(0)
+
+    // assert the empty trash button is gone
+    testIDShouldNotExist(TestIDEnum.EMPTY_TRASH_BUTTON)
+  })
+
+  it('should restore the active note in the trash', () => {
+    // move note to trash and make sure All Notes is empty
+    clickNoteOptions()
+    clickNoteOptionTrash()
+    assertNoteListLengthEquals(0)
+
+    // navigate to trash and restore the active note
+    clickTestID(TestIDEnum.NOTE_TRASH)
+    clickNoteOptions()
+    testIDShouldContain(TestIDEnum.NOTE_OPTION_RESTORE_FROM_TRASH, TextEnum.RESTORE_FROM_TRASH)
+    clickNoteOptionRestoreFromTrash()
+    assertNoteListLengthEquals(0)
+
+    // assert the empty trash button is gone
+    testIDShouldNotExist(TestIDEnum.EMPTY_TRASH_BUTTON)
+
+    // make sure the note is back in All Notes
+    clickTestID(TestIDEnum.ALL_NOTES)
+    assertNoteListLengthEquals(1)
   })
 })

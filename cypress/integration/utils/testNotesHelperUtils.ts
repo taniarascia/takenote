@@ -1,7 +1,7 @@
 // testNotesHelperUtils.ts
 // Utility functions for use in note tests
 
-import { TextEnum, TestIDEnum, wrapWithTestIDTag } from './testHelperEnums'
+import { TestIDEnum, TextEnum, wrapWithTestIDTag } from './testHelperEnums'
 import { clickDynamicTestID, clickTestID, testIDShouldExist } from './testHelperUtils'
 
 const assertActiveNoteIsNew = () => {
@@ -40,11 +40,19 @@ const clickNoteOptions = (extraQualifier?: number | string) => {
   clickDynamicTestID(noteOptionIndexTestID)
 }
 
-const clickFavoriteNoteOption = () => {
+const clickNoteOptionDeleteNotePermanently = () => {
+  clickTestID(TestIDEnum.NOTE_OPTION_DELETE_PERMANENTLY)
+}
+
+const clickNoteOptionFavorite = () => {
   clickTestID(TestIDEnum.NOTE_OPTION_FAVORITE)
 }
 
-const clickTrashNoteOption = () => {
+const clickNoteOptionRestoreFromTrash = () => {
+  clickTestID(TestIDEnum.NOTE_OPTION_RESTORE_FROM_TRASH)
+}
+
+const clickNoteOptionTrash = () => {
   clickTestID(TestIDEnum.NOTE_OPTION_TRASH)
 }
 
@@ -54,7 +62,9 @@ export {
   assertNoteListLengthGTE,
   assertNoteOptionsOpened,
   clickCreateNewNote,
-  clickFavoriteNoteOption,
+  clickNoteOptionDeleteNotePermanently,
+  clickNoteOptionFavorite,
+  clickNoteOptionRestoreFromTrash,
+  clickNoteOptionTrash,
   clickNoteOptions,
-  clickTrashNoteOption,
 }
