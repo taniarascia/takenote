@@ -90,3 +90,12 @@ export type ReactMouseEvent =
   | React.ChangeEvent<HTMLSelectElement>
 
 export type ReactSubmitEvent = React.FormEvent<HTMLFormElement> | React.FocusEvent<HTMLInputElement>
+
+//==============================================================================
+// Default Types
+//==============================================================================
+
+// Taken from TypeScript private declared type within Actions
+export type WithPayload<P, T> = T & {
+  payload: P
+}

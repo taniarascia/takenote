@@ -56,29 +56,25 @@ const NoteList: React.FC = () => {
   const node = useRef<HTMLDivElement>(null)
 
   const handleNoteOptionsClick = (event: ReactMouseEvent, noteId: string = '') => {
+    // make sure we aren't getting any null values .. any element clicked should be a sub-class of element
     if (
-      event instanceof MouseEvent &&
-      (event.target instanceof Element || event.target instanceof SVGElement)
+      event.target instanceof Element &&
+      (event.target.classList.contains('note-options') || event.target instanceof SVGElement)
     ) {
-      if (event.target.classList.contains('note-options')) {
-        setNoteOptionsPosition({ x: event.pageX, y: event.pageY })
-      }
-
-      if (event.target.parentElement instanceof Element) {
-        if (event.target.parentElement.classList.contains('note-options')) {
-          setNoteOptionsPosition({ x: event.pageX, y: event.pageY })
-        }
-      }
-
-      if (event.target.tagName === 'circle') {
+      // make sure we have the necessary variables
+      // note: don't check for MouseEvent because Cypress MouseEvent !== Window.MouseEvent
+      if ('pageX' in event && 'pageY' in event) {
         setNoteOptionsPosition({ x: event.pageX, y: event.pageY })
       }
     }
 
     event.stopPropagation()
 
-    if (node.current && node.current.contains(event.target as HTMLDivElement)) return
-    setNoteOptionsId(!noteOptionsId || noteOptionsId !== noteId ? noteId : '')
+    if (node.current && node.current.contains(event.target as HTMLDivElement)) {
+      return
+    } else {
+      setNoteOptionsId(!noteOptionsId || noteOptionsId !== noteId ? noteId : '')
+    }
   }
 
   const handleDragStart = (event: ReactDragEvent, noteId: string = '') => {
@@ -121,8 +117,9 @@ const NoteList: React.FC = () => {
     <aside className="note-sidebar">
       <div className="note-sidebar-header">
         <input
-          ref={searchRef}
+          data-testid="note-search"
           className="note-search"
+          ref={searchRef}
           type="search"
           onChange={event => {
             event.preventDefault()
@@ -131,12 +128,20 @@ const NoteList: React.FC = () => {
           placeholder="Search for notes"
         />
         {showEmptyTrash && (
-          <NoteListButton label="Empty Trash" handler={() => _emptyTrash()}>
+          <NoteListButton
+            dataTestID="empty-trash-button"
+            label="Empty Trash"
+            handler={() => _emptyTrash()}
+          >
             Empty Trash
           </NoteListButton>
         )}
       </div>
-      <div className="note-list" style={{ marginTop: showEmptyTrash ? '103px' : '60px' }}>
+      <div
+        data-testid="note-list"
+        className="note-list"
+        style={{ marginTop: showEmptyTrash ? '103px' : '60px' }}
+      >
         {filteredNotes.map(note => {
           let noteTitle: string | React.ReactElement = getNoteTitle(note.text)
 
@@ -157,8 +162,15 @@ const NoteList: React.FC = () => {
             }
           }
 
+          const activeNote: boolean = note.id === activeNoteId
+
+          const activeOrInactiveTestIDQualifier: string = activeNote
+            ? 'active-note'
+            : 'inactive-note'
+
           return (
             <div
+              data-testid={activeOrInactiveTestIDQualifier}
               className={note.id === activeNoteId ? 'note-list-each active' : 'note-list-each'}
               key={note.id}
               onClick={() => {
@@ -180,12 +192,14 @@ const NoteList: React.FC = () => {
                   </>
                 ) : (
                   <>
-                    <div className="icon"></div>
+                    <div className="icon" />
                     <div> {noteTitle}</div>
                   </>
                 )}
               </div>
               <div
+                // TODO: make testID based off of index when we add that to a NoteItem object
+                data-testid={'note-options-div-' + activeOrInactiveTestIDQualifier}
                 className={noteOptionsId === note.id ? 'note-options active ' : 'note-options'}
                 onClick={event => handleNoteOptionsClick(event, note.id)}
               >
@@ -201,8 +215,6 @@ const NoteList: React.FC = () => {
                     left: noteOptionsPosition.x + 'px',
                   }}
                   onClick={event => {
-                    console.log('test')
-                    console.log(event)
                     event.stopPropagation()
                   }}
                 >
