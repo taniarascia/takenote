@@ -1,42 +1,26 @@
-const addCategory = (categoryName: string) => {
-  cy.findByLabelText('Add category')
-    .should('exist')
-    .click()
+// category.spec.ts
+// Tests for manipulating note categories
 
-  cy.findByPlaceholderText('New category...')
-    .type(`${categoryName}`)
-    .parent()
-    .submit()
-
-  return cy
-    .findByText(categoryName)
-    .should('exist')
-    .click()
-}
+import {
+  addCategory,
+  assertCategoryDoesNotExist,
+  removeCategory,
+} from './utils/testCategoryHelperUtils'
+import { dynamicTimeCategoryName } from './utils/testHelperEnums'
+import { defaultInit } from './utils/testHelperUtils'
 
 describe('Category tests', () => {
-  before(() => {
-    cy.visit('/')
+  defaultInit()
+
+  it('creates a new category with the current time', () => {
+    addCategory(dynamicTimeCategoryName)
   })
 
-  it('creates a new category', () => {
-    const categoryName = `Cy${Date.now()}`
-    addCategory(categoryName)
-  })
+  it('should delete a category just created with the current time', () => {
+    addCategory(dynamicTimeCategoryName)
 
-  it('should delete a category', () => {
-    const categoryName = `Cy${Date.now()}`
+    removeCategory(dynamicTimeCategoryName)
 
-    addCategory(categoryName)
-
-    cy.findByText(categoryName)
-      .parent()
-      .within(() => {
-        cy.queryByLabelText('Remove category')
-          .trigger('mouseover')
-          .click()
-      })
-
-    cy.findByText(categoryName).should('not.exist')
+    assertCategoryDoesNotExist(dynamicTimeCategoryName)
   })
 })
