@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { useTempState } from 'contexts/TempStateContext'
 import { Folder } from 'constants/enums'
-import { downloadNote, getNoteTitle, newNote } from 'helpers'
+import { downloadNote, getNoteTitle, newNoteHandlerHelper } from 'helpers'
 import { useKey } from 'helpers/hooks'
 import { addNote, swapNote, toggleTrashedNote, swapFolder } from 'slices/note'
 import { syncState } from 'slices/sync'
@@ -34,24 +34,17 @@ const KeyboardShortcuts: React.FC = () => {
 
   const { addingTempCategory, setAddingTempCategory } = useTempState()
 
-  const newNoteHandler = () => {
-    if (activeFolder === Folder.TRASH) {
-      _swapFolder(Folder.ALL)
-    }
-
-    if (previewMarkdown) {
-      _togglePreviewMarkdown()
-    }
-
-    if ((activeNote && activeNote.text !== '') || !activeNote) {
-      const note = newNote(
-        activeCategoryId,
-        activeFolder === Folder.TRASH ? Folder.ALL : activeFolder
-      )
-      _addNote(note)
-      _swapNote(note.id)
-    }
-  }
+  const newNoteHandler = () =>
+    newNoteHandlerHelper(
+      activeFolder,
+      previewMarkdown,
+      activeNote,
+      activeCategoryId,
+      _swapFolder,
+      _togglePreviewMarkdown,
+      _addNote,
+      _swapNote
+    )
 
   const newTempCategoryHandler = () => {
     !addingTempCategory && setAddingTempCategory(true)
