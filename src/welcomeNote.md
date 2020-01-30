@@ -14,15 +14,16 @@ TakeNote is a web-based note-taking app with GitHub sync (soon™️) and Markdo
 
 ## Keyboard shortcuts
 
-| Action          | Windows/Linux Shortcut | Mac Shortcut               |
-| --------------- | ---------------------- | -------------------------- |
-| Create note     | `CTRL` + `ALT` + `O`   | `CONTROL` + `OPTION` + `O` |
-| Delete note     | `CTRL` + `ALT` + `W`   | `CONTROL` + `OPTION` + `W` |
-| Create category | `CTRL` + `ALT` + `C`   | `CONTROL` + `OPTION` + `C` |
-| Download note   | `CTRL` + `ALT` + `D`   | `CONTROL` + `OPTION` + `D` |
-| Sync note       | `CTRL` + `ALT` + `L`   | `CONTROL` + `OPTION` + `L` |
-| Preview note    | `CTRL` + `ALT` + `J`   | `CONTROL` + `OPTION` + `J` |
-| Dark mode       | `CTRL` + `ALT` + `K`   | `CONTROL` + `OPTION` + `K` |
+| Action           | Windows/Linux Shortcut | Mac Shortcut               |
+| ---------------- | ---------------------- | -------------------------- |
+| Create note      | `CTRL` + `ALT` + `N`   | `CONTROL` + `OPTION` + `N` |
+| Delete note      | `CTRL` + `ALT` + `U`   | `CONTROL` + `OPTION` + `U` |
+| Create category  | `CTRL` + `ALT` + `C`   | `CONTROL` + `OPTION` + `C` |
+| Download note    | `CTRL` + `ALT` + `P`   | `CONTROL` + `OPTION` + `P` |
+| Sync note        | `CTRL` + `ALT` + `L`   | `CONTROL` + `OPTION` + `L` |
+| Markdown preview | `CTRL` + `ALT` + `J`   | `CONTROL` + `OPTION` + `J` |
+| Toggle theme     | `CTRL` + `ALT` + `K`   | `CONTROL` + `OPTION` + `K` |
+| Focus search     | `CTRL` + `ALT` + `F`   | `CONTROL` + `OPTION` + `F` |
 
 ## Sync
 
