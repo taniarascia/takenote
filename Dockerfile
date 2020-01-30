@@ -1,7 +1,8 @@
 FROM node:12-alpine as builder
 WORKDIR /app
 COPY package*.json ./
-RUN npm install
+RUN ["mkdir","-p","cypress/plugins"]
+RUN npm ci
 COPY . .
 RUN npm run build
 
