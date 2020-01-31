@@ -1,7 +1,7 @@
 // testCategoryHelperUtils.ts
 // Utility functions for use in category tests
 
-import { TextEnum } from './testHelperEnums'
+import { getTestID, TestIDEnum, TextEnum } from './testHelperEnums'
 
 const addCategory = (categoryName: string) => {
   cy.findByLabelText(TextEnum.ADD_CATEGORY)
@@ -23,6 +23,12 @@ const assertCategoryDoesNotExist = (categoryName: string) => {
   cy.findByText(categoryName).should('not.exist')
 }
 
+const navigateToCategory = (categoryName: string) => {
+  cy.get('.category-list')
+    .contains(categoryName)
+    .click()
+}
+
 const removeCategory = (categoryName: string) => {
   cy.findByText(categoryName)
     .parent()
@@ -33,4 +39,14 @@ const removeCategory = (categoryName: string) => {
     })
 }
 
-export { addCategory, assertCategoryDoesNotExist, removeCategory }
+const selectMoveToCategoryOption = (categoryName: string) => {
+  getTestID(TestIDEnum.MOVE_TO_CATEGORY).select(categoryName)
+}
+
+export {
+  addCategory,
+  assertCategoryDoesNotExist,
+  navigateToCategory,
+  removeCategory,
+  selectMoveToCategoryOption,
+}

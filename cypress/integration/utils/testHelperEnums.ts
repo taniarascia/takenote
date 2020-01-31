@@ -23,6 +23,7 @@ enum TestIDEnum {
   NOTE_OPTION_RESTORE_FROM_TRASH = 'note-option-restore-from-trash',
   NOTE_OPTION_TRASH = 'note-option-trash',
   NOTE_TRASH = 'trash',
+  MOVE_TO_CATEGORY = 'note-options-move-to-category-select',
   SETTINGS_SIDEBAR_ACTION = 'settings-sidebar-action',
   SYNC_NOTES_SIDEBAR_ACTION = 'sync-notes-sidebar-action',
 }

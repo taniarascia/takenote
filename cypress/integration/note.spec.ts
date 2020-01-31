@@ -3,28 +3,35 @@
 
 import { TestIDEnum, TextEnum } from './utils/testHelperEnums'
 import {
-  clickTestID,
   defaultInit,
+  navigateToAllNotes,
+  navigateToFavorites,
+  navigateToTrash,
   testIDShouldContain,
   testIDShouldNotExist,
 } from './utils/testHelperUtils'
 import {
   assertActiveNoteIsNew,
+  assertNoteEditorCharacterCount,
+  assertNoteEditorLineCount,
   assertNoteListLengthEquals,
   assertNoteListLengthGTE,
   assertNoteOptionsOpened,
   clickCreateNewNote,
+  clickEmptyTrash,
   clickNoteOptionDeleteNotePermanently,
   clickNoteOptionFavorite,
   clickNoteOptionRestoreFromTrash,
   clickNoteOptionTrash,
   clickNoteOptions,
+  typeNoteEditor,
 } from './utils/testNotesHelperUtils'
 
 describe('Manage notes test', () => {
   defaultInit()
 
   beforeEach(() => {
+    navigateToAllNotes()
     clickCreateNewNote()
     assertNoteListLengthEquals(1)
   })
@@ -43,6 +50,30 @@ describe('Manage notes test', () => {
     assertActiveNoteIsNew()
   })
 
+  it('should update a note', () => {
+    const sampleText = 'Sample note text.'
+
+    // add some text to the editor
+    typeNoteEditor(sampleText)
+    assertNoteEditorLineCount(1)
+    assertNoteEditorCharacterCount(sampleText.length)
+
+    typeNoteEditor('{enter}123')
+    assertNoteEditorLineCount(2)
+    assertNoteEditorCharacterCount(sampleText.length + 3)
+
+    typeNoteEditor('{backspace}{backspace}{backspace}{backspace}')
+    assertNoteEditorLineCount(1)
+    assertNoteEditorCharacterCount(sampleText.length)
+
+    // clean up state
+    clickNoteOptions()
+    clickNoteOptionTrash()
+    clickCreateNewNote()
+    navigateToTrash()
+    clickEmptyTrash()
+  })
+
   it('should open options', () => {
     clickNoteOptions()
     assertNoteOptionsOpened()
@@ -50,17 +81,17 @@ describe('Manage notes test', () => {
 
   it('should add a note to favorites', () => {
     // make sure favorites is empty
-    clickTestID(TestIDEnum.FAVORITES)
+    navigateToFavorites()
     assertNoteListLengthEquals(0)
 
     // favorite the note in All Notes
-    clickTestID(TestIDEnum.ALL_NOTES)
+    navigateToAllNotes()
     clickNoteOptions()
     testIDShouldContain(TestIDEnum.NOTE_OPTION_FAVORITE, TextEnum.MARK_AS_FAVORITE)
     clickNoteOptionFavorite()
 
     // assert there is 1 favorited note
-    clickTestID(TestIDEnum.FAVORITES)
+    navigateToFavorites()
     assertNoteListLengthEquals(1)
 
     // assert button now says 'Remove'
@@ -69,24 +100,23 @@ describe('Manage notes test', () => {
     clickNoteOptionFavorite()
 
     // assert favorites is empty
-    clickTestID(TestIDEnum.FAVORITES)
     assertNoteListLengthEquals(0)
   })
 
   it('should send a note to trash', () => {
     // make sure trash is currently empty
-    clickTestID(TestIDEnum.NOTE_TRASH)
+    navigateToTrash()
     assertNoteListLengthEquals(0)
 
     // navigate back to All Notes and move the note to trash
-    clickTestID(TestIDEnum.ALL_NOTES)
+    navigateToAllNotes()
     clickNoteOptions()
     testIDShouldContain(TestIDEnum.NOTE_OPTION_TRASH, TextEnum.MOVE_TO_TRASH)
     clickNoteOptionTrash()
     testIDShouldNotExist(TestIDEnum.NOTE_OPTION_TRASH)
 
     // make sure the new note is in the trash
-    clickTestID(TestIDEnum.NOTE_TRASH)
+    navigateToTrash()
     assertNoteListLengthEquals(1)
     assertActiveNoteIsNew()
   })
@@ -97,9 +127,9 @@ describe('Manage notes test', () => {
     clickNoteOptionTrash()
 
     // make sure there is a note in the trash and empty it
-    clickTestID(TestIDEnum.NOTE_TRASH)
+    navigateToTrash()
     assertNoteListLengthGTE(1)
-    clickTestID(TestIDEnum.EMPTY_TRASH_BUTTON)
+    clickEmptyTrash()
     assertNoteListLengthEquals(0)
 
     // assert the empty trash button is gone
@@ -112,7 +142,7 @@ describe('Manage notes test', () => {
     clickNoteOptionTrash()
 
     // navigate to trash and delete the active note permanently
-    clickTestID(TestIDEnum.NOTE_TRASH)
+    navigateToTrash()
     clickNoteOptions()
     testIDShouldContain(TestIDEnum.NOTE_OPTION_DELETE_PERMANENTLY, TextEnum.DELETE_PERMANENTLY)
     clickNoteOptionDeleteNotePermanently()
@@ -129,7 +159,7 @@ describe('Manage notes test', () => {
     assertNoteListLengthEquals(0)
 
     // navigate to trash and restore the active note
-    clickTestID(TestIDEnum.NOTE_TRASH)
+    navigateToTrash()
     clickNoteOptions()
     testIDShouldContain(TestIDEnum.NOTE_OPTION_RESTORE_FROM_TRASH, TextEnum.RESTORE_FROM_TRASH)
     clickNoteOptionRestoreFromTrash()
@@ -139,7 +169,7 @@ describe('Manage notes test', () => {
     testIDShouldNotExist(TestIDEnum.EMPTY_TRASH_BUTTON)
 
     // make sure the note is back in All Notes
-    clickTestID(TestIDEnum.ALL_NOTES)
+    navigateToAllNotes()
     assertNoteListLengthEquals(1)
   })
 })
