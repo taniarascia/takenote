@@ -1,5 +1,7 @@
 import { SyncStatePayload, SettingsState } from 'types'
 
+import { welcomeNote } from './welcomeNote'
+
 type PromiseCallbackFun = (value?: any) => void
 type GetLocalStorage = (
   key: string,
@@ -20,7 +22,24 @@ const getLocalStorage: GetLocalStorage = (key, errorMsg = 'Something went wrong'
   }
 }
 
-export const requestNotes = () => new Promise(getLocalStorage('notes'))
+const getUserNotes = () => (resolve: PromiseCallbackFun, reject: PromiseCallbackFun) => {
+  const notes: any = localStorage.getItem('notes')
+
+  // check if there is any data in localstorage
+  if (!notes) {
+    // if there is none (i.e. new user), show the wecomeNote
+    resolve(welcomeNote)
+  } else if (JSON.parse(notes)) {
+    // if there is (existing user), show the user's notes
+    resolve(JSON.parse(notes))
+  } else {
+    reject({
+      message: 'Something went wrong',
+    })
+  }
+}
+
+export const requestNotes = () => new Promise(getUserNotes())
 
 export const requestCategories = () => new Promise(getLocalStorage('categories'))
 
