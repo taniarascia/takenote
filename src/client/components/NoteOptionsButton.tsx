@@ -2,15 +2,17 @@ import React, { KeyboardEventHandler, MouseEventHandler } from 'react'
 import { Icon } from 'react-feather'
 
 export interface NoteOptionsButtonProps {
+  dataTestID: string
   handler: MouseEventHandler & KeyboardEventHandler
   icon: Icon
   text: string
 }
 
 const NoteOptionsButton: React.FC<NoteOptionsButtonProps> = props => {
-  const { handler, icon: IconCmp, text, ...rest } = props
+  const { dataTestID, handler, icon: IconCmp, text, ...rest } = props
   return (
     <div
+      data-testid={dataTestID}
       className="nav-item"
       role="button"
       onClick={handler}

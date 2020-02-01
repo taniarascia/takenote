@@ -57,29 +57,44 @@ const NoteOptions: React.FC<NoteOptionsProps> = ({ clickedNote }) => {
     <nav className="note-options-nav" data-testid="note-options-nav">
       {clickedNote.trash ? (
         <>
-          <NoteOptionsButton handler={deleteNoteHandler} icon={X} text="Delete permanently" />
-          <NoteOptionsButton handler={trashNoteHandler} icon={ArrowUp} text="Restore from trash" />
+          <NoteOptionsButton
+            dataTestID="note-option-delete-permanently"
+            handler={deleteNoteHandler}
+            icon={X}
+            text="Delete permanently"
+          />
+          <NoteOptionsButton
+            dataTestID="note-option-restore-from-trash"
+            handler={trashNoteHandler}
+            icon={ArrowUp}
+            text="Restore from trash"
+          />
         </>
       ) : (
         <>
           <NoteOptionsButton
-            data-testid="note-option-favorite-button"
+            dataTestID="note-option-favorite"
             handler={favoriteNoteHandler}
             icon={Star}
             text={clickedNote.favorite ? 'Remove favorite' : 'Mark as favorite'}
           />
           <NoteOptionsButton
-            data-testid="note-option-trash-button"
+            dataTestID="note-option-trash"
             handler={trashNoteHandler}
             icon={Trash}
             text="Move to trash"
           />
         </>
       )}
-      <NoteOptionsButton handler={downloadNoteHandler} icon={Download} text="Download" />
+      <NoteOptionsButton
+        dataTestID="note-options-download"
+        handler={downloadNoteHandler}
+        icon={Download}
+        text="Download"
+      />
       {clickedNote.category && (
         <NoteOptionsButton
-          data-testid="note-option-remove-category-button"
+          dataTestID="note-option-remove-category"
           handler={removeCategoryHandler}
           icon={X}
           text="Remove category"

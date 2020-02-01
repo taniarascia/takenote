@@ -58,7 +58,9 @@ const NoteEditor: React.FC = () => {
             value={activeNote.text}
             options={codeMirrorOptions}
             editorDidMount={editor => {
-              editor.focus()
+              setTimeout(() => {
+                editor.focus()
+              }, 0)
               editor.setCursor(0)
             }}
             onBeforeChange={(editor, data, value) => {
