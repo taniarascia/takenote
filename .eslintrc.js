@@ -1,3 +1,6 @@
+/**
+ * ESLint Configuration
+ */
 module.exports = {
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -17,6 +20,7 @@ module.exports = {
   ],
   plugins: ['import'],
   rules: {
+    // Separate import groups with newline by section
     'import/order': [
       'error',
       {
@@ -24,11 +28,12 @@ module.exports = {
         'newlines-between': 'always',
       },
     ],
-    'no-console': 1,
-    'react/prop-types': 0,
+    'no-console': 1, // Warning to reduce console logs used throughout app
+    'react/prop-types': 0, // Not using prop-types because we have TypeScript
   },
   settings: {
     'import/resolver': {
+      // Allow `@/` to map to `src/client/`
       alias: {
         map: [['@', './src/client']],
         extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
