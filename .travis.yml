@@ -15,7 +15,7 @@ cache:
     - ~/.cache
 install:
   - 'npm ci'
+before_script:
+  - npm run dev &
 script:
-  - npm run dev
-  - npm run coveralls
-  - npm run e2e
+  - npm run coveralls && npm run e2e
