@@ -1,11 +1,14 @@
 language: node_js
+
 node_js:
   - '12'
+
 addons:
   apt:
     packages:
       # Ubuntu 16+ does not install this dependency by default, so we need to install it ourselves
       - libgconf-2-4
+
 cache:
   # Caches $HOME/.npm when npm ci is default script command
   # Caches node_modules in all other cases
@@ -13,9 +16,14 @@ cache:
   directories:
     # we also need to cache folder with Cypress binary
     - ~/.cache
+
 install:
   - 'npm ci'
+
 before_script:
+  # Start server and client
   - npm run dev &
+
 script:
+  # Run unit, component, and e2e tests
   - npm run coveralls && npm run e2e

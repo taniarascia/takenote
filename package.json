@@ -14,7 +14,8 @@
     "start": "cross-env NODE_ENV=production node -r ts-node/register/transpile-only src/server/index.ts",
     "test": "jest",
     "coveralls": "jest --ci --coverage --watchAll=false && cat ./coverage/lcov.info | coveralls",
-    "e2e": "cypress open",
+    "e2e": "cypress run",
+    "e2e:open": "cypress open",
     "postinstall": "patch-package"
   },
   "repository": {
