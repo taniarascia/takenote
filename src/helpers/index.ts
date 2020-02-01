@@ -87,5 +87,6 @@ export const sortByLastUpdated = (a: NoteItem, b: NoteItem) => {
   let dateA = new Date(a.lastUpdated)
   let dateB = new Date(b.lastUpdated)
 
-  return dateA > dateB ? -1 : dateA < dateB ? 1 : 0
+  // the first note in the list should consistently sort after if it is created at the same time
+  return dateA < dateB ? 1 : -1
 }

@@ -1,11 +1,11 @@
 // testNotesHelperUtils.ts
 // Utility functions for use in note tests
 
-import { getTestID, TestIDEnum, TextEnum } from './testHelperEnums'
+import { getDynamicTestID, getTestID, TestIDEnum, TextEnum } from './testHelperEnums'
 import { clickDynamicTestID, clickTestID, testIDShouldExist } from './testHelperUtils'
 
-const assertActiveNoteIsNew = () => {
-  getTestID(TestIDEnum.ACTIVE_NOTE).should('contain', TextEnum.NEW_NOTE)
+const assertNewNoteCreated = () => {
+  getDynamicTestID(TestIDEnum.NOTE_LIST_ITEM + '0').should('contain', TextEnum.NEW_NOTE)
 }
 
 const assertNoteEditorCharacterCount = (expectedCharacterCount: number) => {
@@ -45,16 +45,9 @@ const clickEmptyTrash = () => {
   clickTestID(TestIDEnum.EMPTY_TRASH_BUTTON)
 }
 
-const clickNoteOptions = (extraQualifier?: number | string) => {
-  // if no option qualifier is supplied, click active note
-  extraQualifier = extraQualifier ? extraQualifier : TestIDEnum.ACTIVE_NOTE
-
-  // build a test id for the note based on index
-  const noteOptionIndexTestID: string = extraQualifier
-    ? TestIDEnum.NOTE_OPTIONS + '-' + extraQualifier
-    : TestIDEnum.NOTE_OPTIONS
-
-  clickDynamicTestID(noteOptionIndexTestID)
+// click a note with the specified index
+const clickNoteOptions = (noteIndex: number = 0) => {
+  clickDynamicTestID(TestIDEnum.NOTE_OPTIONS_DIV + noteIndex)
 }
 
 const clickNoteOptionDeleteNotePermanently = () => {
@@ -79,7 +72,7 @@ const typeNoteEditor = (contentToType: string) => {
 }
 
 export {
-  assertActiveNoteIsNew,
+  assertNewNoteCreated,
   assertNoteEditorCharacterCount,
   assertNoteEditorLineCount,
   assertNoteListLengthEquals,

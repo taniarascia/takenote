@@ -11,7 +11,7 @@ import {
   testIDShouldNotExist,
 } from './utils/testHelperUtils'
 import {
-  assertActiveNoteIsNew,
+  assertNewNoteCreated,
   assertNoteEditorCharacterCount,
   assertNoteEditorLineCount,
   assertNoteListLengthEquals,
@@ -33,21 +33,20 @@ describe('Manage notes test', () => {
   beforeEach(() => {
     navigateToAllNotes()
     clickCreateNewNote()
-    assertNoteListLengthEquals(1)
   })
 
   it('should try to create a few new notes', () => {
     clickCreateNewNote()
-    assertNoteListLengthEquals(1)
-    assertActiveNoteIsNew()
+    assertNoteListLengthEquals(2)
+    assertNewNoteCreated()
 
     clickCreateNewNote()
-    assertNoteListLengthEquals(1)
-    assertActiveNoteIsNew()
+    assertNoteListLengthEquals(2)
+    assertNewNoteCreated()
 
     clickCreateNewNote()
-    assertNoteListLengthEquals(1)
-    assertActiveNoteIsNew()
+    assertNoteListLengthEquals(2)
+    assertNewNoteCreated()
   })
 
   it('should update a note', () => {
@@ -118,7 +117,6 @@ describe('Manage notes test', () => {
     // make sure the new note is in the trash
     navigateToTrash()
     assertNoteListLengthEquals(1)
-    assertActiveNoteIsNew()
   })
 
   it('should empty notes in trash', () => {
@@ -156,7 +154,7 @@ describe('Manage notes test', () => {
     // move note to trash and make sure All Notes is empty
     clickNoteOptions()
     clickNoteOptionTrash()
-    assertNoteListLengthEquals(0)
+    assertNoteListLengthEquals(1)
 
     // navigate to trash and restore the active note
     navigateToTrash()
@@ -170,6 +168,6 @@ describe('Manage notes test', () => {
 
     // make sure the note is back in All Notes
     navigateToAllNotes()
-    assertNoteListLengthEquals(1)
+    assertNoteListLengthEquals(2)
   })
 })

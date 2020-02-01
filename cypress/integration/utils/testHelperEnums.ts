@@ -14,7 +14,8 @@ enum TestIDEnum {
   FAVORITES = 'favorites',
   INACTIVE_NOTE = 'inactive-note',
   NOTE_LIST = 'note-list',
-  NOTE_OPTIONS = 'note-options-div',
+  NOTE_LIST_ITEM = 'note-list-item-',
+  NOTE_OPTIONS_DIV = 'note-options-div-',
   NOTE_OPTIONS_NAV = 'note-options-nav',
   NOTE_OPTION_DELETE_PERMANENTLY = 'note-option-delete-permanently',
   NOTE_OPTION_DOWNLOAD = 'note-option-download',
@@ -30,6 +31,10 @@ enum TestIDEnum {
 
 const wrapWithTestIDTag = (testIDEnum: TestIDEnum | string) => {
   return '[data-testid="' + testIDEnum + '"]'
+}
+
+const getDynamicTestID = (testID: string) => {
+  return cy.get(wrapWithTestIDTag(testID))
 }
 
 const getTestID = (testIDEnum: TestIDEnum) => {
@@ -55,4 +60,12 @@ enum TextEnum {
   SYNC_NOTES = 'Sync notes',
 }
 
-export { entryPoint, dynamicTimeCategoryName, getTestID, TestIDEnum, TextEnum, wrapWithTestIDTag }
+export {
+  entryPoint,
+  dynamicTimeCategoryName,
+  getDynamicTestID,
+  getTestID,
+  TestIDEnum,
+  TextEnum,
+  wrapWithTestIDTag,
+}

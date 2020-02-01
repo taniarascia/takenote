@@ -283,7 +283,7 @@ const AppSidebar: React.FC = () => {
                     <FolderIcon size={15} className="app-sidebar-icon" color={iconColor} />
                     {editingCategoryId === category.id ? (
                       <input
-                        data-testID="category-edit"
+                        data-testid="category-edit"
                         className="category-edit"
                         type="text"
                         autoFocus
@@ -299,7 +299,7 @@ const AppSidebar: React.FC = () => {
                     )}
                   </form>
                   <div
-                    data-testID="category-options"
+                    data-testid="category-options"
                     className="category-options"
                     onClick={() => {
                       const notesNotTrash = notes.filter(note => !note.trash)

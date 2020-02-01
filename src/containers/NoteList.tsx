@@ -142,7 +142,7 @@ const NoteList: React.FC = () => {
         className="note-list"
         style={{ marginTop: showEmptyTrash ? '103px' : '60px' }}
       >
-        {filteredNotes.map(note => {
+        {filteredNotes.map((note: NoteItem, index: number) => {
           let noteTitle: string | React.ReactElement = getNoteTitle(note.text)
 
           if (searchValue) {
@@ -162,15 +162,9 @@ const NoteList: React.FC = () => {
             }
           }
 
-          const activeNote: boolean = note.id === activeNoteId
-
-          const activeOrInactiveTestIDQualifier: string = activeNote
-            ? 'active-note'
-            : 'inactive-note'
-
           return (
             <div
-              data-testid={activeOrInactiveTestIDQualifier}
+              data-testid={'note-list-item-' + index}
               className={note.id === activeNoteId ? 'note-list-each active' : 'note-list-each'}
               key={note.id}
               onClick={() => {
@@ -199,7 +193,7 @@ const NoteList: React.FC = () => {
               </div>
               <div
                 // TODO: make testID based off of index when we add that to a NoteItem object
-                data-testid={'note-options-div-' + activeOrInactiveTestIDQualifier}
+                data-testid={'note-options-div-' + index}
                 className={noteOptionsId === note.id ? 'note-options active ' : 'note-options'}
                 onClick={event => handleNoteOptionsClick(event, note.id)}
               >

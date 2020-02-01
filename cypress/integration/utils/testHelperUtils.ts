@@ -3,6 +3,7 @@
 
 import { entryPoint, TestIDEnum, TextEnum, wrapWithTestIDTag } from './testHelperEnums'
 
+// takes a built string instead of a TestIDEnum prefer clickTestID() when possible
 const clickDynamicTestID = (dynamicTestID: string) => {
   cy.get(wrapWithTestIDTag(dynamicTestID)).click()
 }
