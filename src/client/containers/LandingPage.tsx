@@ -19,7 +19,7 @@ const LandingPage: React.FC = () => {
             </div>
             <div>
               <Link to="/app" className="button">
-                Use App
+                Use app
               </Link>
             </div>
           </div>
@@ -33,19 +33,16 @@ const LandingPage: React.FC = () => {
             you need, and nothing you don't.`}
           </p>
           <p className="cta">
-            <a
-              className="button"
-              href="https://github.com/login/oauth/authorize?client_id=a6f0527550d66198cedf&scope=repo"
-            >
-              Login with GitHub
-            </a>
+            <Link to="/app" className="button">
+              Try it out
+            </Link>
             <a
               href="https://github.com/taniarascia/takenote"
               target="_blank"
               rel="noopener noreferrer"
               className="button secondary"
             >
-              View Source
+              View source
             </a>
           </p>
           <div>

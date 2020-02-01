@@ -27,6 +27,10 @@ export interface CategoryItem {
 // State
 //==============================================================================
 
+export interface AuthState {
+  isAuthenticated: boolean
+}
+
 export interface CategoryState {
   categories: CategoryItem[]
   error: string
@@ -58,6 +62,7 @@ export interface SyncState {
 }
 
 export interface RootState {
+  authState: AuthState
   categoryState: CategoryState
   noteState: NoteState
   settingsState: SettingsState

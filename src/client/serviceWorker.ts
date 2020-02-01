@@ -51,7 +51,7 @@ function registerValidSW(swUrl: string, config?: Config) {
       }
     })
     .catch(error => {
-      console.error('Error during service worker registration:', error)
+      console.error('Error during service worker registration:', error) // eslint-disable-line
     })
 }
 
@@ -79,7 +79,7 @@ function checkValidServiceWorker(swUrl: string, config?: Config) {
       }
     })
     .catch(() => {
-      console.log('No internet connection found. App is running in offline mode.')
+      console.log('No internet connection found. App is running in offline mode.') // eslint-disable-line
     })
 }
 
