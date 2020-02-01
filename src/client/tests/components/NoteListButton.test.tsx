@@ -24,7 +24,6 @@ describe('<NoteListButton />', () => {
     }
 
     const { getByTestId } = render(<NoteListButton {...disabledProps} />)
-    const button = getByTestId('Test')
-    // expect(button).toHaveAttribute('disabled')
+    const button = getByTestId('note-list-button')
   })
 })

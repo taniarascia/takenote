@@ -30,6 +30,12 @@ import {
 describe('Manage notes test', () => {
   defaultInit()
 
+  before(() => {
+    // Delete welcome note
+    clickNoteOptions()
+    clickNoteOptionTrash()
+  })
+
   beforeEach(() => {
     navigateToAllNotes()
     clickCreateNewNote()
