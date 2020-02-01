@@ -63,6 +63,8 @@ npm run build && npm run start
 
 ### Run in Docker
 
+Docker container is [also available on the Dockerhub registry](https://hub.docker.com/r/taniarascia/takenote).
+
 ```bash
 docker build -t takenote .
 docker run -p 5000:5000 takenote

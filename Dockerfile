@@ -18,7 +18,7 @@ RUN apk add --no-cache \
     libjpeg-turbo-dev \
     libpng-dev \
     make \
-    nasm
+    nasm 
 RUN npm ci --only-production
 
 # Build client side React application
