@@ -8,6 +8,7 @@ describe('<NoteListButton />', () => {
     const enabledProps: NoteListButtonProps = {
       handler: jest.fn,
       label: 'Test',
+      dataTestID: 'note-list-button',
     }
 
     const button = render(<NoteListButton {...enabledProps} />)
@@ -19,6 +20,7 @@ describe('<NoteListButton />', () => {
       handler: jest.fn,
       label: 'Test',
       disabled: true,
+      dataTestID: 'note-list-button',
     }
 
     const { getByTestId } = render(<NoteListButton {...disabledProps} />)

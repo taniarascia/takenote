@@ -50,6 +50,18 @@ module.exports = {
           name: 'fonts/[name].[ext]',
         },
       },
+
+      {
+        test: /\.md$/,
+        use: [
+          {
+            loader: 'html-loader',
+          },
+          {
+            loader: 'markdown-loader',
+          },
+        ],
+      },
     ],
   },
 
