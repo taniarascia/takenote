@@ -315,6 +315,16 @@
         "test",
         "bug"
       ]
+    },
+    {
+      "login": "vincentdoerig",
+      "name": "Vincent Dörig",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/24668338?v=4",
+      "profile": "https://github.com/vincentdoerig",
+      "contributions": [
+        "test",
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,

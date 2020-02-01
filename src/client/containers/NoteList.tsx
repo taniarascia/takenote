@@ -221,8 +221,9 @@ const NoteList: React.FC = () => {
                   {!note.trash && filteredCategories.length > 0 && (
                     <>
                       <select
+                        data-testid="note-options-move-to-category-select"
                         defaultValue=""
-                        className="select"
+                        className="move-to-category-select"
                         onChange={event => {
                           _addCategoryToNote(event.target.value, note.id)
 

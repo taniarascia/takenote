@@ -7,14 +7,30 @@ const clickDynamicTestID = (dynamicTestID: string) => {
   cy.get(wrapWithTestIDTag(dynamicTestID)).click()
 }
 
-const clickTestID = (testIDEnum: TestIDEnum) => {
-  cy.get(wrapWithTestIDTag(testIDEnum)).click()
+// optional second parameter to click at supported areas (e.g. 'right' 'left') default is 'center'
+const clickTestID = (testIDEnum: TestIDEnum, clickOption: string = 'center') => {
+  cy.get(wrapWithTestIDTag(testIDEnum)).click(clickOption)
 }
 
 const defaultInit = () => {
   before(() => {
     cy.visit(entryPoint)
+
+    // wait for things to settle .. like waiting for Welcome Note to resolve
+    cy.wait(100)
   })
+}
+
+const navigateToAllNotes = () => {
+  clickTestID(TestIDEnum.ALL_NOTES)
+}
+
+const navigateToFavorites = () => {
+  clickTestID(TestIDEnum.FAVORITES)
+}
+
+const navigateToTrash = () => {
+  clickTestID(TestIDEnum.NOTE_TRASH)
 }
 
 const testIDShouldContain = (testIDEnum: TestIDEnum, textEnum: TextEnum) => {
@@ -33,6 +49,9 @@ export {
   clickDynamicTestID,
   clickTestID,
   defaultInit,
+  navigateToAllNotes,
+  navigateToFavorites,
+  navigateToTrash,
   testIDShouldContain,
   testIDShouldExist,
   testIDShouldNotExist,
