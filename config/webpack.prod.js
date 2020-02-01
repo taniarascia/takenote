@@ -7,10 +7,27 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const common = require('./webpack.common.js')
 
 module.exports = merge(common, {
+  /**
+   * Mode
+   *
+   * Use production optimizations.
+   */
   mode: 'production',
+
+  /**
+   * Devtool
+   *
+   * No source maps in production - creates the fastest build.
+   */
   devtool: false,
+
   module: {
     rules: [
+      /**
+       * Styles (production)
+       *
+       * Load into files instead of injecting into the head.
+       */
       {
         test: /\.(scss|css)$/,
         use: [
@@ -24,6 +41,11 @@ module.exports = merge(common, {
           'sass-loader',
         ],
       },
+      /**
+       * Images (production)
+       *
+       * Add image webpack loader for image optimization.
+       */
       {
         test: /\.(?:ico|gif|png|jpg|jpeg|webp|svg)$/i,
         use: [
@@ -38,7 +60,13 @@ module.exports = merge(common, {
       },
     ],
   },
+
   plugins: [
+    /**
+     * MiniCssExtractPlugin
+     *
+     * Extracts CSS into separate files.
+     */
     new MiniCssExtractPlugin({
       filename: 'styles/[name].css',
       chunkFilename: 'styles/[name].css',
@@ -48,15 +76,28 @@ module.exports = merge(common, {
       exclude: ['/node_modules/'],
     }),
   ],
+
+  /**
+   * Performance
+   *
+   * Set max asset sizes but do not show additional hints on production build.
+   */
   performance: {
     hints: false,
     maxEntrypointSize: 512000,
     maxAssetSize: 512000,
   },
+
+  /**
+   * Optimization
+   *
+   * Production minimizing of JavaSvript and CSS assets.
+   */
   optimization: {
     minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})],
     runtimeChunk: 'single',
     splitChunks: {
+      // Cache vendors since this code won't change very often
       cacheGroups: {
         vendor: {
           test: /[\\/]node_modules[\\/](react|react-dom|lodash|axios)[\\/]/,

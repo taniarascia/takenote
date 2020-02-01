@@ -1,4 +1,5 @@
 import express from 'express'
+
 import authHandler from '../handlers/auth'
 
 const router = express.Router()

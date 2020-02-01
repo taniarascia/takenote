@@ -9,13 +9,14 @@
     "isolatedModules": true,
     "noImplicitAny": true,
     "allowJs": false,
-    "target": "esnext",
+    "target": "es5",
     "module": "commonjs",
     "lib": ["dom", "dom.iterable", "esnext"],
     "jsx": "react",
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "paths": {
+      // Allow `@/` to map to `src/client/`
       "@/*": ["./src/client/*"]
     }
   },
