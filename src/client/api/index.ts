@@ -26,7 +26,7 @@ const getUserNotes = () => (resolve: PromiseCallbackFun, reject: PromiseCallback
 
   // check if there is any data in localstorage
   if (!notes) {
-    // if there is none (i.e. new user), show the wecomeNote
+    // if there is none (i.e. new user), show the welcomeNote
     resolve(welcomeNote)
   } else if (JSON.parse(notes)) {
     // if there is (existing user), show the user's notes

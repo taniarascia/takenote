@@ -1,22 +1,19 @@
 // testCategoryHelperUtils.ts
 // Utility functions for use in category tests
 
-import { getTestID, TestIDEnum, TextEnum } from './testHelperEnums'
+import { TestIDEnum, TextEnum } from './testHelperEnums'
+import { getTestID, wrapWithTestIDTag } from './testHelperUtils'
 
 const addCategory = (categoryName: string) => {
-  cy.findByLabelText(TextEnum.ADD_CATEGORY)
-    .should('exist')
+  getTestID(TestIDEnum.ADD_CATEGORY_BUTTON)
+    .should('contain', TextEnum.ADD_CATEGORY)
     .click()
 
-  cy.findByPlaceholderText(TextEnum.NEW_CATEGORY)
-    .type(`${categoryName}`)
-    .parent()
-    .submit()
+  getTestID(TestIDEnum.NEW_CATEGORY_INPUT).type(categoryName)
 
-  return cy
-    .findByText(categoryName)
-    .should('exist')
-    .click()
+  getTestID(TestIDEnum.NEW_CATEGORY_FORM).submit()
+
+  cy.contains(categoryName)
 }
 
 const assertCategoryDoesNotExist = (categoryName: string) => {
@@ -30,13 +27,10 @@ const navigateToCategory = (categoryName: string) => {
 }
 
 const removeCategory = (categoryName: string) => {
-  cy.findByText(categoryName)
+  cy.contains(categoryName)
     .parent()
-    .within(() => {
-      cy.queryByLabelText(TextEnum.REMOVE_CATEGORY)
-        .trigger('mouseover')
-        .click()
-    })
+    .find(wrapWithTestIDTag(TestIDEnum.REMOVE_CATEGORY))
+    .click()
 }
 
 const selectMoveToCategoryOption = (categoryName: string) => {

@@ -4,6 +4,7 @@
 import { TestIDEnum, TextEnum } from './utils/testHelperEnums'
 import {
   defaultInit,
+  getNoteCount,
   navigateToAllNotes,
   navigateToFavorites,
   navigateToTrash,
@@ -11,7 +12,7 @@ import {
   testIDShouldNotExist,
 } from './utils/testHelperUtils'
 import {
-  assertActiveNoteIsNew,
+  assertNewNoteCreated,
   assertNoteEditorCharacterCount,
   assertNoteEditorLineCount,
   assertNoteListLengthEquals,
@@ -19,11 +20,13 @@ import {
   assertNoteOptionsOpened,
   clickCreateNewNote,
   clickEmptyTrash,
+  clickNoteAtIndex,
   clickNoteOptionDeleteNotePermanently,
   clickNoteOptionFavorite,
   clickNoteOptionRestoreFromTrash,
   clickNoteOptionTrash,
   clickNoteOptions,
+  clickSyncNotes,
   typeNoteEditor,
 } from './utils/testNotesHelperUtils'
 
@@ -39,21 +42,26 @@ describe('Manage notes test', () => {
   beforeEach(() => {
     navigateToAllNotes()
     clickCreateNewNote()
-    assertNoteListLengthEquals(1)
+  })
+
+  it('should have a welcome note', () => {
+    assertNoteListLengthEquals(2)
+    clickNoteAtIndex(1)
+    cy.get('.note-list-each.active').should('contain', TextEnum.WELCOME_TO_TAKENOTE)
   })
 
   it('should try to create a few new notes', () => {
     clickCreateNewNote()
-    assertNoteListLengthEquals(1)
-    assertActiveNoteIsNew()
+    assertNoteListLengthEquals(2)
+    assertNewNoteCreated()
 
     clickCreateNewNote()
-    assertNoteListLengthEquals(1)
-    assertActiveNoteIsNew()
+    assertNoteListLengthEquals(2)
+    assertNewNoteCreated()
 
     clickCreateNewNote()
-    assertNoteListLengthEquals(1)
-    assertActiveNoteIsNew()
+    assertNoteListLengthEquals(2)
+    assertNewNoteCreated()
   })
 
   it('should update a note', () => {
@@ -124,7 +132,6 @@ describe('Manage notes test', () => {
     // make sure the new note is in the trash
     navigateToTrash()
     assertNoteListLengthEquals(1)
-    assertActiveNoteIsNew()
   })
 
   it('should empty notes in trash', () => {
@@ -158,24 +165,50 @@ describe('Manage notes test', () => {
     testIDShouldNotExist(TestIDEnum.EMPTY_TRASH_BUTTON)
   })
 
-  it('should restore the active note in the trash', () => {
+  it('should restore the active note in the trash', function() {
+    getNoteCount('allNoteStartCount')
+
     // move note to trash and make sure All Notes is empty
     clickNoteOptions()
     clickNoteOptionTrash()
-    assertNoteListLengthEquals(0)
+    cy.then(() => assertNoteListLengthEquals(this.allNoteStartCount - 1))
 
     // navigate to trash and restore the active note
     navigateToTrash()
+    getNoteCount('trashStartCount')
     clickNoteOptions()
     testIDShouldContain(TestIDEnum.NOTE_OPTION_RESTORE_FROM_TRASH, TextEnum.RESTORE_FROM_TRASH)
     clickNoteOptionRestoreFromTrash()
-    assertNoteListLengthEquals(0)
+    cy.then(() => assertNoteListLengthEquals(this.trashStartCount - 1))
 
     // assert the empty trash button is gone
     testIDShouldNotExist(TestIDEnum.EMPTY_TRASH_BUTTON)
 
     // make sure the note is back in All Notes
     navigateToAllNotes()
-    assertNoteListLengthEquals(1)
+    assertNoteListLengthEquals(2)
+  })
+
+  it('should sync some notes', function() {
+    // start with a refresh so we know our current saved state
+    cy.reload()
+    getNoteCount('allNoteStartCount')
+
+    // create a new note and refresh without syncing
+    clickCreateNewNote()
+    typeNoteEditor('note1')
+    cy.reload()
+    cy.then(() => assertNoteListLengthEquals(this.allNoteStartCount))
+
+    // create a couple new notes and sync them
+    clickCreateNewNote()
+    typeNoteEditor('note2')
+    clickCreateNewNote()
+    typeNoteEditor('note3')
+    clickSyncNotes()
+
+    // make sure notes persisted
+    cy.reload()
+    cy.then(() => assertNoteListLengthEquals(this.allNoteStartCount + 2))
   })
 })
