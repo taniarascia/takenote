@@ -65,7 +65,7 @@ npm run build && npm run start
 
 ```bash
 docker build -t takenote .
-docker run -p 80:80 takenote
+docker run -p 5000:5000 takenote
 ```
 
 ### Seed data
@@ -133,6 +133,7 @@ Thanks goes to these wonderful people:
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 ## Acknowledgements
