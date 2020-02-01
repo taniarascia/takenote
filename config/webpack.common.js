@@ -51,23 +51,21 @@ module.exports = {
         },
       },
 
+      /**
+       * Markdown
+       *
+       * Parse raw string.
+       */
       {
         test: /\.md$/,
-        use: [
-          {
-            loader: 'html-loader',
-          },
-          {
-            loader: 'markdown-loader',
-          },
-        ],
+        use: 'raw-loader',
       },
     ],
   },
 
   resolve: {
     // Resolve in this order
-    extensions: ['*', '.js', '.jsx', '.ts', '.tsx'],
+    extensions: ['*', '.js', '.jsx', '.ts', '.tsx', '.md'],
     // Allow `@/` to map to `src/client/`
     alias: {
       '@': path.resolve(__dirname, '../src/client'),

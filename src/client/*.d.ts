@@ -8,4 +8,9 @@ declare module '*.svg' {
   export default value
 }
 
+declare module '*.md' {
+  const content: string
+  export = content
+}
+
 declare module 'mousetrap'
