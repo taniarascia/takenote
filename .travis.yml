@@ -17,7 +17,11 @@ cache:
     # we also need to cache folder with Cypress binary
     - ~/.cache
 
+services:
+  - docker
+
 install:
+  # Install dependencies
   - 'npm ci'
 
 before_script:
@@ -27,3 +31,13 @@ before_script:
 script:
   # Run unit, component, and e2e tests
   - npm run coveralls && npm run e2e
+
+deploy:
+  provider: script
+  script:
+    - docker build -t taniarascia/takenote .
+    - export GIT_VERSION=$(git describe --abbrev --always --tags)
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+    - docker push taniarascia/takenote:${GIT_VERSION}
+  on:
+    branch: initiate-express-server
