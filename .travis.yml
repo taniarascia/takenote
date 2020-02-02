@@ -5,14 +5,12 @@ node_js:
 
 dist: xenial
   addons:
+    apt:
+      packages:
+        # Ubuntu 16+ does not install this dependency by default, so we need to install it ourselves
+        - libgconf-2-4
     snaps:
       - doctl
-
-addons:
-  apt:
-    packages:
-      # Ubuntu 16+ does not install this dependency by default, so we need to install it ourselves
-      - libgconf-2-4
 
 cache:
   # Caches $HOME/.npm when npm ci is default script command
