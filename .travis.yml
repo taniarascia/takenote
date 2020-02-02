@@ -3,6 +3,11 @@ language: node_js
 node_js:
   - '12'
 
+dist: xenial
+  addons:
+    snaps:
+      - doctl
+
 addons:
   apt:
     packages:
