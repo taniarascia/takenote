@@ -32,9 +32,6 @@ script:
   # Run unit, component, and e2e tests
   - npm run coveralls && npm run e2e
 
-after_script:
-  - pkill node
-
 deploy:
   provider: script
   script: bash deploy.sh
