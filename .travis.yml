@@ -3,16 +3,12 @@ language: node_js
 node_js:
   - '12'
 
-dist: xenial
-  addons:
-    snaps:
-      - doctl
-
 addons:
   apt:
     packages:
       # Ubuntu 16+ does not install this dependency by default, so we need to install it ourselves
       - libgconf-2-4
+      - snapd
 
 cache:
   # Caches $HOME/.npm when npm ci is default script command
@@ -28,6 +24,7 @@ services:
 
 install:
   # Install dependencies for tests
+  - 'sudo snap install doctl'
   - 'npm ci'
 
 before_script:
