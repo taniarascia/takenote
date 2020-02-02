@@ -2,7 +2,7 @@
 set -e
 
 IMAGE="taniarascia/takenote"
-GIT_VERSION=$(git describe --abbrev --always --tags)
+GIT_VERSION=$(git describe --always --abbrev --tags --long)
 
 docker build -t ${IMAGE}:${GIT_VERSION} .
 docker tag ${IMAGE}:${VERSION} ${IMAGE}:latest
