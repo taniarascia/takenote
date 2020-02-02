@@ -32,8 +32,11 @@ script:
   # Run unit, component, and e2e tests
   - npm run coveralls && npm run e2e
 
+after_script:
+  - pkill node
+
 deploy:
   provider: script
-  script: bash push-docker.sh
+  script: bash deploy.sh
   on:
     branch: initiate-express-server
