@@ -18,14 +18,15 @@ cache:
     - ~/.cache
 
 services:
+  # Use Docker command line
   - docker
 
 install:
-  # Install dependencies
+  # Install dependencies for tests
   - 'npm ci'
 
 before_script:
-  # Start server and client
+  # Start server and client for tests
   - npm run dev &
 
 script:
@@ -33,6 +34,7 @@ script:
   - npm run coveralls && npm run e2e
 
 deploy:
+  # Build Docker container and push to Dockerhub
   provider: script
   script: bash deploy.sh
   on:
