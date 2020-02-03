@@ -29,6 +29,7 @@ install:
 
 before_script:
   # Start server and client for tests
+  - echo -e "Host 165.227.60.33\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
   - npm run dev &
 
 script:
