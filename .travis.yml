@@ -4,6 +4,8 @@ node_js:
   - '12'
 
 addons:
+  ssh_known_hosts:
+    - 165.227.60.33
   apt:
     packages:
       # Ubuntu 16+ does not install this dependency by default, so we need to install it ourselves
@@ -29,7 +31,6 @@ install:
 
 before_script:
   # Start server and client for tests
-  - echo -e "Host 165.227.60.33\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
   - npm run dev &
 
 script:
