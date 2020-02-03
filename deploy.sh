@@ -16,7 +16,7 @@ echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 docker push ${IMAGE}:${GIT_VERSION}
 
 # Login to DigitalOcean command line
-doctl auth init –-access-token "$DO_ACCESS_TOKEN" 
+doctl auth init -t "$DO_ACCESS_TOKEN" 
 
 # Log into Droplet, pull the latest container, and stop and start Docker
 doctl compute ssh "$DROPLET" --ssh-command docker pull ${IMAGE}:${GIT_VERSION} && 
