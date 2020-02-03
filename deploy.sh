@@ -22,4 +22,4 @@ doctl auth init -t "$DO_ACCESS_TOKEN"
 doctl compute ssh "$DROPLET" --ssh-command docker pull ${IMAGE}:${GIT_VERSION} && 
 export CURRENT_CONTAINER=$(docker ps | grep takenote | awk '{print $1}') && 
 docker stop CURRENT_CONTAINER && 
-docker start ${IMAGE}:${GIT_VERSION}
+docker run -p 80:5000 ${IMAGE}:${GIT_VERSION}
