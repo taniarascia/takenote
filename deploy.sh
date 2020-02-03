@@ -24,6 +24,9 @@ chmod 600 deploy_key
 
 # Log into Droplet, pull the latest container, and stop and start Docker
 CONTAINER_ID=$(doctl compute ssh ${DROPLET} --ssh-key-path deploy_key --ssh-command 'docker ps | grep takenote | cut -d" " -f1')
+
+echo "Stopping container ID ${CONTAINER_ID} and starting ${IMAGE}:${GIT_VERSION}"
+
 doctl compute ssh ${DROPLET} --ssh-key-path deploy_key --ssh-command "docker pull ${IMAGE}:${GIT_VERSION} && 
 docker stop ${CONTAINER_ID} && 
-docker run -p 80:5000 ${IMAGE}:${GIT_VERSION}"
+docker run -d -p 80:5000 ${IMAGE}:${GIT_VERSION}"
