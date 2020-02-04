@@ -8,7 +8,6 @@ import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
 import App from '@/containers/App'
 import rootSaga from '@/sagas'
 import rootReducer from '@/slices'
-import * as serviceWorker from '@/serviceWorker'
 import history from '@/helpers/history'
 
 import '@/styles/index.scss'
@@ -29,5 +28,3 @@ render(
   </Provider>,
   document.getElementById('root')
 )
-
-serviceWorker.register()
