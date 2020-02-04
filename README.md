@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./logo/logo-color-sm.png">
+  <img src="./docs/logo.png">
 </p>
 
 <p align="center">
@@ -13,7 +13,7 @@
 
 > **Warning**: TakeNote is still in active development. You can visit [takenote.dev](https://takenote.dev) to see the work in progress, but your account and the notes you create are **temporary** will not be persisted. All data will be lost once GitHub integration is complete.
 
-![Screenshot](./screenshot.png)
+![Screenshot](./docs/screenshot.png)
 
 ### Simple
 
@@ -45,17 +45,29 @@ cd takenote
 npm i
 ```
 
-### Run
+### Development
+
+Node/Express server on port `5000` and hot webpack server on port `3000`.
 
 ```bash
-npm start
+npm run dev
+```
+
+### Production
+
+Express serves React on port `5000`.
+
+```bash
+npm run build && npm run start
 ```
 
 ### Run in Docker
 
+Docker container is [also available on the Dockerhub registry](https://hub.docker.com/r/taniarascia/takenote).
+
 ```bash
 docker build -t takenote .
-docker run -p 80:80 takenote
+docker run -p 5000:5000 takenote
 ```
 
 ### Seed data
@@ -123,6 +135,7 @@ Thanks goes to these wonderful people:
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 ## Acknowledgements

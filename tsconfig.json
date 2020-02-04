@@ -1,21 +1,25 @@
 {
   "compilerOptions": {
-    "baseUrl": "src",
-    "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "skipLibCheck": true,
-    "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true,
+    "baseUrl": ".",
+    "outDir": "./dist",
     "strict": true,
     "forceConsistentCasingInFileNames": true,
-    "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true,
-    "jsx": "react",
     "noImplicitAny": true,
-    "allowJs": true
+    "allowJs": false,
+    "target": "es5",
+    "module": "commonjs",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "jsx": "react",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "paths": {
+      // Allow `@/` to map to `src/client/`
+      "@/*": ["./src/client/*"]
+    }
   },
-  "include": ["src"]
+  "include": ["./src/**/*", "./global.d.ts"],
+  "exclude": ["./dist/", "node_modules", "webpack.*.js"]
 }

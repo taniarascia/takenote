@@ -1,7 +1,44 @@
 language: node_js
+
 node_js:
   - '12'
+
+addons:
+  apt:
+    packages:
+      # Ubuntu 16+ does not install this dependency by default, so we need to install it ourselves
+      - libgconf-2-4
+      - snapd
+
+cache:
+  # Caches $HOME/.npm when npm ci is default script command
+  # Caches node_modules in all other cases
+  npm: true
+  directories:
+    # we also need to cache folder with Cypress binary
+    - ~/.cache
+
+services:
+  # Use Docker command line
+  - docker
+
 install:
-  - 'npm ci'
+  # Install dependencies for tests
+  - echo "MTY1LjIyNy42MC4zMyBlY2RzYS1zaGEyLW5pc3RwMjU2IEFBQUFFMlZqWkhOaExYTm9ZVEl0Ym1semRIQXlOVFlBQUFBSWJtbHpkSEF5TlRZQUFBQkJCTVVPRlVVT3BxSzNmWkMzUUxJNmsrL2Vlc1l5YVVaNGZXbkRUaWNia1pjMmJIR1ltMG4wVk9RaW5mK0NYY2xhWmZTaVBNQ0xZakJUUzkrUWxWSFpPZ009" | base64 -d >> $HOME/.ssh/known_hosts
+  - sudo snap install doctl
+  - npm ci
+
+before_script:
+  # Start server and client for tests
+  - npm run dev &
+
 script:
-  - npm run coveralls
+  # Run unit, component, and e2e tests
+  - npm run coveralls && npm run e2e
+
+deploy:
+  # Build Docker container and push to Dockerhub
+  provider: script
+  script: bash deploy.sh
+  on:
+    branch: master

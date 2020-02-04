@@ -1,19 +1,22 @@
 {
   "name": "takenote",
-  "version": "0.2.0",
-  "description": "A web-based note-taking app with GitHub sync and Markdown support",
+  "version": "0.3.0",
+  "description": "A web-based note-taking app with GitHub sync and Markdown support.",
+  "author": "Tania Rascia",
   "private": false,
+  "main": "src/server/index.js",
+  "licence": "MIT",
   "scripts": {
-    "a11y:fix": "eslint src --ext tsx --config './a11y.json' --fix",
-    "build": "react-scripts build",
-    "contributors:add": "all-contributors add",
-    "contributors:generate": "all-contributors generate",
-    "coveralls": "react-scripts test --ci --coverage --watchAll=false && cat ./coverage/lcov.info | coveralls",
-    "eject": "react-scripts eject",
-    "postinstall": "patch-package",
-    "start": "react-scripts start",
-    "test": "react-scripts test",
-    "e2e": "cypress open"
+    "dev": "concurrently 'npm run server' 'npm run client'",
+    "client": "cross-env NODE_ENV=development webpack-dev-server --config config/webpack.dev.js",
+    "server": "nodemon",
+    "build": "cross-env NODE_ENV=production webpack --config config/webpack.prod.js",
+    "start": "cross-env NODE_ENV=production node -r ts-node/register/transpile-only src/server/index.ts",
+    "test": "jest",
+    "coveralls": "jest --ci --coverage --watchAll=false && cat ./coverage/lcov.info | coveralls",
+    "e2e": "cypress run",
+    "e2e:open": "cypress open",
+    "postinstall": "patch-package"
   },
   "repository": {
     "type": "git",
@@ -22,18 +25,16 @@
   "keywords": [
     "notes",
     "notes-app",
+    "note-taking",
     "markdown",
     "markdown-editor",
-    "note-taking",
     "redux",
     "react",
     "typescript",
     "react-hooks",
     "react-hooks-redux",
-    "gist"
+    "github"
   ],
-  "author": "Tania Rascia",
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/taniarascia/takenote/issues"
   },
@@ -45,123 +46,100 @@
   },
   "lint-staged": {
     "**/*.{js,jsx,ts,tsx}": [
-      "eslint --fix",
-      "git add"
+      "eslint --fix"
     ],
     "**/*.{json,css,scss,md}": [
-      "prettier --write",
-      "git add"
+      "prettier --write"
     ]
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "prettier": {
-    "bracketSpacing": true,
-    "printWidth": 100,
-    "semi": false,
-    "singleQuote": true,
-    "tabWidth": 2,
-    "trailingComma": "es5"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "plugin:import/errors",
-      "plugin:import/typescript",
-      "plugin:import/warnings",
-      "plugin:prettier/recommended",
-      "prettier/react"
-    ],
-    "plugins": [
-      "import"
-    ],
-    "rules": {
-      "import/order": [
-        "error",
-        {
-          "groups": [
-            "builtin",
-            "external",
-            "internal",
-            "parent",
-            "sibling",
-            "index",
-            "unknown"
-          ],
-          "newlines-between": "always"
-        }
-      ]
-    },
-    "settings": {
-      "import/resolver": {
-        "node": {
-          "paths": [
-            "src"
-          ]
-        }
-      }
-    }
   },
   "dependencies": {
-    "@reduxjs/toolkit": "^1.1.0",
-    "@types/codemirror": "0.0.78",
-    "@types/jest": "^24.9.0",
-    "@types/lodash": "^4.14.141",
-    "@types/node": "12.7.8",
-    "@types/react": "16.9.3",
-    "@types/react-dom": "16.9.1",
-    "@types/react-helmet-async": "^1.0.1",
-    "@types/react-redux": "^7.1.4",
-    "@types/react-router-dom": "^5.1.0",
-    "@types/uuid": "^3.4.5",
-    "codemirror": "^5.49.0",
+    "@reduxjs/toolkit": "^1.2.3",
+    "axios": "^0.19.1",
+    "codemirror": "^5.51.0",
+    "compression": "^1.7.4",
+    "cookie-parser": "^1.4.4",
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "helmet": "^3.21.2",
     "lodash": "^4.17.15",
     "moment": "^2.24.0",
     "mousetrap": "^1.6.3",
     "mousetrap-global-bind": "^1.1.0",
-    "node-sass": "^4.13.1",
-    "patch-package": "^6.2.0",
-    "react": "^16.9.0",
+    "prettier": "^1.19.1",
+    "react": "^16.12.0",
     "react-codemirror2": "^6.0.0",
-    "react-dom": "^16.9.0",
+    "react-dom": "^16.12.0",
     "react-feather": "^2.0.3",
     "react-helmet-async": "^1.0.4",
-    "react-markdown": "^4.2.2",
-    "react-redux": "^7.1.1",
+    "react-markdown": "^4.3.1",
+    "react-redux": "^7.1.3",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "^3.3.0",
-    "redux": "^4.0.4",
-    "redux-saga": "^1.1.1",
-    "typescript": "3.6.3",
-    "uuid": "^3.3.3"
+    "redux": "^4.0.5",
+    "redux-saga": "^1.1.3",
+    "uuid": "^3.4.0"
   },
   "devDependencies": {
-    "@bahmutov/add-typescript-to-cypress": "^2.1.2",
+    "@cypress/webpack-preprocessor": "^4.1.1",
     "@testing-library/cypress": "^5.0.2",
-    "@testing-library/jest-dom": "^4.1.2",
-    "@testing-library/react": "^9.3.0",
-    "@types/react-router": "^5.1.3",
-    "all-contributors-cli": "^6.9.2",
-    "coveralls": "^3.0.7",
-    "cypress": "^3.4.1",
-    "eslint-config-prettier": "^6.4.0",
-    "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-prettier": "^3.1.1",
-    "husky": "^3.0.9",
+    "@testing-library/jest-dom": "^5.0.0",
+    "@testing-library/react": "^9.4.0",
+    "@types/axios": "^0.14.0",
+    "@types/codemirror": "0.0.82",
+    "@types/compression": "^1.0.1",
+    "@types/cookie-parser": "^1.4.2",
+    "@types/cors": "^2.8.6",
+    "@types/express": "^4.17.2",
+    "@types/helmet": "0.0.45",
+    "@types/jest": "^24.9.0",
+    "@types/lodash": "^4.14.149",
+    "@types/moment": "^2.13.0",
+    "@types/node": "^13.1.8",
+    "@types/react": "^16.9.17",
+    "@types/react-dom": "^16.9.4",
+    "@types/react-helmet-async": "^1.0.3",
+    "@types/react-redux": "^7.1.6",
+    "@types/react-router": "^5.1.4",
+    "@types/react-router-dom": "^5.1.3",
+    "@types/uuid": "^3.4.6",
+    "@typescript-eslint/eslint-plugin": "^2.17.0",
+    "@typescript-eslint/parser": "^2.17.0",
+    "clean-webpack-plugin": "^3.0.0",
+    "concurrently": "^5.0.2",
+    "copy-webpack-plugin": "^5.1.1",
+    "coveralls": "^3.0.9",
+    "cross-env": "^6.0.3",
+    "css-loader": "^3.4.2",
+    "cypress": "^3.8.2",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.9.0",
+    "eslint-import-resolver-alias": "^1.1.2",
+    "eslint-plugin-import": "^2.20.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "eslint-plugin-react": "^7.18.0",
+    "file-loader": "^5.0.2",
+    "html-webpack-plugin": "^3.2.0",
+    "husky": "^4.0.10",
+    "image-webpack-loader": "^6.0.0",
     "jest": "^24.9.0",
-    "lint-staged": "^9.4.2",
-    "prettier": "^1.18.2",
-    "ts-jest": "^24.1.0"
+    "jest-extended": "^0.11.5",
+    "jest-raw-loader": "^1.0.1",
+    "lint-staged": "^10.0.1",
+    "mini-css-extract-plugin": "^0.9.0",
+    "node-sass": "^4.13.1",
+    "nodemon": "^2.0.2",
+    "optimize-css-assets-webpack-plugin": "^5.0.3",
+    "patch-package": "^6.2.0",
+    "raw-loader": "^4.0.0",
+    "sass-loader": "^8.0.2",
+    "style-loader": "^1.1.3",
+    "ts-jest": "^24.3.0",
+    "ts-loader": "^6.2.1",
+    "ts-node": "^8.6.2",
+    "typescript": "^3.7.5",
+    "webpack": "^4.41.5",
+    "webpack-cli": "^3.3.10",
+    "webpack-dev-server": "^3.10.1",
+    "webpack-merge": "^4.2.2"
   }
 }
