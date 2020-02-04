@@ -6,7 +6,6 @@
  <img src="https://img.shields.io/badge/License-MIT-blue.svg">
   <a href="#contributors"><img src="https://img.shields.io/badge/all_contributors-31-orange.svg?style=flat-square)"></a>
    <a href="https://travis-ci.org/taniarascia/takenote"><img src="https://travis-ci.org/taniarascia/takenote.svg?branch=master"></a>
-  <a href="https://app.netlify.com/sites/tnote/deploys"><img src="https://api.netlify.com/api/v1/badges/a0e055de-cab8-4217-80dd-5bd769b7d478/deploy-status"></a>
 </p>
 
 <p align="center">A web-based note-taking app with GitHub sync and Markdown support. (WIP)</p>
@@ -47,32 +46,55 @@ npm i
 
 ### Development
 
-Node/Express server on port `5000` and hot webpack server on port `3000`.
+In the development environment, an Express server is running on port `5000` to handle all API calls, and a hot Webpack dev server is running on port `3000` for the React front end. To run both of these servers concurrently, run the `dev` command.
 
 ```bash
+# Run client and server concurrently
 npm run dev
 ```
 
+Go to `localhost:3000` to view the app.
+
+API requests will be proxied to port `5000` automatically.
+
 ### Production
 
-Express serves React on port `5000`.
+In production, the React app is built, and Express redirects all incoming requests to the `dist` directory on port `5000`.
 
 ```bash
+# Build client for production and start server
 npm run build && npm run start
 ```
 
+Go to `localhost:5000` to view the app.
+
 ### Run in Docker
 
-Docker container is [also available on the Dockerhub registry](https://hub.docker.com/r/taniarascia/takenote).
+Docker containers are [also available on the Dockerhub registry](https://hub.docker.com/r/taniarascia/takenote).
 
 ```bash
 docker build -t takenote .
 docker run -p 5000:5000 takenote
+# Go to localhost:5000 to view the application
 ```
 
 ### Seed data
 
 To seed the app with some test data, paste the contents of `seed.js` into your browser console.
+
+## Testing
+
+Run unit and component tests.
+
+```bash
+npm run test
+```
+
+Run Cypress e2e tests.
+
+```bash
+npm run cypress:open
+```
 
 ## Contributing
 
@@ -140,7 +162,7 @@ Thanks goes to these wonderful people:
 
 ## Acknowledgements
 
-- A big thank you to [David Bock](https://dkbock.com/) for logo design
+- A big thank you to [David Bock](https://dkbock.com/) for logo design.
 
 ## Author
 
