@@ -41,4 +41,4 @@ deploy:
   provider: script
   script: bash deploy.sh
   on:
-    branch: initiate-express-server
+    branch: master

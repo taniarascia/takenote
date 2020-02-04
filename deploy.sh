@@ -38,6 +38,6 @@ echo "Stopping container ID ${CONTAINER_ID} and starting ${IMAGE}:${GIT_VERSION}
 
 doctl compute ssh ${DROPLET} --ssh-key-path deploy_key --ssh-command "docker pull ${IMAGE}:${GIT_VERSION} && 
 docker stop ${CONTAINER_ID} && 
-docker run -d -p 80:5000 ${IMAGE}:${GIT_VERSION} &&
+docker run --restart unless-stopped -d -p 80:5000 ${IMAGE}:${GIT_VERSION} &&
 docker system prune -f &&
 docker image prune -a -f"

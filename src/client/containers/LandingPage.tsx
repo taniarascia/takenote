@@ -30,7 +30,7 @@ const LandingPage: React.FC = () => {
           <h1>The Note-Taking App for Developers</h1>
           <p className="subtitle">
             {`TakeNote is a free, open-source, Markdown note-taking app for the web. All the features
-            you need, and nothing you don't. Testing CI/CD 2.`}
+            you need, and nothing you don't.`}
           </p>
           <p className="cta">
             <Link to="/app" className="button">
