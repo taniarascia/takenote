@@ -5,7 +5,7 @@ node_js:
 
 addons:
   ssh_known_hosts:
-    - 165.227.60.33
+    secure: 'd66vS+qPCSObYgcRzrM7LF+pym3iXZUZ7jsJ1BqxOZeuZrtcJrTDDowhJ56+/eqpJA+bCqG6727tQVfr0nBhlLh8mR5bRUKGiwe9AxH6yLJXg0Dv8QAgTAxznO6L5H/OODHmCQ0RFXDHBXRbSQwtyV5JnI0UdYvq7ebxGZvlKrBnFQkpVn4dPnoBLT7Vp/wo1hGRmK0cbUzp0W7XowMP81q7AKA0C3LT3qtnWQOOlKxYtAq85M+b6EljRGde+dYzWetpOUxPYfkIB3T1maL2khvjEPVgkGv/cmpOWTxXae4uVlPj890RT4x8qQp/wfAMqpm+y0l735sXtirUojveUgkh6APAdnIQytveLaWDm5LLW4tg1MKtxRcWD/fCVnyzIGb+QX+rBZ++EZZ4EOXiK+btn2+xH1FSveiFwcRm6FMClzA6KK7AGlI1eP6WBD1xsxTEUx/SeQo3jWDgAygaBS+cWQWH0wfsTUzumls+NaeWFWGqsTDya1kZQltVeLQs+Py0Q313VTtloFKvldNHF2XKyNPVo4ZTsBFCDGQdlhwzSBTebiG2cS5QaVHSN7YIMwvafUAMdjm1DIQAoyJpklkuHRfGxJQ5Nekvdxs5lgbXYIbSiJsKVyXcDd43y5HETZ2Wq7/2peRAGB2uj0rH/t71XRUJKfM0vFKbRkvF7BM='
   apt:
     packages:
       # Ubuntu 16+ does not install this dependency by default, so we need to install it ourselves
