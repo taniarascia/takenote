@@ -24,8 +24,9 @@ services:
 
 install:
   # Install dependencies for tests
-  - 'sudo snap install doctl'
-  - 'npm ci'
+  - echo "MTY1LjIyNy42MC4zMyBlY2RzYS1zaGEyLW5pc3RwMjU2IEFBQUFFMlZqWkhOaExYTm9ZVEl0Ym1semRIQXlOVFlBQUFBSWJtbHpkSEF5TlRZQUFBQkJCTVVPRlVVT3BxSzNmWkMzUUxJNmsrL2Vlc1l5YVVaNGZXbkRUaWNia1pjMmJIR1ltMG4wVk9RaW5mK0NYY2xhWmZTaVBNQ0xZakJUUzkrUWxWSFpPZ009" | base64 -d >> $HOME/.ssh/known_hosts
+  - sudo snap install doctl
+  - npm ci
 
 before_script:
   # Start server and client for tests
@@ -35,9 +36,6 @@ script:
   # Run unit, component, and e2e tests
   - npm run coveralls && npm run e2e
 
-before_deploy:
-  # Authorize SSH host
-  - ssh-keyscan -t $TRAVIS_SSH_KEY_TYPES -H $SSH_HOST 2>&1 | tee -a ${TRAVIS_HOME}/.ssh/known_hosts
 deploy:
   # Build Docker container and push to Dockerhub
   provider: script
