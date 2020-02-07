@@ -3,7 +3,7 @@
 
 import { entryPoint, TestIDEnum, TextEnum } from './testHelperEnums'
 
-// takes a built string instead of a TestIDEnum prefer clickTestID() when possible
+// takes a built string instead of a TestIDEnum .. prefer clickTestID() when possible
 const clickDynamicTestID = (dynamicTestID: string) => {
   cy.get(wrapWithTestIDTag(dynamicTestID)).click()
 }
@@ -30,7 +30,7 @@ const getTestID = (testIDEnum: TestIDEnum) => {
   return cy.get(wrapWithTestIDTag(testIDEnum))
 }
 
-// sets sets the specified alias for the current folder note count, must be accessed
+// sets the specified alias for the current folder note count, must be accessed
 // through 'this' asynchronously (for example, .then())
 // note: test retrieving aliased variable must use regular 'function(){}' syntax for proper 'this' scope
 const getNoteCount = (noteCountAlias: string) => {

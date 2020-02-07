@@ -7,14 +7,14 @@ import {
   navigateToCategory,
   removeCategory,
   selectMoveToCategoryOption,
-} from './utils/testCategoryHelperUtils'
-import { dynamicTimeCategoryName } from './utils/testHelperEnums'
-import { defaultInit, navigateToAllNotes } from './utils/testHelperUtils'
+} from '../utils/testCategoryHelperUtils'
+import { dynamicTimeCategoryName } from '../utils/testHelperEnums'
+import { defaultInit, navigateToAllNotes } from '../utils/testHelperUtils'
 import {
   assertNoteListLengthEquals,
   clickCreateNewNote,
   clickNoteOptions,
-} from './utils/testNotesHelperUtils'
+} from '../utils/testNotesHelperUtils'
 
 describe('Category tests', () => {
   defaultInit()

@@ -1,7 +1,7 @@
 // note.spec.ts
 // Tests for managing notes (create, trash, favorite, etc)
 
-import { TestIDEnum, TextEnum } from './utils/testHelperEnums'
+import { TestIDEnum, TextEnum } from '../utils/testHelperEnums'
 import {
   defaultInit,
   getNoteCount,
@@ -10,7 +10,7 @@ import {
   navigateToTrash,
   testIDShouldContain,
   testIDShouldNotExist,
-} from './utils/testHelperUtils'
+} from '../utils/testHelperUtils'
 import {
   assertNewNoteCreated,
   assertNoteEditorCharacterCount,
@@ -20,7 +20,6 @@ import {
   assertNoteOptionsOpened,
   clickCreateNewNote,
   clickEmptyTrash,
-  clickNoteAtIndex,
   clickNoteOptionDeleteNotePermanently,
   clickNoteOptionFavorite,
   clickNoteOptionRestoreFromTrash,
@@ -28,7 +27,7 @@ import {
   clickNoteOptions,
   clickSyncNotes,
   typeNoteEditor,
-} from './utils/testNotesHelperUtils'
+} from '../utils/testNotesHelperUtils'
 
 describe('Manage notes test', () => {
   defaultInit()
@@ -44,23 +43,17 @@ describe('Manage notes test', () => {
     clickCreateNewNote()
   })
 
-  it('should have a welcome note', () => {
-    assertNoteListLengthEquals(2)
-    clickNoteAtIndex(1)
-    cy.get('.note-list-each.active').should('contain', TextEnum.WELCOME_TO_TAKENOTE)
-  })
-
   it('should try to create a few new notes', () => {
     clickCreateNewNote()
-    assertNoteListLengthEquals(2)
+    assertNoteListLengthEquals(1)
     assertNewNoteCreated()
 
     clickCreateNewNote()
-    assertNoteListLengthEquals(2)
+    assertNoteListLengthEquals(1)
     assertNewNoteCreated()
 
     clickCreateNewNote()
-    assertNoteListLengthEquals(2)
+    assertNoteListLengthEquals(1)
     assertNewNoteCreated()
   })
 
@@ -168,7 +161,7 @@ describe('Manage notes test', () => {
   it('should restore the active note in the trash', function() {
     getNoteCount('allNoteStartCount')
 
-    // move note to trash and make sure All Notes is empty
+    // move note to trash
     clickNoteOptions()
     clickNoteOptionTrash()
     cy.then(() => assertNoteListLengthEquals(this.allNoteStartCount - 1))
@@ -186,7 +179,7 @@ describe('Manage notes test', () => {
 
     // make sure the note is back in All Notes
     navigateToAllNotes()
-    assertNoteListLengthEquals(2)
+    cy.then(() => assertNoteListLengthEquals(this.allNoteStartCount))
   })
 
   it('should sync some notes', function() {
