@@ -6,14 +6,15 @@ export interface NoteOptionsButtonProps {
   handler: MouseEventHandler & KeyboardEventHandler
   icon: Icon
   text: string
+  optionType?: string
 }
 
 const NoteOptionsButton: React.FC<NoteOptionsButtonProps> = props => {
-  const { dataTestID, handler, icon: IconCmp, text, ...rest } = props
+  const { dataTestID, handler, optionType, icon: IconCmp, text, ...rest } = props
   return (
     <div
       data-testid={dataTestID}
-      className="nav-item"
+      className={optionType === 'delete' ? 'nav-item delete-option' : 'nav-item'}
       role="button"
       onClick={handler}
       onKeyPress={handler}

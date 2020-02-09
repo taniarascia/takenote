@@ -7,7 +7,7 @@
   flex-direction: column;
   border-right: 1px solid darken($app-sidebar-color, 10%);
   overflow-x: hidden;
-  z-index: 5;
+  z-index: 3;
 
   &-synced {
     display: block;
@@ -18,7 +18,7 @@
     width: $app-sidebar-width;
     padding: 0.5rem;
     background: $app-sidebar-color;
-    z-index: 6;
+    z-index: 4;
 
     .last-synced {
       display: flex;

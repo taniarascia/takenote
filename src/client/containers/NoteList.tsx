@@ -6,7 +6,7 @@ import _ from 'lodash'
 import { Folder } from '@/constants/enums'
 import NoteListButton from '@/components/NoteListButton'
 import NoteOptions from '@/containers/NoteOptions'
-import { getNoteTitle, sortByLastUpdated, sortByFavourites } from '@/helpers'
+import { getNoteTitle, sortByLastUpdated, sortByFavourites, shouldOpenContextMenu } from '@/helpers'
 import { useKey } from '@/helpers/hooks'
 import {
   addCategoryToNote,
@@ -56,12 +56,13 @@ const NoteList: React.FC = () => {
   const node = useRef<HTMLDivElement>(null)
 
   const handleNoteOptionsClick = (event: ReactMouseEvent, noteId: string = '') => {
-    // make sure we aren't getting any null values .. any element clicked should be a sub-class of element
-    if (
-      event.target instanceof Element &&
-      (event.target.classList.contains('note-options') || event.target instanceof SVGElement)
-    ) {
-      // make sure we have the necessary variables
+    const clicked = event.target
+
+    // Make sure we aren't getting any null values .. any element clicked should be a sub-class of element
+    if (!clicked) return
+
+    // Ensure the clicked target is supposed to open the context menu
+    if (shouldOpenContextMenu(clicked as Element)) {
       // note: don't check for MouseEvent because Cypress MouseEvent !== Window.MouseEvent
       if ('pageX' in event && 'pageY' in event) {
         setNoteOptionsPosition({ x: event.pageX, y: event.pageY })
@@ -70,7 +71,7 @@ const NoteList: React.FC = () => {
 
     event.stopPropagation()
 
-    if (node.current && node.current.contains(event.target as HTMLDivElement)) {
+    if (node.current && node.current.contains(clicked as HTMLDivElement)) {
       return
     } else {
       setNoteOptionsId(!noteOptionsId || noteOptionsId !== noteId ? noteId : '')
@@ -182,22 +183,26 @@ const NoteList: React.FC = () => {
                     <div className="icon">
                       <Star className="note-favorite" size={12} />
                     </div>
-                    <div className="truncate-text"> {noteTitle}</div>
+                    <div> {noteTitle}</div>
                   </>
                 ) : (
                   <>
                     <div className="icon" />
-                    <div className="truncate-text"> {noteTitle}</div>
+                    <div> {noteTitle}</div>
                   </>
                 )}
               </div>
               <div
                 // TODO: make testID based off of index when we add that to a NoteItem object
                 data-testid={'note-options-div-' + index}
-                className={noteOptionsId === note.id ? 'note-options active ' : 'note-options'}
+                className={
+                  noteOptionsId === note.id
+                    ? 'note-options context-menu-action active '
+                    : 'note-options context-menu-action'
+                }
                 onClick={event => handleNoteOptionsClick(event, note.id)}
               >
-                <MoreHorizontal size={15} />
+                <MoreHorizontal size={15} className="context-menu-action" />
               </div>
               {noteOptionsId === note.id && (
                 <div

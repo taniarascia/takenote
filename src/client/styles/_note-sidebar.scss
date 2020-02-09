@@ -168,6 +168,13 @@
             &:hover {
               background: #f0f0f0;
             }
+
+            &.delete-option {
+              &:hover {
+                background: $error;
+                color: white;
+              }
+            }
           }
 
           svg {

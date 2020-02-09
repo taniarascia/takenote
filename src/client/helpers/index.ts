@@ -94,3 +94,14 @@ export const sortByLastUpdated = (a: NoteItem, b: NoteItem) => {
   // the first note in the list should consistently sort after if it is created at the same time
   return dateA < dateB ? 1 : -1
 }
+
+export const shouldOpenContextMenu = (clicked: Element) => {
+  return (
+    (clicked instanceof Element &&
+      // If the element is explicitly a context menu action
+      clicked.classList.contains('context-menu-action')) ||
+    // Or if it's a sub-element of the context menu
+    (clicked.tagName === 'circle' &&
+      clicked.parentElement!.classList.contains('context-menu-action'))
+  )
+}
