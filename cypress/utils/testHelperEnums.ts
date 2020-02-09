@@ -44,7 +44,7 @@ enum TextEnum {
   MARK_AS_FAVORITE = 'Mark as favorite',
   MOVE_TO_TRASH = 'Move to trash',
   NEW_CATEGORY = 'New category...',
-  NEW_NOTE = 'New Note',
+  NEW_NOTE = 'New note',
   REMOVE_CATEGORY = 'Remove category',
   REMOVE_FAVORITE = 'Remove favorite',
   RESTORE_FROM_TRASH = 'Restore from trash',

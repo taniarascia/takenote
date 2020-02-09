@@ -322,7 +322,7 @@ const AppSidebar: React.FC = () => {
               data-testid="add-category-button"
               className="category-button"
               onClick={newTempCategoryHandler}
-              aria-label="Add category"
+              aria-label="Add Category"
             >
               <Plus size={15} color={iconColor} />
               Add Category
