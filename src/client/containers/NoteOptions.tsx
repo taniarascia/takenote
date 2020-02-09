@@ -62,6 +62,7 @@ const NoteOptions: React.FC<NoteOptionsProps> = ({ clickedNote }) => {
             handler={deleteNoteHandler}
             icon={X}
             text="Delete permanently"
+            optionType="delete"
           />
           <NoteOptionsButton
             dataTestID="note-option-restore-from-trash"
@@ -83,6 +84,7 @@ const NoteOptions: React.FC<NoteOptionsProps> = ({ clickedNote }) => {
             handler={trashNoteHandler}
             icon={Trash}
             text="Move to trash"
+            optionType="delete"
           />
         </>
       )}
