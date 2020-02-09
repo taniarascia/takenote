@@ -182,12 +182,12 @@ const NoteList: React.FC = () => {
                     <div className="icon">
                       <Star className="note-favorite" size={12} />
                     </div>
-                    <div> {noteTitle}</div>
+                    <div className="truncate-text"> {noteTitle}</div>
                   </>
                 ) : (
                   <>
                     <div className="icon" />
-                    <div> {noteTitle}</div>
+                    <div className="truncate-text"> {noteTitle}</div>
                   </>
                 )}
               </div>

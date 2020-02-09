@@ -9,13 +9,13 @@ IMAGE="taniarascia/takenote"
 # Git version with git hash and tags (if they exist) to be used as Docker tag
 GIT_VERSION=$(git describe --always --abbrev --tags --long)
 
-# Build and tag new Docker image and push up to Dockerhub
+# Build and tag new Docker image and push up to Docker Hub
 echo "Building and tagging new Docker image: ${IMAGE}:${GIT_VERSION}"
 
 docker build -t ${IMAGE}:${GIT_VERSION} .
 docker tag ${IMAGE}:${GIT_VERSION} ${IMAGE}:latest
 
-# Login to Dockerhub and push newest build
+# Login to Docker Hub and push newest build
 echo "Logging into Docker and pushing ${IMAGE}:${GIT_VERSION}"
 
 echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
@@ -39,5 +39,5 @@ echo "Stopping container ID ${CONTAINER_ID} and starting ${IMAGE}:${GIT_VERSION}
 doctl compute ssh ${DROPLET} --ssh-key-path deploy_key --ssh-command "docker pull ${IMAGE}:${GIT_VERSION} && 
 docker stop ${CONTAINER_ID} && 
 docker run --restart unless-stopped -d -p 80:5000 ${IMAGE}:${GIT_VERSION} &&
-docker system prune -f &&
+docker system prune -a -f &&
 docker image prune -a -f"

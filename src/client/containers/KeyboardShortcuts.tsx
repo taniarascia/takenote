@@ -91,11 +91,11 @@ const KeyboardShortcuts: React.FC = () => {
     syncNotesHandler()
   })
 
-  useKey('ctrl+alt+p', () => {
+  useKey('ctrl+alt+o', () => {
     downloadNoteHandler()
   })
 
-  useKey('alt+ctrl+j', () => {
+  useKey('alt+ctrl+p', () => {
     togglePreviewMarkdownHandler()
   })
 

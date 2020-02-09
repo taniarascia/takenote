@@ -122,7 +122,7 @@ const SettingsModal: React.FC = () => {
           <div className="settings-shortcut">
             <div>Download note</div>
             <div>
-              <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>P</kbd>
+              <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>O</kbd>
             </div>
           </div>
           <div className="settings-shortcut">
@@ -134,7 +134,7 @@ const SettingsModal: React.FC = () => {
           <div className="settings-shortcut">
             <div>Markdown preview</div>
             <div>
-              <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>J</kbd>
+              <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>P</kbd>
             </div>
           </div>
           <div className="settings-shortcut">
