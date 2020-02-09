@@ -68,8 +68,8 @@ module.exports = merge(common, {
      * Extracts CSS into separate files.
      */
     new MiniCssExtractPlugin({
-      filename: 'styles/[name].css',
-      chunkFilename: 'styles/[name].css',
+      filename: 'styles/[name].[hash].css',
+      chunkFilename: 'styles/[name].[hash].css',
       ignoreOrder: false,
     }),
     new webpack.SourceMapDevToolPlugin({

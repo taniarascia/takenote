@@ -19,7 +19,7 @@ module.exports = {
    */
   output: {
     path: path.resolve(__dirname, '../dist'),
-    filename: '[name].bundle.js',
+    filename: '[name].[hash].bundle.js',
     publicPath: '/',
   },
 
@@ -102,6 +102,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './public/template.html',
       favicon: './public/favicon.ico',
+      hash: true,
     }),
   ],
 }
