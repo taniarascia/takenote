@@ -6,10 +6,14 @@ import { Folder } from '@/constants/enums'
 import { NoteItem, WithPayload } from '@/types'
 
 export const getNoteTitle = (text: string): string => {
-  const noteText = text.trim().match(/[^#]{1,50}/)
-  const noteTextFirstLine = noteText ? noteText[0].split(/\r?\n/)[0] : 'New Note'
+  // Remove whitespace from both ends
+  // Get the first n characters
+  // Remove # from the title in the case of using markdown headers in your title
+  const noteText = text.trim().match(/[^#]{1,40}/)
 
-  return noteTextFirstLine
+  // Get the first line of text after any newlines
+  // In the future, this should break on a full word
+  return noteText ? noteText[0].split(/\r?\n/)[0] : 'New note'
 }
 
 export const noteWithFrontmatter = (note: NoteItem): string =>
