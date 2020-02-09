@@ -162,19 +162,19 @@ const AppSidebar: React.FC = () => {
       <aside className="app-sidebar">
         <section className="app-sidebar-actions">
           <AppSidebarAction
-            dataTestID="create-new-note-sidebar-action"
+            dataTestID="sidebar-action-create-new-note"
             handler={newNoteHandler}
             icon={Plus}
             label="Create new note"
           />
           <AppSidebarAction
-            dataTestID="sync-notes-sidebar-action"
+            dataTestID="sidebar-action-sync-notes"
             handler={syncNotesHandler}
             icon={syncing ? Loader : UploadCloud}
             label="Sync notes"
           />
           <AppSidebarAction
-            dataTestID="settings-sidebar-action"
+            dataTestID="sidebar-action-settings"
             handler={settingsHandler}
             icon={Settings}
             label="Settings"
@@ -283,7 +283,7 @@ const AppSidebar: React.FC = () => {
                     <FolderIcon size={15} className="app-sidebar-icon" color={iconColor} />
                     {editingCategoryId === category.id ? (
                       <input
-                        data-testID="category-edit"
+                        data-testid="category-edit"
                         className="category-edit"
                         type="text"
                         autoFocus
@@ -299,7 +299,7 @@ const AppSidebar: React.FC = () => {
                     )}
                   </form>
                   <div
-                    data-testID="category-options"
+                    data-testid="category-options"
                     className="category-options"
                     onClick={() => {
                       const notesNotTrash = notes.filter(note => !note.trash)
@@ -311,7 +311,7 @@ const AppSidebar: React.FC = () => {
                       _swapNote(newNoteId)
                     }}
                   >
-                    <X size={12} aria-label="Remove category" />
+                    <X data-testid="remove-category" size={12} aria-label="Remove category" />
                   </div>
                 </div>
               )
@@ -319,7 +319,7 @@ const AppSidebar: React.FC = () => {
           </div>
           {!addingTempCategory && (
             <button
-              data-testid="category-button"
+              data-testid="add-category-button"
               className="category-button"
               onClick={newTempCategoryHandler}
               aria-label="Add category"
@@ -329,8 +329,13 @@ const AppSidebar: React.FC = () => {
             </button>
           )}
           {addingTempCategory && (
-            <form className="category-form" onSubmit={onSubmitNewCategory}>
+            <form
+              data-testid="new-category-form"
+              className="category-form"
+              onSubmit={onSubmitNewCategory}
+            >
               <input
+                data-testid="new-category-label"
                 aria-label="Category name"
                 type="text"
                 autoFocus

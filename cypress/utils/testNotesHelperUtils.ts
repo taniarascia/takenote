@@ -1,11 +1,17 @@
 // testNotesHelperUtils.ts
 // Utility functions for use in note tests
 
-import { getTestID, TestIDEnum, TextEnum } from './testHelperEnums'
-import { clickDynamicTestID, clickTestID, testIDShouldExist } from './testHelperUtils'
+import { TestIDEnum, TextEnum } from './testHelperEnums'
+import {
+  clickDynamicTestID,
+  clickTestID,
+  getDynamicTestID,
+  getTestID,
+  testIDShouldExist,
+} from './testHelperUtils'
 
-const assertActiveNoteIsNew = () => {
-  getTestID(TestIDEnum.ACTIVE_NOTE).should('contain', TextEnum.NEW_NOTE)
+const assertNewNoteCreated = () => {
+  getDynamicTestID(TestIDEnum.NOTE_LIST_ITEM + '0').should('contain', TextEnum.NEW_NOTE)
 }
 
 const assertNoteEditorCharacterCount = (expectedCharacterCount: number) => {
@@ -38,23 +44,20 @@ const assertNoteOptionsOpened = () => {
 }
 
 const clickCreateNewNote = () => {
-  clickTestID(TestIDEnum.CREATE_NEW_NOTE_SIDEBAR_ACTION)
+  clickTestID(TestIDEnum.SIDEBAR_ACTION_CREATE_NEW_NOTE)
 }
 
 const clickEmptyTrash = () => {
   clickTestID(TestIDEnum.EMPTY_TRASH_BUTTON)
 }
 
-const clickNoteOptions = (extraQualifier?: number | string) => {
-  // if no option qualifier is supplied, click active note
-  extraQualifier = extraQualifier ? extraQualifier : TestIDEnum.ACTIVE_NOTE
+const clickNoteAtIndex = (noteIndex: number) => {
+  getDynamicTestID(TestIDEnum.NOTE_LIST_ITEM + noteIndex).click()
+}
 
-  // build a test id for the note based on index
-  const noteOptionIndexTestID: string = extraQualifier
-    ? TestIDEnum.NOTE_OPTIONS + '-' + extraQualifier
-    : TestIDEnum.NOTE_OPTIONS
-
-  clickDynamicTestID(noteOptionIndexTestID)
+// click a note with the specified index
+const clickNoteOptions = (noteIndex: number = 0) => {
+  clickDynamicTestID(TestIDEnum.NOTE_OPTIONS_DIV + noteIndex)
 }
 
 const clickNoteOptionDeleteNotePermanently = () => {
@@ -73,13 +76,17 @@ const clickNoteOptionTrash = () => {
   clickTestID(TestIDEnum.NOTE_OPTION_TRASH)
 }
 
+const clickSyncNotes = () => {
+  clickTestID(TestIDEnum.SIDEBAR_ACTION_SYNC_NOTES)
+}
+
 const typeNoteEditor = (contentToType: string) => {
   // force = true, cypress doesn't support typing in hidden elements
   cy.get('.CodeMirror textarea').type(contentToType, { force: true })
 }
 
 export {
-  assertActiveNoteIsNew,
+  assertNewNoteCreated,
   assertNoteEditorCharacterCount,
   assertNoteEditorLineCount,
   assertNoteListLengthEquals,
@@ -87,10 +94,12 @@ export {
   assertNoteOptionsOpened,
   clickCreateNewNote,
   clickEmptyTrash,
+  clickNoteAtIndex,
   clickNoteOptionDeleteNotePermanently,
   clickNoteOptionFavorite,
   clickNoteOptionRestoreFromTrash,
   clickNoteOptionTrash,
   clickNoteOptions,
+  clickSyncNotes,
   typeNoteEditor,
 }

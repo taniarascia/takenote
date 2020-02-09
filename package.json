@@ -5,7 +5,7 @@
   "author": "Tania Rascia",
   "private": false,
   "main": "src/server/index.js",
-  "licence": "MIT",
+  "license": "MIT",
   "scripts": {
     "dev": "concurrently 'npm run server' 'npm run client'",
     "client": "cross-env NODE_ENV=development webpack-dev-server --config config/webpack.dev.js",
