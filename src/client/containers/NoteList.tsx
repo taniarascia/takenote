@@ -197,7 +197,7 @@ const NoteList: React.FC = () => {
                 data-testid={'note-options-div-' + index}
                 className={
                   noteOptionsId === note.id
-                    ? 'note-options active '
+                    ? 'note-options context-menu-action active '
                     : 'note-options context-menu-action'
                 }
                 onClick={event => handleNoteOptionsClick(event, note.id)}
