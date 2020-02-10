@@ -26,6 +26,8 @@ enum TestIDEnum {
   NOTE_OPTION_REMOVE_CATEGORY = 'note-option-remove-category',
   NOTE_OPTION_RESTORE_FROM_TRASH = 'note-option-restore-from-trash',
   NOTE_OPTION_TRASH = 'note-option-trash',
+  NOTE_SEARCH = 'note-search',
+  NOTE_TITLE = 'note-title-',
   MOVE_TO_CATEGORY = 'note-options-move-to-category-select',
   REMOVE_CATEGORY = 'remove-category',
   SIDEBAR_ACTION_CREATE_NEW_NOTE = 'sidebar-action-create-new-note',

@@ -17,6 +17,7 @@ import {
   assertNoteEditorLineCount,
   assertNoteListLengthEquals,
   assertNoteListLengthGTE,
+  assertNoteListTitleAtIndex,
   assertNoteOptionsOpened,
   clickCreateNewNote,
   clickEmptyTrash,
@@ -27,6 +28,7 @@ import {
   clickNoteOptions,
   clickSyncNotes,
   typeNoteEditor,
+  typeNoteSearch,
 } from '../utils/testNotesHelperUtils'
 
 describe('Manage notes test', () => {
@@ -183,25 +185,70 @@ describe('Manage notes test', () => {
   })
 
   it('should sync some notes', function() {
+    const noteOneTitle = 'note 1'
+    const noteTwoTitle = 'same note title'
+    const noteThreeTitle = 'same note title'
+    const noteFourTitle = 'note 4'
+
     // start with a refresh so we know our current saved state
     cy.reload()
     getNoteCount('allNoteStartCount')
 
     // create a new note and refresh without syncing
     clickCreateNewNote()
-    typeNoteEditor('note1')
+    typeNoteEditor(noteOneTitle)
     cy.reload()
     cy.then(() => assertNoteListLengthEquals(this.allNoteStartCount))
 
-    // create a couple new notes and sync them
+    // create a few new notes and sync them
     clickCreateNewNote()
-    typeNoteEditor('note2')
+    typeNoteEditor(noteOneTitle)
     clickCreateNewNote()
-    typeNoteEditor('note3')
+    typeNoteEditor(noteTwoTitle)
+    clickCreateNewNote()
+    typeNoteEditor(noteThreeTitle)
+    clickCreateNewNote()
+    typeNoteEditor(noteFourTitle)
     clickSyncNotes()
 
     // make sure notes persisted
     cy.reload()
-    cy.then(() => assertNoteListLengthEquals(this.allNoteStartCount + 2))
+    cy.then(() => assertNoteListLengthEquals(this.allNoteStartCount + 4))
+
+    // make sure order is correct
+    assertNoteListTitleAtIndex(3, noteOneTitle)
+    assertNoteListTitleAtIndex(2, noteTwoTitle)
+    assertNoteListTitleAtIndex(1, noteThreeTitle)
+    assertNoteListTitleAtIndex(0, noteFourTitle)
+  })
+
+  it('should search some notes', function() {
+    const noteOneTitle = 'note 1'
+    const noteTwoTitle = 'same note title'
+    const noteThreeTitle = 'same note title'
+    const noteFourTitle = 'note 4'
+
+    // start with a refresh so we know our current saved state
+    cy.reload()
+    getNoteCount('allNoteStartCount')
+
+    // create a few new notes and sync them
+    clickCreateNewNote()
+    typeNoteEditor(noteOneTitle)
+    clickCreateNewNote()
+    typeNoteEditor(noteTwoTitle)
+    clickCreateNewNote()
+    typeNoteEditor(noteThreeTitle)
+    clickCreateNewNote()
+    typeNoteEditor(noteFourTitle)
+    clickSyncNotes()
+
+    // make sure notes persisted
+    cy.reload()
+    cy.then(() => assertNoteListLengthEquals(this.allNoteStartCount + 4))
+
+    // make sure notes are filtered
+    typeNoteSearch('note title')
+    cy.then(() => assertNoteListLengthEquals(2))
   })
 })

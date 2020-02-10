@@ -177,7 +177,7 @@ const NoteList: React.FC = () => {
               draggable
               onDragStart={event => handleDragStart(event, note.id)}
             >
-              <div className="note-title">
+              <div data-testid={'note-title-' + index} className="note-title">
                 {note.favorite ? (
                   <>
                     <div className="icon">
