@@ -39,6 +39,12 @@ const assertNoteListLengthGTE = (expectedLength: number) => {
     .should('have.length.gte', expectedLength)
 }
 
+const assertNoteListTitleAtIndex = (noteIndex: number, expectedTitle: string) => {
+  getDynamicTestID(TestIDEnum.NOTE_TITLE + noteIndex)
+    .children()
+    .contains(expectedTitle)
+}
+
 const assertNoteOptionsOpened = () => {
   testIDShouldExist(TestIDEnum.NOTE_OPTIONS_NAV)
 }
@@ -85,12 +91,17 @@ const typeNoteEditor = (contentToType: string) => {
   cy.get('.CodeMirror textarea').type(contentToType, { force: true })
 }
 
+const typeNoteSearch = (contentToType: string) => {
+  getTestID(TestIDEnum.NOTE_SEARCH).type(contentToType, { force: true })
+}
+
 export {
   assertNewNoteCreated,
   assertNoteEditorCharacterCount,
   assertNoteEditorLineCount,
   assertNoteListLengthEquals,
   assertNoteListLengthGTE,
+  assertNoteListTitleAtIndex,
   assertNoteOptionsOpened,
   clickCreateNewNote,
   clickEmptyTrash,
@@ -102,4 +113,5 @@ export {
   clickNoteOptions,
   clickSyncNotes,
   typeNoteEditor,
+  typeNoteSearch,
 }

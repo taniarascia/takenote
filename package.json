@@ -15,6 +15,7 @@
     "test": "jest",
     "coveralls": "jest --ci --coverage --watchAll=false && cat ./coverage/lcov.info | coveralls",
     "e2e": "cypress run",
+    "e2e:only": "# Usage: npm run e2e:only -- <note/category> \n func() { npm run e2e -- --spec \"cypress/integration/${1}.spec.ts\"; }; func",
     "e2e:open": "cypress open",
     "postinstall": "patch-package"
   },
