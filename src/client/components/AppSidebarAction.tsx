@@ -11,8 +11,13 @@ export interface AppSidebarActionProps {
   label: string
 }
 
-const AppSidebarAction: React.FC<AppSidebarActionProps> = props => {
-  const { dataTestID, disabled = false, handler, icon: IconCmp, label } = props
+const AppSidebarAction: React.FC<AppSidebarActionProps> = ({
+  dataTestID,
+  disabled = false,
+  handler,
+  icon: IconCmp,
+  label,
+}) => {
   return (
     <button
       data-testid={dataTestID}

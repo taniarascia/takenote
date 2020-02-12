@@ -10,12 +10,11 @@ import {
   Trash2,
   UploadCloud,
   X,
-  Check,
 } from 'react-feather'
 import { useDispatch, useSelector } from 'react-redux'
-import moment from 'moment'
 
 import AppSidebarAction from '@/components/AppSidebarAction'
+import { LastSynced } from '@/components/AppSidebar/LastSynced'
 import { Folder } from '@/constants/enums'
 import { iconColor } from '@/constants/index'
 import { useTempState } from '@/contexts/TempStateContext'
@@ -356,14 +355,7 @@ const AppSidebar: React.FC = () => {
           )}
         </section>
       </aside>
-      {lastSynced && (
-        <section className="app-sidebar-synced">
-          <div className="last-synced">
-            <Check size={14} className="app-sidebar-icon" />{' '}
-            {moment(lastSynced).format('h:mm A on M/D/Y')}
-          </div>
-        </section>
-      )}
+      {lastSynced && <LastSynced datetime={lastSynced} />}
     </>
   )
 }

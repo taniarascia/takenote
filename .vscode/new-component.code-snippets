@@ -1,0 +1,19 @@
+{
+  "New Component": {
+    "scope": "typescriptreact",
+    "prefix": "rpp",
+    "body": [
+      "import React from 'react'",
+      " ",
+      "export interface ${1:ComponentName}Props {}",
+      " ",
+      "export const ${1:ComponentName}: React.FC<${1:ComponentName}Props> = () => {",
+      "  return (",
+      "    $0",
+      "  )",
+      "}",
+      " "
+    ],
+    "description": "Create new component"
+  }
+}

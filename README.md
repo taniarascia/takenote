@@ -4,7 +4,7 @@
 
 <p align="center">
  <img src="https://img.shields.io/badge/License-MIT-blue.svg">
-  <a href="#contributors"><img src="https://img.shields.io/badge/all_contributors-31-orange.svg?style=flat-square)"></a>
+  <a href="#contributors"><img src="https://img.shields.io/badge/all_contributors-34-orange.svg?style=flat-square)"></a>
    <a href="https://travis-ci.org/taniarascia/takenote"><img src="https://travis-ci.org/taniarascia/takenote.svg?branch=master"></a>
 </p>
 
@@ -73,10 +73,12 @@ Go to `localhost:5000` to view the app.
 Docker containers are [also available on the Dockerhub registry](https://hub.docker.com/r/taniarascia/takenote).
 
 ```bash
+# Build image and run container
 docker build -t takenote .
 docker run -p 5000:5000 takenote
-# Go to localhost:5000 to view the application
 ```
+
+Go to `localhost:5000` to view the app.
 
 ### Seed data
 

@@ -9,8 +9,14 @@ export interface NoteOptionsButtonProps {
   optionType?: string
 }
 
-const NoteOptionsButton: React.FC<NoteOptionsButtonProps> = props => {
-  const { dataTestID, handler, optionType, icon: IconCmp, text, ...rest } = props
+const NoteOptionsButton: React.FC<NoteOptionsButtonProps> = ({
+  dataTestID,
+  handler,
+  optionType,
+  icon: IconCmp,
+  text,
+  ...rest
+}) => {
   return (
     <div
       data-testid={dataTestID}

@@ -2,7 +2,7 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { useTempState } from '@/contexts/TempStateContext'
-import { Folder } from '@/constants/enums'
+import { Folder, Shortcuts } from '@/constants/enums'
 import { downloadNote, getNoteTitle, newNoteHandlerHelper } from '@/helpers'
 import { useKey } from '@/helpers/hooks'
 import { addNote, swapNote, toggleTrashedNote, swapFolder } from '@/slices/note'
@@ -11,15 +11,14 @@ import { RootState, CategoryItem, NoteItem } from '@/types'
 import { updateCodeMirrorOption, togglePreviewMarkdown, toggleDarkTheme } from '@/slices/settings'
 
 const KeyboardShortcuts: React.FC = () => {
+  const dispatch = useDispatch()
+  const { addingTempCategory, setAddingTempCategory } = useTempState()
   const { categories } = useSelector((state: RootState) => state.categoryState)
   const { activeCategoryId, activeFolder, activeNoteId, notes } = useSelector(
     (state: RootState) => state.noteState
   )
   const { darkTheme, previewMarkdown } = useSelector((state: RootState) => state.settingsState)
-
   const activeNote = notes.find(note => note.id === activeNoteId)
-
-  const dispatch = useDispatch()
 
   const _addNote = (note: NoteItem) => dispatch(addNote(note))
   const _swapNote = (noteId: string) => dispatch(swapNote(noteId))
@@ -32,8 +31,6 @@ const KeyboardShortcuts: React.FC = () => {
   const _updateCodeMirrorOption = (key: string, value: string) =>
     dispatch(updateCodeMirrorOption({ key, value }))
 
-  const { addingTempCategory, setAddingTempCategory } = useTempState()
-
   const newNoteHandler = () =>
     newNoteHandlerHelper(
       activeFolder,
@@ -45,63 +42,23 @@ const KeyboardShortcuts: React.FC = () => {
       _addNote,
       _swapNote
     )
-
-  const newTempCategoryHandler = () => {
-    !addingTempCategory && setAddingTempCategory(true)
-  }
-
-  const trashNoteHandler = () => {
-    if (activeNote) {
-      _toggleTrashedNote(activeNote.id)
-    }
-  }
-
-  const syncNotesHandler = () => {
-    _syncState(notes, categories)
-  }
-
-  const downloadNoteHandler = () => {
-    if (activeNote) {
-      downloadNote(getNoteTitle(activeNote.text), activeNote)
-    }
-  }
-
-  const togglePreviewMarkdownHandler = () => {
-    _togglePreviewMarkdown()
-  }
-
+  const newTempCategoryHandler = () => !addingTempCategory && setAddingTempCategory(true)
+  const trashNoteHandler = () => _toggleTrashedNote(activeNote!.id)
+  const syncNotesHandler = () => _syncState(notes, categories)
+  const downloadNoteHandler = () => downloadNote(getNoteTitle(activeNote!.text), activeNote!)
+  const togglePreviewMarkdownHandler = () => _togglePreviewMarkdown()
   const toggleDarkThemeHandler = () => {
     _toggleDarkTheme()
     _updateCodeMirrorOption('theme', darkTheme ? 'base16-light' : 'new-moon')
   }
 
-  useKey('ctrl+alt+n', () => {
-    newNoteHandler()
-  })
-
-  useKey('ctrl+alt+c', () => {
-    newTempCategoryHandler()
-  })
-
-  useKey('ctrl+alt+u', () => {
-    trashNoteHandler()
-  })
-
-  useKey('ctrl+alt+l', () => {
-    syncNotesHandler()
-  })
-
-  useKey('ctrl+alt+o', () => {
-    downloadNoteHandler()
-  })
-
-  useKey('alt+ctrl+p', () => {
-    togglePreviewMarkdownHandler()
-  })
-
-  useKey('alt+ctrl+k', () => {
-    toggleDarkThemeHandler()
-  })
+  useKey(Shortcuts.NEW_NOTE, () => newNoteHandler())
+  useKey(Shortcuts.NEW_CATEGORY, () => newTempCategoryHandler())
+  useKey(Shortcuts.DELETE_NOTE, () => trashNoteHandler())
+  useKey(Shortcuts.SYNC_NOTES, () => syncNotesHandler())
+  useKey(Shortcuts.DOWNLOAD_NOTES, () => downloadNoteHandler())
+  useKey(Shortcuts.PREVIEW, () => togglePreviewMarkdownHandler())
+  useKey(Shortcuts.TOGGLE_THEME, () => toggleDarkThemeHandler())
 
   return null
 }

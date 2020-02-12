@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { MoreHorizontal, Star } from 'react-feather'
 import _ from 'lodash'
 
-import { Folder } from '@/constants/enums'
+import { Folder, Shortcuts } from '@/constants/enums'
 import NoteListButton from '@/components/NoteListButton'
 import NoteOptions from '@/containers/NoteOptions'
 import { getNoteTitle, sortByLastUpdated, sortByFavourites, shouldOpenContextMenu } from '@/helpers'
@@ -101,7 +101,7 @@ const NoteList: React.FC = () => {
     searchRef.current.focus()
   }
 
-  useKey('alt+ctrl+f', () => {
+  useKey(Shortcuts.SEARCH, () => {
     focusSearch()
   })
 
@@ -183,12 +183,12 @@ const NoteList: React.FC = () => {
                     <div className="icon">
                       <Star className="note-favorite" size={12} />
                     </div>
-                    <div> {noteTitle}</div>
+                    <div className="truncate-text"> {noteTitle}</div>
                   </>
                 ) : (
                   <>
                     <div className="icon" />
-                    <div> {noteTitle}</div>
+                    <div className="truncate-text"> {noteTitle}</div>
                   </>
                 )}
               </div>
