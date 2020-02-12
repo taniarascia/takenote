@@ -7,8 +7,12 @@ export interface NoteListButtonProps {
   label: string
 }
 
-const NoteListButton: React.FC<NoteListButtonProps> = props => {
-  const { dataTestID, disabled = false, handler, label } = props
+const NoteListButton: React.FC<NoteListButtonProps> = ({
+  dataTestID,
+  disabled = false,
+  handler,
+  label,
+}) => {
   return (
     <button
       data-testid={dataTestID}
