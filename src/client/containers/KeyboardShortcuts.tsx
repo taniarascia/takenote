@@ -10,8 +10,9 @@ import { syncState } from '@/slices/sync'
 import { RootState, CategoryItem, NoteItem } from '@/types'
 import { updateCodeMirrorOption, togglePreviewMarkdown, toggleDarkTheme } from '@/slices/settings'
 
-const KeyboardShortcuts: React.FC = () => {
+export const KeyboardShortcuts: React.FC = () => {
   const dispatch = useDispatch()
+
   const { addingTempCategory, setAddingTempCategory } = useTempState()
   const { categories } = useSelector((state: RootState) => state.categoryState)
   const { activeCategoryId, activeFolder, activeNoteId, notes } = useSelector(
@@ -62,5 +63,3 @@ const KeyboardShortcuts: React.FC = () => {
 
   return null
 }
-
-export default KeyboardShortcuts

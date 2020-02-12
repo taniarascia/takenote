@@ -11,6 +11,7 @@ const initialContextValue = {
 }
 
 const TempStateContext = createContext<TempStateContextInterface>(initialContextValue)
+
 const useTempState = () => {
   const context = useContext(TempStateContext)
 
@@ -19,6 +20,7 @@ const useTempState = () => {
   }
   return context
 }
+
 const TempStateProvider: FunctionComponent = ({ children }) => {
   const [addingTempCategory, setAddingTempCategory] = useState(false)
 

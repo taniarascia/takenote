@@ -1,11 +1,11 @@
 import { SyncStatePayload, SettingsState } from '@/types'
 import { welcomeNote } from '@/api/welcomeNote'
 
-type PromiseCallbackFun = (value?: any) => void
+type PromiseCallback = (value?: any) => void
 type GetLocalStorage = (
   key: string,
   errorMsg?: string
-) => (resolve: PromiseCallbackFun, reject: PromiseCallbackFun) => void
+) => (resolve: PromiseCallback, reject: PromiseCallback) => void
 const getLocalStorage: GetLocalStorage = (key, errorMsg = 'Something went wrong') => (
   resolve,
   reject
@@ -21,7 +21,7 @@ const getLocalStorage: GetLocalStorage = (key, errorMsg = 'Something went wrong'
   }
 }
 
-const getUserNotes = () => (resolve: PromiseCallbackFun, reject: PromiseCallbackFun) => {
+const getUserNotes = () => (resolve: PromiseCallback, reject: PromiseCallback) => {
   const notes: any = localStorage.getItem('notes')
 
   // check if there is any data in localstorage

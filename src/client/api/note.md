@@ -4,11 +4,12 @@ TakeNote is a web-based note-taking app with GitHub sync (soon™️) and Markdo
 
 ## Features
 
-- Create plain text notes with Markdown highlighting and frontmatter metadata
-- Create favorites and categories
-- Drag and drop notes
-- Keybinding shortcuts for common actions
+- Create plain text notes with Markdown support
+- Easily find notes by pinning them to top as a favorite
+- Categorize notes
+- Shortcuts for common actions
 - Light/dark mode
+- Drag and drop support
 - Multi-cursor editing
 - Markdown preview
 

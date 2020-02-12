@@ -8,7 +8,7 @@ interface PrivateRouteProps extends RouteProps {
   component: any
 }
 
-const PrivateRoute: React.FC<PrivateRouteProps> = ({ component: Component, ...rest }) => {
+export const PrivateRoute: React.FC<PrivateRouteProps> = ({ component: Component, ...rest }) => {
   const { isAuthenticated } = useSelector((state: RootState) => state.authState)
 
   return (
@@ -18,5 +18,3 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ component: Component, ...re
     />
   )
 }
-
-export default PrivateRoute

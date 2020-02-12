@@ -1,7 +1,7 @@
 import React from 'react'
 import { render } from '@testing-library/react'
 
-import NoteListButton, { NoteListButtonProps } from '@/components/NoteListButton'
+import { NoteListButton, NoteListButtonProps } from '@/components/NoteList/NoteListButton'
 
 describe('<NoteListButton />', () => {
   it('renders the NoteListButton component', () => {
@@ -12,6 +12,7 @@ describe('<NoteListButton />', () => {
     }
 
     const button = render(<NoteListButton {...enabledProps} />)
+
     expect(button).toBeTruthy()
   })
 

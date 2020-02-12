@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { Folder } from '@/constants/enums'
-import { sortByLastUpdated, sortByFavourites } from '@/helpers'
+import { sortByLastUpdated, sortByFavorites } from '@/helpers'
 import { NoteItem, NoteState } from '@/types'
 
 const getNewActiveNoteId = (
@@ -23,7 +23,7 @@ export const getFirstNoteId = (folder: Folder, notes: NoteItem[], categoryId?: s
   const notesNotTrash = notes
     .filter(note => !note.trash)
     .sort(sortByLastUpdated)
-    .sort(sortByFavourites)
+    .sort(sortByFavorites)
   const firstNote = {
     [Folder.ALL]: () => notesNotTrash[0],
     [Folder.CATEGORY]: () => notesNotTrash.find(note => note.category === categoryId),
@@ -124,6 +124,15 @@ const noteSlice = createSlice({
       ),
       activeNoteId: getNewActiveNoteId(state.notes, payload, state.activeCategoryId),
     }),
+    addFavoriteNote: (state, { payload }: PayloadAction<string>) => ({
+      ...state,
+      notes: state.notes.map(note => (note.id === payload ? { ...note, favorite: true } : note)),
+    }),
+    addTrashedNote: (state, { payload }: PayloadAction<string>) => ({
+      ...state,
+      notes: state.notes.map(note => (note.id === payload ? { ...note, trash: true } : note)),
+      activeNoteId: getNewActiveNoteId(state.notes, payload, state.activeCategoryId),
+    }),
     updateNote: (state, { payload }: PayloadAction<NoteItem>) => ({
       ...state,
       notes: state.notes.map(note =>
@@ -151,6 +160,8 @@ export const {
   swapNote,
   toggleFavoriteNote,
   toggleTrashedNote,
+  addFavoriteNote,
+  addTrashedNote,
   updateNote,
 } = noteSlice.actions
 

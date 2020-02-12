@@ -2,23 +2,23 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Helmet, HelmetProvider } from 'react-helmet-async'
 
-import { Folder } from '@/constants/enums'
-import { folderMap } from '@/constants/index'
-import AppSidebar from '@/containers/AppSidebar'
-import KeyboardShortcuts from '@/containers/KeyboardShortcuts'
-import NoteEditor from '@/containers/NoteEditor'
-import NoteList from '@/containers/NoteList'
-import SettingsModal from '@/containers/SettingsModal'
+import { AppSidebar } from '@/containers/AppSidebar'
+import { KeyboardShortcuts } from '@/containers/KeyboardShortcuts'
+import { NoteEditor } from '@/containers/NoteEditor'
+import { NoteList } from '@/containers/NoteList'
+import { SettingsModal } from '@/containers/SettingsModal'
 import { TempStateProvider } from '@/contexts/TempStateContext'
 import { useInterval } from '@/helpers/hooks'
+import { getWebsiteTitle, determineTheme } from '@/helpers'
 import { loadCategories } from '@/slices/category'
 import { loadNotes } from '@/slices/note'
 import { syncState } from '@/slices/sync'
 import { loadSettings } from '@/slices/settings'
 import { RootState, NoteItem, CategoryItem } from '@/types'
 
-const TakeNoteApp: React.FC = () => {
+export const TakeNoteApp: React.FC = () => {
   const dispatch = useDispatch()
+
   const { darkTheme } = useSelector((state: RootState) => state.settingsState)
   const { activeFolder, activeCategoryId, notes } = useSelector(
     (state: RootState) => state.noteState
@@ -51,18 +51,12 @@ const TakeNoteApp: React.FC = () => {
     <HelmetProvider>
       <Helmet>
         <meta charSet="utf-8" />
-        <title>
-          {activeFolder === Folder.CATEGORY
-            ? activeCategory
-              ? `${activeCategory.name} | TakeNote`
-              : `TakeNote`
-            : `${folderMap[activeFolder]} | TakeNote`}
-        </title>
+        <title>{getWebsiteTitle(activeFolder, activeCategory)}</title>
         <link rel="canonical" href="https://takenote.dev" />
       </Helmet>
 
       <TempStateProvider>
-        <div className={`app ${darkTheme ? 'dark' : ''}`}>
+        <div className={determineTheme(darkTheme)}>
           <AppSidebar />
           <NoteList />
           <NoteEditor />
@@ -73,5 +67,3 @@ const TakeNoteApp: React.FC = () => {
     </HelmetProvider>
   )
 }
-
-export default TakeNoteApp

@@ -14,7 +14,7 @@ import 'codemirror/theme/base16-light.css'
 import 'codemirror/mode/gfm/gfm'
 import 'codemirror/addon/selection/active-line'
 
-const NoteEditor: React.FC = () => {
+export const NoteEditor: React.FC = () => {
   const { activeNoteId, loading, notes } = useSelector((state: RootState) => state.noteState)
   const { codeMirrorOptions, previewMarkdown } = useSelector(
     (state: RootState) => state.settingsState
@@ -72,5 +72,3 @@ const NoteEditor: React.FC = () => {
 
   return <main className="note-editor">{renderEditor()}</main>
 }
-
-export default NoteEditor

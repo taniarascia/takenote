@@ -1,13 +1,13 @@
 import React from 'react'
 
-import NoteOptions, { NoteOptionsProps } from '@/containers/NoteOptions'
+import { ContextMenuOptions, ContextMenuOptionsProps } from '@/containers/ContextMenuOptions'
 import { renderWithRouter } from '@/tests/helpers'
 
-const wrap = (props: NoteOptionsProps) => renderWithRouter(<NoteOptions {...props} />)
+const wrap = (props: ContextMenuOptionsProps) => renderWithRouter(<ContextMenuOptions {...props} />)
 
-describe('<NoteOptions />', () => {
-  it('renders the NoteOptions', () => {
-    const props: NoteOptionsProps = {
+describe('<ContextMenuOptions />', () => {
+  it('renders the ContextMenuOptions', () => {
+    const props: ContextMenuOptionsProps = {
       clickedNote: {
         id: '1',
         text: 'text',
