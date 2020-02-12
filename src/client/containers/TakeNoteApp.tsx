@@ -14,34 +14,28 @@ import { loadCategories } from '@/slices/category'
 import { loadNotes } from '@/slices/note'
 import { syncState } from '@/slices/sync'
 import { loadSettings } from '@/slices/settings'
-import { RootState, NoteItem, CategoryItem } from '@/types'
+import { NoteItem, CategoryItem } from '@/types'
+import { getSettings, getNotes, getCategories, getSync } from '@/selectors'
 
 export const TakeNoteApp: React.FC = () => {
+  const { darkTheme } = useSelector(getSettings)
+  const { activeFolder, activeCategoryId, notes } = useSelector(getNotes)
+  const { categories } = useSelector(getCategories)
+
   const dispatch = useDispatch()
-
-  const { darkTheme } = useSelector((state: RootState) => state.settingsState)
-  const { activeFolder, activeCategoryId, notes } = useSelector(
-    (state: RootState) => state.noteState
-  )
-  const { categories } = useSelector((state: RootState) => state.categoryState)
-  const activeCategory = categories.find(({ id }) => id === activeCategoryId)
-
-  const _loadNotes = () => {
-    dispatch(loadNotes())
-  }
-  const _loadCategories = () => {
-    dispatch(loadCategories())
-  }
-  const _loadSettings = () => {
-    dispatch(loadSettings())
-  }
-
-  useEffect(_loadNotes, [])
-  useEffect(_loadCategories, [])
-  useEffect(_loadSettings, [])
-
+  const _loadNotes = () => dispatch(loadNotes())
+  const _loadCategories = () => dispatch(loadCategories())
+  const _loadSettings = () => dispatch(loadSettings())
   const _syncState = (notes: NoteItem[], categories: CategoryItem[]) =>
     dispatch(syncState({ notes, categories }))
+
+  const activeCategory = categories.find(({ id }) => id === activeCategoryId)
+
+  useEffect(() => {
+    _loadNotes
+    _loadCategories
+    _loadSettings
+  }, [])
 
   useInterval(() => {
     _syncState(notes, categories)

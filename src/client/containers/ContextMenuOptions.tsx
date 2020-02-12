@@ -29,24 +29,10 @@ export const ContextMenuOptions: React.FC<ContextMenuOptionsProps> = ({ clickedN
   const _swapNote = (noteId: string) => dispatch(swapNote(noteId))
   const _swapCategory = (categoryId: string) => dispatch(swapCategory(categoryId))
 
-  const deleteNoteHandler = () => {
-    _deleteNote(clickedNote.id)
-  }
-
-  const downloadNoteHandler = () => {
-    if (clickedNote) {
-      downloadNote(getNoteTitle(clickedNote.text), clickedNote)
-    }
-  }
-
-  const favoriteNoteHandler = () => {
-    _toggleFavoriteNote(clickedNote.id)
-  }
-
-  const trashNoteHandler = () => {
-    _toggleTrashedNote(clickedNote.id)
-  }
-
+  const deleteNoteHandler = () => _deleteNote(clickedNote.id)
+  const downloadNoteHandler = () => downloadNote(getNoteTitle(clickedNote.text), clickedNote)
+  const favoriteNoteHandler = () => _toggleFavoriteNote(clickedNote.id)
+  const trashNoteHandler = () => _toggleTrashedNote(clickedNote.id)
   const removeCategoryHandler = () => {
     _addCategoryToNote('', clickedNote.id)
     _swapCategory('')

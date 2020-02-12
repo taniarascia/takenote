@@ -29,19 +29,17 @@ import {
 } from '@/slices/note'
 import { toggleSettingsModal, togglePreviewMarkdown } from '@/slices/settings'
 import { syncState } from '@/slices/sync'
-import { CategoryItem, NoteItem, ReactDragEvent, ReactSubmitEvent, RootState } from '@/types'
+import { getSettings, getNotes, getCategories, getSync } from '@/selectors'
+import { CategoryItem, NoteItem, ReactDragEvent, ReactSubmitEvent } from '@/types'
 import { newNoteHandlerHelper } from '@/helpers'
 
 export const AppSidebar: React.FC = () => {
+  const { categories } = useSelector(getCategories)
+  const { activeCategoryId, activeFolder, activeNoteId, notes } = useSelector(getNotes)
+  const { previewMarkdown } = useSelector(getSettings)
+  const { syncing, lastSynced } = useSelector(getSync)
+
   const dispatch = useDispatch()
-
-  const { categories } = useSelector((state: RootState) => state.categoryState)
-  const { activeCategoryId, activeFolder, activeNoteId, notes } = useSelector(
-    (state: RootState) => state.noteState
-  )
-  const { previewMarkdown } = useSelector((state: RootState) => state.settingsState)
-  const { syncing, lastSynced } = useSelector((state: RootState) => state.syncState)
-
   const _addNote = (note: NoteItem) => dispatch(addNote(note))
   const _swapNote = (noteId: string) => dispatch(swapNote(noteId))
   const _swapCategory = (categoryId: string) => dispatch(swapCategory(categoryId))
@@ -115,15 +113,8 @@ export const AppSidebar: React.FC = () => {
     }
   }
 
-  const syncNotesHandler = () => {
-    _syncState(notes, categories)
-  }
-
-  const settingsHandler = () => {
-    _toggleSettingsModal()
-  }
-
-  const activeNote = notes.find(note => note.id === activeNoteId)
+  const syncNotesHandler = () => _syncState(notes, categories)
+  const settingsHandler = () => _toggleSettingsModal()
 
   const determineCategoryClass = (category: CategoryItem) => {
     if (category.id === activeCategoryId) {
@@ -134,6 +125,8 @@ export const AppSidebar: React.FC = () => {
       return 'category-list-each'
     }
   }
+
+  const activeNote = notes.find(note => note.id === activeNoteId)
 
   return (
     <>

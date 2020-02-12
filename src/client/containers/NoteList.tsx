@@ -10,20 +10,34 @@ import { ContextMenu } from '@/containers/ContextMenu'
 import { getNoteTitle, sortByLastUpdated, sortByFavorites, shouldOpenContextMenu } from '@/helpers'
 import { useKey } from '@/helpers/hooks'
 import { emptyTrash, pruneNotes, swapNote, searchNotes } from '@/slices/note'
-import { NoteItem, ReactDragEvent, ReactMouseEvent, RootState } from '@/types'
+import { NoteItem, ReactDragEvent, ReactMouseEvent } from '@/types'
+import { getNotes } from '@/selectors'
 
 export const NoteList: React.FC = () => {
-  const dispatch = useDispatch()
+  const { activeCategoryId, activeFolder, activeNoteId, notes, searchValue } = useSelector(getNotes)
 
   const contextMenuRef = useRef<HTMLDivElement>(null)
   const searchRef = React.useRef() as React.MutableRefObject<HTMLInputElement>
 
-  const { activeCategoryId, activeFolder, activeNoteId, notes, searchValue } = useSelector(
-    (state: RootState) => state.noteState
-  )
+  const dispatch = useDispatch()
+  const _emptyTrash = () => dispatch(emptyTrash())
+  const _pruneNotes = () => dispatch(pruneNotes())
+  const _swapNote = (noteId: string) => dispatch(swapNote(noteId))
+  const _searchNotes = _.debounce((searchValue: string) => dispatch(searchNotes(searchValue)), 100)
 
   const re = new RegExp(_.escapeRegExp(searchValue), 'i')
   const isMatch = (result: NoteItem) => re.test(result.text)
+
+  const [noteOptionsId, setNoteOptionsId] = useState('')
+  const [noteOptionsPosition, setNoteOptionsPosition] = useState({ x: 0, y: 0 })
+
+  const handleDragStart = (event: ReactDragEvent, noteId: string = '') => {
+    event.stopPropagation()
+
+    event.dataTransfer.setData('text/plain', noteId)
+  }
+
+  const focusSearch = () => searchRef.current.focus()
 
   const filter: Record<Folder, (note: NoteItem) => boolean> = {
     [Folder.CATEGORY]: note => !note.trash && note.category === activeCategoryId,
@@ -36,24 +50,6 @@ export const NoteList: React.FC = () => {
     .filter(isMatch)
     .sort(sortByLastUpdated)
     .sort(sortByFavorites)
-
-  const _emptyTrash = () => dispatch(emptyTrash())
-  const _pruneNotes = () => dispatch(pruneNotes())
-  const _swapNote = (noteId: string) => dispatch(swapNote(noteId))
-  const _searchNotes = _.debounce((searchValue: string) => dispatch(searchNotes(searchValue)), 100)
-
-  const [noteOptionsId, setNoteOptionsId] = useState('')
-  const [noteOptionsPosition, setNoteOptionsPosition] = useState({ x: 0, y: 0 })
-
-  const handleDragStart = (event: ReactDragEvent, noteId: string = '') => {
-    event.stopPropagation()
-
-    event.dataTransfer.setData('text/plain', noteId)
-  }
-
-  const focusSearch = () => {
-    searchRef.current.focus()
-  }
 
   useKey(Shortcuts.SEARCH, () => focusSearch())
 

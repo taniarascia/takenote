@@ -5,9 +5,10 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { updateNote } from '@/slices/note'
 import { togglePreviewMarkdown } from '@/slices/settings'
-import { RootState, NoteItem } from '@/types'
+import { NoteItem } from '@/types'
 import { EmptyEditor } from '@/components/Editor/EmptyEditor'
 import { PreviewEditor } from '@/components/Editor/PreviewEditor'
+import { getSettings, getNotes } from '@/selectors'
 
 import 'codemirror/lib/codemirror.css'
 import 'codemirror/theme/base16-light.css'
@@ -15,16 +16,14 @@ import 'codemirror/mode/gfm/gfm'
 import 'codemirror/addon/selection/active-line'
 
 export const NoteEditor: React.FC = () => {
-  const { activeNoteId, loading, notes } = useSelector((state: RootState) => state.noteState)
-  const { codeMirrorOptions, previewMarkdown } = useSelector(
-    (state: RootState) => state.settingsState
-  )
-  const activeNote = notes.find(note => note.id === activeNoteId)
+  const { activeNoteId, loading, notes } = useSelector(getNotes)
+  const { codeMirrorOptions, previewMarkdown } = useSelector(getSettings)
 
   const dispatch = useDispatch()
-
   const _togglePreviewMarkdown = () => dispatch(togglePreviewMarkdown())
   const _updateNote = (note: NoteItem) => dispatch(updateNote(note))
+
+  const activeNote = notes.find(note => note.id === activeNoteId)
 
   const renderEditor = () => {
     if (loading) {

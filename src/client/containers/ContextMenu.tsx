@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { ContextMenuOptions } from '@/containers/ContextMenuOptions'
 import { addCategoryToNote, swapCategory, swapNote } from '@/slices/note'
-import { NoteItem, RootState } from '@/types'
+import { NoteItem } from '@/types'
+import { getNotes, getCategories } from '@/selectors'
 
 interface Position {
   x: number
@@ -23,17 +24,14 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({
   contextMenuRef,
   setNoteOptionsId,
 }) => {
+  const { categories } = useSelector(getCategories)
+  const { activeCategoryId } = useSelector(getNotes)
+
   const dispatch = useDispatch()
-
-  const { categories } = useSelector((state: RootState) => state.categoryState)
-  const { activeCategoryId } = useSelector((state: RootState) => state.noteState)
-
   const _addCategoryToNote = (categoryId: string, noteId: string) =>
     dispatch(addCategoryToNote({ categoryId, noteId }))
   const _swapNote = (noteId: string) => dispatch(swapNote(noteId))
   const _swapCategory = (categoryId: string) => dispatch(swapCategory(categoryId))
-
-  const filteredCategories = categories.filter(({ id }) => id !== activeCategoryId)
 
   const getOptionsYPosition = (): Number => {
     // get the max window frame
@@ -47,6 +45,8 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({
       ? noteOptionsPosition.y
       : noteOptionsPosition.y - optionsSize
   }
+
+  const filteredCategories = categories.filter(({ id }) => id !== activeCategoryId)
 
   return (
     <div

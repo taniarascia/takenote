@@ -9,17 +9,17 @@ import {
   toggleDarkTheme,
 } from '@/slices/settings'
 import { shortcutMap } from '@/constants'
-import { ReactMouseEvent, RootState } from '@/types'
+import { ReactMouseEvent } from '@/types'
+import { getSettings } from '@/selectors'
 import { Option } from '@/components/SettingsModal/Option'
 import { Shortcut } from '@/components/SettingsModal/Shortcut'
 
 export const SettingsModal: React.FC = () => {
-  const dispatch = useDispatch()
-  const { codeMirrorOptions, isOpen, previewMarkdown, darkTheme } = useSelector(
-    (state: RootState) => state.settingsState
-  )
+  const { codeMirrorOptions, isOpen, previewMarkdown, darkTheme } = useSelector(getSettings)
+
   const node = useRef<HTMLDivElement>(null)
 
+  const dispatch = useDispatch()
   const _toggleSettingsModal = () => dispatch(toggleSettingsModal())
   const _togglePreviewMarkdown = () => dispatch(togglePreviewMarkdown())
   const _toggleDarkTheme = () => dispatch(toggleDarkTheme())
@@ -30,7 +30,6 @@ export const SettingsModal: React.FC = () => {
     event.stopPropagation()
 
     if (node.current && node.current.contains(event.target as HTMLDivElement)) return
-
     if (isOpen) {
       _toggleSettingsModal()
     }

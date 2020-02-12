@@ -7,20 +7,16 @@ import { downloadNote, getNoteTitle, newNoteHandlerHelper } from '@/helpers'
 import { useKey } from '@/helpers/hooks'
 import { addNote, swapNote, toggleTrashedNote, swapFolder } from '@/slices/note'
 import { syncState } from '@/slices/sync'
-import { RootState, CategoryItem, NoteItem } from '@/types'
+import { getSettings, getNotes, getCategories } from '@/selectors'
+import { CategoryItem, NoteItem } from '@/types'
 import { updateCodeMirrorOption, togglePreviewMarkdown, toggleDarkTheme } from '@/slices/settings'
 
 export const KeyboardShortcuts: React.FC = () => {
+  const { categories } = useSelector(getCategories)
+  const { activeCategoryId, activeFolder, activeNoteId, notes } = useSelector(getNotes)
+  const { darkTheme, previewMarkdown } = useSelector(getSettings)
+
   const dispatch = useDispatch()
-
-  const { addingTempCategory, setAddingTempCategory } = useTempState()
-  const { categories } = useSelector((state: RootState) => state.categoryState)
-  const { activeCategoryId, activeFolder, activeNoteId, notes } = useSelector(
-    (state: RootState) => state.noteState
-  )
-  const { darkTheme, previewMarkdown } = useSelector((state: RootState) => state.settingsState)
-  const activeNote = notes.find(note => note.id === activeNoteId)
-
   const _addNote = (note: NoteItem) => dispatch(addNote(note))
   const _swapNote = (noteId: string) => dispatch(swapNote(noteId))
   const _swapFolder = (folder: Folder) => dispatch(swapFolder(folder))
@@ -31,6 +27,9 @@ export const KeyboardShortcuts: React.FC = () => {
   const _toggleDarkTheme = () => dispatch(toggleDarkTheme())
   const _updateCodeMirrorOption = (key: string, value: string) =>
     dispatch(updateCodeMirrorOption({ key, value }))
+
+  const { addingTempCategory, setAddingTempCategory } = useTempState()
+  const activeNote = notes.find(note => note.id === activeNoteId)
 
   const newNoteHandler = () =>
     newNoteHandlerHelper(
