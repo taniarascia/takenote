@@ -1,12 +1,13 @@
 import moment from 'moment'
 import React from 'react'
 import { Controlled as CodeMirror } from 'react-codemirror2'
-import ReactMarkdown from 'react-markdown'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { updateNote } from '@/slices/note'
 import { togglePreviewMarkdown } from '@/slices/settings'
 import { RootState, NoteItem } from '@/types'
+import { EmptyEditor } from '@/components/Editor/EmptyEditor'
+import { PreviewEditor } from '@/components/Editor/PreviewEditor'
 
 import 'codemirror/lib/codemirror.css'
 import 'codemirror/theme/base16-light.css'
@@ -29,28 +30,12 @@ const NoteEditor: React.FC = () => {
     if (loading) {
       return <div className="empty-editor v-center">Loading...</div>
     } else if (!activeNote) {
+      return <EmptyEditor />
+    } else if (previewMarkdown)
       return (
-        <div className="empty-editor v-center">
-          <div className="text-center">
-            <p>
-              <strong>Create a note</strong>
-            </p>
-            <p>
-              <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>N</kbd>
-            </p>
-          </div>
-        </div>
+        <PreviewEditor noteText={activeNote.text} togglePreviewMarkdown={_togglePreviewMarkdown} />
       )
-    } else if (previewMarkdown) {
-      return (
-        <>
-          <ReactMarkdown className="previewer" source={activeNote.text} />
-          <button className="preview-button" onClick={_togglePreviewMarkdown}>
-            Edit
-          </button>
-        </>
-      )
-    } else {
+    else {
       return (
         <>
           <CodeMirror

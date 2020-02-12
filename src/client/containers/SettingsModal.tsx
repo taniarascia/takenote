@@ -9,22 +9,21 @@ import {
   toggleDarkTheme,
 } from '@/slices/settings'
 import { ReactMouseEvent, RootState } from '@/types'
-import Switch from '@/components/Switch'
+import { Option } from '@/components/Settings/Option'
+import { Shortcut } from '@/components/Settings/Shortcut'
 
 const SettingsModal: React.FC = () => {
+  const dispatch = useDispatch()
   const { codeMirrorOptions, isOpen, previewMarkdown, darkTheme } = useSelector(
     (state: RootState) => state.settingsState
   )
-
-  const dispatch = useDispatch()
+  const node = useRef<HTMLDivElement>(null)
 
   const _toggleSettingsModal = () => dispatch(toggleSettingsModal())
   const _togglePreviewMarkdown = () => dispatch(togglePreviewMarkdown())
   const _toggleDarkTheme = () => dispatch(toggleDarkTheme())
   const _updateCodeMirrorOption = (key: string, value: any) =>
     dispatch(updateCodeMirrorOption({ key, value }))
-
-  const node = useRef<HTMLDivElement>(null)
 
   const handleDomClick = (event: ReactMouseEvent) => {
     event.stopPropagation()
@@ -36,18 +35,13 @@ const SettingsModal: React.FC = () => {
     }
   }
 
-  const togglePreviewMarkdownHandler = () => {
-    _togglePreviewMarkdown()
-  }
-
+  const togglePreviewMarkdownHandler = () => _togglePreviewMarkdown()
   const toggleDarkThemeHandler = () => {
     _toggleDarkTheme()
     _updateCodeMirrorOption('theme', darkTheme ? 'base16-light' : 'new-moon')
   }
-
-  const toggleLineHighlight = () => {
+  const toggleLineHighlight = () =>
     _updateCodeMirrorOption('styleActiveLine', !codeMirrorOptions.styleActiveLine)
-  }
 
   const handleEscPress = (event: KeyboardEvent) => {
     event.stopPropagation()
@@ -68,87 +62,43 @@ const SettingsModal: React.FC = () => {
   return isOpen ? (
     <div className="dimmer">
       <div ref={node} className="settings-modal">
-        <div className="settings-header mb-1">
+        <header className="settings-header mb-1">
           <h2>Settings</h2>
           <div
             className="action-button"
             onClick={() => {
-              if (isOpen) {
-                _toggleSettingsModal()
-              }
+              if (isOpen) _toggleSettingsModal()
             }}
           >
             <X size={20} />
           </div>
-        </div>
+        </header>
 
-        <div className="settings-label mb-1">Options</div>
-
-        <div className="settings-options">
-          <div>Active line highlight</div>
-          <Switch toggle={toggleLineHighlight} checked={codeMirrorOptions.styleActiveLine} />
-        </div>
-
-        <div className="settings-options">
-          <div>Markdown preview</div>
-          <Switch toggle={togglePreviewMarkdownHandler} checked={previewMarkdown} />
-        </div>
-
-        <div className="settings-options">
-          <div>Dark mode</div>
-          <Switch toggle={toggleDarkThemeHandler} checked={darkTheme} />
-        </div>
+        <section className="settings-section">
+          <div className="settings-label mb-1">Options</div>
+          <Option
+            title="Active line highlight"
+            toggle={toggleLineHighlight}
+            checked={codeMirrorOptions.styleActiveLine}
+          />
+          <Option
+            title="Markdown preview"
+            toggle={togglePreviewMarkdownHandler}
+            checked={previewMarkdown}
+          />
+          <Option title="Dark mode" toggle={toggleDarkThemeHandler} checked={darkTheme} />
+        </section>
 
         <section className="settings-section">
           <div className="settings-label mb-1">Keyboard Shortcuts</div>
-          <div className="settings-shortcut">
-            <div>Create note</div>
-            <div>
-              <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>N</kbd>
-            </div>
-          </div>
-          <div className="settings-shortcut">
-            <div>Delete note</div>
-            <div>
-              <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>U</kbd>
-            </div>
-          </div>
-          <div className="settings-shortcut">
-            <div>Create category</div>
-            <div>
-              <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>C</kbd>
-            </div>
-          </div>
-          <div className="settings-shortcut">
-            <div>Download note</div>
-            <div>
-              <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>O</kbd>
-            </div>
-          </div>
-          <div className="settings-shortcut">
-            <div>Sync notes</div>
-            <div>
-              <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>L</kbd>
-            </div>
-          </div>
-          <div className="settings-shortcut">
-            <div>Markdown preview</div>
-            <div>
-              <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>P</kbd>
-            </div>
-          </div>
-          <div className="settings-shortcut">
-            <div>Toggle theme</div>
-            <div>
-              <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>K</kbd>
-            </div>
-          </div>
-          <div className="settings-shortcut">
-            <div>Focus search</div>
-            <div>
-              <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>F</kbd>
-            </div>
-          </div>
+          <Shortcut action="New note" letter="N" />
+          <Shortcut action="Delete note" letter="U" />
+          <Shortcut action="Create category" letter="C" />
+          <Shortcut action="Download note" letter="O" />
+          <Shortcut action="Sync notes" letter="L" />
+          <Shortcut action="Markdown preview" letter="P" />
+          <Shortcut action="Toggle theme" letter="K" />
+          <Shortcut action="Search" letter="F" />
         </section>
       </div>
     </div>
