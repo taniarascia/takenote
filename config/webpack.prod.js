@@ -52,7 +52,7 @@ module.exports = merge(common, {
           {
             loader: 'file-loader',
             options: {
-              name: 'images/[name].[contenthash].[ext]',
+              name: 'images/[name].[hash].[ext]',
             },
           },
           'image-webpack-loader',
@@ -68,8 +68,8 @@ module.exports = merge(common, {
      * Extracts CSS into separate files.
      */
     new MiniCssExtractPlugin({
-      filename: 'styles/[name].[contenthash].css',
-      chunkFilename: 'styles/[name].[id].[contenthash].css',
+      filename: 'styles/[name].[hash].css',
+      chunkFilename: 'styles/[name].[id].[hash].css',
       ignoreOrder: false,
     }),
     new webpack.SourceMapDevToolPlugin({
