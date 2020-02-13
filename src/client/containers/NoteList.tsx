@@ -31,14 +31,6 @@ export const NoteList: React.FC = () => {
   const [noteOptionsId, setNoteOptionsId] = useState('')
   const [noteOptionsPosition, setNoteOptionsPosition] = useState({ x: 0, y: 0 })
 
-  const handleDragStart = (event: ReactDragEvent, noteId: string = '') => {
-    event.stopPropagation()
-
-    event.dataTransfer.setData('text/plain', noteId)
-  }
-
-  const focusSearch = () => searchRef.current.focus()
-
   const filter: Record<Folder, (note: NoteItem) => boolean> = {
     [Folder.CATEGORY]: note => !note.trash && note.category === activeCategoryId,
     [Folder.FAVORITES]: note => !note.trash && !!note.favorite,
@@ -51,6 +43,13 @@ export const NoteList: React.FC = () => {
     .sort(sortByLastUpdated)
     .sort(sortByFavorites)
 
+  const handleDragStart = (event: ReactDragEvent, noteId: string = '') => {
+    event.stopPropagation()
+
+    event.dataTransfer.setData('text/plain', noteId)
+  }
+
+  const focusSearch = () => searchRef.current.focus()
   useKey(Shortcuts.SEARCH, () => focusSearch())
 
   useEffect(() => {

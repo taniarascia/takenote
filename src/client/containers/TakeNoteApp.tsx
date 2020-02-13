@@ -32,9 +32,9 @@ export const TakeNoteApp: React.FC = () => {
   const activeCategory = categories.find(({ id }) => id === activeCategoryId)
 
   useEffect(() => {
-    _loadNotes
-    _loadCategories
-    _loadSettings
+    _loadNotes()
+    _loadCategories()
+    _loadSettings()
   }, [])
 
   useInterval(() => {

@@ -8,9 +8,9 @@ export interface SearchBarProps {
 export const SearchBar: React.FC<SearchBarProps> = ({ searchRef, searchNotes }) => {
   return (
     <input
+      ref={searchRef}
       data-testid="note-search"
       className="note-search"
-      ref={searchRef}
       type="search"
       onChange={event => {
         event.preventDefault()
