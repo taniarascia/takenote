@@ -4,9 +4,13 @@
 import {
   addCategory,
   assertCategoryDoesNotExist,
+  assertCategoryExists,
   navigateToCategory,
   removeCategory,
   selectMoveToCategoryOption,
+  startEditingCategory,
+  renameCategory,
+  defocusCategory,
 } from '../utils/testCategoryHelperUtils'
 import { dynamicTimeCategoryName } from '../utils/testHelperEnums'
 import { defaultInit, navigateToAllNotes } from '../utils/testHelperUtils'
@@ -44,5 +48,17 @@ describe('Category tests', () => {
     // make sure it ended up in the category
     navigateToCategory(dynamicTimeCategoryName)
     assertNoteListLengthEquals(1)
+  })
+
+  it('should rename existing category after defocusing edit state', () => {
+    const originalCategoryName = 'Category'
+    const newCategoryName = 'Renamed Category'
+
+    addCategory(originalCategoryName)
+    startEditingCategory(originalCategoryName)
+    renameCategory(originalCategoryName, newCategoryName)
+    defocusCategory(newCategoryName)
+
+    assertCategoryExists(newCategoryName)
   })
 })
