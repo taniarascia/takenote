@@ -264,7 +264,7 @@ export const AppSidebar: React.FC = () => {
                 type="text"
                 autoFocus
                 maxLength={20}
-                placeholder="New category..."
+                placeholder="Start typing..."
                 onChange={event => {
                   setTempCategoryName(event.target.value)
                 }}

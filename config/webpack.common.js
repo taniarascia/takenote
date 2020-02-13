@@ -19,7 +19,7 @@ module.exports = {
    */
   output: {
     path: path.resolve(__dirname, '../dist'),
-    filename: '[name].[hash].bundle.js',
+    filename: '[name].[contenthash].bundle.js',
     publicPath: '/',
   },
 

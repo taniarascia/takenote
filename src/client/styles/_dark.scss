@@ -164,6 +164,10 @@ $dark-editor: #3f3f3f;
     text-shadow: 0 1px 0 #000;
   }
 
+  .cache {
+    border: 1px solid black;
+  }
+
   ::-webkit-scrollbar {
     width: 8px;
     background: $app-sidebar-color;
