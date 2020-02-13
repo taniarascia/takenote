@@ -13,5 +13,5 @@ export enum Shortcuts {
   DOWNLOAD_NOTES = 'ctrl+alt+o',
   PREVIEW = 'alt+ctrl+p',
   TOGGLE_THEME = 'alt+ctrl+k',
-  SEARCH = 'alt+ctrl:f',
+  SEARCH = 'alt+ctrl+f',
 }

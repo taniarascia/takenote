@@ -5,7 +5,7 @@ import { Router } from 'react-router-dom'
 import createSagaMiddleware from 'redux-saga'
 import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
 
-import App from '@/containers/App'
+import { App } from '@/containers/App'
 import rootSaga from '@/sagas'
 import rootReducer from '@/slices'
 import history from '@/helpers/history'

@@ -104,6 +104,11 @@ TakeNote is an open source project, and contributions of any kind are welcome! O
 
 The project is written in TypeScript, React and Redux. TypeScript is set to strict mode, with no implicit any allowed. The formatting style for the project is set by Prettier.
 
+### Style notes
+
+- [Use non-default exports](https://humanwhocodes.com/blog/2019/01/stop-using-default-exports-javascript-module/) for components
+- Imports are ordered and separated by built-in modules -> external modules -> internal modules -> css/assets/other
+
 ## Contributors
 
 Thanks goes to these wonderful people:

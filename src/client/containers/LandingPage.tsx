@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import screenshot from '@/assets/screenshot.png'
 import icon from '@/assets/logo-square-color.svg'
 
-const LandingPage: React.FC = () => {
+export const LandingPage: React.FC = () => {
   return (
     <div className="landing-page">
       <div className="app-navigation">
@@ -80,5 +80,3 @@ const LandingPage: React.FC = () => {
     </div>
   )
 }
-
-export default LandingPage

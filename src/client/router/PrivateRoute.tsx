@@ -2,14 +2,14 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 import { Redirect, Route, RouteProps } from 'react-router-dom'
 
-import { RootState } from '@/types'
+import { getAuth } from '@/selectors'
 
 interface PrivateRouteProps extends RouteProps {
   component: any
 }
 
-const PrivateRoute: React.FC<PrivateRouteProps> = ({ component: Component, ...rest }) => {
-  const { isAuthenticated } = useSelector((state: RootState) => state.authState)
+export const PrivateRoute: React.FC<PrivateRouteProps> = ({ component: Component, ...rest }) => {
+  const { isAuthenticated } = useSelector(getAuth)
 
   return (
     <Route
@@ -18,5 +18,3 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ component: Component, ...re
     />
   )
 }
-
-export default PrivateRoute

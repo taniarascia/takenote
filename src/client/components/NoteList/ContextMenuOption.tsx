@@ -1,7 +1,7 @@
 import React, { KeyboardEventHandler, MouseEventHandler } from 'react'
 import { Icon } from 'react-feather'
 
-export interface NoteOptionsButtonProps {
+export interface ContextMenuOptionProps {
   dataTestID: string
   handler: MouseEventHandler & KeyboardEventHandler
   icon: Icon
@@ -9,7 +9,7 @@ export interface NoteOptionsButtonProps {
   optionType?: string
 }
 
-const NoteOptionsButton: React.FC<NoteOptionsButtonProps> = ({
+export const ContextMenuOption: React.FC<ContextMenuOptionProps> = ({
   dataTestID,
   handler,
   optionType,
@@ -32,5 +32,3 @@ const NoteOptionsButton: React.FC<NoteOptionsButtonProps> = ({
     </div>
   )
 }
-
-export default NoteOptionsButton

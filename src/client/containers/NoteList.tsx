@@ -4,29 +4,32 @@ import { MoreHorizontal, Star } from 'react-feather'
 import _ from 'lodash'
 
 import { Folder, Shortcuts } from '@/constants/enums'
-import NoteListButton from '@/components/NoteListButton'
-import NoteOptions from '@/containers/NoteOptions'
-import { getNoteTitle, sortByLastUpdated, sortByFavourites, shouldOpenContextMenu } from '@/helpers'
+import { NoteListButton } from '@/components/NoteList/NoteListButton'
+import { SearchBar } from '@/components/NoteList/SearchBar'
+import { ContextMenu } from '@/containers/ContextMenu'
+import { getNoteTitle, sortByLastUpdated, sortByFavorites, shouldOpenContextMenu } from '@/helpers'
 import { useKey } from '@/helpers/hooks'
-import {
-  addCategoryToNote,
-  emptyTrash,
-  pruneNotes,
-  swapCategory,
-  swapNote,
-  searchNotes,
-} from '@/slices/note'
-import { NoteItem, ReactDragEvent, ReactMouseEvent, RootState } from '@/types'
+import { emptyTrash, pruneNotes, swapNote, searchNotes } from '@/slices/note'
+import { NoteItem, ReactDragEvent, ReactMouseEvent } from '@/types'
+import { getNotes } from '@/selectors'
 
-const NoteList: React.FC = () => {
+export const NoteList: React.FC = () => {
+  const { activeCategoryId, activeFolder, activeNoteId, notes, searchValue } = useSelector(getNotes)
+
+  const contextMenuRef = useRef<HTMLDivElement>(null)
   const searchRef = React.useRef() as React.MutableRefObject<HTMLInputElement>
-  const { categories } = useSelector((state: RootState) => state.categoryState)
-  const { activeCategoryId, activeFolder, activeNoteId, notes, searchValue } = useSelector(
-    (state: RootState) => state.noteState
-  )
+
+  const dispatch = useDispatch()
+  const _emptyTrash = () => dispatch(emptyTrash())
+  const _pruneNotes = () => dispatch(pruneNotes())
+  const _swapNote = (noteId: string) => dispatch(swapNote(noteId))
+  const _searchNotes = _.debounce((searchValue: string) => dispatch(searchNotes(searchValue)), 100)
 
   const re = new RegExp(_.escapeRegExp(searchValue), 'i')
   const isMatch = (result: NoteItem) => re.test(result.text)
+
+  const [noteOptionsId, setNoteOptionsId] = useState('')
+  const [noteOptionsPosition, setNoteOptionsPosition] = useState({ x: 0, y: 0 })
 
   const filter: Record<Folder, (note: NoteItem) => boolean> = {
     [Folder.CATEGORY]: note => !note.trash && note.category === activeCategoryId,
@@ -38,22 +41,23 @@ const NoteList: React.FC = () => {
     .filter(filter[activeFolder])
     .filter(isMatch)
     .sort(sortByLastUpdated)
-    .sort(sortByFavourites)
-  const filteredCategories = categories.filter(({ id }) => id !== activeCategoryId)
+    .sort(sortByFavorites)
 
-  const dispatch = useDispatch()
+  const handleDragStart = (event: ReactDragEvent, noteId: string = '') => {
+    event.stopPropagation()
 
-  const _addCategoryToNote = (categoryId: string, noteId: string) =>
-    dispatch(addCategoryToNote({ categoryId, noteId }))
-  const _emptyTrash = () => dispatch(emptyTrash())
-  const _pruneNotes = () => dispatch(pruneNotes())
-  const _swapNote = (noteId: string) => dispatch(swapNote(noteId))
-  const _swapCategory = (categoryId: string) => dispatch(swapCategory(categoryId))
-  const _searchNotes = _.debounce((searchValue: string) => dispatch(searchNotes(searchValue)), 100)
+    event.dataTransfer.setData('text/plain', noteId)
+  }
 
-  const [noteOptionsId, setNoteOptionsId] = useState('')
-  const [noteOptionsPosition, setNoteOptionsPosition] = useState({ x: 0, y: 0 })
-  const node = useRef<HTMLDivElement>(null)
+  const focusSearch = () => searchRef.current.focus()
+  useKey(Shortcuts.SEARCH, () => focusSearch())
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleNoteOptionsClick)
+    return () => {
+      document.removeEventListener('mousedown', handleNoteOptionsClick)
+    }
+  })
 
   const handleNoteOptionsClick = (event: ReactMouseEvent, noteId: string = '') => {
     const clicked = event.target
@@ -71,63 +75,19 @@ const NoteList: React.FC = () => {
 
     event.stopPropagation()
 
-    if (node.current && node.current.contains(clicked as HTMLDivElement)) {
+    if (contextMenuRef.current && contextMenuRef.current.contains(clicked as HTMLDivElement)) {
       return
     } else {
       setNoteOptionsId(!noteOptionsId || noteOptionsId !== noteId ? noteId : '')
     }
   }
 
-  const handleDragStart = (event: ReactDragEvent, noteId: string = '') => {
-    event.stopPropagation()
-
-    event.dataTransfer.setData('text/plain', noteId)
-  }
-
-  const getOptionsYPosition = (): Number => {
-    // get the max window frame
-    const MaxY = window.innerHeight
-
-    // determine approximate options height based on root font-size of 15px, padding, and select box.
-    const optionsSize = 15 * 11
-
-    // if window position - noteOptions position isn't bigger than options, flip it.
-    return MaxY - noteOptionsPosition.y > optionsSize
-      ? noteOptionsPosition.y
-      : noteOptionsPosition.y - optionsSize
-  }
-
-  const focusSearch = () => {
-    searchRef.current.focus()
-  }
-
-  useKey(Shortcuts.SEARCH, () => {
-    focusSearch()
-  })
-
-  useEffect(() => {
-    document.addEventListener('mousedown', handleNoteOptionsClick)
-    return () => {
-      document.removeEventListener('mousedown', handleNoteOptionsClick)
-    }
-  })
-
   const showEmptyTrash = activeFolder === Folder.TRASH && filteredNotes.length > 0
 
   return (
     <aside className="note-sidebar">
       <div className="note-sidebar-header">
-        <input
-          data-testid="note-search"
-          className="note-search"
-          ref={searchRef}
-          type="search"
-          onChange={event => {
-            event.preventDefault()
-            _searchNotes(event.target.value)
-          }}
-          placeholder="Search for notes"
-        />
+        <SearchBar searchRef={searchRef} searchNotes={_searchNotes} />
         {showEmptyTrash && (
           <NoteListButton
             dataTestID="empty-trash-button"
@@ -205,50 +165,12 @@ const NoteList: React.FC = () => {
                 <MoreHorizontal size={15} className="context-menu-action" />
               </div>
               {noteOptionsId === note.id && (
-                <div
-                  ref={node}
-                  className="note-options-context-menu"
-                  style={{
-                    position: 'absolute',
-                    top: getOptionsYPosition() + 'px',
-                    left: noteOptionsPosition.x + 'px',
-                  }}
-                  onClick={event => {
-                    event.stopPropagation()
-                  }}
-                >
-                  {!note.trash && filteredCategories.length > 0 && (
-                    <>
-                      <select
-                        data-testid="note-options-move-to-category-select"
-                        defaultValue=""
-                        className="move-to-category-select"
-                        onChange={event => {
-                          _addCategoryToNote(event.target.value, note.id)
-
-                          if (event.target.value !== activeCategoryId) {
-                            _swapCategory(event.target.value)
-                            _swapNote(note.id)
-                          }
-
-                          setNoteOptionsId('')
-                        }}
-                      >
-                        <option disabled value="">
-                          Move to category...
-                        </option>
-                        {filteredCategories
-                          .filter(category => category.id !== note.category)
-                          .map(category => (
-                            <option key={category.id} value={category.id}>
-                              {category.name}
-                            </option>
-                          ))}
-                      </select>
-                    </>
-                  )}
-                  <NoteOptions clickedNote={note} />
-                </div>
+                <ContextMenu
+                  contextMenuRef={contextMenuRef}
+                  note={note}
+                  noteOptionsPosition={noteOptionsPosition}
+                  setNoteOptionsId={setNoteOptionsId}
+                />
               )}
             </div>
           )
@@ -257,5 +179,3 @@ const NoteList: React.FC = () => {
     </aside>
   )
 }
-
-export default NoteList

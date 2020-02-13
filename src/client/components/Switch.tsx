@@ -5,7 +5,7 @@ export interface SwitchProps {
   checked: boolean
 }
 
-const Switch: React.FC<SwitchProps> = ({ toggle, checked }) => {
+export const Switch: React.FC<SwitchProps> = ({ toggle, checked }) => {
   return (
     <label className="switch">
       <input type="checkbox" onChange={toggle} checked={checked} />
@@ -13,5 +13,3 @@ const Switch: React.FC<SwitchProps> = ({ toggle, checked }) => {
     </label>
   )
 }
-
-export default Switch

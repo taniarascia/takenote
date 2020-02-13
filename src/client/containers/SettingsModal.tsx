@@ -8,17 +8,18 @@ import {
   togglePreviewMarkdown,
   toggleDarkTheme,
 } from '@/slices/settings'
-import { ReactMouseEvent, RootState } from '@/types'
-import { Option } from '@/components/Settings/Option'
-import { Shortcut } from '@/components/Settings/Shortcut'
+import { shortcutMap } from '@/constants'
+import { ReactMouseEvent } from '@/types'
+import { getSettings } from '@/selectors'
+import { Option } from '@/components/SettingsModal/Option'
+import { Shortcut } from '@/components/SettingsModal/Shortcut'
 
-const SettingsModal: React.FC = () => {
-  const dispatch = useDispatch()
-  const { codeMirrorOptions, isOpen, previewMarkdown, darkTheme } = useSelector(
-    (state: RootState) => state.settingsState
-  )
+export const SettingsModal: React.FC = () => {
+  const { codeMirrorOptions, isOpen, previewMarkdown, darkTheme } = useSelector(getSettings)
+
   const node = useRef<HTMLDivElement>(null)
 
+  const dispatch = useDispatch()
   const _toggleSettingsModal = () => dispatch(toggleSettingsModal())
   const _togglePreviewMarkdown = () => dispatch(togglePreviewMarkdown())
   const _toggleDarkTheme = () => dispatch(toggleDarkTheme())
@@ -29,7 +30,6 @@ const SettingsModal: React.FC = () => {
     event.stopPropagation()
 
     if (node.current && node.current.contains(event.target as HTMLDivElement)) return
-
     if (isOpen) {
       _toggleSettingsModal()
     }
@@ -91,18 +91,11 @@ const SettingsModal: React.FC = () => {
 
         <section className="settings-section">
           <div className="settings-label mb-1">Keyboard Shortcuts</div>
-          <Shortcut action="New note" letter="N" />
-          <Shortcut action="Delete note" letter="U" />
-          <Shortcut action="Create category" letter="C" />
-          <Shortcut action="Download note" letter="O" />
-          <Shortcut action="Sync notes" letter="L" />
-          <Shortcut action="Markdown preview" letter="P" />
-          <Shortcut action="Toggle theme" letter="K" />
-          <Shortcut action="Search" letter="F" />
+          {shortcutMap.map(shortcut => (
+            <Shortcut action={shortcut.action} letter={shortcut.key} key={shortcut.key} />
+          ))}
         </section>
       </div>
     </div>
   ) : null
 }
-
-export default SettingsModal

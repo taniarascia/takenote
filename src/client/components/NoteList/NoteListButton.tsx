@@ -7,7 +7,7 @@ export interface NoteListButtonProps {
   label: string
 }
 
-const NoteListButton: React.FC<NoteListButtonProps> = ({
+export const NoteListButton: React.FC<NoteListButtonProps> = ({
   dataTestID,
   disabled = false,
   handler,
@@ -26,5 +26,3 @@ const NoteListButton: React.FC<NoteListButtonProps> = ({
     </button>
   )
 }
-
-export default NoteListButton

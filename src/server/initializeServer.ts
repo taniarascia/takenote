@@ -9,7 +9,7 @@ import compression from 'compression'
 
 import errorHandler from './utils/errorHandler'
 
-function server(router: Router) {
+export default function initializeServer(router: Router) {
   const app = express()
   const isProduction = process.env.NODE_ENV === 'production'
   const origin = { origin: isProduction ? false : '*' }
@@ -32,5 +32,3 @@ function server(router: Router) {
 
   return app
 }
-
-export default server

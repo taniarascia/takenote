@@ -2,11 +2,11 @@ import React from 'react'
 import { Switch, Route, Redirect } from 'react-router-dom'
 import { Helmet, HelmetProvider } from 'react-helmet-async'
 
-import LandingPage from '@/containers/LandingPage'
-import TakeNoteApp from '@/containers/TakeNoteApp'
-import PrivateRoute from '@/router/PrivateRoute'
+import { LandingPage } from '@/containers/LandingPage'
+import { TakeNoteApp } from '@/containers/TakeNoteApp'
+import { PrivateRoute } from '@/router/PrivateRoute'
 
-const App: React.FC = () => {
+export const App: React.FC = () => {
   return (
     <HelmetProvider>
       <Helmet>
@@ -23,5 +23,3 @@ const App: React.FC = () => {
     </HelmetProvider>
   )
 }
-
-export default App

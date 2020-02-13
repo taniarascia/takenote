@@ -3,9 +3,9 @@
   "version": "0.4.0",
   "description": "A web-based note-taking app with GitHub sync and Markdown support.",
   "author": "Tania Rascia",
+  "license": "MIT",
   "private": false,
   "main": "src/server/index.js",
-  "license": "MIT",
   "scripts": {
     "dev": "concurrently 'npm run server' 'npm run client'",
     "client": "cross-env NODE_ENV=development webpack-dev-server --config config/webpack.dev.js",

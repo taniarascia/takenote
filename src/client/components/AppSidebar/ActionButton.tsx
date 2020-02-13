@@ -3,7 +3,7 @@ import { Icon } from 'react-feather'
 
 import { iconColor } from '@/constants'
 
-export interface AppSidebarActionProps {
+export interface ActionButtonProps {
   dataTestID: string
   disabled?: boolean
   handler: MouseEventHandler
@@ -11,7 +11,7 @@ export interface AppSidebarActionProps {
   label: string
 }
 
-const AppSidebarAction: React.FC<AppSidebarActionProps> = ({
+export const ActionButton: React.FC<ActionButtonProps> = ({
   dataTestID,
   disabled = false,
   handler,
@@ -39,5 +39,3 @@ const AppSidebarAction: React.FC<AppSidebarActionProps> = ({
     </button>
   )
 }
-
-export default AppSidebarAction

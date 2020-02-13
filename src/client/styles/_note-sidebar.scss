@@ -19,6 +19,7 @@
     border-bottom: 1px solid darken($note-sidebar-color, 10%);
     border-right: 1px solid darken($note-sidebar-color, 10%);
     input {
+      -webkit-appearance: none;
       margin: 0;
     }
   }
@@ -67,12 +68,13 @@
         width: 100%;
 
         .icon {
-          flex: 0 0 20px;
+          display: flex;
+          flex: 0 0 25px;
         }
 
         .note-favorite {
           stroke: $primary;
-          margin-right: 0.5rem;
+          margin: 0.25rem;
         }
 
         .truncate-text {

@@ -3,7 +3,8 @@ import uuid from 'uuid/v4'
 import { Action } from 'redux'
 
 import { Folder } from '@/constants/enums'
-import { NoteItem, WithPayload } from '@/types'
+import { folderMap } from '@/constants/index'
+import { NoteItem, CategoryItem, WithPayload } from '@/types'
 
 export const getNoteTitle = (text: string): string => {
   // Remove whitespace from both ends
@@ -81,7 +82,7 @@ export const newNoteHandlerHelper = (
   }
 }
 
-export const sortByFavourites = (a: NoteItem, b: NoteItem) => {
+export const sortByFavorites = (a: NoteItem, b: NoteItem) => {
   if (a.favorite && !b.favorite) return -1
   if (!a.favorite && b.favorite) return 1
   return 0
@@ -104,4 +105,22 @@ export const shouldOpenContextMenu = (clicked: Element) => {
     (clicked.tagName === 'circle' &&
       clicked.parentElement!.classList.contains('context-menu-action'))
   )
+}
+
+export const getWebsiteTitle = (activeFolder: Folder, activeCategory?: CategoryItem) => {
+  // Show category name if category is active
+  if (activeFolder === Folder.CATEGORY && activeCategory) {
+    return `${activeCategory.name} | TakeNote`
+  } else {
+    // Show main folder name otherwise
+    return `${folderMap[activeFolder]} | TakeNote`
+  }
+}
+
+export const determineTheme = (darkTheme?: boolean) => {
+  if (darkTheme) {
+    return 'app dark'
+  } else {
+    return 'app'
+  }
 }

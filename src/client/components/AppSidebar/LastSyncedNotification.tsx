@@ -1,16 +1,16 @@
 import React from 'react'
 import moment from 'moment'
-import { Check } from 'react-feather'
+import { RefreshCw } from 'react-feather'
 
-export interface LastSyncedProps {
+export interface LastSyncedNotificationProps {
   datetime: string
 }
 
-export const LastSynced: React.FC<LastSyncedProps> = ({ datetime }) => {
+export const LastSyncedNotification: React.FC<LastSyncedNotificationProps> = ({ datetime }) => {
   return (
     <section className="app-sidebar-synced">
       <div className="last-synced">
-        <Check size={14} className="app-sidebar-icon" />
+        <RefreshCw size={14} className="app-sidebar-icon" />
         {moment(datetime).format('h:mm A on M/D/Y')}
       </div>
     </section>
