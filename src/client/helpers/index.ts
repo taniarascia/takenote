@@ -17,22 +17,22 @@ export const getNoteTitle = (text: string): string => {
   return noteText ? noteText[0].split(/\r?\n/)[0] : 'New note'
 }
 
-export const noteWithFrontmatter = (note: NoteItem): string =>
+export const noteWithFrontmatter = (note: NoteItem, category?: CategoryItem): string =>
   `---
 title: ${getNoteTitle(note.text)}
 created: ${note.created}
 lastUpdated: ${note.lastUpdated}
-category: ${note.category ? note.category : ''}
+category: ${category?.name ?? ''}
 ---
 
 ${note.text}`
 
-export const downloadNote = (filename: string, note: NoteItem): void => {
+export const downloadNote = (filename: string, note: NoteItem, category?: CategoryItem): void => {
   const pom = document.createElement('a')
 
   pom.setAttribute(
     'href',
-    `data:text/plain;charset=utf-8,${encodeURIComponent(noteWithFrontmatter(note))}`
+    `data:text/plain;charset=utf-8,${encodeURIComponent(noteWithFrontmatter(note, category))}`
   )
   pom.setAttribute('download', `${filename}.md`)
 

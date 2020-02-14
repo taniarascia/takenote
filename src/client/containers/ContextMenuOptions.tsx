@@ -1,6 +1,6 @@
 import React from 'react'
 import { ArrowUp, Download, Star, Trash, X } from 'react-feather'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { ContextMenuOption } from '@/components/NoteList/ContextMenuOption'
 import { downloadNote, getNoteTitle } from '@/helpers'
@@ -12,7 +12,8 @@ import {
   swapCategory,
   swapNote,
 } from '@/slices/note'
-import { NoteItem } from '@/types'
+import { getCategories } from '@/selectors'
+import { CategoryItem, NoteItem } from '@/types'
 
 export interface ContextMenuOptionsProps {
   clickedNote: NoteItem
@@ -29,8 +30,15 @@ export const ContextMenuOptions: React.FC<ContextMenuOptionsProps> = ({ clickedN
   const _swapNote = (noteId: string) => dispatch(swapNote(noteId))
   const _swapCategory = (categoryId: string) => dispatch(swapCategory(categoryId))
 
+  const { categories } = useSelector(getCategories)
+
   const deleteNoteHandler = () => _deleteNote(clickedNote.id)
-  const downloadNoteHandler = () => downloadNote(getNoteTitle(clickedNote.text), clickedNote)
+  const downloadNoteHandler = () =>
+    downloadNote(
+      getNoteTitle(clickedNote.text),
+      clickedNote,
+      categories.find((category: CategoryItem) => category.id === clickedNote.category)
+    )
   const favoriteNoteHandler = () => _toggleFavoriteNote(clickedNote.id)
   const trashNoteHandler = () => _toggleTrashedNote(clickedNote.id)
   const removeCategoryHandler = () => {
