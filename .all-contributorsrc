@@ -325,6 +325,16 @@
         "test",
         "code"
       ]
+    },
+    {
+      "login": "miqh",
+      "name": "Michael Huynh",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/43751307?v=4",
+      "profile": "https://github.com/miqh",
+      "contributions": [
+        "code",
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
