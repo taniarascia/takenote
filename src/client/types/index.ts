@@ -12,6 +12,9 @@ export interface NoteItem {
   text: string
   created: string
   lastUpdated: string
+  /**
+   * Refers to the category UUID and not the actual name.
+   */
   category?: string
   trash?: boolean
   favorite?: boolean
