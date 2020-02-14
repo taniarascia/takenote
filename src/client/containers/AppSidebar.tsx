@@ -227,7 +227,7 @@ export const AppSidebar: React.FC = () => {
                         onChange={event => {
                           setTempCategoryName(event.target.value)
                         }}
-                        onBlur={() => resetTempCategory()}
+                        onBlur={event => onSubmitUpdateCategory(event)}
                       />
                     ) : (
                       category.name

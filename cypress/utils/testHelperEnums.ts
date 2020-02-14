@@ -9,6 +9,9 @@ const dynamicTimeCategoryName = `Cy${Date.now()}`
 enum TestIDEnum {
   ACTIVE_NOTE = 'active-note',
   ADD_CATEGORY_BUTTON = 'add-category-button',
+  CATEGORY_EDIT = 'category-edit',
+  CATEGORY_LIST_DIV = 'category-list-div',
+  EDIT_CATEGORY = 'edit-category',
   EMPTY_TRASH_BUTTON = 'empty-trash-button',
   FOLDER_ALL_NOTES = 'all-notes',
   FOLDER_FAVORITES = 'favorites',
