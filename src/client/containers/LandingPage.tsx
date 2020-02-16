@@ -1,10 +1,18 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 
 import screenshot from '@/assets/screenshot.png'
 import icon from '@/assets/logo-square-color.svg'
 
 export const LandingPage: React.FC = () => {
+  const loginButton = () => (
+    <a
+      className="button"
+      href="https://github.com/login/oauth/authorize?client_id=a6f0527550d66198cedf&scope=repo"
+    >
+      Log in with GitHub
+    </a>
+  )
+
   return (
     <div className="landing-page">
       <div className="app-navigation">
@@ -17,14 +25,7 @@ export const LandingPage: React.FC = () => {
             <div>
               <a href="https://github.com/taniarascia/takenote">GitHub</a>
             </div>
-            <div>
-              <a
-                className="button"
-                href="https://github.com/login/oauth/authorize?client_id=a6f0527550d66198cedf&scope=repo"
-              >
-                Log in
-              </a>
-            </div>
+            <div>{loginButton()}</div>
           </div>
         </div>
       </div>
@@ -36,12 +37,7 @@ export const LandingPage: React.FC = () => {
             you need, and nothing you don't.`}
           </p>
           <p className="cta">
-            <a
-              className="button"
-              href="https://github.com/login/oauth/authorize?client_id=a6f0527550d66198cedf&scope=repo"
-            >
-              Log in
-            </a>
+            {loginButton()}
             <a
               href="https://github.com/taniarascia/takenote"
               target="_blank"
