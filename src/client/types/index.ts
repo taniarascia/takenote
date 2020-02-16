@@ -31,6 +31,8 @@ export interface CategoryItem {
 //==============================================================================
 
 export interface AuthState {
+  loading: boolean
+  currentUser: any // fix once you know what it looks like
   isAuthenticated: boolean
 }
 
