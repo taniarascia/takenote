@@ -1,4 +1,4 @@
-import { Request, Response } from 'express'
+import { Request, Response, NextFunction } from 'express'
 import axios from 'axios'
 import * as dotenv from 'dotenv'
 
@@ -54,7 +54,7 @@ export default {
       const accessToken = data.access_token
 
       // Set cookie
-      response.cookie('accessTokenGitHub', accessToken, thirtyDayCookie)
+      response.cookie('accessTokenGH', accessToken, thirtyDayCookie)
 
       // Redirect to the app when logged in
       response.redirect('/app')
@@ -62,6 +62,28 @@ export default {
       console.log(error)
       // Redirect to the main page if something went wrong
       response.redirect('/')
+    }
+  },
+  /**
+   * Authentication
+   *
+   * If an access token cookie exists, attempt to determine the currently logged
+   * in user. If the access token is in some way incorrect, expired, etc., throw
+   * an error.
+   */
+  authenticate: async (request: Request, response: Response, next: NextFunction) => {
+    const { accessToken } = response.locals
+
+    try {
+      const { data } = await axios('https://api.github.com/user', {
+        headers: {
+          Authorization: `token ${accessToken}`,
+        },
+      })
+
+      response.status(200).send(data)
+    } catch (error) {
+      response.status(400).send({ message: error.message })
     }
   },
 }
