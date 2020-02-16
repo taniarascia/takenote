@@ -2,7 +2,7 @@ import { Request, Response } from 'express'
 import axios from 'axios'
 import * as dotenv from 'dotenv'
 
-import { oneHourCookie } from '../utils'
+import { thirtyDayCookie } from '../utils'
 
 dotenv.config()
 
@@ -24,9 +24,19 @@ export default {
    * Client-side persistance
    * @url https://www.taniarascia.com/full-stack-cookies-localstorage-react-express/
    *
-   * A one-hour, secure, HTTP only, and same-site cookie will be set on the app
+   * A thirty day, secure, HTTP only, and same-site cookie will be set on the app
    * containing the access token with repo scope for accessing any GitHub data
    * and determining login state.
+   *
+   * Refresh tokens
+   * @url https://developer.github.com/apps/migrating-oauth-apps-to-github-apps/
+   *
+   * From the GitHub docs:
+   * > An OAuth token does not expire until the person who authorized the OAuth
+   * > App revokes the token.
+   *
+   * Therefore, there is no refresh token set up and the only option is to
+   * log in again.
    */
   callback: async (request: Request, response: Response) => {
     const { code } = request.query
@@ -44,7 +54,7 @@ export default {
       const accessToken = data.access_token
 
       // Set cookie
-      response.cookie('accessTokenGitHub', accessToken, oneHourCookie)
+      response.cookie('accessTokenGitHub', accessToken, thirtyDayCookie)
 
       // Redirect to the app when logged in
       response.redirect('/app')
