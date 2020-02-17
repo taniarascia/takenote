@@ -14,6 +14,7 @@ import 'codemirror/lib/codemirror.css'
 import 'codemirror/theme/base16-light.css'
 import 'codemirror/mode/gfm/gfm'
 import 'codemirror/addon/selection/active-line'
+import { setPendingSync } from '@/slices/sync'
 
 export const NoteEditor: React.FC = () => {
   const { activeNoteId, loading, notes } = useSelector(getNotes)
@@ -21,7 +22,10 @@ export const NoteEditor: React.FC = () => {
 
   const dispatch = useDispatch()
   const _togglePreviewMarkdown = () => dispatch(togglePreviewMarkdown())
-  const _updateNote = (note: NoteItem) => dispatch(updateNote(note))
+  const _updateNote = (note: NoteItem) => {
+    dispatch(setPendingSync())
+    dispatch(updateNote(note))
+  }
 
   const activeNote = notes.find(note => note.id === activeNoteId)
 
