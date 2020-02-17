@@ -4,7 +4,7 @@ node_js:
   - '12'
 
 env:
-  - TEST=true
+  - TEST_ENV=true
 
 addons:
   apt:

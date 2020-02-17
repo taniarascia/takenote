@@ -8,7 +8,7 @@ dotenv.config()
 
 const clientId = process.env.CLIENT_ID
 const clientSecret = process.env.CLIENT_SECRET
-const isTest = process.env.TEST
+const isTest = process.env.TEST_ENV
 
 export default {
   /**
@@ -42,6 +42,7 @@ export default {
   callback: async (request: Request, response: Response) => {
     // Testing =================================================================
     if (isTest) {
+      console.log('yes')
       response.redirect('/app')
       return
     }

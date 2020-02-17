@@ -5,6 +5,7 @@ import { Helmet, HelmetProvider } from 'react-helmet-async'
 
 import { LandingPage } from '@/containers/LandingPage'
 import { TakeNoteApp } from '@/containers/TakeNoteApp'
+import { PublicRoute } from '@/router/PublicRoute'
 import { PrivateRoute } from '@/router/PrivateRoute'
 import { getAuth } from '@/selectors'
 import { authenticateUser } from '@/slices/auth'
@@ -40,7 +41,7 @@ export const App: React.FC = () => {
       </Helmet>
 
       <Switch>
-        <Route exact path="/" component={LandingPage} />
+        <PublicRoute exact path="/" component={LandingPage} />
         <PrivateRoute path="/app" component={TakeNoteApp} />
         <Redirect to="/" />
       </Switch>
