@@ -190,6 +190,10 @@ describe('Manage notes test', () => {
     const noteThreeTitle = 'same note title'
     const noteFourTitle = 'note 4'
 
+    Cypress.on('window:before:unload', (event: BeforeUnloadEvent) =>
+      expect(event.returnValue).to.equal('')
+    )
+
     // start with a refresh so we know our current saved state
     cy.reload()
     getNoteCount('allNoteStartCount')

@@ -38,3 +38,42 @@ export function useKey(key: string, action: () => void) {
     return () => mousetrap.unbind(key)
   }, [key])
 }
+
+export function useBeforeUnload(handler: Function = () => {}) {
+  if (process.env.NODE_ENV !== 'production' && typeof handler !== 'function') {
+    throw new TypeError(`Expected "handler" to be a function, not ${typeof handler}.`)
+  }
+
+  const handlerRef = useRef(handler)
+
+  // Remember the latest callback
+  useEffect(() => {
+    handlerRef.current = handler
+  }, [handler])
+
+  // Set up the before unload event
+  useEffect(() => {
+    const handleBeforeunload = (event: BeforeUnloadEvent) => {
+      let returnValue
+
+      if (typeof handlerRef.current === 'function') {
+        returnValue = handlerRef.current(event)
+      }
+
+      if (event.defaultPrevented) {
+        event.returnValue = ''
+      }
+
+      if (typeof returnValue === 'string') {
+        event.returnValue = returnValue
+        return returnValue
+      }
+    }
+
+    window.addEventListener('beforeunload', handleBeforeunload)
+
+    return () => {
+      window.removeEventListener('beforeunload', handleBeforeunload)
+    }
+  }, [])
+}
