@@ -2,6 +2,7 @@ import React from 'react'
 
 import screenshot from '@/assets/screenshot.png'
 import icon from '@/assets/logo-square-color.svg'
+import githubLogo from '@/assets/github-logo.png'
 
 export const LandingPage: React.FC = () => {
   // Update this in development mode
@@ -9,10 +10,11 @@ export const LandingPage: React.FC = () => {
 
   const loginButton = () => (
     <a
-      className="button"
+      className="button github-button"
       href={`https://github.com/login/oauth/authorize?client_id=${clientId}&scope=repo`}
     >
-      GitHub Login
+      <img src={githubLogo} />
+      Sign in with GitHub
     </a>
   )
 
@@ -28,7 +30,6 @@ export const LandingPage: React.FC = () => {
             <div>
               <a href="https://github.com/taniarascia/takenote">Source</a>
             </div>
-            <div>{loginButton()}</div>
           </div>
         </div>
       </div>
@@ -39,17 +40,7 @@ export const LandingPage: React.FC = () => {
             {`TakeNote is a free, open-source, Markdown note-taking app for the web. All the features
             you need, and nothing you don't.`}
           </p>
-          <p className="cta">
-            {loginButton()}
-            <a
-              href="https://github.com/taniarascia/takenote"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="button secondary"
-            >
-              View source
-            </a>
-          </p>
+          <p className="cta">{loginButton()}</p>
           <div>
             <img src={screenshot} alt="TakeNote App" className="app-screenshot" />
           </div>
