@@ -1,10 +1,23 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 
 import screenshot from '@/assets/screenshot.png'
 import icon from '@/assets/logo-square-color.svg'
+import githubLogo from '@/assets/github-logo.png'
 
 export const LandingPage: React.FC = () => {
+  // Update this in development mode
+  const clientId = 'a6f0527550d66198cedf'
+
+  const loginButton = () => (
+    <a
+      className="button github-button"
+      href={`https://github.com/login/oauth/authorize?client_id=${clientId}&scope=repo`}
+    >
+      <img src={githubLogo} />
+      Sign in with GitHub
+    </a>
+  )
+
   return (
     <div className="landing-page">
       <div className="app-navigation">
@@ -15,12 +28,7 @@ export const LandingPage: React.FC = () => {
           </div>
           <div className="menu">
             <div>
-              <a href="https://github.com/taniarascia/takenote">GitHub</a>
-            </div>
-            <div>
-              <Link to="/app" className="button">
-                Use app
-              </Link>
+              <a href="https://github.com/taniarascia/takenote">Source</a>
             </div>
           </div>
         </div>
@@ -32,19 +40,7 @@ export const LandingPage: React.FC = () => {
             {`TakeNote is a free, open-source, Markdown note-taking app for the web. All the features
             you need, and nothing you don't.`}
           </p>
-          <p className="cta">
-            <Link to="/app" className="button">
-              Try it out
-            </Link>
-            <a
-              href="https://github.com/taniarascia/takenote"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="button secondary"
-            >
-              View source
-            </a>
-          </p>
+          <p className="cta">{loginButton()}</p>
           <div>
             <img src={screenshot} alt="TakeNote App" className="app-screenshot" />
           </div>

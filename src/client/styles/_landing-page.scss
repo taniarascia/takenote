@@ -35,7 +35,7 @@
     align-items: center;
 
     a {
-      display: block;
+      display: flex;
       font-size: 1.1rem;
       color: $primary;
       font-weight: 600;
@@ -86,18 +86,6 @@
   .cta {
     text-align: center;
     margin-bottom: 2rem;
-
-    button,
-    a.button {
-      font-size: 1.1rem;
-      padding: 0.7rem 1rem;
-      margin: 0 0.25rem;
-
-      @include small-breakpoint {
-        font-size: 1.2rem;
-        padding: 1rem 1.5rem;
-      }
-    }
   }
 }
 

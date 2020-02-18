@@ -117,10 +117,10 @@ export const getWebsiteTitle = (activeFolder: Folder, activeCategory?: CategoryI
   }
 }
 
-export const determineTheme = (darkTheme?: boolean) => {
+export const determineTheme = (darkTheme: boolean, otherClass: string) => {
   if (darkTheme) {
-    return 'app dark'
+    return `${otherClass} dark`
   } else {
-    return 'app'
+    return otherClass
   }
 }

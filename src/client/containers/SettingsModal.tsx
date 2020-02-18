@@ -8,18 +8,21 @@ import {
   togglePreviewMarkdown,
   toggleDarkTheme,
 } from '@/slices/settings'
+import { logout } from '@/slices/auth'
 import { shortcutMap } from '@/constants'
 import { ReactMouseEvent } from '@/types'
-import { getSettings } from '@/selectors'
+import { getSettings, getAuth } from '@/selectors'
 import { Option } from '@/components/SettingsModal/Option'
 import { Shortcut } from '@/components/SettingsModal/Shortcut'
 
 export const SettingsModal: React.FC = () => {
   const { codeMirrorOptions, isOpen, previewMarkdown, darkTheme } = useSelector(getSettings)
+  const { currentUser } = useSelector(getAuth)
 
   const node = useRef<HTMLDivElement>(null)
 
   const dispatch = useDispatch()
+  const _logout = () => dispatch(logout())
   const _toggleSettingsModal = () => dispatch(toggleSettingsModal())
   const _togglePreviewMarkdown = () => dispatch(togglePreviewMarkdown())
   const _toggleDarkTheme = () => dispatch(toggleDarkTheme())
@@ -73,6 +76,23 @@ export const SettingsModal: React.FC = () => {
             <X size={20} />
           </div>
         </header>
+
+        <section className="profile flex">
+          <div>
+            <img src={currentUser.avatar_url} alt="Profile" className="profile-picture" />
+          </div>
+          <div className="profile-details">
+            <h3>{currentUser.name}</h3>
+            <div className="subtitle">{currentUser.email}</div>
+            <button
+              onClick={() => {
+                _logout()
+              }}
+            >
+              Log out
+            </button>
+          </div>
+        </section>
 
         <section className="settings-section">
           <div className="settings-label mb-1">Options</div>

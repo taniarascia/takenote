@@ -2,6 +2,10 @@ $dark-sidebar: #333;
 $dark-editor: #3f3f3f;
 
 .dark {
+  .loading {
+    background: #222;
+  }
+
   .app-sidebar {
     border-right: 1px solid darken($dark-sidebar, 8%);
   }
@@ -166,6 +170,12 @@ $dark-editor: #3f3f3f;
 
   .cache {
     border: 1px solid black;
+  }
+
+  .settings-modal {
+    .subtitle {
+      color: darken($light-font-color, 20%);
+    }
   }
 
   ::-webkit-scrollbar {

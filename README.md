@@ -4,8 +4,8 @@
 
 <p align="center">
  <img src="https://img.shields.io/badge/License-MIT-blue.svg">
-  <a href="#contributors"><img src="https://img.shields.io/badge/all_contributors-34-orange.svg?style=flat-square)"></a>
    <a href="https://travis-ci.org/taniarascia/takenote"><img src="https://travis-ci.org/taniarascia/takenote.svg?branch=master"></a>
+   <a href="https://coveralls.io/github/taniarascia/takenote?branch=master"><img src="https://coveralls.io/repos/github/taniarascia/takenote/badge.svg?branch=master">
 </p>
 
 <p align="center">A web-based note-taking app with GitHub sync and Markdown support. (WIP)</p>
@@ -35,6 +35,27 @@ In progress!
 > _"I think the lack of extra crap is a feature."_ — Craig Lam
 
 ## Setup
+
+### Pre-Installation
+
+> Before working on TakeNote locally, you must create a GitHub OAuth app for development.
+
+Go to your GitHub profile settings, and click on **Developer Settings**.
+
+Click the **New OAuth App** button.
+
+- **Application name**: TakeNote Development
+- **Homepage URL**: http://localhost:3000
+- **Authorization callback URL**: http://localhost:3000/api/auth/callback
+
+Create a `.env` file in the root of the project, and add the app's client ID and secret.
+
+```bash
+CLIENT_ID=xxx
+CLIENT_SECRET=xxxx
+```
+
+Finally, in `LandingPage.tsx`, replace the `clientId` variable with your app's client id.
 
 ### Install
 
@@ -165,6 +186,7 @@ Thanks goes to these wonderful people:
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 ## Acknowledgements

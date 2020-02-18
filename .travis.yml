@@ -3,6 +3,9 @@ language: node_js
 node_js:
   - '12'
 
+env:
+  - TEST_ENV=true
+
 addons:
   apt:
     packages:
@@ -30,7 +33,7 @@ install:
 
 before_script:
   # Start server and client for tests
-  - npm run dev &
+  - npm run dev:test &
 
 script:
   # Run unit, component, and e2e tests
