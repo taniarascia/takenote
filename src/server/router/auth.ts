@@ -13,11 +13,13 @@ const isTest = process.env.TEST_ENV
 if (isTest) {
   // Mocked routes for Cypress end-to-end tests
   router.get('/callback', mockAuthHandler.callback)
-  router.get('/authenticate', mockAuthHandler.authenticate)
+  router.get('/login', mockAuthHandler.login)
+  router.get('/logout', mockAuthHandler.logout)
 } else {
   // Real routes
   router.get('/callback', authHandler.callback)
-  router.get('/authenticate', checkAuth, authHandler.authenticate)
+  router.get('/login', checkAuth, authHandler.login)
+  router.get('/logout', checkAuth, authHandler.logout)
 }
 
 export default router

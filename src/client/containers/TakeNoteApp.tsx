@@ -50,7 +50,7 @@ export const TakeNoteApp: React.FC = () => {
       </Helmet>
 
       <TempStateProvider>
-        <div className={determineTheme(darkTheme)}>
+        <div className={determineTheme(darkTheme, 'app')}>
           <AppSidebar />
           <NoteList />
           <NoteEditor />

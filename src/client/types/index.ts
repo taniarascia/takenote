@@ -26,14 +26,19 @@ export interface CategoryItem {
   draggedOver: boolean
 }
 
+export interface GithubUser {
+  [anyProp: string]: any
+}
+
 //==============================================================================
 // State
 //==============================================================================
 
 export interface AuthState {
   loading: boolean
-  currentUser: any // fix once you know what it looks like
+  currentUser: GithubUser
   isAuthenticated: boolean
+  error?: string
 }
 
 export interface CategoryState {

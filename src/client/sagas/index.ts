@@ -7,7 +7,7 @@ import { requestCategories, requestNotes, saveState, saveSettings, requestSettin
 import { loadCategories, loadCategoriesError, loadCategoriesSuccess } from '@/slices/category'
 import { loadNotes, loadNotesError, loadNotesSuccess } from '@/slices/note'
 import { syncState, syncStateError, syncStateSuccess } from '@/slices/sync'
-import { authenticateUser, authenticateUserSuccess, authenticateUserError } from '@/slices/auth'
+import { login, loginSuccess, loginError, logout, logoutSuccess } from '@/slices/auth'
 import {
   updateCodeMirrorOption,
   loadSettingsSuccess,
@@ -20,8 +20,42 @@ import {
 import { SyncStateAction } from '@/types'
 import { getSettings } from '@/selectors'
 
+/**
+ * Log in user
+ *
+ * Hit the Express endpoint to get the current GitHub user from the cookie
+ */
+function* loginUser() {
+  try {
+    const { data } = yield axios('/api/auth/login')
+
+    yield put(loginSuccess(data))
+  } catch (error) {
+    yield put(loginError(error.message))
+  }
+}
+
+/**
+ * Log out user
+ *
+ * Remove the access token cookie from Express
+ */
+function* logoutUser() {
+  try {
+    yield axios('/api/auth/logout')
+
+    yield put(logoutSuccess())
+  } catch (error) {
+    yield put(logoutSuccess())
+  }
+}
+
+/**
+ * Get notes from API
+ */
 function* fetchNotes() {
   try {
+    // requestNotes is a temporary mock API
     const notes = yield requestNotes()
 
     yield put(loadNotesSuccess(notes))
@@ -30,8 +64,12 @@ function* fetchNotes() {
   }
 }
 
+/**
+ * Get categories from API
+ */
 function* fetchCategories() {
   try {
+    // requestCategories is a temporary mock API
     const categories = yield requestCategories()
 
     yield put(loadCategoriesSuccess(categories))
@@ -67,19 +105,11 @@ function* fetchSettings() {
   }
 }
 
-function* authenticate() {
-  try {
-    const { data } = yield axios('/api/auth/authenticate')
-
-    yield put(authenticateUserSuccess(data))
-  } catch (error) {
-    yield put(authenticateUserError(error.message))
-  }
-}
-
+// If any of these functions are dispatched, invoke the appropriate saga
 function* rootSaga() {
   yield all([
-    takeLatest(authenticateUser.type, authenticate),
+    takeLatest(login.type, loginUser),
+    takeLatest(logout.type, logoutUser),
     takeLatest(loadNotes.type, fetchNotes),
     takeLatest(loadCategories.type, fetchCategories),
     takeLatest(loadSettings.type, fetchSettings),

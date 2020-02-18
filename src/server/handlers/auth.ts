@@ -65,6 +65,7 @@ export default {
       response.redirect('/')
     }
   },
+
   /**
    * Authentication
    *
@@ -72,7 +73,7 @@ export default {
    * in user. If the access token is in some way incorrect, expired, etc., throw
    * an error.
    */
-  authenticate: async (request: Request, response: Response, next: NextFunction) => {
+  login: async (request: Request, response: Response, next: NextFunction) => {
     const { accessToken } = response.locals
 
     try {
@@ -86,5 +87,11 @@ export default {
     } catch (error) {
       response.status(400).send({ message: error.message })
     }
+  },
+
+  logout: async (request: Request, response: Response) => {
+    response.clearCookie('accessTokenGH')
+
+    response.status(200).send({ message: 'Logged out' })
   },
 }

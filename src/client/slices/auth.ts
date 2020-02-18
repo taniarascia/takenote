@@ -6,35 +6,43 @@ const initialState: AuthState = {
   loading: true,
   currentUser: {},
   isAuthenticated: false,
+  error: '',
 }
 
 const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    authenticateUser: state => ({
+    login: state => ({
       ...state,
       loading: true,
     }),
-    authenticateUserSuccess: (state, { payload }: PayloadAction<any>) => ({
+    loginSuccess: (state, { payload }: PayloadAction<any>) => ({
       ...state,
       currentUser: payload,
       isAuthenticated: true,
       loading: false,
     }),
-    authenticateUserError: (state, { payload }: PayloadAction<string>) => ({
+    loginError: (state, { payload }: PayloadAction<string>) => ({
       ...state,
       error: payload,
       isAuthenticated: false,
       loading: false,
     }),
+    logout: state => ({
+      ...state,
+      loading: true,
+    }),
+    logoutSuccess: state => ({
+      ...state,
+      isAuthenticated: false,
+      currentUser: {},
+      error: '',
+      loading: false,
+    }),
   },
 })
 
-export const {
-  authenticateUser,
-  authenticateUserSuccess,
-  authenticateUserError,
-} = authSlice.actions
+export const { login, loginSuccess, loginError, logout, logoutSuccess } = authSlice.actions
 
 export default authSlice.reducer

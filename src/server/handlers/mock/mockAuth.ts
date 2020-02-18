@@ -1,11 +1,15 @@
-import { Request, Response, NextFunction } from 'express'
+import { Request, Response } from 'express'
 
 export default {
   callback: async (request: Request, response: Response) => {
     response.redirect('/app')
   },
 
-  authenticate: async (request: Request, response: Response, next: NextFunction) => {
+  login: async (request: Request, response: Response) => {
     response.status(200).send({ name: 'Test User', email: 'email@example.com' })
+  },
+
+  logout: async (request: Request, response: Response) => {
+    response.status(200).send({ message: 'Logged out' })
   },
 }
