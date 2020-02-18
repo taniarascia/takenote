@@ -4,10 +4,13 @@ import screenshot from '@/assets/screenshot.png'
 import icon from '@/assets/logo-square-color.svg'
 
 export const LandingPage: React.FC = () => {
+  // Update this in development mode
+  const clientId = 'a6f0527550d66198cedf'
+
   const loginButton = () => (
     <a
       className="button"
-      href="https://github.com/login/oauth/authorize?client_id=a6f0527550d66198cedf&scope=repo"
+      href={`https://github.com/login/oauth/authorize?client_id=${clientId}&scope=repo`}
     >
       GitHub Login
     </a>

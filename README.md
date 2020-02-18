@@ -36,6 +36,27 @@ In progress!
 
 ## Setup
 
+### Pre-Installation
+
+> Before working on TakeNote locally, you must create a GitHub OAuth app for development.
+
+Go to your GitHub profile settings, and click on **Developer Settings**.
+
+Click the **New OAuth App** button.
+
+- **Application name**: TakeNote Development
+- **Homepage URL**: http://localhost:3000
+- **Authorization callback URL**: http://localhost:3000/api/auth/callback
+
+Create a `.env` file in the root of the project, and add the app's client ID and secret.
+
+```bash
+CLIENT_ID=xxx
+CLIENT_SECRET=xxxx
+```
+
+Finally, in `LandingPage.tsx`, replace the `clientId` variable with your app's client id.
+
 ### Install
 
 ```bash
