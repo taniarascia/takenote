@@ -69,6 +69,7 @@ export interface SyncState {
   syncing: boolean
   lastSynced: string
   error: string
+  pendingSync: boolean
 }
 
 export interface RootState {

@@ -8,7 +8,7 @@ import { NoteEditor } from '@/containers/NoteEditor'
 import { NoteList } from '@/containers/NoteList'
 import { SettingsModal } from '@/containers/SettingsModal'
 import { TempStateProvider } from '@/contexts/TempStateContext'
-import { useInterval } from '@/helpers/hooks'
+import { useInterval, useBeforeUnload } from '@/helpers/hooks'
 import { getWebsiteTitle, determineTheme } from '@/helpers'
 import { loadCategories } from '@/slices/category'
 import { loadNotes } from '@/slices/note'
@@ -21,6 +21,8 @@ export const TakeNoteApp: React.FC = () => {
   const { darkTheme } = useSelector(getSettings)
   const { activeFolder, activeCategoryId, notes } = useSelector(getNotes)
   const { categories } = useSelector(getCategories)
+  const { pendingSync } = useSelector(getSync)
+  useBeforeUnload((event: BeforeUnloadEvent) => (pendingSync ? event.preventDefault() : null))
 
   const dispatch = useDispatch()
   const _loadNotes = () => dispatch(loadNotes())
