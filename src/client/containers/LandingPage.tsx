@@ -9,7 +9,7 @@ export const LandingPage: React.FC = () => {
       className="button"
       href="https://github.com/login/oauth/authorize?client_id=a6f0527550d66198cedf&scope=repo"
     >
-      Log in with GitHub
+      GitHub Login
     </a>
   )
 
@@ -23,7 +23,7 @@ export const LandingPage: React.FC = () => {
           </div>
           <div className="menu">
             <div>
-              <a href="https://github.com/taniarascia/takenote">GitHub</a>
+              <a href="https://github.com/taniarascia/takenote">Source</a>
             </div>
             <div>{loginButton()}</div>
           </div>

@@ -11,9 +11,11 @@ dotenv.config()
 const isTest = process.env.TEST_ENV
 
 if (isTest) {
+  // Mocked routes for Cypress end-to-end tests
   router.get('/callback', mockAuthHandler.callback)
   router.get('/authenticate', mockAuthHandler.authenticate)
 } else {
+  // Real routes
   router.get('/callback', authHandler.callback)
   router.get('/authenticate', checkAuth, authHandler.authenticate)
 }
