@@ -40,14 +40,6 @@ export default {
    * log in again.
    */
   callback: async (request: Request, response: Response) => {
-    // Testing =================================================================
-    if (isTest) {
-      console.log('yes')
-      response.redirect('/app')
-      return
-    }
-    //==========================================================================
-
     const { code } = request.query
 
     try {
@@ -81,13 +73,6 @@ export default {
    * an error.
    */
   authenticate: async (request: Request, response: Response, next: NextFunction) => {
-    // Testing =================================================================
-    if (isTest) {
-      response.status(200).send({ name: 'Test User', email: 'email@example.com' })
-      return
-    }
-    //==========================================================================
-
     const { accessToken } = response.locals
 
     try {
