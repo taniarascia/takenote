@@ -5,7 +5,7 @@
 <p align="center">
  <img src="https://img.shields.io/badge/License-MIT-blue.svg">
    <a href="https://travis-ci.org/taniarascia/takenote"><img src="https://travis-ci.org/taniarascia/takenote.svg?branch=master"></a>
-   <a href="https://coveralls.io/repos/github/taniarascia/takenote/badge.svg?branch=master"><img src="https://coveralls.io/github/taniarascia/takenote?branch=master">
+   <a href="https://coveralls.io/github/taniarascia/takenote?branch=master"><img src="https://coveralls.io/repos/github/taniarascia/takenote/badge.svg?branch=master">
 </p>
 
 <p align="center">A web-based note-taking app with GitHub sync and Markdown support. (WIP)</p>
