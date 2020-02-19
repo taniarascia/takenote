@@ -5,7 +5,7 @@
 <p align="center">
  <img src="https://img.shields.io/badge/License-MIT-blue.svg">
    <a href="https://travis-ci.org/taniarascia/takenote"><img src="https://travis-ci.org/taniarascia/takenote.svg?branch=master"></a>
-   <a href="https://coveralls.io/github/taniarascia/takenote?branch=master"><img src="https://coveralls.io/repos/github/taniarascia/takenote/badge.svg?branch=master">
+   <a href="https://coveralls.io/github/taniarascia/takenote?branch=master"><img src="https://coveralls.io/repos/github/taniarascia/takenote/badge.svg?branch=master"></a>
 </p>
 
 <p align="center">A web-based note-taking app with GitHub sync and Markdown support. (WIP)</p>
@@ -45,8 +45,8 @@ Go to your GitHub profile settings, and click on **Developer Settings**.
 Click the **New OAuth App** button.
 
 - **Application name**: TakeNote Development
-- **Homepage URL**: http://localhost:3000
-- **Authorization callback URL**: http://localhost:3000/api/auth/callback
+- **Homepage URL**: `http://localhost:3000`
+- **Authorization callback URL**: `http://localhost:3000/api/auth/callback`
 
 Create a `.env` file in the root of the project, and add the app's client ID and secret.
 
@@ -56,6 +56,8 @@ CLIENT_SECRET=xxxx
 ```
 
 Finally, in `LandingPage.tsx`, replace the `clientId` variable with your app's client id.
+
+> The URLs will be on port `5000` in production mode or Docker.
 
 ### Install
 
@@ -93,10 +95,12 @@ Go to `localhost:5000` to view the app.
 
 Docker containers are [also available on the Dockerhub registry](https://hub.docker.com/r/taniarascia/takenote).
 
+> Note: You'll have to pass the client id, client secret, and ensure `secure: false` is set on the cookie.
+
 ```bash
 # Build image and run container
 docker build -t takenote .
-docker run -p 5000:5000 takenote
+docker run --env-file .env -p 5000:5000 takenote
 ```
 
 Go to `localhost:5000` to view the app.
