@@ -20,6 +20,7 @@ echo "Logging into Docker and pushing ${IMAGE}:${GIT_VERSION}"
 
 echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
 docker push ${IMAGE}:${GIT_VERSION}
+docker push ${IMAGE}:latest
 
 # Login to DigitalOcean command line
 echo "Authorizing DigitalOcean"
