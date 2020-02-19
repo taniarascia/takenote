@@ -35,7 +35,10 @@ module.exports = {
     'import/resolver': {
       // Allow `@/` to map to `src/client/`
       alias: {
-        map: [['@', './src/client']],
+        map: [
+          ['@', './src/client'],
+          ['@resources', './src/resources']
+        ],
         extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
       },
     },

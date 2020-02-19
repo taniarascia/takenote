@@ -2,6 +2,8 @@ import moment from 'moment'
 import uuid from 'uuid/v4'
 import { Action } from 'redux'
 
+import { ResourceStringEnum } from '@resources/resourceStrings'
+
 import { Folder } from '@/constants/enums'
 import { folderMap } from '@/constants/index'
 import { NoteItem, CategoryItem, WithPayload } from '@/types'
@@ -14,7 +16,7 @@ export const getNoteTitle = (text: string): string => {
 
   // Get the first line of text after any newlines
   // In the future, this should break on a full word
-  return noteText ? noteText[0].split(/\r?\n/)[0] : 'New note'
+  return noteText ? noteText[0].split(/\r?\n/)[0] : ResourceStringEnum.NEW_NOTE
 }
 
 export const noteWithFrontmatter = (note: NoteItem, category?: CategoryItem): string =>

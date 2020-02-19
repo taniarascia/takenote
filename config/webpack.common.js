@@ -69,6 +69,7 @@ module.exports = {
     // Allow `@/` to map to `src/client/`
     alias: {
       '@': path.resolve(__dirname, '../src/client'),
+      '@resources': path.resolve(__dirname, '../src/resources'),
     },
   },
 

@@ -1,8 +1,8 @@
 import React from 'react'
 
-import screenshot from '@/assets/screenshot.png'
-import icon from '@/assets/logo-square-color.svg'
-import githubLogo from '@/assets/github-logo.png'
+import screenshot from '@resources/assets/screenshot.png'
+import icon from '@resources/assets/logo-square-color.svg'
+import githubLogo from '@resources/assets/github-logo.png'
 
 export const LandingPage: React.FC = () => {
   // Update this in development mode
