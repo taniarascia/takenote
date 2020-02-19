@@ -3,9 +3,6 @@ language: node_js
 node_js:
   - '12'
 
-env:
-  - TEST_ENV=true
-
 addons:
   apt:
     packages:
