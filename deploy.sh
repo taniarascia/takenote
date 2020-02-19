@@ -30,18 +30,12 @@ doctl auth init -t "${DO_ACCESS_TOKEN}"
 echo ${DO_SSH_KEY} | base64 -d > deploy_key
 chmod 600 deploy_key
 
-echo -e "CLIENT_ID=${CLIENT_ID} \nCLIENT_SECRET=${CLIENT_SECRET}" > .env
-
-# Find currently running container ID
-CONTAINER_ID=$(doctl compute ssh ${DROPLET} --ssh-key-path deploy_key --ssh-command 'docker ps | grep takenote | cut -d" " -f1')
-
 # Log into Droplet, stop the currently running container and start the new one
-echo "Stopping container ID ${CONTAINER_ID} and starting ${IMAGE}:${GIT_VERSION}"
+echo "Stopping container name current and starting ${IMAGE}:${GIT_VERSION}"
 
-# TODO: If there is no currently running container, do not attempt to stop the
-# CONTAINER_ID or the build will fail.
 doctl compute ssh ${DROPLET} --ssh-key-path deploy_key --ssh-command "docker pull ${IMAGE}:${GIT_VERSION} && 
-docker stop ${CONTAINER_ID} && 
-docker run --restart unless-stopped -e CLIENT_ID=${CLIENT_ID} -e CLIENT_SECRET=${CLIENT_SECRET} -d -p 80:5000 ${IMAGE}:${GIT_VERSION} &&
+docker stop current && 
+docker rm current && 
+docker run --name=current --restart unless-stopped -e CLIENT_ID=${CLIENT_ID} -e CLIENT_SECRET=${CLIENT_SECRET} -d -p 80:5000 ${IMAGE}:${GIT_VERSION} &&
 docker system prune -a -f &&
 docker image prune -a -f"
