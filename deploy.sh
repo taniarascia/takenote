@@ -30,6 +30,8 @@ doctl auth init -t "${DO_ACCESS_TOKEN}"
 echo ${DO_SSH_KEY} | base64 -d > deploy_key
 chmod 600 deploy_key
 
+echo -e "CLIENT_ID=${CLIENT_ID} \nCLIENT_SECRET=${CLIENT_SECRET}" > .env
+
 # Find currently running container ID
 CONTAINER_ID=$(doctl compute ssh ${DROPLET} --ssh-key-path deploy_key --ssh-command 'docker ps | grep takenote | cut -d" " -f1')
 
@@ -38,6 +40,6 @@ echo "Stopping container ID ${CONTAINER_ID} and starting ${IMAGE}:${GIT_VERSION}
 
 doctl compute ssh ${DROPLET} --ssh-key-path deploy_key --ssh-command "docker pull ${IMAGE}:${GIT_VERSION} && 
 docker stop ${CONTAINER_ID} && 
-docker run --restart unless-stopped -d -p 80:5000 ${IMAGE}:${GIT_VERSION} &&
+docker run --restart unless-stopped --env-file .env -d -p 80:5000 ${IMAGE}:${GIT_VERSION} env &&
 docker system prune -a -f &&
 docker image prune -a -f"
