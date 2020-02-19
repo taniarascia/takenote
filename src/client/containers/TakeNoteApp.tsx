@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Helmet, HelmetProvider } from 'react-helmet-async'
+import { DragDropContext, DropResult } from 'react-beautiful-dnd'
 
 import { AppSidebar } from '@/containers/AppSidebar'
 import { KeyboardShortcuts } from '@/containers/KeyboardShortcuts'
@@ -32,6 +33,9 @@ export const TakeNoteApp: React.FC = () => {
     dispatch(syncState({ notes, categories }))
 
   const activeCategory = categories.find(({ id }) => id === activeCategoryId)
+  const onDragEnd = (result: DropResult) => {
+    // TODO: Add drag logic
+  }
 
   useEffect(() => {
     _loadNotes()
@@ -53,9 +57,11 @@ export const TakeNoteApp: React.FC = () => {
 
       <TempStateProvider>
         <div className={determineTheme(darkTheme)}>
-          <AppSidebar />
-          <NoteList />
-          <NoteEditor />
+          <DragDropContext onDragEnd={onDragEnd}>
+            <AppSidebar />
+            <NoteList />
+            <NoteEditor />
+          </DragDropContext>
           <KeyboardShortcuts />
           <SettingsModal />
         </div>

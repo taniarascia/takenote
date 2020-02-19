@@ -2,6 +2,7 @@ import uuid from 'uuid/v4'
 import React, { useState } from 'react'
 import { Loader, Folder as FolderIcon, Plus, Settings, RefreshCw, X } from 'react-feather'
 import { useDispatch, useSelector } from 'react-redux'
+import { Droppable, DroppableProvided, Draggable, DraggableProps } from 'react-beautiful-dnd'
 
 import { ActionButton } from '@/components/AppSidebar/ActionButton'
 import { LastSyncedNotification } from '@/components/AppSidebar/LastSyncedNotification'
@@ -172,86 +173,106 @@ export const AppSidebar: React.FC = () => {
           <div className="category-title">
             <h2>Categories</h2>
           </div>
-          <div className="category-list" aria-label="Category list">
-            {categories.map(category => {
-              return (
-                <div
-                  data-testid="category-list-div"
-                  key={category.id}
-                  className={determineCategoryClass(category)}
-                  onClick={() => {
-                    const notesForNewCategory = notes.filter(
-                      note => !note.trash && note.category === category.id
-                    )
-                    const newNoteId =
-                      notesForNewCategory.length > 0 ? notesForNewCategory[0].id : ''
-                    if (category.id !== activeCategoryId) {
-                      _swapCategory(category.id)
-                      _swapNote(newNoteId)
-                    }
-                  }}
-                  onDoubleClick={() => {
-                    setEditingCategoryId(category.id)
-                    setTempCategoryName(category.name)
-                  }}
-                  onBlur={() => {
-                    setEditingCategoryId('')
-                  }}
-                  onDrop={event => {
-                    event.preventDefault()
+          <Droppable droppableId="Category list">
+            {droppableProvided => (
+              <div
+                {...droppableProvided.droppableProps}
+                ref={droppableProvided.innerRef}
+                className="category-list"
+                aria-label="Category list"
+              >
+                {categories.map((category, index) => {
+                  return (
+                    <Draggable key={category.id} draggableId={category.id} index={index}>
+                      {draggableProvided => (
+                        <div
+                          {...draggableProvided.dragHandleProps}
+                          {...draggableProvided.draggableProps}
+                          ref={draggableProvided.innerRef}
+                          data-testid="category-list-div"
+                          className={determineCategoryClass(category)}
+                          onClick={() => {
+                            const notesForNewCategory = notes.filter(
+                              note => !note.trash && note.category === category.id
+                            )
+                            const newNoteId =
+                              notesForNewCategory.length > 0 ? notesForNewCategory[0].id : ''
+                            if (category.id !== activeCategoryId) {
+                              _swapCategory(category.id)
+                              _swapNote(newNoteId)
+                            }
+                          }}
+                          onDoubleClick={() => {
+                            setEditingCategoryId(category.id)
+                            setTempCategoryName(category.name)
+                          }}
+                          onBlur={() => {
+                            setEditingCategoryId('')
+                          }}
+                          onDrop={event => {
+                            event.preventDefault()
 
-                    _addCategoryToNote(category.id, event.dataTransfer.getData('text'))
-                    _categoryDragLeave(category)
-                  }}
-                  onDragOver={(event: ReactDragEvent) => event.preventDefault()}
-                  onDragEnter={() => _categoryDragEnter(category)}
-                  onDragLeave={() => _categoryDragLeave(category)}
-                >
-                  <form
-                    className="category-list-name"
-                    onSubmit={event => {
-                      event.preventDefault()
-                      setEditingCategoryId('')
-                      onSubmitUpdateCategory(event)
-                    }}
-                  >
-                    <FolderIcon size={15} className="app-sidebar-icon" color={iconColor} />
-                    {editingCategoryId === category.id ? (
-                      <input
-                        data-testid="category-edit"
-                        className="category-edit"
-                        type="text"
-                        autoFocus
-                        maxLength={20}
-                        value={tempCategoryName}
-                        onChange={event => {
-                          setTempCategoryName(event.target.value)
-                        }}
-                        onBlur={event => onSubmitUpdateCategory(event)}
-                      />
-                    ) : (
-                      category.name
-                    )}
-                  </form>
-                  <div
-                    data-testid="category-options"
-                    className="category-options"
-                    onClick={() => {
-                      const notesNotTrash = notes.filter(note => !note.trash)
-                      const newNoteId = notesNotTrash.length > 0 ? notesNotTrash[0].id : ''
+                            _addCategoryToNote(category.id, event.dataTransfer.getData('text'))
+                            _categoryDragLeave(category)
+                          }}
+                          onDragOver={(event: ReactDragEvent) => event.preventDefault()}
+                          onDragEnter={() => _categoryDragEnter(category)}
+                          onDragLeave={() => _categoryDragLeave(category)}
+                        >
+                          <form
+                            className="category-list-name"
+                            onSubmit={event => {
+                              event.preventDefault()
+                              setEditingCategoryId('')
+                              onSubmitUpdateCategory(event)
+                            }}
+                          >
+                            <FolderIcon size={15} className="app-sidebar-icon" color={iconColor} />
+                            {editingCategoryId === category.id ? (
+                              <input
+                                data-testid="category-edit"
+                                className="category-edit"
+                                type="text"
+                                autoFocus
+                                maxLength={20}
+                                value={tempCategoryName}
+                                onChange={event => {
+                                  setTempCategoryName(event.target.value)
+                                }}
+                                onBlur={event => onSubmitUpdateCategory(event)}
+                              />
+                            ) : (
+                              category.name
+                            )}
+                          </form>
+                          <div
+                            data-testid="category-options"
+                            className="category-options"
+                            onClick={() => {
+                              const notesNotTrash = notes.filter(note => !note.trash)
+                              const newNoteId = notesNotTrash.length > 0 ? notesNotTrash[0].id : ''
 
-                      _deleteCategory(category.id)
-                      _pruneCategoryFromNotes(category.id)
-                      _swapFolder(Folder.ALL)
-                      _swapNote(newNoteId)
-                    }}
-                  >
-                    <X data-testid="remove-category" size={12} aria-label="Remove category" />
-                  </div>
-                </div>
-              )
-            })}
-          </div>
+                              _deleteCategory(category.id)
+                              _pruneCategoryFromNotes(category.id)
+                              _swapFolder(Folder.ALL)
+                              _swapNote(newNoteId)
+                            }}
+                          >
+                            <X
+                              data-testid="remove-category"
+                              size={12}
+                              aria-label="Remove category"
+                            />
+                          </div>
+                        </div>
+                      )}
+                    </Draggable>
+                  )
+                })}
+                {droppableProvided.placeholder}
+              </div>
+            )}
+          </Droppable>
           {addingTempCategory ? (
             <form
               data-testid="new-category-form"
