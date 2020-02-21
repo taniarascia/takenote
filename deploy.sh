@@ -8,6 +8,11 @@ IMAGE="taniarascia/takenote"
 
 # Git version with git hash and tags (if they exist) to be used as Docker tag
 GIT_VERSION=$(git describe --always --abbrev --tags --long)
+WEBPACK_CLIENT_ID="a6f0527550d66198cedf"
+
+echo "Setting client ID for Webpack"
+
+echo "CLIENT_ID=${WEBPACK_CLIENT_ID}" > .env
 
 # Build and tag new Docker image and push up to Docker Hub
 echo "Building and tagging new Docker image: ${IMAGE}:${GIT_VERSION}"
@@ -37,6 +42,6 @@ echo "Stopping container name current and starting ${IMAGE}:${GIT_VERSION}"
 doctl compute ssh ${DROPLET} --ssh-key-path deploy_key --ssh-command "docker pull ${IMAGE}:${GIT_VERSION} && 
 docker stop current && 
 docker rm current && 
-docker run --name=current --restart unless-stopped -e CLIENT_ID=${CLIENT_ID} -e CLIENT_SECRET=${CLIENT_SECRET} -d -p 80:5000 ${IMAGE}:${GIT_VERSION} &&
+docker run --name=current --restart unless-stopped --env-file .env -e CLIENT_ID=${CLIENT_ID} -e CLIENT_SECRET=${CLIENT_SECRET} -d -p 80:5000 ${IMAGE}:${GIT_VERSION} &&
 docker system prune -a -f &&
 docker image prune -a -f"
