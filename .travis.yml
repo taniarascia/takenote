@@ -3,6 +3,10 @@ language: node_js
 node_js:
   - '12'
 
+env: 
+  - CLIENT_ID=TEST_CLIENT_ID
+  - CLIENT_SECRET=TEST_CLIENT_SECRET
+
 addons:
   apt:
     packages:
