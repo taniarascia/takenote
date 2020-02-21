@@ -34,11 +34,9 @@ chmod 600 deploy_key
 # Log into Droplet, stop the currently running container and start the new one
 echo "Stopping container name current and starting ${IMAGE}:${GIT_VERSION}"
 
-doctl compute ssh ${DROPLET} --ssh-key-path deploy_key --ssh-command "touch .env && 
-echo CLIENT_ID=${CLIENT_ID} > .env &&
-docker pull ${IMAGE}:${GIT_VERSION} && 
+doctl compute ssh ${DROPLET} --ssh-key-path deploy_key --ssh-command "docker pull ${IMAGE}:${GIT_VERSION} && 
 docker stop current && 
 docker rm current && 
-docker run --name=current --restart unless-stopped --env-file .env -e CLIENT_ID=${CLIENT_ID} -e CLIENT_SECRET=${CLIENT_SECRET} -d -p 80:5000 ${IMAGE}:${GIT_VERSION} &&
+docker run --name=current --restart unless-stopped -e CLIENT_ID=${CLIENT_ID} -e CLIENT_SECRET=${CLIENT_SECRET} -d -p 80:5000 ${IMAGE}:${GIT_VERSION} &&
 docker system prune -a -f &&
 docker image prune -a -f"

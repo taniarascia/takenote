@@ -7,10 +7,17 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 // Obtain CLIENT_ID for OAuth link
+// Hard code client ID for deployment due to difficulties passing in env file
 const envVariable = dotenv.config()
-if (envVariable.error) throw envVariable.error
-const envKeys = {
-  'process.env.CLIENT_ID': JSON.stringify(envVariable.parsed['CLIENT_ID']),
+let envKeys
+if (envVariable.error) {
+  envKeys = {
+    'process.env.CLIENT_ID': 'a6f0527550d66198cedf',
+  }
+} else {
+  envKeys = {
+    'process.env.CLIENT_ID': JSON.stringify(envVariable.parsed['CLIENT_ID']),
+  }
 }
 
 module.exports = {
