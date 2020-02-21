@@ -59,9 +59,7 @@ CLIENT_ID=xxx
 CLIENT_SECRET=xxxx
 ```
 
-Finally, in `LandingPage.tsx`, replace the `clientId` variable with your app's client id.
-
-> The URLs will be on port `5000` in production mode or Docker.
+> Change the URLs to port `5000` in production mode or Docker.
 
 ### Install
 
