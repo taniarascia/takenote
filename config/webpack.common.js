@@ -6,16 +6,9 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
+// Obtain CLIENT_ID for OAuth link
 const envVariable = dotenv.config()
-
-console.log(envVariable.parsed)
-
-if (envVariable.error) {
-  throw envVariable.error
-}
-
-console.log(envVariable.parsed)
-
+if (envVariable.error) throw envVariable.error
 const envKeys = {
   'process.env.CLIENT_ID': JSON.stringify(envVariable.parsed['CLIENT_ID']),
 }
