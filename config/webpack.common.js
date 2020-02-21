@@ -7,8 +7,11 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 const envVariable = dotenv.config().parsed
+
 const envKeys = {
-  'process.env.CLIENT_ID': JSON.stringify(envVariable['CLIENT_ID']),
+  'process.env.CLIENT_ID': envVariable
+    ? JSON.stringify(envVariable['CLIENT_ID'])
+    : 'TEST_CLIENT_ID',
 }
 
 module.exports = {
