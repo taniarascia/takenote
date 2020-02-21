@@ -1,8 +1,17 @@
 const path = require('path')
 
+const webpack = require('webpack')
+const dotenv = require('dotenv')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+
+// Obtain CLIENT_ID for OAuth link
+const envVariable = dotenv.config()
+if (envVariable.error) throw envVariable.error
+const envKeys = {
+  'process.env.CLIENT_ID': JSON.stringify(envVariable.parsed['CLIENT_ID']),
+}
 
 module.exports = {
   /**
@@ -73,6 +82,8 @@ module.exports = {
   },
 
   plugins: [
+    // Get environment variables in React
+    new webpack.DefinePlugin(envKeys),
     /**
      * CleanWebpackPlugin
      *
