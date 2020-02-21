@@ -12,19 +12,23 @@
 
 > **Warning**: TakeNote is still in active development. You can visit [takenote.dev](https://takenote.dev) to see the work in progress, but your account and the notes you create are **temporary** will not be persisted. All data will be lost once GitHub integration is complete.
 
-![Screenshot](./docs/screenshot.png)
+![Screenshot](./docs/light.png)
 
-### Simple
+### Fast and simple
 
 TakeNote was made by developers for developers - a simple, plain-text note-taking app for the web with Markdown support. What you see is what you paste. No WYSIWIG, no formatting pasted from the web, and no features you don't need or want.
 
-### Organized
+### Intuitive
 
 Drag-and-drop notes into categories, instantly search through notes, and pin your favorites to the top.
 
+### Available anywhere
+
+TakeNote is made for the web, so you can use it anywhere without downloading anything.
+
 ### Beautiful
 
-Beautiful, clean design with light and dark themes.
+Enjoy a beautiful, clean design reminiscent of your IDE with light and dark themes.
 
 ### Sync to GitHub
 
@@ -55,9 +59,7 @@ CLIENT_ID=xxx
 CLIENT_SECRET=xxxx
 ```
 
-Finally, in `LandingPage.tsx`, replace the `clientId` variable with your app's client id.
-
-> The URLs will be on port `5000` in production mode or Docker.
+> Change the URLs to port `5000` in production mode or Docker.
 
 ### Install
 

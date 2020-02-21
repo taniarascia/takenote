@@ -20,3 +20,8 @@ body {
 code {
   font-family: $monospace;
 }
+
+::selection {
+  background: $primary;
+  color: white;
+}
