@@ -12,7 +12,7 @@ const envVariable = dotenv.config()
 let envKeys
 if (envVariable.error) {
   envKeys = {
-    'process.env.CLIENT_ID': 'a6f0527550d66198cedf',
+    'process.env.CLIENT_ID': '"a6f0527550d66198cedf"',
   }
 } else {
   envKeys = {
