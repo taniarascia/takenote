@@ -24,6 +24,7 @@ describe('Category tests', () => {
   defaultInit()
 
   it('creates a new category with the current time', () => {
+    // Skipping for now due to
     addCategory(dynamicTimeCategoryName)
   })
 

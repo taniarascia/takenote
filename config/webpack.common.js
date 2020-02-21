@@ -1,8 +1,15 @@
 const path = require('path')
 
+const webpack = require('webpack')
+const dotenv = require('dotenv')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+
+const envVariable = dotenv.config().parsed
+const envKeys = {
+  'process.env.CLIENT_ID': JSON.stringify(envVariable['CLIENT_ID']),
+}
 
 module.exports = {
   /**
@@ -73,6 +80,8 @@ module.exports = {
   },
 
   plugins: [
+    // Get environment variables in React
+    new webpack.DefinePlugin(envKeys),
     /**
      * CleanWebpackPlugin
      *

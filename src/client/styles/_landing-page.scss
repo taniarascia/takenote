@@ -11,7 +11,7 @@
     }
   }
 
-  .app-navigation {
+  .navigation {
     width: 100%;
     height: 80px;
     display: flex;
@@ -31,6 +31,10 @@
       .brand-icon {
         max-width: 30px;
         margin-right: 1rem;
+
+        @include small-breakpoint {
+          max-width: 40px;
+        }
       }
 
       span {
@@ -53,6 +57,14 @@
         color: rgba(0, 0, 0, 0.5);
         font-weight: 500;
         text-decoration: none;
+        &:first-of-type {
+          display: none;
+
+          @include small-breakpoint {
+            display: block;
+            margin-right: 1.5rem;
+          }
+        }
 
         &:hover {
           color: rgba(0, 0, 0, 0.6);
@@ -61,10 +73,14 @@
     }
   }
 
-  .app-content {
-    padding: 3rem 0;
+  .content {
+    padding: 2rem 0;
     background: lighten($note-sidebar-color, 5%);
     border-bottom: 1px solid $note-sidebar-color;
+
+    @include small-breakpoint {
+      padding: 4rem 0;
+    }
 
     .lead {
       text-align: center;
@@ -85,9 +101,8 @@
     .subtitle {
       color: #888;
       line-height: 1.6;
-      font-size: 1.1rem;
+      font-size: 1.2rem;
       margin: 1rem auto 1.5rem;
-      letter-spacing: -0.03rem;
 
       @include small-breakpoint {
         font-size: 1.4rem;
@@ -110,28 +125,27 @@
     }
   }
 
-  .app-screenshot {
+  .screenshot {
     max-width: 100%;
     height: auto;
   }
 
   .features {
-    padding: 3rem 0;
     display: flex;
     flex-wrap: wrap;
 
     div {
-      padding: 0 1.5rem;
       flex: 0 0 100%;
 
       @include small-breakpoint {
+        padding: 0 1.5rem;
         flex: 0 0 50%;
       }
     }
 
     h2 {
       font-weight: 700;
-      font-size: 1.6rem;
+      font-size: 1.4rem;
 
       @include small-breakpoint {
         font-size: 2rem;
@@ -141,12 +155,54 @@
     p {
       line-height: 1.6;
       color: lighten($font-color, 15%);
-      font-size: 1.3rem;
-      letter-spacing: -0.03rem;
+      font-size: 1.1rem;
+
+      @include small-breakpoint {
+        font-size: 1.3rem;
+      }
     }
   }
 
-  .app-footer {
-    padding: 3rem 0;
+  .footer {
+    background: $primary;
+    padding: 2rem 0;
+    text-align: center;
+    color: white;
+
+    @include small-breakpoint {
+      padding: 4rem 0;
+    }
+
+    .logo {
+      display: block;
+      margin: 0 auto;
+      height: 50px;
+      width: 50px;
+      margin-bottom: 2rem;
+
+      @include small-breakpoint {
+        height: 100px;
+        width: 100px;
+        margin-bottom: 4rem;
+      }
+    }
+
+    a {
+      color: rgba(255, 255, 255, 0.8);
+      &:hover {
+        color: white;
+      }
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+
+      a {
+        margin: 0 0.75rem;
+      }
+    }
   }
 }
