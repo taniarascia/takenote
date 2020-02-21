@@ -6,9 +6,18 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
-const envVariable = dotenv.config().parsed
+const envVariable = dotenv.config()
+
+console.log(envVariable.parsed)
+
+if (envVariable.error) {
+  throw envVariable.error
+}
+
+console.log(envVariable.parsed)
+
 const envKeys = {
-  'process.env.CLIENT_ID': JSON.stringify(envVariable['CLIENT_ID']),
+  'process.env.CLIENT_ID': JSON.stringify(envVariable.parsed['CLIENT_ID']),
 }
 
 module.exports = {
