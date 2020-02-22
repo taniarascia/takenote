@@ -10,16 +10,16 @@ dotenv.config()
 
 const isTest = process.env.TEST_ENV
 
-if (isTest) {
+if (!isTest) {
+  // Real routes
+  router.get('/callback', authHandler.callback)
+  router.get('/login', checkAuth, authHandler.login)
+  router.get('/logout', authHandler.logout)
+} else {
   // Mocked routes for Cypress end-to-end tests
   router.get('/callback', mockAuthHandler.callback)
   router.get('/login', mockAuthHandler.login)
   router.get('/logout', mockAuthHandler.logout)
-} else {
-  // Real routes
-  router.get('/callback', authHandler.callback)
-  router.get('/login', checkAuth, authHandler.login)
-  router.get('/logout', checkAuth, authHandler.logout)
 }
 
 export default router

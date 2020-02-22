@@ -1,6 +1,6 @@
 {
   "name": "takenote",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "A web-based note-taking app with GitHub sync and Markdown support.",
   "author": "Tania Rascia",
   "license": "MIT",
@@ -8,11 +8,11 @@
   "main": "src/server/index.js",
   "scripts": {
     "dev": "concurrently 'npm run server' 'npm run client'",
-    "dev:test": "cross-env TEST_ENV=true concurrently 'npm run server' 'npm run client'",
+    "dev:test": "cross-env TEST_ENV=true CLIENT_ID='abc' concurrently 'npm run server' 'npm run client'",
     "client": "cross-env NODE_ENV=development webpack-dev-server --config config/webpack.dev.js",
     "server": "nodemon",
     "build": "cross-env NODE_ENV=production webpack --config config/webpack.prod.js",
-    "start": "cross-env NODE_ENV=production node -r ts-node/register/transpile-only src/server/index.ts",
+    "start": "node -r ts-node/register/transpile-only src/server/index.ts",
     "test": "jest",
     "coveralls": "jest --ci --coverage --watchAll=false && cat ./coverage/lcov.info | coveralls",
     "e2e": "cypress run",

@@ -3,6 +3,4 @@ import router from './router'
 
 const app = initializeServer(router)
 
-app.listen(process.env.PORT || 5000, () => {
-  console.log(`Listening on port ${process.env.PORT || 5000}`) // eslint-disable-line
-})
+app.listen(5000, () => console.log(`Listening on port ${5000}`))

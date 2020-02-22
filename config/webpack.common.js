@@ -1,8 +1,28 @@
 const path = require('path')
 
+const dotenv = require('dotenv')
+const webpack = require('webpack')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+
+/**
+ * Obtain client id for OAuth link in React
+ *
+ * If in development mode or local production mode, search the .env file for
+ * client id. If using Docker, pass a build arg.
+ *
+ */
+const getEnvFromDotEnvFile = dotenv.config()
+let envKeys
+if (getEnvFromDotEnvFile.error) {
+  console.log('Getting environment variables from build args for production') // eslint-disable-line
+  envKeys = {
+    'process.env.CLIENT_ID': JSON.stringify(process.env.CLIENT_ID),
+    'process.env.NODE_ENV': JSON.stringify('production'),
+  }
+} else {
+  envKeys = { 'process.env.CLIENT_ID': JSON.stringify(getEnvFromDotEnvFile.parsed['CLIENT_ID']) }
+}
 
 module.exports = {
   /**
@@ -74,6 +94,8 @@ module.exports = {
   },
 
   plugins: [
+    // Get environment variables in React
+    new webpack.DefinePlugin(envKeys),
     /**
      * CleanWebpackPlugin
      *
@@ -94,16 +116,5 @@ module.exports = {
         ignore: ['*.DS_Store', 'favicon.ico', 'template.html'],
       },
     ]),
-
-    /**
-     * HtmlWebpackPlugin
-     *
-     * Generates the React SPA HTML file from a template.
-     */
-    new HtmlWebpackPlugin({
-      template: './public/template.html',
-      favicon: './public/favicon.ico',
-      hash: true,
-    }),
   ],
 }
