@@ -4,6 +4,7 @@
 .idea
 .DS_Store
 .env
+.vscode
 
 npm-debug.log*
 .coveralls.yml

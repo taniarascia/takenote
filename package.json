@@ -1,6 +1,6 @@
 {
   "name": "takenote",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "A web-based note-taking app with GitHub sync and Markdown support.",
   "author": "Tania Rascia",
   "license": "MIT",
