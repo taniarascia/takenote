@@ -12,7 +12,7 @@
     "client": "cross-env NODE_ENV=development webpack-dev-server --config config/webpack.dev.js",
     "server": "nodemon",
     "build": "cross-env NODE_ENV=production webpack --config config/webpack.prod.js",
-    "start": "cross-env NODE_ENV=production node -r ts-node/register/transpile-only src/server/index.ts",
+    "start": "node -r ts-node/register/transpile-only src/server/index.ts",
     "test": "jest",
     "coveralls": "jest --ci --coverage --watchAll=false && cat ./coverage/lcov.info | coveralls",
     "e2e": "cypress run",

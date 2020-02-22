@@ -12,7 +12,7 @@ GIT_VERSION=$(git describe --always --abbrev --tags --long)
 # Build and tag new Docker image and push up to Docker Hub
 echo "Building and tagging new Docker image: ${IMAGE}:${GIT_VERSION}"
 
-docker build -t ${IMAGE}:${GIT_VERSION} .
+docker build --build-arg CLIENT_ID=${CLIENT_ID} -t ${IMAGE}:${GIT_VERSION} .
 docker tag ${IMAGE}:${GIT_VERSION} ${IMAGE}:latest
 
 # Login to Docker Hub and push newest build

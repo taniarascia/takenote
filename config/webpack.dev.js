@@ -1,5 +1,6 @@
 const webpack = require('webpack')
 const merge = require('webpack-merge')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 const common = require('./webpack.common.js')
 
@@ -79,5 +80,15 @@ module.exports = merge(common, {
      * the whole page.
      */
     new webpack.HotModuleReplacementPlugin(),
+
+    /**
+     * HtmlWebpackPlugin
+     *
+     * Generates the React SPA HTML file from a template.
+     */
+    new HtmlWebpackPlugin({
+      template: './public/template.html',
+      favicon: './public/favicon.ico',
+    }),
   ],
 })

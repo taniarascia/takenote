@@ -3,8 +3,18 @@ const merge = require('webpack-merge')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const TerserJSPlugin = require('terser-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 const common = require('./webpack.common.js')
+
+// Disable React DevTools in production
+const disableReactDevtools = `
+<script>
+if (typeof window.__REACT_DEVTOOLS_GLOBAL_HOOK__ === 'object') {
+   __REACT_DEVTOOLS_GLOBAL_HOOK__.inject = function() {};
+}
+</script>
+`
 
 module.exports = merge(common, {
   /**
@@ -71,6 +81,18 @@ module.exports = merge(common, {
       filename: 'styles/[name].[hash].css',
       chunkFilename: 'styles/[name].[id].[hash].css',
       ignoreOrder: false,
+    }),
+
+    /**
+     * HtmlWebpackPlugin
+     *
+     * Hash the HTML so it registers every new version, and disable React DevTools.
+     */
+    new HtmlWebpackPlugin({
+      template: './public/template.html',
+      favicon: './public/favicon.ico',
+      hash: true,
+      disableReactDevtools,
     }),
     new webpack.SourceMapDevToolPlugin({
       exclude: ['/node_modules/'],

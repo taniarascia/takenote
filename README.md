@@ -74,7 +74,6 @@ npm i
 In the development environment, an Express server is running on port `5000` to handle all API calls, and a hot Webpack dev server is running on port `3000` for the React front end. To run both of these servers concurrently, run the `dev` command.
 
 ```bash
-# Run client and server concurrently
 npm run dev
 ```
 
@@ -87,7 +86,6 @@ API requests will be proxied to port `5000` automatically.
 In production, the React app is built, and Express redirects all incoming requests to the `dist` directory on port `5000`.
 
 ```bash
-# Build client for production and start server
 npm run build && npm run start
 ```
 
@@ -95,17 +93,16 @@ Go to `localhost:5000` to view the app.
 
 ### Run in Docker
 
-Docker containers are [also available on the Dockerhub registry](https://hub.docker.com/r/taniarascia/takenote).
-
-> Note: You'll have to pass the client id, client secret, and ensure `secure: false` is set on the cookie.
+Follow these instructions to build an image and run a container.
 
 ```bash
-# Build image and run container
-docker build -t takenote .
-docker run --env-file .env -p 5000:5000 takenote
+docker build --build-arg CLIENT_ID=xxx -t takenote:mytag .
+docker run -p CLIENT_ID=xxx CLIENT_SECRET=xxxx NODE_ENV=development 5000:5000 takenote:mytag
 ```
 
 Go to `localhost:5000` to view the app.
+
+> Note: You will see some errors during the installation phase, but these are simply warnings that unnecessary packages do not exist, since the Node Alpine base image is minimal.
 
 ### Seed data
 
@@ -122,8 +119,62 @@ npm run test
 Run Cypress e2e tests.
 
 ```bash
-npm run cypress:open
+npm run e2e:open
 ```
+
+## Folder Structure
+
+```bash
+├── config
+│   ├── webpack.common.js     # Webpack shared configuration
+│   ├── webpack.dev.js        # Webpack development configuration (dev server)
+│   └── webpack.prod.js       # Webpack productuon configuration (dist output)
+├── cypress                   # End-to-end tests
+├── docs                      # Assets for documentation
+├── patches                   # Overrides for dependencies
+├── public                    # Files that will write to dist on build
+├── src
+│   ├── client                # React client side code
+│   └── server                # Node/Express server side code
+├── .editorconfig             # Configures editor rules
+├── .gitattributes            # Additional git attributes
+├── .gitignore                # Lists files for git to ignore
+├── .prettierrc               # Code convention enforced by Prettier
+├── .travis.yml               # Continuous integration and deployment config
+├── CHANGELOG.md              # List of significant changes
+├── cypress.json              # Cypress configuration
+├── deploy.sh                 # Deployment script for Docker in production
+├── Dockerfile                # Docker build instructions
+├── jest.config.js            # Jest configuration
+├── LICENSE                   # License for this open source project
+├── nodemon.json              # Nodemon configuration
+├── package-lock.json         # Package lockfile
+├── package.json              # Dependencies and additional information
+├── README.md
+├── seed.js                   # Seed the app with data for testing
+├── seed.js                   # Seed the app with data for testing
+├── tsconfig.json             # Typescript configuration
+└── tsconfig.test.json        # Typescript test configuration
+```
+
+## Technologies
+
+TakeNote is possible thanks the all these open source languages, libraries, and frameworks.
+
+| Tech                                          | Description                               |
+| --------------------------------------------- | ----------------------------------------- |
+| [Codemirror](https://codemirror.net/)         | Browser-based text editor                 |
+| [TypeScript](https://www.typescriptlang.org/) | Static type-checking programming language |
+| [Node.js](https://nodejs.org/en/)             | JavaScript runtime for the backend        |
+| [Express](https://expressjs.com/)             | Server framework                          |
+| [React](https://reactjs.org/)                 | Front end user interface                  |
+| [Redux](https://redux.js.org/)                | Global state management                   |
+| [Webpack](https://webpack.js.org/)            | Asset bundler                             |
+| [Sass](https://sass-lang.com/)                | Style preprocessor                        |
+| [OAuth](https://oauth.net/)                   | Protocol for secure authorization         |
+| [ESLint](https://eslint.org/)                 | TypeScript linting                        |
+| [Jest](https://jestjs.io/)                    | Unit testing framework                    |
+| [Cypress](https://www.cypress.io/)            | End-to-end testing framework              | L |
 
 ## Contributing
 

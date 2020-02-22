@@ -38,7 +38,8 @@ script:
   - npm run coveralls && npm run e2e
 
 deploy:
-  # Build Docker container and push to Dockerhub
+  # Build Docker container and push to Docker Hub
+  # Pull into DigitalOcean container and start
   provider: script
   script: bash deploy.sh
   on:
