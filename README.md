@@ -124,37 +124,57 @@ npm run e2e:open
 
 ## Folder Structure
 
+Explanation the structure of files and directories within TakeNote.
+
 ```bash
-├── config
-│   ├── webpack.common.js     # Webpack shared configuration
-│   ├── webpack.dev.js        # Webpack development configuration (dev server)
-│   └── webpack.prod.js       # Webpack productuon configuration (dist output)
-├── cypress                   # End-to-end tests
-├── docs                      # Assets for documentation
-├── patches                   # Overrides for dependencies
-├── public                    # Files that will write to dist on build
-├── src
-│   ├── client                # React client side code
-│   └── server                # Node/Express server side code
-├── .editorconfig             # Configures editor rules
-├── .gitattributes            # Additional git attributes
-├── .gitignore                # Lists files for git to ignore
-├── .prettierrc               # Code convention enforced by Prettier
-├── .travis.yml               # Continuous integration and deployment config
-├── CHANGELOG.md              # List of significant changes
-├── cypress.json              # Cypress configuration
-├── deploy.sh                 # Deployment script for Docker in production
-├── Dockerfile                # Docker build instructions
-├── jest.config.js            # Jest configuration
-├── LICENSE                   # License for this open source project
-├── nodemon.json              # Nodemon configuration
-├── package-lock.json         # Package lockfile
-├── package.json              # Dependencies and additional information
+├── config/                    # Webpack configuration
+│   ├── webpack.common.js      # Webpack shared configuration
+│   ├── webpack.dev.js         # Webpack development configuration (dev server)
+│   └── webpack.prod.js        # Webpack productuon configuration (dist output)
+├── cypress/                   # End-to-end tests
+├── docs/                      # Assets for documentation
+├── patches/                   # Overrides for dependencies
+├── public/                    # Files that will write to dist on build
+├── src/                       # All TakeNote app source files
+│   ├── client/                # React client side code
+│   │   ├── api/               # Temporary placeholders for mock API calls
+│   │   ├── assets/            # Static assets
+│   │   ├── components/        # React components that are not connected to Redux
+│   │   ├── constants/         # Static values
+│   │   ├── contexts/          # React context global state without Redux
+│   │   ├── helpers/           # Helper functions
+│   │   ├── router/            # React private and public routes
+│   │   ├── sagas/             # Redux sagas
+│   │   ├── selectors/         # Redux Toolkit selectors
+│   │   ├── slices/            # Redux Toolkit slices
+│   │   ├── styles/            # Sass style files
+│   │   ├── tests/             # React Testing Library component tests
+│   │   └── types              # TypeScript types
+│   │   └── index.tsx          # Client side entry point
+│   └── server/                # Node/Express server side code
+│       ├── handlers/          # Functions for API endpoints
+│       ├── middleware/        # Middleware for API endpoints
+│       ├── router/            # Route API endpoints
+│       ├── utils/             # Backend utilities
+│       └── index.ts           # Server entrypoint
+├── .editorconfig              # Configures editor rules
+├── .gitattributes             # Additional git attributes
+├── .gitignore                 # Lists files for git to ignore
+├── .prettierrc                # Code convention enforced by Prettier
+├── .travis.yml                # Continuous integration and deployment config
+├── CHANGELOG.md               # List of significant changes
+├── cypress.json               # Cypress configuration
+├── deploy.sh                  # Deployment script for Docker in production
+├── Dockerfile                 # Docker build instructions
+├── jest.config.js             # Jest configuration
+├── LICENSE                    # License for this open source project
+├── nodemon.json               # Nodemon configuration
+├── package-lock.json          # Package lockfile
+├── package.json               # Dependencies and additional information
 ├── README.md
-├── seed.js                   # Seed the app with data for testing
-├── seed.js                   # Seed the app with data for testing
-├── tsconfig.json             # Typescript configuration
-└── tsconfig.test.json        # Typescript test configuration
+├── seed.js                    # Seed the app with data for testing
+├── tsconfig.json              # Typescript configuration
+└── tsconfig.test.json         # Typescript test configuration
 ```
 
 ## Technologies
