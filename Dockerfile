@@ -3,6 +3,7 @@ FROM node:12-alpine
 
 # Set environment variables
 ENV PORT=5000
+ARG CLIENT_ID
 
 COPY . app/
 
@@ -19,7 +20,7 @@ RUN apk add --no-cache \
   libpng-dev \
   make \
   nasm 
-RUN npm ci --only-production
+RUN npm ci --only-production --silent
 
 # Build production client side React application
 RUN npm run build

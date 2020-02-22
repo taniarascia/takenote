@@ -1,23 +1,27 @@
 const path = require('path')
 
-const webpack = require('webpack')
 const dotenv = require('dotenv')
+const webpack = require('webpack')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const CopyWebpackPlugin = require('copy-webpack-plugin')
-const HtmlWebpackPlugin = require('html-webpack-plugin')
 
-// Obtain CLIENT_ID for OAuth link
-// Hard code client ID for deployment due to difficulties passing in env file
-const envVariable = dotenv.config()
+/**
+ * Obtain client id for OAuth link in React
+ *
+ * If in development mode or local production mode, search the .env file for
+ * client id. If using Docker, pass a build arg.
+ *
+ */
+const getEnvFromDotEnvFile = dotenv.config()
 let envKeys
-if (envVariable.error) {
+if (getEnvFromDotEnvFile.error) {
+  console.log('Getting environment variables from build args for production') // eslint-disable-line
   envKeys = {
-    'process.env.CLIENT_ID': '"a6f0527550d66198cedf"',
+    'process.env.CLIENT_ID': JSON.stringify(process.env.CLIENT_ID),
+    'process.env.NODE_ENV': JSON.stringify('production'),
   }
 } else {
-  envKeys = {
-    'process.env.CLIENT_ID': JSON.stringify(envVariable.parsed['CLIENT_ID']),
-  }
+  envKeys = { 'process.env.CLIENT_ID': JSON.stringify(getEnvFromDotEnvFile.parsed['CLIENT_ID']) }
 }
 
 module.exports = {
@@ -111,16 +115,5 @@ module.exports = {
         ignore: ['*.DS_Store', 'favicon.ico', 'template.html'],
       },
     ]),
-
-    /**
-     * HtmlWebpackPlugin
-     *
-     * Generates the React SPA HTML file from a template.
-     */
-    new HtmlWebpackPlugin({
-      template: './public/template.html',
-      favicon: './public/favicon.ico',
-      hash: true,
-    }),
   ],
 }
