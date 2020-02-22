@@ -1,7 +1,7 @@
 // testNotesHelperUtils.ts
 // Utility functions for use in note tests
 
-import { ResourceStringEnum } from '@resources/resourceStrings'
+import { ResourceStringEnum } from '../../src/resources/resourceStrings'
 
 import { TestIDEnum } from './testHelperEnums'
 import {

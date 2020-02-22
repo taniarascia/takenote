@@ -1,8 +1,7 @@
 // note.spec.ts
 // Tests for managing notes (create, trash, favorite, etc)
 
-import { ResourceStringEnum } from '@resources/resourceStrings'
-
+import { ResourceStringEnum } from '../../src/resources/resourceStrings'
 import { TestIDEnum } from '../utils/testHelperEnums'
 import {
   defaultInit,

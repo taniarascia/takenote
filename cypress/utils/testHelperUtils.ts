@@ -1,7 +1,7 @@
 // testHelperUtils.ts
 // Utility functions used by all test specs
 
-import { ResourceStringEnum } from '@resources/resourceStrings'
+import { ResourceStringEnum } from '../../src/resources/resourceStrings'
 
 import { entryPoint, TestIDEnum } from './testHelperEnums'
 

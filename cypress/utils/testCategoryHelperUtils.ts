@@ -1,7 +1,7 @@
 // testCategoryHelperUtils.ts
 // Utility functions for use in category tests
 
-import { ResourceStringEnum } from '@resources/resourceStrings'
+import { ResourceStringEnum } from '../../src/resources/resourceStrings'
 
 import { TestIDEnum } from './testHelperEnums'
 import { getTestID, wrapWithTestIDTag } from './testHelperUtils'
