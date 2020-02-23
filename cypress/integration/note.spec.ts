@@ -1,7 +1,8 @@
 // note.spec.ts
 // Tests for managing notes (create, trash, favorite, etc)
 
-import { TestIDEnum, TextEnum } from '../utils/testHelperEnums'
+import { ResourceStringEnum } from '../../src/resources/resourceStrings'
+import { TestIDEnum } from '../utils/testHelperEnums'
 import {
   defaultInit,
   getNoteCount,
@@ -96,7 +97,7 @@ describe('Manage notes test', () => {
     // favorite the note in All Notes
     navigateToAllNotes()
     clickNoteOptions()
-    testIDShouldContain(TestIDEnum.NOTE_OPTION_FAVORITE, TextEnum.MARK_AS_FAVORITE)
+    testIDShouldContain(TestIDEnum.NOTE_OPTION_FAVORITE, ResourceStringEnum.MARK_AS_FAVORITE)
     clickNoteOptionFavorite()
 
     // assert there is 1 favorited note
@@ -105,7 +106,7 @@ describe('Manage notes test', () => {
 
     // assert button now says 'Remove'
     clickNoteOptions()
-    testIDShouldContain(TestIDEnum.NOTE_OPTION_FAVORITE, TextEnum.REMOVE_FAVORITE)
+    testIDShouldContain(TestIDEnum.NOTE_OPTION_FAVORITE, ResourceStringEnum.REMOVE_FAVORITE)
     clickNoteOptionFavorite()
 
     // assert favorites is empty
@@ -120,7 +121,7 @@ describe('Manage notes test', () => {
     // navigate back to All Notes and move the note to trash
     navigateToAllNotes()
     clickNoteOptions()
-    testIDShouldContain(TestIDEnum.NOTE_OPTION_TRASH, TextEnum.MOVE_TO_TRASH)
+    testIDShouldContain(TestIDEnum.NOTE_OPTION_TRASH, ResourceStringEnum.MOVE_TO_TRASH)
     clickNoteOptionTrash()
     testIDShouldNotExist(TestIDEnum.NOTE_OPTION_TRASH)
 
@@ -152,7 +153,10 @@ describe('Manage notes test', () => {
     // navigate to trash and delete the active note permanently
     navigateToTrash()
     clickNoteOptions()
-    testIDShouldContain(TestIDEnum.NOTE_OPTION_DELETE_PERMANENTLY, TextEnum.DELETE_PERMANENTLY)
+    testIDShouldContain(
+      TestIDEnum.NOTE_OPTION_DELETE_PERMANENTLY,
+      ResourceStringEnum.DELETE_PERMANENTLY
+    )
     clickNoteOptionDeleteNotePermanently()
     assertNoteListLengthEquals(0)
 
@@ -172,7 +176,10 @@ describe('Manage notes test', () => {
     navigateToTrash()
     getNoteCount('trashStartCount')
     clickNoteOptions()
-    testIDShouldContain(TestIDEnum.NOTE_OPTION_RESTORE_FROM_TRASH, TextEnum.RESTORE_FROM_TRASH)
+    testIDShouldContain(
+      TestIDEnum.NOTE_OPTION_RESTORE_FROM_TRASH,
+      ResourceStringEnum.RESTORE_FROM_TRASH
+    )
     clickNoteOptionRestoreFromTrash()
     cy.then(() => assertNoteListLengthEquals(this.trashStartCount - 1))
 

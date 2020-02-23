@@ -1,5 +1,8 @@
+/* eslint-disable import/no-unresolved */
 import React from 'react'
 import { Book } from 'react-feather'
+
+import { ResourceStringEnum } from '@resources/resourceStrings'
 
 import { Folder } from '@/constants/enums'
 import { iconColor } from '@/constants/index'
@@ -19,7 +22,7 @@ export const AllNotesOption: React.FC<AllNotesOptionProps> = ({ active, swapFold
       }}
     >
       <Book size={15} className="app-sidebar-icon" color={iconColor} />
-      All Notes
+      {ResourceStringEnum.ALL_NOTES}
     </div>
   )
 }
