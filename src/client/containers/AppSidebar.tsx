@@ -4,6 +4,8 @@ import { Loader, Folder as FolderIcon, Plus, Settings, RefreshCw, X, Move } from
 import { useDispatch, useSelector } from 'react-redux'
 import { Droppable, Draggable } from 'react-beautiful-dnd'
 
+import { ResourceStringEnum } from '@resources/resourceStrings'
+
 import { ActionButton } from '@/components/AppSidebar/ActionButton'
 import { LastSyncedNotification } from '@/components/AppSidebar/LastSyncedNotification'
 import { AllNotesOption } from '@/components/AppSidebar/AllNotesOption'
@@ -137,26 +139,26 @@ export const AppSidebar: React.FC = () => {
             dataTestID="sidebar-action-create-new-note"
             handler={newNoteHandler}
             icon={Plus}
-            label="Create new note"
+            label={ResourceStringEnum.CREATE_NEW_NOTE}
           />
           <ActionButton
             dataTestID="sidebar-action-sync-notes"
             handler={syncNotesHandler}
             icon={syncing ? Loader : RefreshCw}
-            label="Sync notes"
+            label={ResourceStringEnum.SYNC_NOTES}
           />
           <ActionButton
             dataTestID="sidebar-action-settings"
             handler={settingsHandler}
             icon={Settings}
-            label="Settings"
+            label={ResourceStringEnum.SETTINGS}
           />
         </section>
         <section className="app-sidebar-main">
           <AllNotesOption active={activeFolder === Folder.ALL} swapFolder={_swapFolder} />
           <FolderOption
             active={activeFolder === Folder.FAVORITES}
-            text="Favorites"
+            text={ResourceStringEnum.FAVORITES}
             dataTestID="favorites"
             folder={Folder.FAVORITES}
             swapFolder={_swapFolder}
@@ -164,7 +166,7 @@ export const AppSidebar: React.FC = () => {
           />
           <FolderOption
             active={activeFolder === Folder.TRASH}
-            text="Trash"
+            text={ResourceStringEnum.TRASH}
             dataTestID="trash"
             folder={Folder.TRASH}
             swapFolder={_swapFolder}
@@ -257,7 +259,7 @@ export const AppSidebar: React.FC = () => {
                                 const notesNotTrash = notes.filter(note => !note.trash)
                                 const newNoteId =
                                   notesNotTrash.length > 0 ? notesNotTrash[0].id : ''
-
+                                
                                 _deleteCategory(category.id)
                                 _pruneCategoryFromNotes(category.id)
                                 _swapFolder(Folder.ALL)
@@ -265,7 +267,7 @@ export const AppSidebar: React.FC = () => {
                               }}
                               data-testid="remove-category"
                               size={16}
-                              aria-label="Remove category"
+                              aria-label={ResourceStringEnum.REMOVE_CATEGORY}
                             />
                           </div>
                         </div>
@@ -307,10 +309,10 @@ export const AppSidebar: React.FC = () => {
               data-testid="add-category-button"
               className="category-button"
               onClick={newTempCategoryHandler}
-              aria-label="Add Category"
+              aria-label="{{ResourceStringEnum.ADD_CATEGORY}}"
             >
               <Plus size={15} color={iconColor} />
-              Add Category
+              {ResourceStringEnum.ADD_CATEGORY}
             </button>
           )}
         </section>

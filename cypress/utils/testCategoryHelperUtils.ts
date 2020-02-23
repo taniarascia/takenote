@@ -1,12 +1,14 @@
 // testCategoryHelperUtils.ts
 // Utility functions for use in category tests
 
-import { TestIDEnum, TextEnum } from './testHelperEnums'
+import { ResourceStringEnum } from '../../src/resources/resourceStrings'
+
+import { TestIDEnum } from './testHelperEnums'
 import { getTestID, wrapWithTestIDTag } from './testHelperUtils'
 
 const addCategory = (categoryName: string) => {
   getTestID(TestIDEnum.ADD_CATEGORY_BUTTON)
-    .should('contain', TextEnum.ADD_CATEGORY)
+    .should('contain', ResourceStringEnum.ADD_CATEGORY)
     .click()
 
   getTestID(TestIDEnum.NEW_CATEGORY_INPUT).type(categoryName)

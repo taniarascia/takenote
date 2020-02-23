@@ -1,7 +1,9 @@
 // testNotesHelperUtils.ts
 // Utility functions for use in note tests
 
-import { TestIDEnum, TextEnum } from './testHelperEnums'
+import { ResourceStringEnum } from '../../src/resources/resourceStrings'
+
+import { TestIDEnum } from './testHelperEnums'
 import {
   clickDynamicTestID,
   clickTestID,
@@ -11,7 +13,7 @@ import {
 } from './testHelperUtils'
 
 const assertNewNoteCreated = () => {
-  getDynamicTestID(TestIDEnum.NOTE_LIST_ITEM + '0').should('contain', TextEnum.NEW_NOTE)
+  getDynamicTestID(TestIDEnum.NOTE_LIST_ITEM + '0').should('contain', ResourceStringEnum.NEW_NOTE)
 }
 
 const assertNoteEditorCharacterCount = (expectedCharacterCount: number) => {

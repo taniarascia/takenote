@@ -1,10 +1,13 @@
 import React from 'react'
 
+
+import screenshot from '@resources/assets/screenshot.png'
+import icon from '@resources/assets/logo-square-color.svg'
+import githubLogo from '@resources/assets/github-logo.png'
+
 import lightScreen from '@/assets/light.png'
 import darkScreen from '@/assets/dark.png'
 import squareLogo from '@/assets/logo-white-square.svg'
-import icon from '@/assets/logo-square-color.svg'
-import githubLogo from '@/assets/github-logo.png'
 
 const clientId = process.env.CLIENT_ID
 

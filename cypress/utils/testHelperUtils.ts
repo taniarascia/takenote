@@ -1,7 +1,9 @@
 // testHelperUtils.ts
 // Utility functions used by all test specs
 
-import { entryPoint, TestIDEnum, TextEnum } from './testHelperEnums'
+import { ResourceStringEnum } from '../../src/resources/resourceStrings'
+
+import { entryPoint, TestIDEnum } from './testHelperEnums'
 
 // takes a built string instead of a TestIDEnum .. prefer clickTestID() when possible
 const clickDynamicTestID = (dynamicTestID: string) => {
@@ -53,7 +55,7 @@ const navigateToTrash = () => {
   clickTestID(TestIDEnum.FOLDER_TRASH)
 }
 
-const testIDShouldContain = (testIDEnum: TestIDEnum, textEnum: TextEnum) => {
+const testIDShouldContain = (testIDEnum: TestIDEnum, textEnum: ResourceStringEnum) => {
   cy.get(wrapWithTestIDTag(testIDEnum)).should('contain', textEnum)
 }
 

@@ -10,5 +10,6 @@ module.exports = {
   moduleNameMapper: {
     // Allow `@/` to map to `src/client/` in Jest tests
     '@/(.*)$': '<rootDir>/src/client/$1',
+    '@resources(.*)$': '<rootDir>/src/resources/$1',
   },
 }
