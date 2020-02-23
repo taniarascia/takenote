@@ -70,6 +70,7 @@
     "mousetrap-global-bind": "^1.1.0",
     "prettier": "^1.19.1",
     "react": "^16.12.0",
+    "react-beautiful-dnd": "^12.2.0",
     "react-codemirror2": "^6.0.0",
     "react-dom": "^16.12.0",
     "react-feather": "^2.0.3",
@@ -82,6 +83,7 @@
     "uuid": "^3.4.0"
   },
   "devDependencies": {
+    "@types/react-beautiful-dnd": "^12.1.1",
     "@cypress/webpack-preprocessor": "^4.1.1",
     "@testing-library/cypress": "^5.0.2",
     "@testing-library/jest-dom": "^5.0.0",

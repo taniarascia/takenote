@@ -11,6 +11,8 @@ import {
   startEditingCategory,
   renameCategory,
   defocusCategory,
+  moveCategory,
+  assertCategoryOrder,
 } from '../utils/testCategoryHelperUtils'
 import { dynamicTimeCategoryName } from '../utils/testHelperEnums'
 import { defaultInit, navigateToAllNotes } from '../utils/testHelperUtils'
@@ -18,6 +20,7 @@ import {
   assertNoteListLengthEquals,
   clickCreateNewNote,
   clickNoteOptions,
+  clickSyncNotes,
 } from '../utils/testNotesHelperUtils'
 
 describe('Category tests', () => {
@@ -61,5 +64,23 @@ describe('Category tests', () => {
     defocusCategory(newCategoryName)
 
     assertCategoryExists(newCategoryName)
+  })
+
+  it('should change category order', () => {
+    const firstCategory = 'Source Category'
+    const secondCategory = 'Destination Category'
+
+    addCategory(firstCategory)
+    addCategory(secondCategory)
+
+    moveCategory(firstCategory, secondCategory)
+
+    assertCategoryOrder(firstCategory, 3)
+
+    moveCategory(secondCategory, firstCategory)
+
+    assertCategoryOrder(secondCategory, 3)
+
+    //moveCategory(secondCategory, firstCategory, 161, 700)
   })
 })

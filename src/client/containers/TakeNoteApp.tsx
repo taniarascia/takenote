@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Helmet, HelmetProvider } from 'react-helmet-async'
+import { DragDropContext, DropResult } from 'react-beautiful-dnd'
 
 import { AppSidebar } from '@/containers/AppSidebar'
 import { KeyboardShortcuts } from '@/containers/KeyboardShortcuts'
@@ -10,7 +11,7 @@ import { SettingsModal } from '@/containers/SettingsModal'
 import { TempStateProvider } from '@/contexts/TempStateContext'
 import { useInterval, useBeforeUnload } from '@/helpers/hooks'
 import { getWebsiteTitle, determineTheme } from '@/helpers'
-import { loadCategories } from '@/slices/category'
+import { loadCategories, swapCategories } from '@/slices/category'
 import { loadNotes } from '@/slices/note'
 import { syncState } from '@/slices/sync'
 import { loadSettings } from '@/slices/settings'
@@ -28,10 +29,23 @@ export const TakeNoteApp: React.FC = () => {
   const _loadNotes = () => dispatch(loadNotes())
   const _loadCategories = () => dispatch(loadCategories())
   const _loadSettings = () => dispatch(loadSettings())
+  const _swapCategories = (categoryId: number, destinationId: number) =>
+    dispatch(swapCategories({ categoryId, destinationId }))
   const _syncState = (notes: NoteItem[], categories: CategoryItem[]) =>
     dispatch(syncState({ notes, categories }))
 
   const activeCategory = categories.find(({ id }) => id === activeCategoryId)
+  const onDragEnd = (result: DropResult) => {
+    const { destination, source } = result
+
+    if (!destination) return
+    if (destination.droppableId === source.droppableId && destination.index === source.index) return
+
+    switch (result.type) {
+      case 'CATEGORY':
+        _swapCategories(source.index, destination.index)
+    }
+  }
 
   useEffect(() => {
     _loadNotes()
@@ -52,10 +66,13 @@ export const TakeNoteApp: React.FC = () => {
       </Helmet>
 
       <TempStateProvider>
+
         <div className={determineTheme(darkTheme, 'app')}>
-          <AppSidebar />
-          <NoteList />
-          <NoteEditor />
+          <DragDropContext onDragEnd={onDragEnd}>
+            <AppSidebar />
+            <NoteList />
+            <NoteEditor />
+          </DragDropContext>
           <KeyboardShortcuts />
           <SettingsModal />
         </div>

@@ -33,6 +33,7 @@ enum TestIDEnum {
   NOTE_TITLE = 'note-title-',
   MOVE_TO_CATEGORY = 'note-options-move-to-category-select',
   REMOVE_CATEGORY = 'remove-category',
+  MOVE_CATEGORY = 'move-category',
   SIDEBAR_ACTION_CREATE_NEW_NOTE = 'sidebar-action-create-new-note',
   SIDEBAR_ACTION_SETTINGS = 'sidebar-action-settings',
   SIDEBAR_ACTION_SYNC_NOTES = 'sidebar-action-sync-notes',

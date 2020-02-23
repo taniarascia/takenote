@@ -26,6 +26,12 @@ const assertCategoryExists = (categoryName: string) => {
   cy.contains(wrapWithTestIDTag(TestIDEnum.CATEGORY_LIST_DIV), categoryName).should('exist')
 }
 
+const assertCategoryOrder = (categoryName: string, position: number) => {
+  cy.get('.category-list > div')
+    .eq(position)
+    .contains(categoryName)
+}
+
 const defocusCategory = (categoryName: string) => {
   getTestID(TestIDEnum.CATEGORY_EDIT).blur()
 }
@@ -41,6 +47,15 @@ const removeCategory = (categoryName: string) => {
     .parent()
     .find(wrapWithTestIDTag(TestIDEnum.REMOVE_CATEGORY))
     .click()
+}
+
+const moveCategory = (categoryName: string, targetName: string) => {
+  cy.contains(categoryName)
+    .parent()
+    .find(wrapWithTestIDTag(TestIDEnum.MOVE_CATEGORY))
+    // @ts-ignore
+    .dragAndDrop(targetName)
+    .wait(1 * 1000)
 }
 
 const renameCategory = (oldCategoryName: string, newCategoryName: string) => {
@@ -64,9 +79,11 @@ export {
   addCategory,
   assertCategoryExists,
   assertCategoryDoesNotExist,
+  assertCategoryOrder,
   defocusCategory,
   navigateToCategory,
   removeCategory,
+  moveCategory,
   renameCategory,
   selectMoveToCategoryOption,
   startEditingCategory,
