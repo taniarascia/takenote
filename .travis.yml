@@ -30,14 +30,16 @@ install:
 
 before_script:
   # Start server and client for tests
-  - npm run dev &
+  - echo -e "CLIENT_ID=abc" > .env
+  - npm run dev:test &
 
 script:
   # Run unit, component, and e2e tests
   - npm run coveralls && npm run e2e
 
 deploy:
-  # Build Docker container and push to Dockerhub
+  # Build Docker container and push to Docker Hub
+  # Pull into DigitalOcean container and start
   provider: script
   script: bash deploy.sh
   on:

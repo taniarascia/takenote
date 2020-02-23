@@ -66,7 +66,8 @@ export const TakeNoteApp: React.FC = () => {
       </Helmet>
 
       <TempStateProvider>
-        <div className={determineTheme(darkTheme)}>
+
+        <div className={determineTheme(darkTheme, 'app')}>
           <DragDropContext onDragEnd={onDragEnd}>
             <AppSidebar />
             <NoteList />

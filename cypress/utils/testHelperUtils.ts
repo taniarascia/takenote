@@ -18,7 +18,8 @@ const defaultInit = () => {
     cy.visit(entryPoint)
 
     // wait for things to settle .. like waiting for Welcome Note to resolve
-    cy.wait(100)
+    // increasing due to occassional flaky starts
+    cy.wait(200)
   })
 }
 

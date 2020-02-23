@@ -88,6 +88,7 @@
     height: 100px;
     width: 100px;
     border-radius: 0;
+    border-radius: 3px;
   }
 
   .profile-details {
@@ -96,10 +97,10 @@
     h3 {
       margin: 0.5rem 0;
     }
+  }
 
-    .subtitle {
-      color: lighten($font-color, 15%);
-      margin-bottom: 0.75rem;
-    }
+  .subtitle {
+    color: lighten($font-color, 15%);
+    margin-bottom: 0.75rem;
   }
 }

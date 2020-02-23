@@ -1,13 +1,11 @@
 import path from 'path'
 
-import express, { Request, Response, Router } from 'express'
+import express, { Request, Response, Router, NextFunction } from 'express'
 import cookieParser from 'cookie-parser'
 import bodyParser from 'body-parser'
 import cors from 'cors'
 import helmet from 'helmet'
 import compression from 'compression'
-
-import errorHandler from './utils/errorHandler'
 
 export default function initializeServer(router: Router) {
   const app = express()
@@ -27,8 +25,6 @@ export default function initializeServer(router: Router) {
   app.get('*', (request: Request, response: Response) => {
     response.sendFile(path.join(__dirname, '../../dist/index.html'))
   })
-
-  app.use(errorHandler)
 
   return app
 }

@@ -4,27 +4,31 @@
 
 <p align="center">
  <img src="https://img.shields.io/badge/License-MIT-blue.svg">
-  <a href="#contributors"><img src="https://img.shields.io/badge/all_contributors-34-orange.svg?style=flat-square)"></a>
    <a href="https://travis-ci.org/taniarascia/takenote"><img src="https://travis-ci.org/taniarascia/takenote.svg?branch=master"></a>
+   <a href="https://coveralls.io/github/taniarascia/takenote?branch=master"><img src="https://coveralls.io/repos/github/taniarascia/takenote/badge.svg?branch=master"></a>
 </p>
 
 <p align="center">A web-based note-taking app with GitHub sync and Markdown support. (WIP)</p>
 
 > **Warning**: TakeNote is still in active development. You can visit [takenote.dev](https://takenote.dev) to see the work in progress, but your account and the notes you create are **temporary** will not be persisted. All data will be lost once GitHub integration is complete.
 
-![Screenshot](./docs/screenshot.png)
+![Screenshot](./docs/light.png)
 
-### Simple
+### Fast and simple
 
 TakeNote was made by developers for developers - a simple, plain-text note-taking app for the web with Markdown support. What you see is what you paste. No WYSIWIG, no formatting pasted from the web, and no features you don't need or want.
 
-### Organized
+### Intuitive
 
 Drag-and-drop notes into categories, instantly search through notes, and pin your favorites to the top.
 
+### Available anywhere
+
+TakeNote is made for the web, so you can use it anywhere without downloading anything.
+
 ### Beautiful
 
-Beautiful, clean design with light and dark themes.
+Enjoy a beautiful, clean design reminiscent of your IDE with light and dark themes.
 
 ### Sync to GitHub
 
@@ -35,6 +39,27 @@ In progress!
 > _"I think the lack of extra crap is a feature."_ — Craig Lam
 
 ## Setup
+
+### Pre-Installation
+
+> Before working on TakeNote locally, you must create a GitHub OAuth app for development.
+
+Go to your GitHub profile settings, and click on **Developer Settings**.
+
+Click the **New OAuth App** button.
+
+- **Application name**: TakeNote Development
+- **Homepage URL**: `http://localhost:3000`
+- **Authorization callback URL**: `http://localhost:3000/api/auth/callback`
+
+Create a `.env` file in the root of the project, and add the app's client ID and secret.
+
+```bash
+CLIENT_ID=xxx
+CLIENT_SECRET=xxxx
+```
+
+> Change the URLs to port `5000` in production mode or Docker.
 
 ### Install
 
@@ -49,7 +74,6 @@ npm i
 In the development environment, an Express server is running on port `5000` to handle all API calls, and a hot Webpack dev server is running on port `3000` for the React front end. To run both of these servers concurrently, run the `dev` command.
 
 ```bash
-# Run client and server concurrently
 npm run dev
 ```
 
@@ -62,7 +86,6 @@ API requests will be proxied to port `5000` automatically.
 In production, the React app is built, and Express redirects all incoming requests to the `dist` directory on port `5000`.
 
 ```bash
-# Build client for production and start server
 npm run build && npm run start
 ```
 
@@ -70,15 +93,16 @@ Go to `localhost:5000` to view the app.
 
 ### Run in Docker
 
-Docker containers are [also available on the Dockerhub registry](https://hub.docker.com/r/taniarascia/takenote).
+Follow these instructions to build an image and run a container.
 
 ```bash
-# Build image and run container
-docker build -t takenote .
-docker run -p 5000:5000 takenote
+docker build --build-arg CLIENT_ID=xxx -t takenote:mytag .
+docker run -p CLIENT_ID=xxx CLIENT_SECRET=xxxx NODE_ENV=development 5000:5000 takenote:mytag
 ```
 
 Go to `localhost:5000` to view the app.
+
+> Note: You will see some errors during the installation phase, but these are simply warnings that unnecessary packages do not exist, since the Node Alpine base image is minimal.
 
 ### Seed data
 
@@ -95,8 +119,82 @@ npm run test
 Run Cypress e2e tests.
 
 ```bash
-npm run cypress:open
+npm run e2e:open
 ```
+
+## Folder Structure
+
+Explanation the structure of files and directories within TakeNote.
+
+```bash
+├── config/                    # Webpack configuration
+│   ├── webpack.common.js      # Webpack shared configuration
+│   ├── webpack.dev.js         # Webpack development configuration (dev server)
+│   └── webpack.prod.js        # Webpack productuon configuration (dist output)
+├── cypress/                   # End-to-end tests
+├── docs/                      # Assets for documentation
+├── patches/                   # Overrides for dependencies
+├── public/                    # Files that will write to dist on build
+├── src/                       # All TakeNote app source files
+│   ├── client/                # React client side code
+│   │   ├── api/               # Temporary placeholders for mock API calls
+│   │   ├── assets/            # Static assets
+│   │   ├── components/        # React components that are not connected to Redux
+│   │   ├── constants/         # Static values
+│   │   ├── contexts/          # React context global state without Redux
+│   │   ├── helpers/           # Helper functions
+│   │   ├── router/            # React private and public routes
+│   │   ├── sagas/             # Redux sagas
+│   │   ├── selectors/         # Redux Toolkit selectors
+│   │   ├── slices/            # Redux Toolkit slices
+│   │   ├── styles/            # Sass style files
+│   │   ├── tests/             # React Testing Library component tests
+│   │   └── types              # TypeScript types
+│   │   └── index.tsx          # Client side entry point
+│   └── server/                # Node/Express server side code
+│       ├── handlers/          # Functions for API endpoints
+│       ├── middleware/        # Middleware for API endpoints
+│       ├── router/            # Route API endpoints
+│       ├── utils/             # Backend utilities
+│       └── index.ts           # Server entrypoint
+├── .editorconfig              # Configures editor rules
+├── .gitattributes             # Additional git attributes
+├── .gitignore                 # Lists files for git to ignore
+├── .prettierrc                # Code convention enforced by Prettier
+├── .travis.yml                # Continuous integration and deployment config
+├── CHANGELOG.md               # List of significant changes
+├── cypress.json               # Cypress configuration
+├── deploy.sh                  # Deployment script for Docker in production
+├── Dockerfile                 # Docker build instructions
+├── jest.config.js             # Jest configuration
+├── LICENSE                    # License for this open source project
+├── nodemon.json               # Nodemon configuration
+├── package-lock.json          # Package lockfile
+├── package.json               # Dependencies and additional information
+├── README.md
+├── seed.js                    # Seed the app with data for testing
+├── tsconfig.json              # Typescript configuration
+└── tsconfig.test.json         # Typescript test configuration
+```
+
+## Technologies
+
+TakeNote is possible thanks the all these open source languages, libraries, and frameworks.
+
+| Tech                                          | Description                               |
+| --------------------------------------------- | ----------------------------------------- |
+| [Codemirror](https://codemirror.net/)         | Browser-based text editor                 |
+| [TypeScript](https://www.typescriptlang.org/) | Static type-checking programming language |
+| [Node.js](https://nodejs.org/en/)             | JavaScript runtime for the backend        |
+| [Express](https://expressjs.com/)             | Server framework                          |
+| [React](https://reactjs.org/)                 | Front end user interface                  |
+| [Redux](https://redux.js.org/)                | Global state management                   |
+| [Webpack](https://webpack.js.org/)            | Asset bundler                             |
+| [Sass](https://sass-lang.com/)                | Style preprocessor                        |
+| [OAuth](https://oauth.net/)                   | Protocol for secure authorization         |
+| [ESLint](https://eslint.org/)                 | TypeScript linting                        |
+| [Jest](https://jestjs.io/)                    | Unit testing framework                    |
+| [Cypress](https://www.cypress.io/)            | End-to-end testing framework              | L |
 
 ## Contributing
 
@@ -165,6 +263,7 @@ Thanks goes to these wonderful people:
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 ## Acknowledgements
