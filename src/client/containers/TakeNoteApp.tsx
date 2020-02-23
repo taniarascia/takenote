@@ -11,7 +11,7 @@ import { SettingsModal } from '@/containers/SettingsModal'
 import { TempStateProvider } from '@/contexts/TempStateContext'
 import { useInterval, useBeforeUnload } from '@/helpers/hooks'
 import { getWebsiteTitle, determineTheme } from '@/helpers'
-import { loadCategories } from '@/slices/category'
+import { loadCategories, swapCategories } from '@/slices/category'
 import { loadNotes } from '@/slices/note'
 import { syncState } from '@/slices/sync'
 import { loadSettings } from '@/slices/settings'
@@ -29,12 +29,22 @@ export const TakeNoteApp: React.FC = () => {
   const _loadNotes = () => dispatch(loadNotes())
   const _loadCategories = () => dispatch(loadCategories())
   const _loadSettings = () => dispatch(loadSettings())
+  const _swapCategories = (categoryId: number, destinationId: number) =>
+    dispatch(swapCategories({ categoryId, destinationId }))
   const _syncState = (notes: NoteItem[], categories: CategoryItem[]) =>
     dispatch(syncState({ notes, categories }))
 
   const activeCategory = categories.find(({ id }) => id === activeCategoryId)
   const onDragEnd = (result: DropResult) => {
-    // TODO: Add drag logic
+    const { destination, source } = result
+
+    if (!destination) return
+    if (destination.droppableId === source.droppableId && destination.index === source.index) return
+
+    switch (result.type) {
+      case 'CATEGORY':
+        _swapCategories(source.index, destination.index)
+    }
   }
 
   useEffect(() => {

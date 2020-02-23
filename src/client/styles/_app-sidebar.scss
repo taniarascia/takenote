@@ -186,6 +186,10 @@
         z-index: 1;
         display: flex;
         cursor: pointer;
+
+        & > *:not(:last-child) {
+          margin-right: 0.3rem;
+        }
       }
     }
 

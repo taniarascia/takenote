@@ -1,8 +1,8 @@
 import uuid from 'uuid/v4'
 import React, { useState } from 'react'
-import { Loader, Folder as FolderIcon, Plus, Settings, RefreshCw, X } from 'react-feather'
+import { Loader, Folder as FolderIcon, Plus, Settings, RefreshCw, X, Move } from 'react-feather'
 import { useDispatch, useSelector } from 'react-redux'
-import { Droppable, DroppableProvided, Draggable, DraggableProps } from 'react-beautiful-dnd'
+import { Droppable, Draggable } from 'react-beautiful-dnd'
 
 import { ActionButton } from '@/components/AppSidebar/ActionButton'
 import { LastSyncedNotification } from '@/components/AppSidebar/LastSyncedNotification'
@@ -173,7 +173,7 @@ export const AppSidebar: React.FC = () => {
           <div className="category-title">
             <h2>Categories</h2>
           </div>
-          <Droppable droppableId="Category list">
+          <Droppable type="CATEGORY" droppableId="Category list">
             {droppableProvided => (
               <div
                 {...droppableProvided.droppableProps}
@@ -186,7 +186,6 @@ export const AppSidebar: React.FC = () => {
                     <Draggable key={category.id} draggableId={category.id} index={index}>
                       {draggableProvided => (
                         <div
-                          {...draggableProvided.dragHandleProps}
                           {...draggableProvided.draggableProps}
                           ref={draggableProvided.innerRef}
                           data-testid="category-list-div"
@@ -245,22 +244,27 @@ export const AppSidebar: React.FC = () => {
                               category.name
                             )}
                           </form>
-                          <div
-                            data-testid="category-options"
-                            className="category-options"
-                            onClick={() => {
-                              const notesNotTrash = notes.filter(note => !note.trash)
-                              const newNoteId = notesNotTrash.length > 0 ? notesNotTrash[0].id : ''
-
-                              _deleteCategory(category.id)
-                              _pruneCategoryFromNotes(category.id)
-                              _swapFolder(Folder.ALL)
-                              _swapNote(newNoteId)
-                            }}
-                          >
+                          <div data-testid="category-options" className="category-options">
+                            <div
+                              {...draggableProvided.dragHandleProps}
+                              data-testid="move-category"
+                              aria-label="Move category"
+                            >
+                              <Move size={16} />
+                            </div>
                             <X
+                              onClick={() => {
+                                const notesNotTrash = notes.filter(note => !note.trash)
+                                const newNoteId =
+                                  notesNotTrash.length > 0 ? notesNotTrash[0].id : ''
+
+                                _deleteCategory(category.id)
+                                _pruneCategoryFromNotes(category.id)
+                                _swapFolder(Folder.ALL)
+                                _swapNote(newNoteId)
+                              }}
                               data-testid="remove-category"
-                              size={12}
+                              size={16}
                               aria-label="Remove category"
                             />
                           </div>
