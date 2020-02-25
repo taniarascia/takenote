@@ -1,7 +1,7 @@
 module.exports = {
   // Setting the root to the actual root, since this file is in root/config
   rootDir: '../',
-  roots: ['<rootDir>/src', '<rootDir>/tests/integration'],
+  roots: ['<rootDir>/src', '<rootDir>/tests/unit'],
   transform: {
     '^.+\\.tsx?$': 'ts-jest',
     '\\.(html|xml|txt|md)$': 'jest-raw-loader',
@@ -11,6 +11,6 @@ module.exports = {
   moduleNameMapper: {
     // Allow `@/` to map to `src/client/` in Jest tests
     '@/(.*)$': '<rootDir>/src/client/$1',
-    '@resources(.*)$': '<rootDir>/src/resources/$1',
+    '@resources/(.*)$': '<rootDir>/src/resources/$1',
   },
 }
