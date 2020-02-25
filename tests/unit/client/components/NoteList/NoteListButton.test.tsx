@@ -1,5 +1,7 @@
 import React from 'react'
 import { render } from '@testing-library/react'
+import '@testing-library/jest-dom'
+import 'jest-extended'
 
 import { NoteListButton, NoteListButtonProps } from '@/components/NoteList/NoteListButton'
 
@@ -11,9 +13,9 @@ describe('<NoteListButton />', () => {
       dataTestID: 'note-list-button',
     }
 
-    const button = render(<NoteListButton {...enabledProps} />)
+    const component = render(<NoteListButton {...enabledProps} />)
 
-    expect(button).toBeTruthy()
+    expect(component).toBeTruthy()
   })
 
   it('renders the NoteListButton component as disabled', () => {
@@ -24,7 +26,9 @@ describe('<NoteListButton />', () => {
       dataTestID: 'note-list-button',
     }
 
-    const { getByTestId } = render(<NoteListButton {...disabledProps} />)
-    const button = getByTestId('note-list-button')
+    const component = render(<NoteListButton {...disabledProps} />)
+    const button = component.queryByTestId('note-list-button')
+
+    expect(button).toBeDisabled()
   })
 })
