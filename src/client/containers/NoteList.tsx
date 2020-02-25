@@ -3,12 +3,17 @@ import { useDispatch, useSelector } from 'react-redux'
 import { MoreHorizontal, Star } from 'react-feather'
 import _ from 'lodash'
 
-import { Folder, Shortcuts } from '@/constants/enums'
+import { Folder, Shortcuts } from '@/utils/enums'
 import { NoteListButton } from '@/components/NoteList/NoteListButton'
 import { SearchBar } from '@/components/NoteList/SearchBar'
 import { ContextMenu } from '@/containers/ContextMenu'
-import { getNoteTitle, sortByLastUpdated, sortByFavorites, shouldOpenContextMenu } from '@/helpers'
-import { useKey } from '@/helpers/hooks'
+import {
+  getNoteTitle,
+  sortByLastUpdated,
+  sortByFavorites,
+  shouldOpenContextMenu,
+} from '@/utils/helpers'
+import { useKey } from '@/utils/hooks'
 import { emptyTrash, pruneNotes, swapNote, searchNotes } from '@/slices/note'
 import { NoteItem, ReactDragEvent, ReactMouseEvent } from '@/types'
 import { getNotes } from '@/selectors'

@@ -4,14 +4,14 @@ import { Loader, Folder as FolderIcon, Plus, Settings, RefreshCw, X, Move } from
 import { useDispatch, useSelector } from 'react-redux'
 import { Droppable, Draggable } from 'react-beautiful-dnd'
 
-import { ResourceStringEnum } from '@resources/resourceStrings'
+import { StringEnum } from '@resources/StringEnum'
 
 import { ActionButton } from '@/components/AppSidebar/ActionButton'
 import { LastSyncedNotification } from '@/components/AppSidebar/LastSyncedNotification'
 import { AllNotesOption } from '@/components/AppSidebar/AllNotesOption'
 import { FolderOption } from '@/components/AppSidebar/FolderOption'
-import { Folder } from '@/constants/enums'
-import { iconColor } from '@/constants/index'
+import { Folder } from '@/utils/enums'
+import { iconColor } from '@/utils/constants'
 import { useTempState } from '@/contexts/TempStateContext'
 import {
   addCategory,
@@ -34,7 +34,7 @@ import { toggleSettingsModal, togglePreviewMarkdown } from '@/slices/settings'
 import { syncState } from '@/slices/sync'
 import { getSettings, getNotes, getCategories, getSync } from '@/selectors'
 import { CategoryItem, NoteItem, ReactDragEvent, ReactSubmitEvent } from '@/types'
-import { newNoteHandlerHelper } from '@/helpers'
+import { newNoteHandlerHelper } from '@/utils/helpers'
 
 export const AppSidebar: React.FC = () => {
   const { categories } = useSelector(getCategories)
@@ -119,11 +119,13 @@ export const AppSidebar: React.FC = () => {
   const syncNotesHandler = () => _syncState(notes, categories)
   const settingsHandler = () => _toggleSettingsModal()
 
-  const determineCategoryClass = (category: CategoryItem) => {
+  const determineCategoryClass = (category: CategoryItem, isDragging: boolean) => {
     if (category.id === activeCategoryId) {
       return 'category-list-each active'
     } else if (category.draggedOver) {
       return 'category-list-each dragged-over'
+    } else if (isDragging) {
+      return 'category-list-each dragging'
     } else {
       return 'category-list-each'
     }
@@ -139,26 +141,26 @@ export const AppSidebar: React.FC = () => {
             dataTestID="sidebar-action-create-new-note"
             handler={newNoteHandler}
             icon={Plus}
-            label={ResourceStringEnum.CREATE_NEW_NOTE}
+            label={StringEnum.CREATE_NEW_NOTE}
           />
           <ActionButton
             dataTestID="sidebar-action-sync-notes"
             handler={syncNotesHandler}
             icon={syncing ? Loader : RefreshCw}
-            label={ResourceStringEnum.SYNC_NOTES}
+            label={StringEnum.SYNC_NOTES}
           />
           <ActionButton
             dataTestID="sidebar-action-settings"
             handler={settingsHandler}
             icon={Settings}
-            label={ResourceStringEnum.SETTINGS}
+            label={StringEnum.SETTINGS}
           />
         </section>
         <section className="app-sidebar-main">
           <AllNotesOption active={activeFolder === Folder.ALL} swapFolder={_swapFolder} />
           <FolderOption
             active={activeFolder === Folder.FAVORITES}
-            text={ResourceStringEnum.FAVORITES}
+            text={StringEnum.FAVORITES}
             dataTestID="favorites"
             folder={Folder.FAVORITES}
             swapFolder={_swapFolder}
@@ -166,7 +168,7 @@ export const AppSidebar: React.FC = () => {
           />
           <FolderOption
             active={activeFolder === Folder.TRASH}
-            text={ResourceStringEnum.TRASH}
+            text={StringEnum.TRASH}
             dataTestID="trash"
             folder={Folder.TRASH}
             swapFolder={_swapFolder}
@@ -186,12 +188,12 @@ export const AppSidebar: React.FC = () => {
                 {categories.map((category, index) => {
                   return (
                     <Draggable key={category.id} draggableId={category.id} index={index}>
-                      {draggableProvided => (
+                      {(draggableProvided, snapshot) => (
                         <div
                           {...draggableProvided.draggableProps}
                           ref={draggableProvided.innerRef}
                           data-testid="category-list-div"
-                          className={determineCategoryClass(category)}
+                          className={determineCategoryClass(category, snapshot.isDragging)}
                           onClick={() => {
                             const notesForNewCategory = notes.filter(
                               note => !note.trash && note.category === category.id
@@ -259,7 +261,7 @@ export const AppSidebar: React.FC = () => {
                                 const notesNotTrash = notes.filter(note => !note.trash)
                                 const newNoteId =
                                   notesNotTrash.length > 0 ? notesNotTrash[0].id : ''
-                                
+
                                 _deleteCategory(category.id)
                                 _pruneCategoryFromNotes(category.id)
                                 _swapFolder(Folder.ALL)
@@ -267,7 +269,7 @@ export const AppSidebar: React.FC = () => {
                               }}
                               data-testid="remove-category"
                               size={16}
-                              aria-label={ResourceStringEnum.REMOVE_CATEGORY}
+                              aria-label={StringEnum.REMOVE_CATEGORY}
                             />
                           </div>
                         </div>
@@ -309,10 +311,10 @@ export const AppSidebar: React.FC = () => {
               data-testid="add-category-button"
               className="category-button"
               onClick={newTempCategoryHandler}
-              aria-label="{{ResourceStringEnum.ADD_CATEGORY}}"
+              aria-label="{{StringEnum.ADD_CATEGORY}}"
             >
               <Plus size={15} color={iconColor} />
-              {ResourceStringEnum.ADD_CATEGORY}
+              {StringEnum.ADD_CATEGORY}
             </button>
           )}
         </section>

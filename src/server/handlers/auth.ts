@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express'
 import axios from 'axios'
 import * as dotenv from 'dotenv'
 
-import { thirtyDayCookie } from '../utils'
+import { thirtyDayCookie } from '../utils/constants'
 
 dotenv.config()
 
@@ -59,7 +59,7 @@ export default {
       // Redirect to the app when logged in
       response.redirect('/app')
     } catch (error) {
-      console.log(error)
+      console.log(error) // eslint-disable-line
       // Redirect to the main page if something went wrong
       response.redirect('/')
     }

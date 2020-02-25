@@ -35,7 +35,7 @@ before_script:
 
 script:
   # Run unit, component, and e2e tests
-  - npm run coveralls && npm run e2e
+  - npm run test:coverage:ci && npm run test:e2e
 
 deploy:
   # Build Docker container and push to Docker Hub
