@@ -1,5 +1,5 @@
 import React from 'react'
-import { ArrowUp, Download, Star, Trash, X } from 'react-feather'
+import { ArrowUp, Download, Star, Trash, X, Edit2 } from 'react-feather'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { StringEnum } from '@resources/StringEnum'
@@ -19,9 +19,10 @@ import { CategoryItem, NoteItem } from '@/types'
 
 export interface ContextMenuOptionsProps {
   clickedNote: NoteItem
+  type?: 'CATEGORY'
 }
 
-export const ContextMenuOptions: React.FC<ContextMenuOptionsProps> = ({ clickedNote }) => {
+export const ContextMenuOptions: React.FC<ContextMenuOptionsProps> = ({ clickedNote, type }) => {
   const dispatch = useDispatch()
 
   const _deleteNote = (noteId: string) => dispatch(deleteNote(noteId))
@@ -49,55 +50,74 @@ export const ContextMenuOptions: React.FC<ContextMenuOptionsProps> = ({ clickedN
     _swapNote(clickedNote.id)
   }
 
-  return (
-    <nav className="note-options-nav" data-testid="note-options-nav">
-      {clickedNote.trash ? (
-        <>
-          <ContextMenuOption
-            dataTestID="note-option-delete-permanently"
-            handler={deleteNoteHandler}
-            icon={X}
-            text={StringEnum.DELETE_PERMANENTLY}
-            optionType="delete"
-          />
-          <ContextMenuOption
-            dataTestID="note-option-restore-from-trash"
-            handler={trashNoteHandler}
-            icon={ArrowUp}
-            text={StringEnum.RESTORE_FROM_TRASH}
-          />
-        </>
-      ) : (
-        <>
-          <ContextMenuOption
-            dataTestID="note-option-favorite"
-            handler={favoriteNoteHandler}
-            icon={Star}
-            text={clickedNote.favorite ? StringEnum.REMOVE_FAVORITE : StringEnum.MARK_AS_FAVORITE}
-          />
-          <ContextMenuOption
-            dataTestID="note-option-trash"
-            handler={trashNoteHandler}
-            icon={Trash}
-            text={StringEnum.MOVE_TO_TRASH}
-            optionType="delete"
-          />
-        </>
-      )}
-      <ContextMenuOption
-        dataTestID="note-options-download"
-        handler={downloadNoteHandler}
-        icon={Download}
-        text={StringEnum.DOWNLOAD}
-      />
-      {clickedNote.category && !clickedNote.trash && (
+  if (type === 'CATEGORY') {
+    return (
+      <nav className="category-options-nav" data-testid="category-options-nav">
         <ContextMenuOption
-          dataTestID="note-option-remove-category"
+          dataTestID="category-options-download"
+          handler={downloadNoteHandler}
+          icon={Edit2}
+          text={StringEnum.RENAME}
+        />
+        <ContextMenuOption
+          dataTestID="category-option-remove-category"
           handler={removeCategoryHandler}
           icon={X}
           text="Remove category"
         />
-      )}
-    </nav>
-  )
+      </nav>
+    )
+  } else {
+    return (
+      <nav className="note-options-nav" data-testid="note-options-nav">
+        {clickedNote.trash ? (
+          <>
+            <ContextMenuOption
+              dataTestID="note-option-delete-permanently"
+              handler={deleteNoteHandler}
+              icon={X}
+              text={StringEnum.DELETE_PERMANENTLY}
+              optionType="delete"
+            />
+            <ContextMenuOption
+              dataTestID="note-option-restore-from-trash"
+              handler={trashNoteHandler}
+              icon={ArrowUp}
+              text={StringEnum.RESTORE_FROM_TRASH}
+            />
+          </>
+        ) : (
+          <>
+            <ContextMenuOption
+              dataTestID="note-option-favorite"
+              handler={favoriteNoteHandler}
+              icon={Star}
+              text={clickedNote.favorite ? StringEnum.REMOVE_FAVORITE : StringEnum.MARK_AS_FAVORITE}
+            />
+            <ContextMenuOption
+              dataTestID="note-option-trash"
+              handler={trashNoteHandler}
+              icon={Trash}
+              text={StringEnum.MOVE_TO_TRASH}
+              optionType="delete"
+            />
+          </>
+        )}
+        <ContextMenuOption
+          dataTestID="note-options-download"
+          handler={downloadNoteHandler}
+          icon={Download}
+          text={StringEnum.DOWNLOAD}
+        />
+        {clickedNote.category && !clickedNote.trash && (
+          <ContextMenuOption
+            dataTestID="note-option-remove-category"
+            handler={removeCategoryHandler}
+            icon={X}
+            text="Remove category"
+          />
+        )}
+      </nav>
+    )
+  }
 }

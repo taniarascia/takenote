@@ -17,6 +17,7 @@ enum StringEnum {
   SYNC_NOTES = 'Sync notes',
   TRASH = 'Trash',
   WELCOME_TO_TAKENOTE = 'Welcome to Takenote!',
+  RENAME = 'Rename',
 }
 
 export { StringEnum }

@@ -96,14 +96,8 @@ export const NoteList: React.FC = () => {
 
     // Make sure we aren't getting any null values .. any element clicked should be a sub-class of element
     if (!clicked) return
+
     setNoteOptionsPosition({ x: event.clientX, y: event.clientY })
-    // Ensure the clicked target is supposed to open the context menu
-    if (shouldOpenContextMenu(clicked as Element)) {
-      // note: don't check for MouseEvent because Cypress MouseEvent !== Window.MouseEvent
-      if ('pageX' in event && 'pageY' in event) {
-        setNoteOptionsPosition({ x: event.clientX, y: event.clientY })
-      }
-    }
 
     event.stopPropagation()
 
