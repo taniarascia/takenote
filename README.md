@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./docs/logo.png">
+  <img src="./assets/logo.png">
 </p>
 
 <p align="center">
@@ -12,7 +12,7 @@
 
 > **Warning**: TakeNote is still in active development. You can visit [takenote.dev](https://takenote.dev) to see the work in progress, but your account and the notes you create are **temporary** will not be persisted. All data will be lost once GitHub integration is complete.
 
-![Screenshot](./docs/screenshot-light.png)
+![Screenshot](./assets/screenshot-light.png)
 
 ### Fast and simple
 
@@ -148,7 +148,7 @@ Explanation the structure of files and directories within TakeNote.
 │   ├── webpack.common.js      # Webpack shared configuration
 │   ├── webpack.dev.js         # Webpack development configuration (dev server)
 │   └── webpack.prod.js        # Webpack productuon configuration (dist output)
-├── docs/                      # Assets for documentation
+├── assets/                    # Supplemental assets
 ├── patches/                   # Overrides for dependencies
 ├── public/                    # Files that will write to dist on build
 ├── src/                       # All TakeNote app source files
@@ -173,14 +173,13 @@ Explanation the structure of files and directories within TakeNote.
 │       └── index.ts           # Server entrypoint
 ├── tests/                     # Test suites
 │   ├── e2e/                   # Cypress end-to-end tests
-│   └── integration/           # React Testing Library and Jest tests
+│   └── unit/                  # React Testing Library and Jest tests
 ├── .dockerignore              # Files ignored by Docker
 ├── .editorconfig              # Configures editor rules
 ├── .gitignore                 # Files ignored by git
 ├── .prettierrc                # Code convention enforced by Prettier
 ├── .travis.yml                # Continuous integration and deployment config
 ├── CHANGELOG.md               # List of significant changes
-├── cypress.json               # Cypress configuration
 ├── deploy.sh                  # Deployment script for Docker in production
 ├── Dockerfile                 # Docker build instructions
 ├── LICENSE                    # License for this open source project

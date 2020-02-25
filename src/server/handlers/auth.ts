@@ -2,7 +2,7 @@ import { Request, Response, NextFunction } from 'express'
 import axios from 'axios'
 import * as dotenv from 'dotenv'
 
-import { thirtyDayCookie } from '../utils'
+import { thirtyDayCookie } from '../utils/constants'
 
 dotenv.config()
 
