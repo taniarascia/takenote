@@ -22,10 +22,6 @@ TakeNote was made by developers for developers - a simple, plain-text note-takin
 
 Drag-and-drop notes into categories, instantly search through notes, and pin your favorites to the top.
 
-### Available anywhere
-
-TakeNote is made for the web, so you can use it anywhere without downloading anything.
-
 ### Beautiful
 
 Enjoy a beautiful, clean design reminiscent of your IDE with light and dark themes.
@@ -42,7 +38,7 @@ In progress!
 
 ### Pre-Installation
 
-> Before working on TakeNote locally, you must create a GitHub OAuth app for development.
+Before working on TakeNote locally, you must create a GitHub OAuth app for development.
 
 Go to your GitHub profile settings, and click on **Developer Settings**.
 
@@ -61,7 +57,7 @@ CLIENT_SECRET=xxxx
 
 > Change the URLs to port `5000` in production mode or Docker.
 
-### Install
+### Installation
 
 ```bash
 git clone git@github.com:taniarascia/takenote
@@ -69,9 +65,9 @@ cd takenote
 npm i
 ```
 
-### Development
+#### Development mode
 
-In the development environment, an Express server is running on port `5000` to handle all API calls, and a hot Webpack dev server is running on port `3000` for the React front end. To run both of these servers concurrently, run the `dev` command.
+In the development environment, an Express server is running on port `5000` to handle all API calls, and a hot Webpack dev server is running on port `3000` for the React frontend. To run both of these servers concurrently, run the `dev` command.
 
 ```bash
 npm run dev
@@ -79,11 +75,11 @@ npm run dev
 
 Go to `localhost:3000` to view the app.
 
-API requests will be proxied to port `5000` automatically.
+> API requests will be proxied to port `5000` automatically.
 
-### Production
+#### Production mode
 
-In production, the React app is built, and Express redirects all incoming requests to the `dist` directory on port `5000`.
+In the production environment, the React app is built, and Express redirects all incoming requests to the `dist` directory on port `5000`.
 
 ```bash
 npm run build && npm run start
@@ -91,7 +87,7 @@ npm run build && npm run start
 
 Go to `localhost:5000` to view the app.
 
-### Run in Docker
+#### Run in Docker
 
 Follow these instructions to build an image and run a container.
 
@@ -124,7 +120,7 @@ Run unit and component/integration tests.
 npm run test
 ```
 
-> If using Jest Runner in VSCode, put "jestrunner.configPath": "config/jest.config.js" in your settings
+> If using Jest Runner in VSCode, add `"jestrunner.configPath": "config/jest.config.js"` to your settings
 
 Run Cypress end-to-end tests.
 
@@ -194,23 +190,23 @@ Explanation the structure of files and directories within TakeNote.
 
 An explanation of the `package.json` scripts.
 
-| Command         | Description                                  |
-| --------------- | -------------------------------------------- |
-| `dev`           | Run TakeNote in a development environment    |
-| `dev:test`      | Run TakeNote in a testing environment        |
-| `client`        | Start a webpack dev server for the front end |
-| `server`        | Start a nodemon dev server for the back end  |
-| `build`         | Create a production build of TakeNote        |
-| `start`         | Start a production server for TakeNote       |
-| `test`          | Run unit and component tests                 |
-| `test:e2e`      | Run end-to-end tests in the command line     |
-| `test:e2e:open` | Open end-to-end tests in a browser           |
-| `test:coverage` | Get test coverage                            |
-| `postinstall`   | Apply patches                                |
+| Command         | Description                                 |
+| --------------- | ------------------------------------------- |
+| `dev`           | Run TakeNote in a development environment   |
+| `dev:test`      | Run TakeNote in a testing environment       |
+| `client`        | Start a webpack dev server for the frontend |
+| `server`        | Start a nodemon dev server for the backend  |
+| `build`         | Create a production build of TakeNote       |
+| `start`         | Start a production server for TakeNote      |
+| `test`          | Run unit and component tests                |
+| `test:e2e`      | Run end-to-end tests in the command line    |
+| `test:e2e:open` | Open end-to-end tests in a browser          |
+| `test:coverage` | Get test coverage                           |
+| `postinstall`   | Apply patches                               |
 
 ## Technologies
 
-TakeNote is possible thanks the all these open source languages, libraries, and frameworks.
+TakeNote is possible thanks to all these open source languages, libraries, and frameworks.
 
 | Tech                                          | Description                               |
 | --------------------------------------------- | ----------------------------------------- |

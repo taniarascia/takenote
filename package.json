@@ -84,7 +84,7 @@
   "devDependencies": {
     "@cypress/webpack-preprocessor": "^4.1.1",
     "@testing-library/cypress": "^5.0.2",
-    "@testing-library/jest-dom": "^5.0.0",
+    "@testing-library/jest-dom": "^5.1.1",
     "@testing-library/react": "^9.4.0",
     "@types/axios": "^0.14.0",
     "@types/codemirror": "0.0.82",
