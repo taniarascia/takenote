@@ -2,10 +2,10 @@
 import React from 'react'
 import { Book } from 'react-feather'
 
-import { ResourceStringEnum } from '@resources/resourceStrings'
+import { StringEnum } from '@resources/StringEnum'
 
-import { Folder } from '@/constants/enums'
-import { iconColor } from '@/constants/index'
+import { Folder } from '@/utils/enums'
+import { iconColor } from '@/utils/constants'
 
 export interface AllNotesOptionProps {
   active: boolean
@@ -22,7 +22,7 @@ export const AllNotesOption: React.FC<AllNotesOptionProps> = ({ active, swapFold
       }}
     >
       <Book size={15} className="app-sidebar-icon" color={iconColor} />
-      {ResourceStringEnum.ALL_NOTES}
+      {StringEnum.ALL_NOTES}
     </div>
   )
 }

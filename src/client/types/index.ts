@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Folder } from '@/constants/enums'
+import { Folder } from '@/utils/enums'
 import { syncState } from '@/slices/sync'
 
 //==============================================================================

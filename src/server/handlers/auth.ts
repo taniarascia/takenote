@@ -59,7 +59,7 @@ export default {
       // Redirect to the app when logged in
       response.redirect('/app')
     } catch (error) {
-      console.log(error)
+      console.log(error) // eslint-disable-line
       // Redirect to the main page if something went wrong
       response.redirect('/')
     }

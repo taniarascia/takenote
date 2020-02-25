@@ -21,6 +21,6 @@
       "@resources/*": ["./src/resources/*"]
     }
   },
-  "include": ["./src/**/*", "./global.d.ts"],
+  "include": ["./src/**/*", "./tests/integration/**/*", "./global.d.ts"],
   "exclude": ["./dist/", "node_modules", "webpack.*.js"]
 }
