@@ -9,7 +9,7 @@ import {
   toggleDarkTheme,
 } from '@/slices/settings'
 import { logout } from '@/slices/auth'
-import { shortcutMap } from '@/constants'
+import { shortcutMap } from '@/utils/constants'
 import { ReactMouseEvent } from '@/types'
 import { getSettings, getAuth } from '@/selectors'
 import { Option } from '@/components/SettingsModal/Option'

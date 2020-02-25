@@ -1,8 +1,0 @@
-{
-  "extends": "./tsconfig.json",
-  "compilerOptions": {
-    "lib": ["esnext"],
-    "noUnusedLocals": false
-  },
-  "include": ["src/**/*.{ts|tsx}", "src/**/*.test.{ts|tsx}"]
-}

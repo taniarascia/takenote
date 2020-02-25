@@ -2,10 +2,10 @@ import React from 'react'
 import { ArrowUp, Download, Star, Trash, X } from 'react-feather'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { ResourceStringEnum } from '@resources/resourceStrings'
+import { StringEnum } from '@resources/StringEnum'
 
 import { ContextMenuOption } from '@/components/NoteList/ContextMenuOption'
-import { downloadNote, getNoteTitle } from '@/helpers'
+import { downloadNote, getNoteTitle } from '@/utils/helpers'
 import {
   deleteNote,
   toggleFavoriteNote,
@@ -57,14 +57,14 @@ export const ContextMenuOptions: React.FC<ContextMenuOptionsProps> = ({ clickedN
             dataTestID="note-option-delete-permanently"
             handler={deleteNoteHandler}
             icon={X}
-            text={ResourceStringEnum.DELETE_PERMANENTLY}
+            text={StringEnum.DELETE_PERMANENTLY}
             optionType="delete"
           />
           <ContextMenuOption
             dataTestID="note-option-restore-from-trash"
             handler={trashNoteHandler}
             icon={ArrowUp}
-            text={ResourceStringEnum.RESTORE_FROM_TRASH}
+            text={StringEnum.RESTORE_FROM_TRASH}
           />
         </>
       ) : (
@@ -73,17 +73,13 @@ export const ContextMenuOptions: React.FC<ContextMenuOptionsProps> = ({ clickedN
             dataTestID="note-option-favorite"
             handler={favoriteNoteHandler}
             icon={Star}
-            text={
-              clickedNote.favorite
-                ? ResourceStringEnum.REMOVE_FAVORITE
-                : ResourceStringEnum.MARK_AS_FAVORITE
-            }
+            text={clickedNote.favorite ? StringEnum.REMOVE_FAVORITE : StringEnum.MARK_AS_FAVORITE}
           />
           <ContextMenuOption
             dataTestID="note-option-trash"
             handler={trashNoteHandler}
             icon={Trash}
-            text={ResourceStringEnum.MOVE_TO_TRASH}
+            text={StringEnum.MOVE_TO_TRASH}
             optionType="delete"
           />
         </>
@@ -92,7 +88,7 @@ export const ContextMenuOptions: React.FC<ContextMenuOptionsProps> = ({ clickedN
         dataTestID="note-options-download"
         handler={downloadNoteHandler}
         icon={Download}
-        text={ResourceStringEnum.DOWNLOAD}
+        text={StringEnum.DOWNLOAD}
       />
       {clickedNote.category && !clickedNote.trash && (
         <ContextMenuOption

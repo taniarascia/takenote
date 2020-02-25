@@ -1,6 +1,7 @@
 /node_modules
 /coverage
 /dist
+/cypress
 .idea
 .DS_Store
 .env
@@ -8,4 +9,5 @@
 
 npm-debug.log*
 .coveralls.yml
-/cypress/videos
+**/*/videos
+tests/e2e/videos

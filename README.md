@@ -96,8 +96,16 @@ Go to `localhost:5000` to view the app.
 Follow these instructions to build an image and run a container.
 
 ```bash
+# Build Docker image
 docker build --build-arg CLIENT_ID=xxx -t takenote:mytag .
-docker run -p CLIENT_ID=xxx CLIENT_SECRET=xxxx NODE_ENV=development 5000:5000 takenote:mytag
+
+# Run Docker container in port 5000
+docker run \
+-e CLIENT_ID=xxx \
+-e CLIENT_SECRET=xxxx \
+-e NODE_ENV=development \
+-p 5000:5000 \
+takenote:mytag
 ```
 
 Go to `localhost:5000` to view the app.
@@ -110,16 +118,22 @@ To seed the app with some test data, paste the contents of `seed.js` into your b
 
 ## Testing
 
-Run unit and component tests.
+Run unit and component/integration tests.
 
 ```bash
 npm run test
 ```
 
-Run Cypress e2e tests.
+> If using Jest Runner in VSCode, put "jestrunner.configPath": "config/jest.config.js" in your settings
+
+Run Cypress end-to-end tests.
 
 ```bash
-npm run e2e:open
+# In one window, run the application in test mode
+npm run dev:test
+
+# In another window, run the end-to-end tests
+npm run test:e2e:open
 ```
 
 ## Folder Structure
@@ -127,29 +141,29 @@ npm run e2e:open
 Explanation the structure of files and directories within TakeNote.
 
 ```bash
-├── config/                    # Webpack configuration
+├── config/                    # Configuration
+│   ├── cypress.config.js      # Cypress end-to-end test configuration
+│   ├── jest.config.js         # Jest unit/component test configuration
+│   ├── nodemon.config.json    # Nodemon configuration
 │   ├── webpack.common.js      # Webpack shared configuration
 │   ├── webpack.dev.js         # Webpack development configuration (dev server)
 │   └── webpack.prod.js        # Webpack productuon configuration (dist output)
-├── cypress/                   # End-to-end tests
 ├── docs/                      # Assets for documentation
 ├── patches/                   # Overrides for dependencies
 ├── public/                    # Files that will write to dist on build
 ├── src/                       # All TakeNote app source files
+│   ├── resources/             # Shared resources
 │   ├── client/                # React client side code
 │   │   ├── api/               # Temporary placeholders for mock API calls
-│   │   ├── assets/            # Static assets
 │   │   ├── components/        # React components that are not connected to Redux
-│   │   ├── constants/         # Static values
 │   │   ├── contexts/          # React context global state without Redux
-│   │   ├── helpers/           # Helper functions
 │   │   ├── router/            # React private and public routes
 │   │   ├── sagas/             # Redux sagas
 │   │   ├── selectors/         # Redux Toolkit selectors
 │   │   ├── slices/            # Redux Toolkit slices
 │   │   ├── styles/            # Sass style files
-│   │   ├── tests/             # React Testing Library component tests
-│   │   └── types              # TypeScript types
+│   │   ├── types/             # TypeScript types
+│   │   ├── utils/             # Utility functions
 │   │   └── index.tsx          # Client side entry point
 │   └── server/                # Node/Express server side code
 │       ├── handlers/          # Functions for API endpoints
@@ -157,25 +171,43 @@ Explanation the structure of files and directories within TakeNote.
 │       ├── router/            # Route API endpoints
 │       ├── utils/             # Backend utilities
 │       └── index.ts           # Server entrypoint
+├── tests/                     # Test suites
+│   ├── e2e/                   # Cypress end-to-end tests
+│   └── integration/           # React Testing Library and Jest tests
+├── .dockerignore              # Files ignored by Docker
 ├── .editorconfig              # Configures editor rules
-├── .gitattributes             # Additional git attributes
-├── .gitignore                 # Lists files for git to ignore
+├── .gitignore                 # Files ignored by git
 ├── .prettierrc                # Code convention enforced by Prettier
 ├── .travis.yml                # Continuous integration and deployment config
 ├── CHANGELOG.md               # List of significant changes
 ├── cypress.json               # Cypress configuration
 ├── deploy.sh                  # Deployment script for Docker in production
 ├── Dockerfile                 # Docker build instructions
-├── jest.config.js             # Jest configuration
 ├── LICENSE                    # License for this open source project
-├── nodemon.json               # Nodemon configuration
 ├── package-lock.json          # Package lockfile
 ├── package.json               # Dependencies and additional information
 ├── README.md
 ├── seed.js                    # Seed the app with data for testing
-├── tsconfig.json              # Typescript configuration
-└── tsconfig.test.json         # Typescript test configuration
+└── tsconfig.json              # Typescript configuration
 ```
+
+## Scripts
+
+An explanation of the `package.json` scripts.
+
+| Command         | Description                                  |
+| --------------- | -------------------------------------------- |
+| `dev`           | Run TakeNote in a development environment    |
+| `dev:test`      | Run TakeNote in a testing environment        |
+| `client`        | Start a webpack dev server for the front end |
+| `server`        | Start a nodemon dev server for the back end  |
+| `build`         | Create a production build of TakeNote        |
+| `start`         | Start a production server for TakeNote       |
+| `test`          | Run unit and component tests                 |
+| `test:e2e`      | Run end-to-end tests in the command line     |
+| `test:e2e:open` | Open end-to-end tests in a browser           |
+| `test:coverage` | Get test coverage                            |
+| `postinstall`   | Apply patches                                |
 
 ## Technologies
 
@@ -264,6 +296,7 @@ Thanks goes to these wonderful people:
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 ## Acknowledgements
