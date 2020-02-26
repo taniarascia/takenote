@@ -27,12 +27,13 @@ describe('<ContextMenuOptions />', () => {
 
   it('displays correct default options', () => {
     const props: ContextMenuOptionsProps = {
-      clickedNote: {
+      clickedItem: {
         id: '1',
         text: 'text',
         created: '01/02/2019',
         lastUpdated: '01/02/2019',
       },
+      type: ContextMenuEnum.NOTE,
     }
 
     const component = wrap(props)
@@ -51,13 +52,14 @@ describe('<ContextMenuOptions />', () => {
 
   it('displays correct trash options', () => {
     const props: ContextMenuOptionsProps = {
-      clickedNote: {
+      clickedItem: {
         id: '1',
         text: 'text',
         created: '01/02/2019',
         lastUpdated: '01/02/2019',
         trash: true,
       },
+      type: ContextMenuEnum.NOTE,
     }
 
     const component = wrap(props)
@@ -76,13 +78,14 @@ describe('<ContextMenuOptions />', () => {
 
   it('displays correct category options', () => {
     const props: ContextMenuOptionsProps = {
-      clickedNote: {
+      clickedItem: {
         id: '1',
         text: 'text',
         created: '01/02/2019',
         lastUpdated: '01/02/2019',
         category: '2',
       },
+      type: ContextMenuEnum.NOTE,
     }
 
     const component = wrap(props)
