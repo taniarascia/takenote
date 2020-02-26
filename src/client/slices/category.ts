@@ -13,6 +13,10 @@ const initialState: CategoryState = {
   categories: [],
   error: '',
   loading: true,
+  editingCategory: {
+    id: '',
+    tempName: '',
+  },
 }
 
 const categorySlice = createSlice({
@@ -63,6 +67,10 @@ const categorySlice = createSlice({
         category.id === payload.id ? { ...category, name: payload.name } : category
       ),
     }),
+    setCategoryEdit: (state, { payload }: PayloadAction<{ id: string; tempName: string }>) => ({
+      ...state,
+      editingCategory: payload,
+    }),
   },
 })
 
@@ -76,6 +84,7 @@ export const {
   loadCategoriesError,
   loadCategoriesSuccess,
   updateCategory,
+  setCategoryEdit,
 } = categorySlice.actions
 
 export default categorySlice.reducer

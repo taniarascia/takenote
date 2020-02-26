@@ -1,42 +1,40 @@
-import React, { useEffect, useState } from 'react'
+import ReactDOM from 'react-dom'
+import React, { useEffect, useState, createContext } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { ContextMenuOptions } from '@/containers/ContextMenuOptions'
 import { addCategoryToNote, swapCategory, swapNote } from '@/slices/note'
-import { NoteItem } from '@/types'
+import { NoteItem, CategoryItem } from '@/types'
 import { getNotes, getCategories } from '@/selectors'
+import { ContextMenuEnum } from '@/utils/enums'
 
+export const MenuUtilitiesContext = createContext({
+  setOptionsId: (id: string) => {},
+})
 interface Position {
   x: number
   y: number
 }
 
 export interface ContextMenuProps {
-  note: NoteItem
-  noteOptionsPosition: Position
+  item: NoteItem | CategoryItem
+  optionsPosition: Position
   contextMenuRef: React.RefObject<HTMLDivElement> | null
-  setNoteOptionsId: (id: string) => void
+  setOptionsId: (id: string) => void
+  type: ContextMenuEnum
 }
 
 export const ContextMenu: React.FC<ContextMenuProps> = ({
-  note,
-  noteOptionsPosition,
+  item,
+  optionsPosition,
   contextMenuRef,
-  setNoteOptionsId,
+  setOptionsId,
+  type,
 }) => {
   const [elementDimensions, setElementDimensions] = useState<{
     offsetHeight: number | null
     offsetWidth: number | null
   }>({ offsetHeight: null, offsetWidth: null })
-
-  const { categories } = useSelector(getCategories)
-  const { activeCategoryId } = useSelector(getNotes)
-
-  const dispatch = useDispatch()
-  const _addCategoryToNote = (categoryId: string, noteId: string) =>
-    dispatch(addCategoryToNote({ categoryId, noteId }))
-  const _swapNote = (noteId: string) => dispatch(swapNote(noteId))
-  const _swapCategory = (categoryId: string) => dispatch(swapCategory(categoryId))
 
   useEffect(() => {
     if (contextMenuRef?.current) {
@@ -46,40 +44,76 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({
   }, [contextMenuRef])
 
   const getOptionsYPosition = (): Number => {
-    // get the max window frame
-    const MaxY = window.innerHeight
-
-    // determine approximate options height based on root font-size of 15px, padding, and select box.
-    let optionsSize = 15 * 11
-
     if (elementDimensions.offsetHeight || elementDimensions.offsetWidth) {
-      optionsSize = elementDimensions.offsetHeight as number
+      // get the max window frame
+      const MaxY = window.innerHeight
+      const optionsSize = elementDimensions.offsetHeight as number
 
       // if window position - noteOptions position isn't bigger than options, flip it.
-      return MaxY - noteOptionsPosition.y > optionsSize
-        ? noteOptionsPosition.y
-        : noteOptionsPosition.y - optionsSize
+      return MaxY - optionsPosition.y > optionsSize
+        ? optionsPosition.y
+        : optionsPosition.y - optionsSize
     }
 
     return 0
   }
 
-  const filteredCategories = categories.filter(({ id }) => id !== activeCategoryId)
+  const contextValues = {
+    setOptionsId,
+  }
 
-  return (
+  return ReactDOM.createPortal(
     <div
       ref={contextMenuRef}
-      className="note-options-context-menu"
+      className="options-context-menu"
       style={{
         visibility: getOptionsYPosition() ? 'visible' : 'hidden',
         position: 'absolute',
         top: getOptionsYPosition() + 'px',
-        left: noteOptionsPosition.x + 'px',
+        left: optionsPosition.x + 'px',
       }}
       onClick={event => {
         event.stopPropagation()
       }}
     >
+      <MenuUtilitiesContext.Provider value={contextValues}>
+        {type === ContextMenuEnum.CATEGORY ? (
+          <CategoryMenu category={item as CategoryItem} />
+        ) : (
+          <NotesMenu note={item as NoteItem} setOptionsId={setOptionsId} />
+        )}
+      </MenuUtilitiesContext.Provider>
+    </div>,
+    document.getElementById('context-menu') as HTMLElement
+  )
+}
+
+interface CategoryMenuProps {
+  category: CategoryItem
+}
+
+const CategoryMenu: React.FC<CategoryMenuProps> = ({ category }) => {
+  return <ContextMenuOptions clickedItem={category} type={ContextMenuEnum.CATEGORY} />
+}
+
+interface NotesMenuProps {
+  note: NoteItem
+  setOptionsId: (id: string) => void
+}
+
+const NotesMenu: React.FC<NotesMenuProps> = ({ note, setOptionsId }) => {
+  const { categories } = useSelector(getCategories)
+  const { activeCategoryId } = useSelector(getNotes)
+
+  const dispatch = useDispatch()
+  const _addCategoryToNote = (categoryId: string, noteId: string) =>
+    dispatch(addCategoryToNote({ categoryId, noteId }))
+  const _swapNote = (noteId: string) => dispatch(swapNote(noteId))
+  const _swapCategory = (categoryId: string) => dispatch(swapCategory(categoryId))
+
+  const filteredCategories = categories.filter(({ id }) => id !== activeCategoryId)
+  return (
+    <>
       {!note.trash && filteredCategories.length > 0 && (
         <>
           <select
@@ -94,7 +128,7 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({
                 _swapNote(note.id)
               }
 
-              setNoteOptionsId('')
+              setOptionsId('')
             }}
           >
             <option disabled value="">
@@ -110,7 +144,7 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({
           </select>
         </>
       )}
-      <ContextMenuOptions clickedNote={note} />
-    </div>
+      <ContextMenuOptions type={ContextMenuEnum.NOTE} clickedItem={note} />
+    </>
   )
 }

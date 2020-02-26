@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { ArrowUp, Download, Star, Trash, X, Edit2 } from 'react-feather'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -16,13 +16,67 @@ import {
 } from '@/slices/note'
 import { getCategories } from '@/selectors'
 import { CategoryItem, NoteItem } from '@/types'
+import { ContextMenuEnum } from '@/utils/enums'
+import { setCategoryEdit, deleteCategory } from '@/slices/category'
+import { MenuUtilitiesContext } from '@/containers/ContextMenu'
 
 export interface ContextMenuOptionsProps {
-  clickedNote: NoteItem
-  type?: 'CATEGORY'
+  clickedItem: NoteItem | CategoryItem
+  type: ContextMenuEnum
 }
 
-export const ContextMenuOptions: React.FC<ContextMenuOptionsProps> = ({ clickedNote, type }) => {
+export const ContextMenuOptions: React.FC<ContextMenuOptionsProps> = ({ clickedItem, type }) => {
+  if (type === 'CATEGORY') {
+    return <CategoryOptions clickedCategory={clickedItem as CategoryItem} />
+  } else {
+    return <NotesOptions clickedNote={clickedItem as NoteItem} />
+  }
+}
+
+interface CategoryOptionsProps {
+  clickedCategory: CategoryItem
+}
+
+const CategoryOptions: React.FC<CategoryOptionsProps> = ({ clickedCategory }) => {
+  const { setOptionsId } = useContext(MenuUtilitiesContext)
+  const dispatch = useDispatch()
+
+  const _deleteCategory = (categoryId: string) => dispatch(deleteCategory(categoryId))
+  const _setCategoryEdit = (categoryId: string, tempName: string) =>
+    dispatch(setCategoryEdit({ id: categoryId, tempName }))
+
+  const startRename = () => {
+    _setCategoryEdit(clickedCategory.id, clickedCategory.name)
+    setOptionsId('')
+  }
+  const removeCategory = () => {
+    _deleteCategory(clickedCategory.id)
+  }
+
+  return (
+    <nav className="options-nav" data-testid="category-options-nav">
+      <ContextMenuOption
+        dataTestID="category-options-rename"
+        handler={startRename}
+        icon={Edit2}
+        text={StringEnum.RENAME}
+      />
+      <ContextMenuOption
+        dataTestID="category-option-remove-category"
+        handler={removeCategory}
+        icon={X}
+        text={StringEnum.DELETE_PERMANENTLY}
+        optionType="delete"
+      />
+    </nav>
+  )
+}
+
+interface NotesOptionsProps {
+  clickedNote: NoteItem
+}
+
+const NotesOptions: React.FC<NotesOptionsProps> = ({ clickedNote }) => {
   const dispatch = useDispatch()
 
   const _deleteNote = (noteId: string) => dispatch(deleteNote(noteId))
@@ -50,74 +104,55 @@ export const ContextMenuOptions: React.FC<ContextMenuOptionsProps> = ({ clickedN
     _swapNote(clickedNote.id)
   }
 
-  if (type === 'CATEGORY') {
-    return (
-      <nav className="category-options-nav" data-testid="category-options-nav">
+  return (
+    <nav className="options-nav" data-testid="note-options-nav">
+      {clickedNote.trash ? (
+        <>
+          <ContextMenuOption
+            dataTestID="note-option-delete-permanently"
+            handler={deleteNoteHandler}
+            icon={X}
+            text={StringEnum.DELETE_PERMANENTLY}
+            optionType="delete"
+          />
+          <ContextMenuOption
+            dataTestID="note-option-restore-from-trash"
+            handler={trashNoteHandler}
+            icon={ArrowUp}
+            text={StringEnum.RESTORE_FROM_TRASH}
+          />
+        </>
+      ) : (
+        <>
+          <ContextMenuOption
+            dataTestID="note-option-favorite"
+            handler={favoriteNoteHandler}
+            icon={Star}
+            text={clickedNote.favorite ? StringEnum.REMOVE_FAVORITE : StringEnum.MARK_AS_FAVORITE}
+          />
+          <ContextMenuOption
+            dataTestID="note-option-trash"
+            handler={trashNoteHandler}
+            icon={Trash}
+            text={StringEnum.MOVE_TO_TRASH}
+            optionType="delete"
+          />
+        </>
+      )}
+      <ContextMenuOption
+        dataTestID="note-options-download"
+        handler={downloadNoteHandler}
+        icon={Download}
+        text={StringEnum.DOWNLOAD}
+      />
+      {clickedNote.category && !clickedNote.trash && (
         <ContextMenuOption
-          dataTestID="category-options-download"
-          handler={downloadNoteHandler}
-          icon={Edit2}
-          text={StringEnum.RENAME}
-        />
-        <ContextMenuOption
-          dataTestID="category-option-remove-category"
+          dataTestID="note-option-remove-category"
           handler={removeCategoryHandler}
           icon={X}
           text="Remove category"
         />
-      </nav>
-    )
-  } else {
-    return (
-      <nav className="note-options-nav" data-testid="note-options-nav">
-        {clickedNote.trash ? (
-          <>
-            <ContextMenuOption
-              dataTestID="note-option-delete-permanently"
-              handler={deleteNoteHandler}
-              icon={X}
-              text={StringEnum.DELETE_PERMANENTLY}
-              optionType="delete"
-            />
-            <ContextMenuOption
-              dataTestID="note-option-restore-from-trash"
-              handler={trashNoteHandler}
-              icon={ArrowUp}
-              text={StringEnum.RESTORE_FROM_TRASH}
-            />
-          </>
-        ) : (
-          <>
-            <ContextMenuOption
-              dataTestID="note-option-favorite"
-              handler={favoriteNoteHandler}
-              icon={Star}
-              text={clickedNote.favorite ? StringEnum.REMOVE_FAVORITE : StringEnum.MARK_AS_FAVORITE}
-            />
-            <ContextMenuOption
-              dataTestID="note-option-trash"
-              handler={trashNoteHandler}
-              icon={Trash}
-              text={StringEnum.MOVE_TO_TRASH}
-              optionType="delete"
-            />
-          </>
-        )}
-        <ContextMenuOption
-          dataTestID="note-options-download"
-          handler={downloadNoteHandler}
-          icon={Download}
-          text={StringEnum.DOWNLOAD}
-        />
-        {clickedNote.category && !clickedNote.trash && (
-          <ContextMenuOption
-            dataTestID="note-option-remove-category"
-            handler={removeCategoryHandler}
-            icon={X}
-            text="Remove category"
-          />
-        )}
-      </nav>
-    )
-  }
+      )}
+    </nav>
+  )
 }
