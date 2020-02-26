@@ -62,7 +62,7 @@ const CategoryOptions: React.FC<CategoryOptionsProps> = ({ clickedCategory }) =>
         text={StringEnum.RENAME}
       />
       <ContextMenuOption
-        dataTestID="category-option-remove-category"
+        dataTestID="category-option-delete-permanently"
         handler={removeCategory}
         icon={X}
         text={StringEnum.DELETE_PERMANENTLY}

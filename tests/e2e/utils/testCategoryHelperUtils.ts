@@ -4,7 +4,7 @@
 import { StringEnum } from '@resources/StringEnum'
 import { TestIDEnum } from '@resources/TestIDEnum'
 
-import { getTestID, wrapWithTestIDTag } from './testHelperUtils'
+import { getTestID, wrapWithTestIDTag, testIDShouldExist, clickTestID } from './testHelperUtils'
 
 const addCategory = (categoryName: string) => {
   getTestID(TestIDEnum.ADD_CATEGORY_BUTTON)
@@ -30,6 +30,10 @@ const assertCategoryOrder = (categoryName: string, position: number) => {
   cy.get('.category-list > div')
     .eq(position)
     .contains(categoryName)
+}
+
+const assertCategoryOptionsOpened = () => {
+  testIDShouldExist(TestIDEnum.CATEGORY_OPTIONS_NAV)
 }
 
 const defocusCategory = (categoryName: string) => {
@@ -65,6 +69,12 @@ const renameCategory = (oldCategoryName: string, newCategoryName: string) => {
     .type(newCategoryName)
 }
 
+const openCategoryContextMenu = (categoryName: string) => {
+  cy.contains(categoryName)
+    .parent()
+    .rightclick()
+}
+
 const selectMoveToCategoryOption = (categoryName: string) => {
   getTestID(TestIDEnum.MOVE_TO_CATEGORY).select(categoryName)
 }
@@ -75,11 +85,20 @@ const startEditingCategory = (categoryName: string) => {
     .dblclick()
 }
 
+const clickCategoryOptionRename = () => {
+  clickTestID(TestIDEnum.CATEGORY_OPTION_RENAME)
+}
+
+const clickCategoryOptionDelete = () => {
+  clickTestID(TestIDEnum.CATEGORY_OPTION_DELETE_PERMANENTLY)
+}
+
 export {
   addCategory,
   assertCategoryExists,
   assertCategoryDoesNotExist,
   assertCategoryOrder,
+  assertCategoryOptionsOpened,
   defocusCategory,
   navigateToCategory,
   removeCategory,
@@ -87,4 +106,7 @@ export {
   renameCategory,
   selectMoveToCategoryOption,
   startEditingCategory,
+  openCategoryContextMenu,
+  clickCategoryOptionRename,
+  clickCategoryOptionDelete,
 }

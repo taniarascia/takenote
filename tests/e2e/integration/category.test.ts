@@ -5,6 +5,8 @@ import {
   addCategory,
   assertCategoryDoesNotExist,
   assertCategoryExists,
+  assertCategoryOptionsOpened,
+  assertCategoryOrder,
   navigateToCategory,
   removeCategory,
   selectMoveToCategoryOption,
@@ -12,7 +14,9 @@ import {
   renameCategory,
   defocusCategory,
   moveCategory,
-  assertCategoryOrder,
+  openCategoryContextMenu,
+  clickCategoryOptionRename,
+  clickCategoryOptionDelete,
 } from '../utils/testCategoryHelperUtils'
 import { dynamicTimeCategoryName } from '../utils/testHelperEnums'
 import { defaultInit, navigateToAllNotes } from '../utils/testHelperUtils'
@@ -75,5 +79,35 @@ describe('Category tests', () => {
     assertCategoryOrder(firstCategory, 3)
     moveCategory(secondCategory, firstCategory)
     assertCategoryOrder(secondCategory, 3)
+  })
+
+  it('should open context menu with right click', () => {
+    const categoryName = 'Context Menu'
+
+    addCategory(categoryName)
+    openCategoryContextMenu(categoryName)
+    assertCategoryOptionsOpened()
+  })
+
+  it('should allow category rename through context menu', () => {
+    const originalCategoryName = 'Category CM'
+    const newCategoryName = 'Renamed Category CM'
+
+    addCategory(originalCategoryName)
+    openCategoryContextMenu(originalCategoryName)
+    clickCategoryOptionRename()
+    renameCategory(originalCategoryName, newCategoryName)
+    defocusCategory(newCategoryName)
+
+    assertCategoryExists(newCategoryName)
+  })
+
+  it('should allow category permanent delete through context menu', () => {
+    addCategory(dynamicTimeCategoryName)
+
+    openCategoryContextMenu(dynamicTimeCategoryName)
+    clickCategoryOptionDelete()
+
+    assertCategoryDoesNotExist(dynamicTimeCategoryName)
   })
 })
