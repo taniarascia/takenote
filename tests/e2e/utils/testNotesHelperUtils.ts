@@ -68,6 +68,12 @@ const clickNoteOptions = (noteIndex: number = 0) => {
   clickDynamicTestID(TestIDEnum.NOTE_OPTIONS_DIV + noteIndex)
 }
 
+const openNoteContextMenu = (noteIndex: number = 0) => {
+  cy.get('.note-list > div')
+    .eq(noteIndex)
+    .rightclick()
+}
+
 const clickNoteOptionDeleteNotePermanently = () => {
   clickTestID(TestIDEnum.NOTE_OPTION_DELETE_PERMANENTLY)
 }
@@ -116,4 +122,5 @@ export {
   clickSyncNotes,
   typeNoteEditor,
   typeNoteSearch,
+  openNoteContextMenu,
 }

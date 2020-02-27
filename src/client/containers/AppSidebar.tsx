@@ -1,5 +1,5 @@
 import uuid from 'uuid/v4'
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { Loader, Folder as FolderIcon, Plus, Settings, RefreshCw, X, Move } from 'react-feather'
 import { useDispatch, useSelector } from 'react-redux'
 import { Droppable, Draggable } from 'react-beautiful-dnd'
@@ -10,15 +10,17 @@ import { ActionButton } from '@/components/AppSidebar/ActionButton'
 import { LastSyncedNotification } from '@/components/AppSidebar/LastSyncedNotification'
 import { AllNotesOption } from '@/components/AppSidebar/AllNotesOption'
 import { FolderOption } from '@/components/AppSidebar/FolderOption'
-import { Folder } from '@/utils/enums'
+import { Folder, ContextMenuEnum } from '@/utils/enums'
 import { iconColor } from '@/utils/constants'
 import { useTempState } from '@/contexts/TempStateContext'
+import { ContextMenu } from '@/containers/ContextMenu'
 import {
   addCategory,
   categoryDragEnter,
   categoryDragLeave,
   updateCategory,
   deleteCategory,
+  setCategoryEdit,
 } from '@/slices/category'
 import {
   addCategoryToNote,
@@ -33,14 +35,19 @@ import {
 import { toggleSettingsModal, togglePreviewMarkdown } from '@/slices/settings'
 import { syncState } from '@/slices/sync'
 import { getSettings, getNotes, getCategories, getSync } from '@/selectors'
-import { CategoryItem, NoteItem, ReactDragEvent, ReactSubmitEvent } from '@/types'
-import { newNoteHandlerHelper } from '@/utils/helpers'
+import { CategoryItem, NoteItem, ReactDragEvent, ReactSubmitEvent, ReactMouseEvent } from '@/types'
+import { newNoteHandlerHelper, shouldOpenContextMenu } from '@/utils/helpers'
 
 export const AppSidebar: React.FC = () => {
-  const { categories } = useSelector(getCategories)
+  const {
+    categories,
+    editingCategory: { id: editingCategoryId, tempName: tempCategoryName },
+  } = useSelector(getCategories)
   const { activeCategoryId, activeFolder, activeNoteId, notes } = useSelector(getNotes)
   const { previewMarkdown } = useSelector(getSettings)
   const { syncing, lastSynced } = useSelector(getSync)
+
+  const contextMenuRef = useRef<HTMLDivElement>(null)
 
   const dispatch = useDispatch()
   const _addNote = (note: NoteItem) => dispatch(addNote(note))
@@ -62,11 +69,20 @@ export const AppSidebar: React.FC = () => {
   const _addFavoriteNote = (noteId: string) => dispatch(addFavoriteNote(noteId))
   const _addCategoryToNote = (categoryId: string, noteId: string) =>
     dispatch(addCategoryToNote({ categoryId, noteId }))
+  const _setCategoryEdit = (categoryId: string, tempName: string) =>
+    dispatch(setCategoryEdit({ id: categoryId, tempName }))
 
-  const [editingCategoryId, setEditingCategoryId] = useState('')
-  const [tempCategoryName, setTempCategoryName] = useState('')
+  const [optionsId, setOptionsId] = useState('')
+  const [optionsPosition, setOptionsPosition] = useState({ x: 0, y: 0 })
 
   const { addingTempCategory, setAddingTempCategory } = useTempState()
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleCategoryMenuClick)
+    return () => {
+      document.removeEventListener('mousedown', handleCategoryMenuClick)
+    }
+  })
 
   const newTempCategoryHandler = () => {
     !addingTempCategory && setAddingTempCategory(true)
@@ -85,9 +101,8 @@ export const AppSidebar: React.FC = () => {
     )
 
   const resetTempCategory = () => {
-    setTempCategoryName('')
     setAddingTempCategory(false)
-    setEditingCategoryId('')
+    _setCategoryEdit('', '')
   }
 
   const onSubmitNewCategory = (event: ReactSubmitEvent): void => {
@@ -114,6 +129,38 @@ export const AppSidebar: React.FC = () => {
       _updateCategory(category)
       resetTempCategory()
     }
+  }
+
+  const handleCategoryMenuClick = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent> | ReactMouseEvent,
+    categoryId: string = ''
+  ) => {
+    const clicked = event.target
+
+    // Make sure we aren't getting any null values .. any element clicked should be a sub-class of element
+    if (!clicked) return
+
+    if (shouldOpenContextMenu(clicked as Element)) {
+      if ('clientX' in event && 'clientY' in event) {
+        setOptionsPosition({ x: event.clientX, y: event.clientY })
+      }
+    }
+
+    event.stopPropagation()
+
+    if (contextMenuRef?.current?.contains(clicked as HTMLDivElement)) {
+      return
+    } else {
+      setOptionsId(!optionsId || optionsId !== categoryId ? categoryId : '')
+    }
+  }
+
+  const handleCategoryRightClick = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent> | ReactMouseEvent,
+    categoryId: string = ''
+  ) => {
+    event.preventDefault()
+    handleCategoryMenuClick(event, categoryId)
   }
 
   const syncNotesHandler = () => _syncState(notes, categories)
@@ -206,11 +253,10 @@ export const AppSidebar: React.FC = () => {
                             }
                           }}
                           onDoubleClick={() => {
-                            setEditingCategoryId(category.id)
-                            setTempCategoryName(category.name)
+                            _setCategoryEdit(category.id, category.name)
                           }}
                           onBlur={() => {
-                            setEditingCategoryId('')
+                            _setCategoryEdit('', '')
                           }}
                           onDrop={event => {
                             event.preventDefault()
@@ -221,13 +267,16 @@ export const AppSidebar: React.FC = () => {
                           onDragOver={(event: ReactDragEvent) => event.preventDefault()}
                           onDragEnter={() => _categoryDragEnter(category)}
                           onDragLeave={() => _categoryDragLeave(category)}
+                          onContextMenu={event => handleCategoryRightClick(event, category.id)}
                         >
                           <form
                             className="category-list-name"
                             onSubmit={event => {
                               event.preventDefault()
-                              setEditingCategoryId('')
+                              _setCategoryEdit('', '')
                               onSubmitUpdateCategory(event)
+
+                              if (optionsId) setOptionsId('')
                             }}
                           >
                             <FolderIcon size={15} className="app-sidebar-icon" color={iconColor} />
@@ -240,7 +289,7 @@ export const AppSidebar: React.FC = () => {
                                 maxLength={20}
                                 value={tempCategoryName}
                                 onChange={event => {
-                                  setTempCategoryName(event.target.value)
+                                  _setCategoryEdit(editingCategoryId, event.target.value)
                                 }}
                                 onBlur={event => onSubmitUpdateCategory(event)}
                               />
@@ -252,7 +301,7 @@ export const AppSidebar: React.FC = () => {
                             <div
                               {...draggableProvided.dragHandleProps}
                               data-testid="move-category"
-                              aria-label="Move category"
+                              aria-label={StringEnum.MOVE_CATEGORY}
                             >
                               <Move size={16} />
                             </div>
@@ -272,6 +321,15 @@ export const AppSidebar: React.FC = () => {
                               aria-label={StringEnum.REMOVE_CATEGORY}
                             />
                           </div>
+                          {optionsId === category.id && (
+                            <ContextMenu
+                              contextMenuRef={contextMenuRef}
+                              item={category}
+                              optionsPosition={optionsPosition}
+                              setOptionsId={setOptionsId}
+                              type={ContextMenuEnum.CATEGORY}
+                            />
+                          )}
                         </div>
                       )}
                     </Draggable>
@@ -295,7 +353,7 @@ export const AppSidebar: React.FC = () => {
                 maxLength={20}
                 placeholder="Start typing..."
                 onChange={event => {
-                  setTempCategoryName(event.target.value)
+                  _setCategoryEdit(editingCategoryId, event.target.value)
                 }}
                 onBlur={event => {
                   if (!tempCategoryName || tempCategoryName.trim() === '') {

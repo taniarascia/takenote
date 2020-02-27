@@ -1,5 +1,5 @@
-import React from 'react'
-import { ArrowUp, Download, Star, Trash, X } from 'react-feather'
+import React, { useContext } from 'react'
+import { ArrowUp, Download, Star, Trash, X, Edit2 } from 'react-feather'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { StringEnum } from '@resources/StringEnum'
@@ -16,12 +16,67 @@ import {
 } from '@/slices/note'
 import { getCategories } from '@/selectors'
 import { CategoryItem, NoteItem } from '@/types'
+import { ContextMenuEnum } from '@/utils/enums'
+import { setCategoryEdit, deleteCategory } from '@/slices/category'
+import { MenuUtilitiesContext } from '@/containers/ContextMenu'
 
 export interface ContextMenuOptionsProps {
+  clickedItem: NoteItem | CategoryItem
+  type: ContextMenuEnum
+}
+
+export const ContextMenuOptions: React.FC<ContextMenuOptionsProps> = ({ clickedItem, type }) => {
+  if (type === 'CATEGORY') {
+    return <CategoryOptions clickedCategory={clickedItem as CategoryItem} />
+  } else {
+    return <NotesOptions clickedNote={clickedItem as NoteItem} />
+  }
+}
+
+interface CategoryOptionsProps {
+  clickedCategory: CategoryItem
+}
+
+const CategoryOptions: React.FC<CategoryOptionsProps> = ({ clickedCategory }) => {
+  const { setOptionsId } = useContext(MenuUtilitiesContext)
+  const dispatch = useDispatch()
+
+  const _deleteCategory = (categoryId: string) => dispatch(deleteCategory(categoryId))
+  const _setCategoryEdit = (categoryId: string, tempName: string) =>
+    dispatch(setCategoryEdit({ id: categoryId, tempName }))
+
+  const startRename = () => {
+    _setCategoryEdit(clickedCategory.id, clickedCategory.name)
+    setOptionsId('')
+  }
+  const removeCategory = () => {
+    _deleteCategory(clickedCategory.id)
+  }
+
+  return (
+    <nav className="options-nav" data-testid="category-options-nav">
+      <ContextMenuOption
+        dataTestID="category-options-rename"
+        handler={startRename}
+        icon={Edit2}
+        text={StringEnum.RENAME}
+      />
+      <ContextMenuOption
+        dataTestID="category-option-delete-permanently"
+        handler={removeCategory}
+        icon={X}
+        text={StringEnum.DELETE_PERMANENTLY}
+        optionType="delete"
+      />
+    </nav>
+  )
+}
+
+interface NotesOptionsProps {
   clickedNote: NoteItem
 }
 
-export const ContextMenuOptions: React.FC<ContextMenuOptionsProps> = ({ clickedNote }) => {
+const NotesOptions: React.FC<NotesOptionsProps> = ({ clickedNote }) => {
   const dispatch = useDispatch()
 
   const _deleteNote = (noteId: string) => dispatch(deleteNote(noteId))
@@ -50,7 +105,7 @@ export const ContextMenuOptions: React.FC<ContextMenuOptionsProps> = ({ clickedN
   }
 
   return (
-    <nav className="note-options-nav" data-testid="note-options-nav">
+    <nav className="options-nav" data-testid="note-options-nav">
       {clickedNote.trash ? (
         <>
           <ContextMenuOption

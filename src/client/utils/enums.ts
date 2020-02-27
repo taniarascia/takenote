@@ -15,3 +15,8 @@ export enum Shortcuts {
   TOGGLE_THEME = 'alt+ctrl+k',
   SEARCH = 'alt+ctrl+f',
 }
+
+export enum ContextMenuEnum {
+  CATEGORY = 'CATEGORY',
+  NOTE = 'NOTE',
+}

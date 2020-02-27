@@ -99,13 +99,18 @@ export const sortByLastUpdated = (a: NoteItem, b: NoteItem) => {
 }
 
 export const shouldOpenContextMenu = (clicked: Element) => {
+  const elementContainsClass = (className: string) => clicked.classList.contains(className)
+
+  const parentContainsClass = (className: string) =>
+    clicked.parentElement!.classList.contains(className)
+
   return (
     (clicked instanceof Element &&
       // If the element is explicitly a context menu action
-      clicked.classList.contains('context-menu-action')) ||
+      elementContainsClass('context-menu-action')) ||
+    !elementContainsClass('nav-item') ||
     // Or if it's a sub-element of the context menu
-    (clicked.tagName === 'circle' &&
-      clicked.parentElement!.classList.contains('context-menu-action'))
+    (clicked.tagName === 'circle' && parentContainsClass('context-menu-action'))
   )
 }
 

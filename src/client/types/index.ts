@@ -45,6 +45,10 @@ export interface CategoryState {
   categories: CategoryItem[]
   error: string
   loading: boolean
+  editingCategory: {
+    id: string
+    tempName: string
+  }
 }
 
 export interface NoteState {

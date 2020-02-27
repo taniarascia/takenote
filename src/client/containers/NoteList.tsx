@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { MoreHorizontal, Star } from 'react-feather'
 import _ from 'lodash'
 
-import { Folder, Shortcuts } from '@/utils/enums'
+import { Folder, Shortcuts, ContextMenuEnum } from '@/utils/enums'
 import { NoteListButton } from '@/components/NoteList/NoteListButton'
 import { SearchBar } from '@/components/NoteList/SearchBar'
 import { ContextMenu } from '@/containers/ContextMenu'
@@ -33,8 +33,8 @@ export const NoteList: React.FC = () => {
   const re = new RegExp(_.escapeRegExp(searchValue), 'i')
   const isMatch = (result: NoteItem) => re.test(result.text)
 
-  const [noteOptionsId, setNoteOptionsId] = useState('')
-  const [noteOptionsPosition, setNoteOptionsPosition] = useState({ x: 0, y: 0 })
+  const [optionsId, setOptionsId] = useState('')
+  const [optionsPosition, setOptionsPosition] = useState({ x: 0, y: 0 })
 
   const filter: Record<Folder, (note: NoteItem) => boolean> = {
     [Folder.CATEGORY]: note => !note.trash && note.category === activeCategoryId,
@@ -74,7 +74,7 @@ export const NoteList: React.FC = () => {
     if (shouldOpenContextMenu(clicked as Element)) {
       // note: don't check for MouseEvent because Cypress MouseEvent !== Window.MouseEvent
       if ('pageX' in event && 'pageY' in event) {
-        setNoteOptionsPosition({ x: event.pageX, y: event.pageY })
+        setOptionsPosition({ x: event.pageX, y: event.pageY })
       }
     }
 
@@ -83,7 +83,34 @@ export const NoteList: React.FC = () => {
     if (contextMenuRef.current && contextMenuRef.current.contains(clicked as HTMLDivElement)) {
       return
     } else {
-      setNoteOptionsId(!noteOptionsId || noteOptionsId !== noteId ? noteId : '')
+      setOptionsId(!optionsId || optionsId !== noteId ? noteId : '')
+    }
+  }
+
+  const handleNoteRightClick = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    noteId: string = ''
+  ) => {
+    event.preventDefault()
+    const clicked = event.target
+    const RIGHT_CLICK = 2
+
+    // Make sure we aren't getting any null values .. any element clicked should be a sub-class of element
+    if (!clicked) return
+
+    // Make sure we are not right clicking on the menu
+    if (optionsId && event.button == RIGHT_CLICK) return
+
+    if ('clientX' in event && 'clientY' in event) {
+      setOptionsPosition({ x: event.clientX, y: event.clientY })
+    }
+
+    event.stopPropagation()
+
+    if (contextMenuRef.current && contextMenuRef.current.contains(clicked as HTMLDivElement)) {
+      return
+    } else {
+      setOptionsId(!optionsId || optionsId !== noteId ? noteId : '')
     }
   }
 
@@ -139,6 +166,7 @@ export const NoteList: React.FC = () => {
                   _pruneNotes()
                 }
               }}
+              onContextMenu={event => handleNoteRightClick(event, note.id)}
               draggable
               onDragStart={event => handleDragStart(event, note.id)}
             >
@@ -161,7 +189,7 @@ export const NoteList: React.FC = () => {
                 // TODO: make testID based off of index when we add that to a NoteItem object
                 data-testid={'note-options-div-' + index}
                 className={
-                  noteOptionsId === note.id
+                  optionsId === note.id
                     ? 'note-options context-menu-action active '
                     : 'note-options context-menu-action'
                 }
@@ -169,12 +197,13 @@ export const NoteList: React.FC = () => {
               >
                 <MoreHorizontal size={15} className="context-menu-action" />
               </div>
-              {noteOptionsId === note.id && (
+              {optionsId === note.id && (
                 <ContextMenu
                   contextMenuRef={contextMenuRef}
-                  note={note}
-                  noteOptionsPosition={noteOptionsPosition}
-                  setNoteOptionsId={setNoteOptionsId}
+                  item={note}
+                  optionsPosition={optionsPosition}
+                  setOptionsId={setOptionsId}
+                  type={ContextMenuEnum.NOTE}
                 />
               )}
             </div>

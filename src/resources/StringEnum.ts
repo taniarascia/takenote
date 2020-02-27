@@ -12,11 +12,13 @@ enum StringEnum {
   NEW_NOTE = 'New note',
   REMOVE_CATEGORY = 'Remove category',
   REMOVE_FAVORITE = 'Remove favorite',
+  MOVE_CATEGORY = 'Move category',
   RESTORE_FROM_TRASH = 'Restore from trash',
   SETTINGS = 'Settings',
   SYNC_NOTES = 'Sync notes',
   TRASH = 'Trash',
   WELCOME_TO_TAKENOTE = 'Welcome to Takenote!',
+  RENAME = 'Rename',
 }
 
 export { StringEnum }

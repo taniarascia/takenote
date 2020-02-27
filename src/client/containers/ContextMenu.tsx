@@ -1,29 +1,112 @@
-import React from 'react'
+import ReactDOM from 'react-dom'
+import React, { useEffect, useState, createContext } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { ContextMenuOptions } from '@/containers/ContextMenuOptions'
 import { addCategoryToNote, swapCategory, swapNote } from '@/slices/note'
-import { NoteItem } from '@/types'
-import { getNotes, getCategories } from '@/selectors'
+import { NoteItem, CategoryItem } from '@/types'
+import { getNotes, getCategories, getSettings } from '@/selectors'
+import { ContextMenuEnum } from '@/utils/enums'
+import { determineTheme } from '@/utils/helpers'
 
+export const MenuUtilitiesContext = createContext({
+  setOptionsId: (id: string) => {},
+})
 interface Position {
   x: number
   y: number
 }
 
 export interface ContextMenuProps {
-  note: NoteItem
-  noteOptionsPosition: Position
+  item: NoteItem | CategoryItem
+  optionsPosition: Position
   contextMenuRef: React.RefObject<HTMLDivElement> | null
-  setNoteOptionsId: (id: string) => void
+  setOptionsId: (id: string) => void
+  type: ContextMenuEnum
 }
 
 export const ContextMenu: React.FC<ContextMenuProps> = ({
-  note,
-  noteOptionsPosition,
+  item,
+  optionsPosition,
   contextMenuRef,
-  setNoteOptionsId,
+  setOptionsId,
+  type,
 }) => {
+  const { darkTheme } = useSelector(getSettings)
+
+  const [elementDimensions, setElementDimensions] = useState<{
+    offsetHeight: number | null
+    offsetWidth: number | null
+  }>({ offsetHeight: null, offsetWidth: null })
+
+  useEffect(() => {
+    if (contextMenuRef?.current) {
+      const { offsetHeight, offsetWidth } = contextMenuRef.current
+      setElementDimensions({ offsetHeight, offsetWidth })
+    }
+  }, [contextMenuRef])
+
+  const getOptionsYPosition = (): Number => {
+    if (elementDimensions.offsetHeight || elementDimensions.offsetWidth) {
+      // get the max window frame
+      const MaxY = window.innerHeight
+      const optionsSize = elementDimensions.offsetHeight as number
+
+      // if window position - noteOptions position isn't bigger than options, flip it.
+      return MaxY - optionsPosition.y > optionsSize
+        ? optionsPosition.y
+        : optionsPosition.y - optionsSize
+    }
+
+    return 0
+  }
+
+  const contextValues = {
+    setOptionsId,
+  }
+
+  return ReactDOM.createPortal(
+    <div className={determineTheme(darkTheme, '')}>
+      <div
+        ref={contextMenuRef}
+        className="options-context-menu"
+        style={{
+          visibility: getOptionsYPosition() ? 'visible' : 'hidden',
+          position: 'absolute',
+          top: getOptionsYPosition() + 'px',
+          left: optionsPosition.x + 'px',
+        }}
+        onClick={event => {
+          event.stopPropagation()
+        }}
+      >
+        <MenuUtilitiesContext.Provider value={contextValues}>
+          {type === ContextMenuEnum.CATEGORY ? (
+            <CategoryMenu category={item as CategoryItem} />
+          ) : (
+            <NotesMenu note={item as NoteItem} setOptionsId={setOptionsId} />
+          )}
+        </MenuUtilitiesContext.Provider>
+      </div>
+    </div>,
+    document.getElementById('context-menu') as HTMLElement
+  )
+}
+
+interface CategoryMenuProps {
+  category: CategoryItem
+}
+
+const CategoryMenu: React.FC<CategoryMenuProps> = ({ category }) => {
+  return <ContextMenuOptions clickedItem={category} type={ContextMenuEnum.CATEGORY} />
+}
+
+interface NotesMenuProps {
+  note: NoteItem
+  setOptionsId: (id: string) => void
+}
+
+const NotesMenu: React.FC<NotesMenuProps> = ({ note, setOptionsId }) => {
   const { categories } = useSelector(getCategories)
   const { activeCategoryId } = useSelector(getNotes)
 
@@ -33,34 +116,9 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({
   const _swapNote = (noteId: string) => dispatch(swapNote(noteId))
   const _swapCategory = (categoryId: string) => dispatch(swapCategory(categoryId))
 
-  const getOptionsYPosition = (): Number => {
-    // get the max window frame
-    const MaxY = window.innerHeight
-
-    // determine approximate options height based on root font-size of 15px, padding, and select box.
-    const optionsSize = 15 * 11
-
-    // if window position - noteOptions position isn't bigger than options, flip it.
-    return MaxY - noteOptionsPosition.y > optionsSize
-      ? noteOptionsPosition.y
-      : noteOptionsPosition.y - optionsSize
-  }
-
   const filteredCategories = categories.filter(({ id }) => id !== activeCategoryId)
-
   return (
-    <div
-      ref={contextMenuRef}
-      className="note-options-context-menu"
-      style={{
-        position: 'absolute',
-        top: getOptionsYPosition() + 'px',
-        left: noteOptionsPosition.x + 'px',
-      }}
-      onClick={event => {
-        event.stopPropagation()
-      }}
-    >
+    <>
       {!note.trash && filteredCategories.length > 0 && (
         <>
           <select
@@ -75,7 +133,7 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({
                 _swapNote(note.id)
               }
 
-              setNoteOptionsId('')
+              setOptionsId('')
             }}
           >
             <option disabled value="">
@@ -91,7 +149,7 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({
           </select>
         </>
       )}
-      <ContextMenuOptions clickedNote={note} />
-    </div>
+      <ContextMenuOptions type={ContextMenuEnum.NOTE} clickedItem={note} />
+    </>
   )
 }

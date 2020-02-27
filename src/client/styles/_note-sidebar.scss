@@ -129,60 +129,6 @@
         &.active {
           color: $font-color;
         }
-
-        &-context-menu {
-          cursor: default;
-          border-radius: 0;
-          position: absolute;
-          color: $font-color;
-          top: 32px;
-          left: 200px;
-          min-width: 250px;
-          background: white;
-          border: 1px solid $accent-gray;
-          z-index: 5;
-          box-shadow: 0 10px 15px rgba(0, 0, 0, 0.07), 0 5px 5px rgba(0, 0, 0, 0.2);
-
-          .move-to-category-select {
-            // This would be better as a right arrow new context
-            // menu than a dropdown
-            -webkit-appearance: none;
-            font-size: 1rem;
-            padding: 0.5rem;
-            width: 220px;
-            margin-left: auto;
-            margin-right: auto;
-            margin-top: 1rem;
-            margin-bottom: 0.5rem;
-          }
-        }
-
-        &-nav {
-          font-size: 0.9rem;
-
-          .nav-item {
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            padding: 0.75rem 1rem;
-            border-radius: 0;
-
-            &:hover {
-              background: #f0f0f0;
-            }
-
-            &.delete-option {
-              &:hover {
-                background: $error;
-                color: white;
-              }
-            }
-          }
-
-          svg {
-            margin-right: 0.5rem;
-          }
-        }
       }
     }
   }
