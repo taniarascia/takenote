@@ -108,9 +108,7 @@ export const shouldOpenContextMenu = (clicked: Element) => {
     (clicked instanceof Element &&
       // If the element is explicitly a context menu action
       elementContainsClass('context-menu-action')) ||
-    elementContainsClass('category-list-each') ||
-    parentContainsClass('category-list-each') ||
-    parentContainsClass('category-list-name') ||
+    !elementContainsClass('nav-item') ||
     // Or if it's a sub-element of the context menu
     (clicked.tagName === 'circle' && parentContainsClass('context-menu-action'))
   )

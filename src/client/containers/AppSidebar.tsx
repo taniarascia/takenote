@@ -301,7 +301,7 @@ export const AppSidebar: React.FC = () => {
                             <div
                               {...draggableProvided.dragHandleProps}
                               data-testid="move-category"
-                              aria-label="Move category"
+                              aria-label={StringEnum.MOVE_CATEGORY}
                             >
                               <Move size={16} />
                             </div>
