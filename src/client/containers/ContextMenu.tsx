@@ -5,8 +5,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { ContextMenuOptions } from '@/containers/ContextMenuOptions'
 import { addCategoryToNote, swapCategory, swapNote } from '@/slices/note'
 import { NoteItem, CategoryItem } from '@/types'
-import { getNotes, getCategories } from '@/selectors'
+import { getNotes, getCategories, getSettings } from '@/selectors'
 import { ContextMenuEnum } from '@/utils/enums'
+import { determineTheme } from '@/utils/helpers'
 
 export const MenuUtilitiesContext = createContext({
   setOptionsId: (id: string) => {},
@@ -31,6 +32,8 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({
   setOptionsId,
   type,
 }) => {
+  const { darkTheme } = useSelector(getSettings)
+
   const [elementDimensions, setElementDimensions] = useState<{
     offsetHeight: number | null
     offsetWidth: number | null
@@ -63,26 +66,28 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({
   }
 
   return ReactDOM.createPortal(
-    <div
-      ref={contextMenuRef}
-      className="options-context-menu"
-      style={{
-        visibility: getOptionsYPosition() ? 'visible' : 'hidden',
-        position: 'absolute',
-        top: getOptionsYPosition() + 'px',
-        left: optionsPosition.x + 'px',
-      }}
-      onClick={event => {
-        event.stopPropagation()
-      }}
-    >
-      <MenuUtilitiesContext.Provider value={contextValues}>
-        {type === ContextMenuEnum.CATEGORY ? (
-          <CategoryMenu category={item as CategoryItem} />
-        ) : (
-          <NotesMenu note={item as NoteItem} setOptionsId={setOptionsId} />
-        )}
-      </MenuUtilitiesContext.Provider>
+    <div className={determineTheme(darkTheme, '')}>
+      <div
+        ref={contextMenuRef}
+        className="options-context-menu"
+        style={{
+          visibility: getOptionsYPosition() ? 'visible' : 'hidden',
+          position: 'absolute',
+          top: getOptionsYPosition() + 'px',
+          left: optionsPosition.x + 'px',
+        }}
+        onClick={event => {
+          event.stopPropagation()
+        }}
+      >
+        <MenuUtilitiesContext.Provider value={contextValues}>
+          {type === ContextMenuEnum.CATEGORY ? (
+            <CategoryMenu category={item as CategoryItem} />
+          ) : (
+            <NotesMenu note={item as NoteItem} setOptionsId={setOptionsId} />
+          )}
+        </MenuUtilitiesContext.Provider>
+      </div>
     </div>,
     document.getElementById('context-menu') as HTMLElement
   )

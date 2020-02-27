@@ -42,7 +42,7 @@ export const App: React.FC = () => {
 
       <Switch>
         <PublicRoute exact path="/" component={LandingPage} />
-        <PrivateRoute path="/app" component={TakeNoteApp} />
+        <PublicRoute path="/app" component={TakeNoteApp} />
         <Redirect to="/" />
       </Switch>
     </HelmetProvider>
