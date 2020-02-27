@@ -27,7 +27,7 @@ export const ContextMenuOption: React.FC<ContextMenuOptionProps> = ({
       tabIndex={0}
       {...rest}
     >
-      <IconCmp size={18} />
+      <IconCmp className="nav-item-icon" size={18} />
       {text}
     </div>
   )
