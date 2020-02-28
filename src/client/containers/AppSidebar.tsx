@@ -167,10 +167,10 @@ export const AppSidebar: React.FC = () => {
   const settingsHandler = () => _toggleSettingsModal()
 
   const determineCategoryClass = (category: CategoryItem, isDragging: boolean) => {
-    if (category.id === activeCategoryId) {
-      return 'category-list-each active'
-    } else if (category.draggedOver) {
+    if (category.draggedOver) {
       return 'category-list-each dragged-over'
+    } else if (category.id === activeCategoryId) {
+      return 'category-list-each active'
     } else if (isDragging) {
       return 'category-list-each dragging'
     } else {

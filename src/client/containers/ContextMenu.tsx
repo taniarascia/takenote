@@ -66,7 +66,7 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({
   }
 
   return ReactDOM.createPortal(
-    <div className={determineTheme(darkTheme, '')}>
+    <div className={type === ContextMenuEnum.CATEGORY || darkTheme ? 'dark' : ''}>
       <div
         ref={contextMenuRef}
         className="options-context-menu"

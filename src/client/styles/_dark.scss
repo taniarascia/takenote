@@ -84,6 +84,12 @@ $dark-editor: #3f3f3f;
       &:hover {
         background: darken($app-sidebar-color, 5%);
       }
+      &.delete-option {
+        &:hover {
+          background: darken($error, 10%);
+          color: white;
+        }
+      }
     }
   }
 
