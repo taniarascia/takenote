@@ -124,7 +124,7 @@ const NotesMenu: React.FC<NotesMenuProps> = ({ note, setOptionsId }) => {
           <select
             data-testid="note-options-move-to-category-select"
             defaultValue=""
-            className="move-to-category-select"
+            className="nav-item move-to-category-select"
             onChange={event => {
               _addCategoryToNote(event.target.value, note.id)
 
