@@ -14,8 +14,17 @@ const getNewActiveNoteId = (
   )
   const trashedNoteIndex = notesNotTrash.findIndex(note => note.id === oldNoteId)
 
-  if (trashedNoteIndex === 0 && notesNotTrash[1]) return notesNotTrash[1].id
-  if (notesNotTrash[trashedNoteIndex - 1]) return notesNotTrash[trashedNoteIndex - 1].id
+  if (trashedNoteIndex === 0 && notesNotTrash[1]) {
+    if (!notesNotTrash[1].scratchpad && notesNotTrash[2]) return notesNotTrash[2].id
+
+    return notesNotTrash[1].id
+  }
+  if (notesNotTrash[trashedNoteIndex - 1]) {
+    if (!notesNotTrash[trashedNoteIndex - 1].scratchpad)
+      return notesNotTrash[trashedNoteIndex - 1].id
+
+    if (notesNotTrash[trashedNoteIndex - 2]) return notesNotTrash[trashedNoteIndex - 2].id
+  }
   return ''
 }
 
@@ -25,10 +34,10 @@ export const getFirstNoteId = (folder: Folder, notes: NoteItem[], categoryId?: s
     .sort(sortByLastUpdated)
     .sort(sortByFavorites)
   const firstNote = {
-    [Folder.ALL]: () => notesNotTrash[0],
+    [Folder.ALL]: () => notesNotTrash.find(note => !note.scratchpad),
     [Folder.CATEGORY]: () => notesNotTrash.find(note => note.category === categoryId),
     [Folder.FAVORITES]: () => notesNotTrash.find(note => note.favorite),
-    [Folder.INBOX]: () => notesNotTrash.find(note => note.inbox),
+    [Folder.SCRATCHPAD]: () => notesNotTrash.find(note => note.scratchpad),
     [Folder.TRASH]: () => notes.find(note => note.trash),
   }[folder]()
   return firstNote ? firstNote.id : ''
