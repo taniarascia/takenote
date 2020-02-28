@@ -38,9 +38,10 @@ export const NoteList: React.FC = () => {
 
   const filter: Record<Folder, (note: NoteItem) => boolean> = {
     [Folder.CATEGORY]: note => !note.trash && note.category === activeCategoryId,
+    [Folder.INBOX]: note => !!note.inbox,
     [Folder.FAVORITES]: note => !note.trash && !!note.favorite,
     [Folder.TRASH]: note => !!note.trash,
-    [Folder.ALL]: note => !note.trash,
+    [Folder.ALL]: note => !note.trash && !note.inbox,
   }
   const filteredNotes: NoteItem[] = notes
     .filter(filter[activeFolder])

@@ -6,6 +6,7 @@ enum StringEnum {
   DELETE_PERMANENTLY = 'Delete permanently',
   DOWNLOAD = 'Download',
   FAVORITES = 'Favorites',
+  INBOX = 'Inbox',
   MARK_AS_FAVORITE = 'Mark as favorite',
   MOVE_TO_TRASH = 'Move to trash',
   NEW_CATEGORY = 'New category...',
