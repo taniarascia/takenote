@@ -1,5 +1,6 @@
 import { SyncStatePayload, SettingsState } from '@/types'
 import { welcomeNote } from '@/api/welcomeNote'
+import { inboxNote } from '@/api/inboxNote'
 
 type PromiseCallback = (value?: any) => void
 type GetLocalStorage = (
@@ -26,8 +27,8 @@ const getUserNotes = () => (resolve: PromiseCallback, reject: PromiseCallback) =
 
   // check if there is any data in localstorage
   if (!notes) {
-    // if there is none (i.e. new user), show the welcomeNote
-    resolve(welcomeNote)
+    // if there is none (i.e. new user), show the welcomeNote and create an inbox note
+    resolve([inboxNote, welcomeNote])
   } else if (JSON.parse(notes)) {
     // if there is (existing user), show the user's notes
     resolve(JSON.parse(notes))
