@@ -16,7 +16,7 @@ export interface NoteItem {
    * Refers to the category UUID and not the actual name.
    */
   category?: string
-  inbox?: boolean
+  scratchpad?: boolean
   trash?: boolean
   favorite?: boolean
 }

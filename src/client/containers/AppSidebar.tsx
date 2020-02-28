@@ -10,7 +10,7 @@ import { ActionButton } from '@/components/AppSidebar/ActionButton'
 import { LastSyncedNotification } from '@/components/AppSidebar/LastSyncedNotification'
 import { AllNotesOption } from '@/components/AppSidebar/AllNotesOption'
 import { FolderOption } from '@/components/AppSidebar/FolderOption'
-import { InboxOption } from '@/components/AppSidebar/InboxOption'
+import { ScratchpadOption } from '@/components/AppSidebar/ScratchpadOption'
 import { Folder, ContextMenuEnum } from '@/utils/enums'
 import { iconColor } from '@/utils/constants'
 import { useTempState } from '@/contexts/TempStateContext'
@@ -205,7 +205,7 @@ export const AppSidebar: React.FC = () => {
           />
         </section>
         <section className="app-sidebar-main">
-          <InboxOption active={activeFolder === Folder.INBOX} swapFolder={_swapFolder} />
+          <ScratchpadOption active={activeFolder === Folder.SCRATCHPAD} swapFolder={_swapFolder} />
           <AllNotesOption active={activeFolder === Folder.ALL} swapFolder={_swapFolder} />
           <FolderOption
             active={activeFolder === Folder.FAVORITES}

@@ -66,7 +66,7 @@ export const newNoteHandlerHelper = (
   addNote: (note: NoteItem) => WithPayload<NoteItem, Action<string>>,
   swapNote: (noteId: string) => WithPayload<string, Action<string>>
 ) => {
-  if ([Folder.TRASH, Folder.INBOX].indexOf(activeFolder) !== -1) {
+  if ([Folder.TRASH, Folder.SCRATCHPAD].indexOf(activeFolder) !== -1) {
     swapFolder(Folder.ALL)
   }
 
