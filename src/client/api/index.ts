@@ -1,6 +1,7 @@
-import { SyncStatePayload, SettingsState } from '@/types'
+import { NoteItem, SyncStatePayload, SettingsState } from '../types'
+
 import { welcomeNote } from '@/api/welcomeNote'
-import { inboxNote } from '@/api/inboxNote'
+import { scratchpadNote } from '@/api/scratchpadNote'
 
 type PromiseCallback = (value?: any) => void
 type GetLocalStorage = (
@@ -27,11 +28,16 @@ const getUserNotes = () => (resolve: PromiseCallback, reject: PromiseCallback) =
 
   // check if there is any data in localstorage
   if (!notes) {
-    // if there is none (i.e. new user), show the welcomeNote and create an inbox note
-    resolve([inboxNote, welcomeNote])
-  } else if (JSON.parse(notes)) {
+    // if there is none (i.e. new user), create the welcomeNote and scratchpadNote
+    resolve([scratchpadNote, welcomeNote])
+  } else if (Array.isArray(JSON.parse(notes))) {
     // if there is (existing user), show the user's notes
-    resolve(JSON.parse(notes))
+    resolve(
+      // find does not work if the array is empty.
+      JSON.parse(notes).length === 0 || !JSON.parse(notes).find((note: NoteItem) => note.scratchpad)
+        ? [scratchpadNote, ...JSON.parse(notes)]
+        : JSON.parse(notes)
+    )
   } else {
     reject({
       message: 'Something went wrong',
