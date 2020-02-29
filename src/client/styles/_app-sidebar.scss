@@ -7,7 +7,7 @@
   flex-direction: column;
   border-right: 1px solid darken($app-sidebar-color, 10%);
   overflow-x: hidden;
-  z-index: 5;
+  z-index: 3;
 
   &-synced {
     display: block;
@@ -18,7 +18,7 @@
     width: $app-sidebar-width;
     padding: 0.5rem;
     background: $app-sidebar-color;
-    z-index: 6;
+    z-index: 4;
 
     .last-synced {
       display: flex;
@@ -35,12 +35,23 @@
     cursor: pointer;
     font-size: 0.9rem;
     font-weight: 600;
+    border: 1px solid transparent;
 
     &:hover {
       background: lighten($app-sidebar-color, 5%);
     }
 
     &.active {
+      color: white;
+      background: darken($app-sidebar-color, 5%);
+
+      svg {
+        stroke: $primary;
+      }
+    }
+
+    &.dragged-over {
+      border: 1px dashed $primary;
       color: white;
       background: darken($app-sidebar-color, 5%);
 
@@ -133,6 +144,7 @@
         display: flex;
         align-items: center;
         justify-content: space-between;
+        border: 1px dashed transparent;
 
         &:hover {
           background: lighten($app-sidebar-color, 5%);
@@ -152,6 +164,21 @@
             }
           }
         }
+
+        &.dragged-over {
+          border: 1px dashed $primary;
+          color: white;
+          background: darken($app-sidebar-color, 5%);
+
+          svg {
+            stroke: $primary;
+          }
+        }
+
+        &.dragging {
+          background: darken($app-sidebar-color, 10%);
+          box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.15);
+        }
       }
 
       &-name {
@@ -164,6 +191,10 @@
         z-index: 1;
         display: flex;
         cursor: pointer;
+
+        & > *:not(:last-child) {
+          margin-right: 0.3rem;
+        }
       }
     }
 

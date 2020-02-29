@@ -2,10 +2,21 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { CategoryItem, CategoryState } from '@/types'
 
+const _swapCategories = (categories: CategoryItem[], categoryId: number, destinationId: number) => {
+  const newCategories = [...categories]
+  newCategories.splice(categoryId, 1)
+  newCategories.splice(destinationId, 0, categories[categoryId])
+  return newCategories
+}
+
 const initialState: CategoryState = {
   categories: [],
   error: '',
   loading: true,
+  editingCategory: {
+    id: '',
+    tempName: '',
+  },
 }
 
 const categorySlice = createSlice({
@@ -28,6 +39,13 @@ const categorySlice = createSlice({
         category.id === payload.id ? { ...category, draggedOver: false } : category
       ),
     }),
+    swapCategories: (
+      state,
+      { payload }: PayloadAction<{ categoryId: number; destinationId: number }>
+    ) => ({
+      ...state,
+      categories: _swapCategories(state.categories, payload.categoryId, payload.destinationId),
+    }),
     deleteCategory: (state, { payload }: PayloadAction<string>) => ({
       ...state,
       categories: state.categories.filter(category => category.id !== payload),
@@ -49,6 +67,10 @@ const categorySlice = createSlice({
         category.id === payload.id ? { ...category, name: payload.name } : category
       ),
     }),
+    setCategoryEdit: (state, { payload }: PayloadAction<{ id: string; tempName: string }>) => ({
+      ...state,
+      editingCategory: payload,
+    }),
   },
 })
 
@@ -56,11 +78,13 @@ export const {
   addCategory,
   categoryDragEnter,
   categoryDragLeave,
+  swapCategories,
   deleteCategory,
   loadCategories,
   loadCategoriesError,
   loadCategoriesSuccess,
   updateCategory,
+  setCategoryEdit,
 } = categorySlice.actions
 
 export default categorySlice.reducer

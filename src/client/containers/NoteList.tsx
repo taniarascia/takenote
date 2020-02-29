@@ -3,79 +3,51 @@ import { useDispatch, useSelector } from 'react-redux'
 import { MoreHorizontal, Star } from 'react-feather'
 import _ from 'lodash'
 
-import { Folder } from '@/constants/enums'
-import NoteListButton from '@/components/NoteListButton'
-import NoteOptions from '@/containers/NoteOptions'
-import { getNoteTitle, sortByLastUpdated, sortByFavourites } from '@/helpers'
-import { useKey } from '@/helpers/hooks'
+import { Folder, Shortcuts, ContextMenuEnum } from '@/utils/enums'
+import { NoteListButton } from '@/components/NoteList/NoteListButton'
+import { SearchBar } from '@/components/NoteList/SearchBar'
+import { ContextMenu } from '@/containers/ContextMenu'
 import {
-  addCategoryToNote,
-  emptyTrash,
-  pruneNotes,
-  swapCategory,
-  swapNote,
-  searchNotes,
-} from '@/slices/note'
-import { NoteItem, ReactDragEvent, ReactMouseEvent, RootState } from '@/types'
+  getNoteTitle,
+  sortByLastUpdated,
+  sortByFavorites,
+  shouldOpenContextMenu,
+} from '@/utils/helpers'
+import { useKey } from '@/utils/hooks'
+import { emptyTrash, pruneNotes, swapNote, searchNotes } from '@/slices/note'
+import { NoteItem, ReactDragEvent, ReactMouseEvent } from '@/types'
+import { getNotes } from '@/selectors'
 
-const NoteList: React.FC = () => {
+export const NoteList: React.FC = () => {
+  const { activeCategoryId, activeFolder, activeNoteId, notes, searchValue } = useSelector(getNotes)
+
+  const contextMenuRef = useRef<HTMLDivElement>(null)
   const searchRef = React.useRef() as React.MutableRefObject<HTMLInputElement>
-  const { categories } = useSelector((state: RootState) => state.categoryState)
-  const { activeCategoryId, activeFolder, activeNoteId, notes, searchValue } = useSelector(
-    (state: RootState) => state.noteState
-  )
+
+  const dispatch = useDispatch()
+  const _emptyTrash = () => dispatch(emptyTrash())
+  const _pruneNotes = () => dispatch(pruneNotes())
+  const _swapNote = (noteId: string) => dispatch(swapNote(noteId))
+  const _searchNotes = _.debounce((searchValue: string) => dispatch(searchNotes(searchValue)), 100)
 
   const re = new RegExp(_.escapeRegExp(searchValue), 'i')
   const isMatch = (result: NoteItem) => re.test(result.text)
 
+  const [optionsId, setOptionsId] = useState('')
+  const [optionsPosition, setOptionsPosition] = useState({ x: 0, y: 0 })
+
   const filter: Record<Folder, (note: NoteItem) => boolean> = {
     [Folder.CATEGORY]: note => !note.trash && note.category === activeCategoryId,
+    [Folder.SCRATCHPAD]: note => !!note.scratchpad,
     [Folder.FAVORITES]: note => !note.trash && !!note.favorite,
     [Folder.TRASH]: note => !!note.trash,
-    [Folder.ALL]: note => !note.trash,
+    [Folder.ALL]: note => !note.trash && !note.scratchpad,
   }
   const filteredNotes: NoteItem[] = notes
     .filter(filter[activeFolder])
     .filter(isMatch)
     .sort(sortByLastUpdated)
-    .sort(sortByFavourites)
-  const filteredCategories = categories.filter(({ id }) => id !== activeCategoryId)
-
-  const dispatch = useDispatch()
-
-  const _addCategoryToNote = (categoryId: string, noteId: string) =>
-    dispatch(addCategoryToNote({ categoryId, noteId }))
-  const _emptyTrash = () => dispatch(emptyTrash())
-  const _pruneNotes = () => dispatch(pruneNotes())
-  const _swapNote = (noteId: string) => dispatch(swapNote(noteId))
-  const _swapCategory = (categoryId: string) => dispatch(swapCategory(categoryId))
-  const _searchNotes = _.debounce((searchValue: string) => dispatch(searchNotes(searchValue)), 100)
-
-  const [noteOptionsId, setNoteOptionsId] = useState('')
-  const [noteOptionsPosition, setNoteOptionsPosition] = useState({ x: 0, y: 0 })
-  const node = useRef<HTMLDivElement>(null)
-
-  const handleNoteOptionsClick = (event: ReactMouseEvent, noteId: string = '') => {
-    // make sure we aren't getting any null values .. any element clicked should be a sub-class of element
-    if (
-      event.target instanceof Element &&
-      (event.target.classList.contains('note-options') || event.target instanceof SVGElement)
-    ) {
-      // make sure we have the necessary variables
-      // note: don't check for MouseEvent because Cypress MouseEvent !== Window.MouseEvent
-      if ('pageX' in event && 'pageY' in event) {
-        setNoteOptionsPosition({ x: event.pageX, y: event.pageY })
-      }
-    }
-
-    event.stopPropagation()
-
-    if (node.current && node.current.contains(event.target as HTMLDivElement)) {
-      return
-    } else {
-      setNoteOptionsId(!noteOptionsId || noteOptionsId !== noteId ? noteId : '')
-    }
-  }
+    .sort(sortByFavorites)
 
   const handleDragStart = (event: ReactDragEvent, noteId: string = '') => {
     event.stopPropagation()
@@ -83,26 +55,8 @@ const NoteList: React.FC = () => {
     event.dataTransfer.setData('text/plain', noteId)
   }
 
-  const getOptionsYPosition = (): Number => {
-    // get the max window frame
-    const MaxY = window.innerHeight
-
-    // determine approximate options height based on root font-size of 15px, padding, and select box.
-    const optionsSize = 15 * 11
-
-    // if window position - noteOptions position isn't bigger than options, flip it.
-    return MaxY - noteOptionsPosition.y > optionsSize
-      ? noteOptionsPosition.y
-      : noteOptionsPosition.y - optionsSize
-  }
-
-  const focusSearch = () => {
-    searchRef.current.focus()
-  }
-
-  useKey('alt+ctrl+f', () => {
-    focusSearch()
-  })
+  const focusSearch = () => searchRef.current.focus()
+  useKey(Shortcuts.SEARCH, () => focusSearch())
 
   useEffect(() => {
     document.addEventListener('mousedown', handleNoteOptionsClick)
@@ -111,22 +65,62 @@ const NoteList: React.FC = () => {
     }
   })
 
+  const handleNoteOptionsClick = (event: ReactMouseEvent, noteId: string = '') => {
+    const clicked = event.target
+
+    // Make sure we aren't getting any null values .. any element clicked should be a sub-class of element
+    if (!clicked) return
+
+    // Ensure the clicked target is supposed to open the context menu
+    if (shouldOpenContextMenu(clicked as Element)) {
+      // note: don't check for MouseEvent because Cypress MouseEvent !== Window.MouseEvent
+      if ('pageX' in event && 'pageY' in event) {
+        setOptionsPosition({ x: event.pageX, y: event.pageY })
+      }
+    }
+
+    event.stopPropagation()
+
+    if (contextMenuRef.current && contextMenuRef.current.contains(clicked as HTMLDivElement)) {
+      return
+    } else {
+      setOptionsId(!optionsId || optionsId !== noteId ? noteId : '')
+    }
+  }
+
+  const handleNoteRightClick = (
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    noteId: string = ''
+  ) => {
+    event.preventDefault()
+    const clicked = event.target
+    const RIGHT_CLICK = 2
+
+    // Make sure we aren't getting any null values .. any element clicked should be a sub-class of element
+    if (!clicked) return
+
+    // Make sure we are not right clicking on the menu
+    if (optionsId && event.button == RIGHT_CLICK) return
+
+    if ('clientX' in event && 'clientY' in event) {
+      setOptionsPosition({ x: event.clientX, y: event.clientY })
+    }
+
+    event.stopPropagation()
+
+    if (contextMenuRef.current && contextMenuRef.current.contains(clicked as HTMLDivElement)) {
+      return
+    } else {
+      setOptionsId(!optionsId || optionsId !== noteId ? noteId : '')
+    }
+  }
+
   const showEmptyTrash = activeFolder === Folder.TRASH && filteredNotes.length > 0
 
-  return (
+  return activeFolder !== Folder.SCRATCHPAD ? (
     <aside className="note-sidebar">
       <div className="note-sidebar-header">
-        <input
-          data-testid="note-search"
-          className="note-search"
-          ref={searchRef}
-          type="search"
-          onChange={event => {
-            event.preventDefault()
-            _searchNotes(event.target.value)
-          }}
-          placeholder="Search for notes"
-        />
+        <SearchBar searchRef={searchRef} searchNotes={_searchNotes} />
         {showEmptyTrash && (
           <NoteListButton
             dataTestID="empty-trash-button"
@@ -142,7 +136,7 @@ const NoteList: React.FC = () => {
         className="note-list"
         style={{ marginTop: showEmptyTrash ? '103px' : '60px' }}
       >
-        {filteredNotes.map(note => {
+        {filteredNotes.map((note: NoteItem, index: number) => {
           let noteTitle: string | React.ReactElement = getNoteTitle(note.text)
 
           if (searchValue) {
@@ -162,15 +156,9 @@ const NoteList: React.FC = () => {
             }
           }
 
-          const activeNote: boolean = note.id === activeNoteId
-
-          const activeOrInactiveTestIDQualifier: string = activeNote
-            ? 'active-note'
-            : 'inactive-note'
-
           return (
             <div
-              data-testid={activeOrInactiveTestIDQualifier}
+              data-testid={'note-list-item-' + index}
               className={note.id === activeNoteId ? 'note-list-each active' : 'note-list-each'}
               key={note.id}
               onClick={() => {
@@ -179,84 +167,50 @@ const NoteList: React.FC = () => {
                   _pruneNotes()
                 }
               }}
+              onContextMenu={event => handleNoteRightClick(event, note.id)}
               draggable
               onDragStart={event => handleDragStart(event, note.id)}
             >
-              <div className="note-title">
+              <div data-testid={'note-title-' + index} className="note-title">
                 {note.favorite ? (
                   <>
                     <div className="icon">
                       <Star className="note-favorite" size={12} />
                     </div>
-                    <div> {noteTitle}</div>
+                    <div className="truncate-text"> {noteTitle}</div>
                   </>
                 ) : (
                   <>
                     <div className="icon" />
-                    <div> {noteTitle}</div>
+                    <div className="truncate-text"> {noteTitle}</div>
                   </>
                 )}
               </div>
               <div
                 // TODO: make testID based off of index when we add that to a NoteItem object
-                data-testid={'note-options-div-' + activeOrInactiveTestIDQualifier}
-                className={noteOptionsId === note.id ? 'note-options active ' : 'note-options'}
+                data-testid={'note-options-div-' + index}
+                className={
+                  optionsId === note.id
+                    ? 'note-options context-menu-action active '
+                    : 'note-options context-menu-action'
+                }
                 onClick={event => handleNoteOptionsClick(event, note.id)}
               >
-                <MoreHorizontal size={15} />
+                <MoreHorizontal size={15} className="context-menu-action" />
               </div>
-              {noteOptionsId === note.id && (
-                <div
-                  ref={node}
-                  className="note-options-context-menu"
-                  style={{
-                    position: 'absolute',
-                    top: getOptionsYPosition() + 'px',
-                    left: noteOptionsPosition.x + 'px',
-                  }}
-                  onClick={event => {
-                    event.stopPropagation()
-                  }}
-                >
-                  {!note.trash && filteredCategories.length > 0 && (
-                    <>
-                      <select
-                        data-testid="note-options-move-to-category-select"
-                        defaultValue=""
-                        className="move-to-category-select"
-                        onChange={event => {
-                          _addCategoryToNote(event.target.value, note.id)
-
-                          if (event.target.value !== activeCategoryId) {
-                            _swapCategory(event.target.value)
-                            _swapNote(note.id)
-                          }
-
-                          setNoteOptionsId('')
-                        }}
-                      >
-                        <option disabled value="">
-                          Move to category...
-                        </option>
-                        {filteredCategories
-                          .filter(category => category.id !== note.category)
-                          .map(category => (
-                            <option key={category.id} value={category.id}>
-                              {category.name}
-                            </option>
-                          ))}
-                      </select>
-                    </>
-                  )}
-                  <NoteOptions clickedNote={note} />
-                </div>
+              {optionsId === note.id && (
+                <ContextMenu
+                  contextMenuRef={contextMenuRef}
+                  item={note}
+                  optionsPosition={optionsPosition}
+                  setOptionsId={setOptionsId}
+                  type={ContextMenuEnum.NOTE}
+                />
               )}
             </div>
           )
         })}
       </div>
     </aside>
-  )
+  ) : null
 }
-
-export default NoteList

@@ -1,56 +1,44 @@
 import moment from 'moment'
 import React from 'react'
 import { Controlled as CodeMirror } from 'react-codemirror2'
-import ReactMarkdown from 'react-markdown'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { updateNote } from '@/slices/note'
 import { togglePreviewMarkdown } from '@/slices/settings'
-import { RootState, NoteItem } from '@/types'
+import { NoteItem } from '@/types'
+import { EmptyEditor } from '@/components/Editor/EmptyEditor'
+import { PreviewEditor } from '@/components/Editor/PreviewEditor'
+import { getSettings, getNotes } from '@/selectors'
 
 import 'codemirror/lib/codemirror.css'
 import 'codemirror/theme/base16-light.css'
 import 'codemirror/mode/gfm/gfm'
 import 'codemirror/addon/selection/active-line'
+import { setPendingSync } from '@/slices/sync'
 
-const NoteEditor: React.FC = () => {
-  const { activeNoteId, loading, notes } = useSelector((state: RootState) => state.noteState)
-  const { codeMirrorOptions, previewMarkdown } = useSelector(
-    (state: RootState) => state.settingsState
-  )
-  const activeNote = notes.find(note => note.id === activeNoteId)
+export const NoteEditor: React.FC = () => {
+  const { activeNoteId, loading, notes } = useSelector(getNotes)
+  const { codeMirrorOptions, previewMarkdown } = useSelector(getSettings)
 
   const dispatch = useDispatch()
-
   const _togglePreviewMarkdown = () => dispatch(togglePreviewMarkdown())
-  const _updateNote = (note: NoteItem) => dispatch(updateNote(note))
+  const _updateNote = (note: NoteItem) => {
+    dispatch(setPendingSync())
+    dispatch(updateNote(note))
+  }
+
+  const activeNote = notes.find(note => note.id === activeNoteId)
 
   const renderEditor = () => {
     if (loading) {
       return <div className="empty-editor v-center">Loading...</div>
     } else if (!activeNote) {
+      return <EmptyEditor />
+    } else if (previewMarkdown)
       return (
-        <div className="empty-editor v-center">
-          <div className="text-center">
-            <p>
-              <strong>Create a note</strong>
-            </p>
-            <p>
-              <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>N</kbd>
-            </p>
-          </div>
-        </div>
+        <PreviewEditor noteText={activeNote.text} togglePreviewMarkdown={_togglePreviewMarkdown} />
       )
-    } else if (previewMarkdown) {
-      return (
-        <>
-          <ReactMarkdown className="previewer" source={activeNote.text} />
-          <button className="preview-button" onClick={_togglePreviewMarkdown}>
-            Edit
-          </button>
-        </>
-      )
-    } else {
+    else {
       return (
         <>
           <CodeMirror
@@ -87,5 +75,3 @@ const NoteEditor: React.FC = () => {
 
   return <main className="note-editor">{renderEditor()}</main>
 }
-
-export default NoteEditor

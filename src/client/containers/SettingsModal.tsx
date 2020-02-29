@@ -8,46 +8,43 @@ import {
   togglePreviewMarkdown,
   toggleDarkTheme,
 } from '@/slices/settings'
-import { ReactMouseEvent, RootState } from '@/types'
-import Switch from '@/components/Switch'
+import { logout } from '@/slices/auth'
+import { shortcutMap } from '@/utils/constants'
+import { ReactMouseEvent } from '@/types'
+import { getSettings, getAuth } from '@/selectors'
+import { Option } from '@/components/SettingsModal/Option'
+import { Shortcut } from '@/components/SettingsModal/Shortcut'
 
-const SettingsModal: React.FC = () => {
-  const { codeMirrorOptions, isOpen, previewMarkdown, darkTheme } = useSelector(
-    (state: RootState) => state.settingsState
-  )
+export const SettingsModal: React.FC = () => {
+  const { codeMirrorOptions, isOpen, previewMarkdown, darkTheme } = useSelector(getSettings)
+  const { currentUser } = useSelector(getAuth)
+
+  const node = useRef<HTMLDivElement>(null)
 
   const dispatch = useDispatch()
-
+  const _logout = () => dispatch(logout())
   const _toggleSettingsModal = () => dispatch(toggleSettingsModal())
   const _togglePreviewMarkdown = () => dispatch(togglePreviewMarkdown())
   const _toggleDarkTheme = () => dispatch(toggleDarkTheme())
   const _updateCodeMirrorOption = (key: string, value: any) =>
     dispatch(updateCodeMirrorOption({ key, value }))
 
-  const node = useRef<HTMLDivElement>(null)
-
   const handleDomClick = (event: ReactMouseEvent) => {
     event.stopPropagation()
 
     if (node.current && node.current.contains(event.target as HTMLDivElement)) return
-
     if (isOpen) {
       _toggleSettingsModal()
     }
   }
 
-  const togglePreviewMarkdownHandler = () => {
-    _togglePreviewMarkdown()
-  }
-
+  const togglePreviewMarkdownHandler = () => _togglePreviewMarkdown()
   const toggleDarkThemeHandler = () => {
     _toggleDarkTheme()
     _updateCodeMirrorOption('theme', darkTheme ? 'base16-light' : 'new-moon')
   }
-
-  const toggleLineHighlight = () => {
+  const toggleLineHighlight = () =>
     _updateCodeMirrorOption('styleActiveLine', !codeMirrorOptions.styleActiveLine)
-  }
 
   const handleEscPress = (event: KeyboardEvent) => {
     event.stopPropagation()
@@ -68,91 +65,57 @@ const SettingsModal: React.FC = () => {
   return isOpen ? (
     <div className="dimmer">
       <div ref={node} className="settings-modal">
-        <div className="settings-header mb-1">
+        <header className="settings-header mb-1">
           <h2>Settings</h2>
           <div
             className="action-button"
             onClick={() => {
-              if (isOpen) {
-                _toggleSettingsModal()
-              }
+              if (isOpen) _toggleSettingsModal()
             }}
           >
             <X size={20} />
           </div>
-        </div>
+        </header>
 
-        <div className="settings-label mb-1">Options</div>
+        <section className="profile flex">
+          <div>
+            <img src={currentUser.avatar_url} alt="Profile" className="profile-picture" />
+          </div>
+          <div className="profile-details">
+            <h3>{currentUser.name}</h3>
+            <div className="subtitle">{currentUser.email}</div>
+            <button
+              onClick={() => {
+                _logout()
+              }}
+            >
+              Log out
+            </button>
+          </div>
+        </section>
 
-        <div className="settings-options">
-          <div>Active line highlight</div>
-          <Switch toggle={toggleLineHighlight} checked={codeMirrorOptions.styleActiveLine} />
-        </div>
-
-        <div className="settings-options">
-          <div>Markdown preview</div>
-          <Switch toggle={togglePreviewMarkdownHandler} checked={previewMarkdown} />
-        </div>
-
-        <div className="settings-options">
-          <div>Dark mode</div>
-          <Switch toggle={toggleDarkThemeHandler} checked={darkTheme} />
-        </div>
+        <section className="settings-section">
+          <div className="settings-label mb-1">Options</div>
+          <Option
+            title="Active line highlight"
+            toggle={toggleLineHighlight}
+            checked={codeMirrorOptions.styleActiveLine}
+          />
+          <Option
+            title="Markdown preview"
+            toggle={togglePreviewMarkdownHandler}
+            checked={previewMarkdown}
+          />
+          <Option title="Dark mode" toggle={toggleDarkThemeHandler} checked={darkTheme} />
+        </section>
 
         <section className="settings-section">
           <div className="settings-label mb-1">Keyboard Shortcuts</div>
-          <div className="settings-shortcut">
-            <div>Create note</div>
-            <div>
-              <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>N</kbd>
-            </div>
-          </div>
-          <div className="settings-shortcut">
-            <div>Delete note</div>
-            <div>
-              <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>U</kbd>
-            </div>
-          </div>
-          <div className="settings-shortcut">
-            <div>Create category</div>
-            <div>
-              <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>C</kbd>
-            </div>
-          </div>
-          <div className="settings-shortcut">
-            <div>Download note</div>
-            <div>
-              <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>P</kbd>
-            </div>
-          </div>
-          <div className="settings-shortcut">
-            <div>Sync notes</div>
-            <div>
-              <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>L</kbd>
-            </div>
-          </div>
-          <div className="settings-shortcut">
-            <div>Markdown preview</div>
-            <div>
-              <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>J</kbd>
-            </div>
-          </div>
-          <div className="settings-shortcut">
-            <div>Toggle theme</div>
-            <div>
-              <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>K</kbd>
-            </div>
-          </div>
-          <div className="settings-shortcut">
-            <div>Focus search</div>
-            <div>
-              <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>F</kbd>
-            </div>
-          </div>
+          {shortcutMap.map(shortcut => (
+            <Shortcut action={shortcut.action} letter={shortcut.key} key={shortcut.key} />
+          ))}
         </section>
       </div>
     </div>
   ) : null
 }
-
-export default SettingsModal

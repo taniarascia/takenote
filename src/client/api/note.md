@@ -4,11 +4,12 @@ TakeNote is a web-based note-taking app with GitHub sync (soon™️) and Markdo
 
 ## Features
 
-- Create plain text notes with Markdown highlighting and frontmatter metadata
-- Create favorites and categories
-- Drag and drop notes
-- Keybinding shortcuts for common actions
+- Create plain text notes with Markdown support
+- Easily find notes by pinning them to top as a favorite
+- Categorize notes
+- Shortcuts for common actions
 - Light/dark mode
+- Drag and drop support
 - Multi-cursor editing
 - Markdown preview
 
@@ -19,9 +20,9 @@ TakeNote is a web-based note-taking app with GitHub sync (soon™️) and Markdo
 | Create note      | `CTRL` + `ALT` + `N`   | `CONTROL` + `OPTION` + `N` |
 | Delete note      | `CTRL` + `ALT` + `U`   | `CONTROL` + `OPTION` + `U` |
 | Create category  | `CTRL` + `ALT` + `C`   | `CONTROL` + `OPTION` + `C` |
-| Download note    | `CTRL` + `ALT` + `P`   | `CONTROL` + `OPTION` + `P` |
+| Download note    | `CTRL` + `ALT` + `O`   | `CONTROL` + `OPTION` + `O` |
 | Sync note        | `CTRL` + `ALT` + `L`   | `CONTROL` + `OPTION` + `L` |
-| Markdown preview | `CTRL` + `ALT` + `J`   | `CONTROL` + `OPTION` + `J` |
+| Markdown preview | `CTRL` + `ALT` + `P`   | `CONTROL` + `OPTION` + `P` |
 | Toggle theme     | `CTRL` + `ALT` + `K`   | `CONTROL` + `OPTION` + `K` |
 | Focus search     | `CTRL` + `ALT` + `F`   | `CONTROL` + `OPTION` + `F` |
 

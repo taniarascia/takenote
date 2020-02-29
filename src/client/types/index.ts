@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Folder } from '@/constants/enums'
+import { Folder } from '@/utils/enums'
 import { syncState } from '@/slices/sync'
 
 //==============================================================================
@@ -12,7 +12,11 @@ export interface NoteItem {
   text: string
   created: string
   lastUpdated: string
+  /**
+   * Refers to the category UUID and not the actual name.
+   */
   category?: string
+  scratchpad?: boolean
   trash?: boolean
   favorite?: boolean
 }
@@ -23,18 +27,29 @@ export interface CategoryItem {
   draggedOver: boolean
 }
 
+export interface GithubUser {
+  [anyProp: string]: any
+}
+
 //==============================================================================
 // State
 //==============================================================================
 
 export interface AuthState {
+  loading: boolean
+  currentUser: GithubUser
   isAuthenticated: boolean
+  error?: string
 }
 
 export interface CategoryState {
   categories: CategoryItem[]
   error: string
   loading: boolean
+  editingCategory: {
+    id: string
+    tempName: string
+  }
 }
 
 export interface NoteState {
@@ -59,6 +74,7 @@ export interface SyncState {
   syncing: boolean
   lastSynced: string
   error: string
+  pendingSync: boolean
 }
 
 export interface RootState {

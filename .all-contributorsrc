@@ -325,6 +325,34 @@
         "test",
         "code"
       ]
+    },
+    {
+      "login": "miqh",
+      "name": "Michael Huynh",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/43751307?v=4",
+      "profile": "https://github.com/miqh",
+      "contributions": [
+        "code",
+        "bug"
+      ]
+    },
+    {
+      "login": "code128",
+      "name": "Joshua Bloom",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/43435?v=4",
+      "profile": "https://github.com/code128",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "Mxchaeltrxn",
+      "name": "Mxchaeltrxn",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/34886045?v=4",
+      "profile": "https://github.com/Mxchaeltrxn",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,

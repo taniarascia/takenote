@@ -19,6 +19,7 @@
     border-bottom: 1px solid darken($note-sidebar-color, 10%);
     border-right: 1px solid darken($note-sidebar-color, 10%);
     input {
+      -webkit-appearance: none;
       margin: 0;
     }
   }
@@ -67,12 +68,19 @@
         width: 100%;
 
         .icon {
-          flex: 0 0 20px;
+          display: flex;
+          flex: 0 0 25px;
         }
 
         .note-favorite {
           stroke: $primary;
-          margin-right: 0.5rem;
+          margin: 0.25rem;
+        }
+
+        .truncate-text {
+          max-width: 250px;
+          overflow: hidden;
+          text-overflow: clip;
         }
       }
 
@@ -120,52 +128,6 @@
 
         &.active {
           color: $font-color;
-        }
-
-        &-context-menu {
-          cursor: default;
-          border-radius: 0;
-          position: absolute;
-          padding: 0.5rem;
-          color: $font-color;
-          top: 32px;
-          left: 200px;
-          min-width: 250px;
-          background: white;
-          border: 1px solid $accent-gray;
-          z-index: 5;
-          box-shadow: 0 10px 15px rgba(0, 0, 0, 0.07), 0 5px 5px rgba(0, 0, 0, 0.2);
-
-          .move-to-category-select {
-            -webkit-appearance: none;
-            font-size: 1rem;
-            padding: 0.5rem;
-            width: 100%;
-            margin-left: 0;
-            margin-right: 0;
-            margin-top: 0;
-            margin-bottom: 0.5rem;
-          }
-        }
-
-        &-nav {
-          font-size: 0.9rem;
-
-          .nav-item {
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            padding: 0.5rem;
-            border-radius: 0;
-
-            &:hover {
-              background: #f0f0f0;
-            }
-          }
-
-          svg {
-            margin-right: 0.5rem;
-          }
         }
       }
     }
