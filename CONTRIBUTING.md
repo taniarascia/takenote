@@ -4,7 +4,7 @@ TakeNote is an open source project, and contributions of any kind are welcome an
 
 ## Issues
 
-If you encounter a bug, please file a bug report. If you have a feature to request, please open a feature request. If you would like to work on an issue or feature, there is no need to request permission.
+If you encounter a bug, please file a bug report. If you have a feature to request, please open a feature request. If you would like to work on an issue or feature, there is no need to request permission. Please add tests to any new features.
 
 ## Pull Requests
 
