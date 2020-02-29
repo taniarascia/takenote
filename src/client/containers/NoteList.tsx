@@ -38,9 +38,10 @@ export const NoteList: React.FC = () => {
 
   const filter: Record<Folder, (note: NoteItem) => boolean> = {
     [Folder.CATEGORY]: note => !note.trash && note.category === activeCategoryId,
+    [Folder.SCRATCHPAD]: note => !!note.scratchpad,
     [Folder.FAVORITES]: note => !note.trash && !!note.favorite,
     [Folder.TRASH]: note => !!note.trash,
-    [Folder.ALL]: note => !note.trash,
+    [Folder.ALL]: note => !note.trash && !note.scratchpad,
   }
   const filteredNotes: NoteItem[] = notes
     .filter(filter[activeFolder])
@@ -116,7 +117,7 @@ export const NoteList: React.FC = () => {
 
   const showEmptyTrash = activeFolder === Folder.TRASH && filteredNotes.length > 0
 
-  return (
+  return activeFolder !== Folder.SCRATCHPAD ? (
     <aside className="note-sidebar">
       <div className="note-sidebar-header">
         <SearchBar searchRef={searchRef} searchNotes={_searchNotes} />
@@ -211,5 +212,5 @@ export const NoteList: React.FC = () => {
         })}
       </div>
     </aside>
-  )
+  ) : null
 }

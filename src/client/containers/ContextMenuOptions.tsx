@@ -122,7 +122,7 @@ const NotesOptions: React.FC<NotesOptionsProps> = ({ clickedNote }) => {
             text={StringEnum.RESTORE_FROM_TRASH}
           />
         </>
-      ) : (
+      ) : clickedNote.scratchpad ? null : (
         <>
           <ContextMenuOption
             dataTestID="note-option-favorite"

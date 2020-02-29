@@ -25,6 +25,7 @@ export const FolderOption: React.FC<FolderOptionProps> = ({
   const [mainSectionDragState, setMainSectionDragState] = useState({
     [Folder.ALL]: false,
     [Folder.FAVORITES]: false,
+    [Folder.SCRATCHPAD]: false,
     [Folder.TRASH]: false,
     [Folder.CATEGORY]: false,
   })

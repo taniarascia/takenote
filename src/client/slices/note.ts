@@ -7,15 +7,18 @@ import { NoteItem, NoteState } from '@/types'
 const getNewActiveNoteId = (
   notes: NoteItem[],
   oldNoteId: string,
-  activeCategoryId: string
+  activeCategoryId: string,
+  activeFolder: Folder
 ): string => {
-  const notesNotTrash = notes.filter(note =>
-    activeCategoryId ? !note.trash && note.category === activeCategoryId : !note.trash
-  )
-  const trashedNoteIndex = notesNotTrash.findIndex(note => note.id === oldNoteId)
+  const newActiveNotes = notes
+    .filter(note => !note.scratchpad) // filter out all scratchpad notes
+    .filter(note => (activeFolder !== Folder.TRASH ? !note.trash : note.trash)) // trash or not trash
+    .filter(note => (activeCategoryId ? note.category === activeCategoryId : true)) // filter category if necessary
+  const trashedNoteIndex = newActiveNotes.findIndex(note => note.id === oldNoteId)
 
-  if (trashedNoteIndex === 0 && notesNotTrash[1]) return notesNotTrash[1].id
-  if (notesNotTrash[trashedNoteIndex - 1]) return notesNotTrash[trashedNoteIndex - 1].id
+  if (trashedNoteIndex === 0 && newActiveNotes[1]) return newActiveNotes[1].id
+  if (newActiveNotes[trashedNoteIndex - 1]) return newActiveNotes[trashedNoteIndex - 1].id
+
   return ''
 }
 
@@ -25,9 +28,10 @@ export const getFirstNoteId = (folder: Folder, notes: NoteItem[], categoryId?: s
     .sort(sortByLastUpdated)
     .sort(sortByFavorites)
   const firstNote = {
-    [Folder.ALL]: () => notesNotTrash[0],
+    [Folder.ALL]: () => notesNotTrash.find(note => !note.scratchpad),
     [Folder.CATEGORY]: () => notesNotTrash.find(note => note.category === categoryId),
     [Folder.FAVORITES]: () => notesNotTrash.find(note => note.favorite),
+    [Folder.SCRATCHPAD]: () => notesNotTrash.find(note => note.scratchpad),
     [Folder.TRASH]: () => notes.find(note => note.trash),
   }[folder]()
   return firstNote ? firstNote.id : ''
@@ -63,7 +67,12 @@ const noteSlice = createSlice({
     deleteNote: (state, { payload }: PayloadAction<string>) => ({
       ...state,
       notes: state.notes.filter(note => note.id !== payload),
-      activeNoteId: getNewActiveNoteId(state.notes, payload, state.activeCategoryId),
+      activeNoteId: getNewActiveNoteId(
+        state.notes,
+        payload,
+        state.activeCategoryId,
+        state.activeFolder
+      ),
     }),
     emptyTrash: state => ({
       ...state,
@@ -122,7 +131,12 @@ const noteSlice = createSlice({
       notes: state.notes.map(note =>
         note.id === payload ? { ...note, trash: !note.trash } : note
       ),
-      activeNoteId: getNewActiveNoteId(state.notes, payload, state.activeCategoryId),
+      activeNoteId: getNewActiveNoteId(
+        state.notes,
+        payload,
+        state.activeCategoryId,
+        state.activeFolder
+      ),
     }),
     addFavoriteNote: (state, { payload }: PayloadAction<string>) => ({
       ...state,
@@ -131,7 +145,12 @@ const noteSlice = createSlice({
     addTrashedNote: (state, { payload }: PayloadAction<string>) => ({
       ...state,
       notes: state.notes.map(note => (note.id === payload ? { ...note, trash: true } : note)),
-      activeNoteId: getNewActiveNoteId(state.notes, payload, state.activeCategoryId),
+      activeNoteId: getNewActiveNoteId(
+        state.notes,
+        payload,
+        state.activeCategoryId,
+        state.activeFolder
+      ),
     }),
     updateNote: (state, { payload }: PayloadAction<NoteItem>) => ({
       ...state,

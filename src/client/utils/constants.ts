@@ -3,6 +3,7 @@ import { Folder } from '@/utils/enums'
 export const folderMap: Record<Folder, string> = {
   [Folder.ALL]: 'All Notes',
   [Folder.FAVORITES]: 'Favorites',
+  [Folder.SCRATCHPAD]: 'Scratchpad',
   [Folder.TRASH]: 'Trash',
   [Folder.CATEGORY]: 'Category',
 }
