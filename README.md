@@ -136,7 +136,7 @@ npm run test:e2e:open
 
 TakeNote is an open source project, and contributions of any kind are welcome and appreciated. Open issues, bugs, and feature requests are all listed on the [issues](https://github.com/taniarascia/takenote/issues) tab and labeled accordingly. Feel free to open bug tickets and make feature requests. Easy bugs and features will be tagged with the `good first issue` label.
 
-View [CONTRIBUTING.md] to learn about the style guide, folder structure, scripts, and how to contribute.
+View [CONTRIBUTING.md](CONTRIBUTING.md) to learn about the style guide, folder structure, scripts, and how to contribute.
 
 ## Contributors
 
