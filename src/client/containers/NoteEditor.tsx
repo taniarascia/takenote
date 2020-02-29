@@ -9,12 +9,11 @@ import { NoteItem } from '@/types'
 import { EmptyEditor } from '@/components/Editor/EmptyEditor'
 import { PreviewEditor } from '@/components/Editor/PreviewEditor'
 import { getSettings, getNotes } from '@/selectors'
-
+import { setPendingSync } from '@/slices/sync'
 import 'codemirror/lib/codemirror.css'
 import 'codemirror/theme/base16-light.css'
 import 'codemirror/mode/gfm/gfm'
 import 'codemirror/addon/selection/active-line'
-import { setPendingSync } from '@/slices/sync'
 
 export const NoteEditor: React.FC = () => {
   const { activeNoteId, loading, notes } = useSelector(getNotes)
@@ -63,6 +62,24 @@ export const NoteEditor: React.FC = () => {
               if (!value) {
                 editor.focus()
               }
+            }}
+            onPaste={(editor, event: any) => {
+              // Get around pasting issue
+              // https://github.com/scniro/react-codemirror2/issues/77
+              if (
+                !event.clipboardData ||
+                !event.clipboardData.items ||
+                !event.clipboardData.items[0]
+              )
+                return
+              event.clipboardData.items[0].getAsString((pasted: any) => {
+                if (editor.getSelection() !== pasted) return
+                const { anchor, head } = editor.listSelections()[0]
+                editor.setCursor({
+                  line: Math.max(anchor.line, head.line),
+                  ch: Math.max(anchor.ch, head.ch),
+                })
+              })
             }}
           />
           <button className="preview-button" onClick={_togglePreviewMarkdown}>
