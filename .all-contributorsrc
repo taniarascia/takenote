@@ -353,6 +353,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "KonradStanski",
+      "name": "Konrad Staniszewski",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/38778413?v=4",
+      "profile": "https://konradstaniszewski.com",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
