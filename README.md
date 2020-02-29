@@ -132,107 +132,11 @@ npm run dev:test
 npm run test:e2e:open
 ```
 
-## Folder Structure
-
-Explanation the structure of files and directories within TakeNote.
-
-```bash
-├── config/                    # Configuration
-│   ├── cypress.config.js      # Cypress end-to-end test configuration
-│   ├── jest.config.js         # Jest unit/component test configuration
-│   ├── nodemon.config.json    # Nodemon configuration
-│   ├── webpack.common.js      # Webpack shared configuration
-│   ├── webpack.dev.js         # Webpack development configuration (dev server)
-│   └── webpack.prod.js        # Webpack productuon configuration (dist output)
-├── assets/                    # Supplemental assets
-├── patches/                   # Overrides for dependencies
-├── public/                    # Files that will write to dist on build
-├── src/                       # All TakeNote app source files
-│   ├── resources/             # Shared resources
-│   ├── client/                # React client side code
-│   │   ├── api/               # Temporary placeholders for mock API calls
-│   │   ├── components/        # React components that are not connected to Redux
-│   │   ├── contexts/          # React context global state without Redux
-│   │   ├── router/            # React private and public routes
-│   │   ├── sagas/             # Redux sagas
-│   │   ├── selectors/         # Redux Toolkit selectors
-│   │   ├── slices/            # Redux Toolkit slices
-│   │   ├── styles/            # Sass style files
-│   │   ├── types/             # TypeScript types
-│   │   ├── utils/             # Utility functions
-│   │   └── index.tsx          # Client side entry point
-│   └── server/                # Node/Express server side code
-│       ├── handlers/          # Functions for API endpoints
-│       ├── middleware/        # Middleware for API endpoints
-│       ├── router/            # Route API endpoints
-│       ├── utils/             # Backend utilities
-│       └── index.ts           # Server entrypoint
-├── tests/                     # Test suites
-│   ├── e2e/                   # Cypress end-to-end tests
-│   └── unit/                  # React Testing Library and Jest tests
-├── .dockerignore              # Files ignored by Docker
-├── .editorconfig              # Configures editor rules
-├── .gitignore                 # Files ignored by git
-├── .prettierrc                # Code convention enforced by Prettier
-├── .travis.yml                # Continuous integration and deployment config
-├── CHANGELOG.md               # List of significant changes
-├── deploy.sh                  # Deployment script for Docker in production
-├── Dockerfile                 # Docker build instructions
-├── LICENSE                    # License for this open source project
-├── package-lock.json          # Package lockfile
-├── package.json               # Dependencies and additional information
-├── README.md
-├── seed.js                    # Seed the app with data for testing
-└── tsconfig.json              # Typescript configuration
-```
-
-## Scripts
-
-An explanation of the `package.json` scripts.
-
-| Command         | Description                                 |
-| --------------- | ------------------------------------------- |
-| `dev`           | Run TakeNote in a development environment   |
-| `dev:test`      | Run TakeNote in a testing environment       |
-| `client`        | Start a webpack dev server for the frontend |
-| `server`        | Start a nodemon dev server for the backend  |
-| `build`         | Create a production build of TakeNote       |
-| `start`         | Start a production server for TakeNote      |
-| `test`          | Run unit and component tests                |
-| `test:e2e`      | Run end-to-end tests in the command line    |
-| `test:e2e:open` | Open end-to-end tests in a browser          |
-| `test:coverage` | Get test coverage                           |
-| `postinstall`   | Apply patches                               |
-
-## Technologies
-
-TakeNote is possible thanks to all these open source languages, libraries, and frameworks.
-
-| Tech                                          | Description                               |
-| --------------------------------------------- | ----------------------------------------- |
-| [Codemirror](https://codemirror.net/)         | Browser-based text editor                 |
-| [TypeScript](https://www.typescriptlang.org/) | Static type-checking programming language |
-| [Node.js](https://nodejs.org/en/)             | JavaScript runtime for the backend        |
-| [Express](https://expressjs.com/)             | Server framework                          |
-| [React](https://reactjs.org/)                 | Front end user interface                  |
-| [Redux](https://redux.js.org/)                | Global state management                   |
-| [Webpack](https://webpack.js.org/)            | Asset bundler                             |
-| [Sass](https://sass-lang.com/)                | Style preprocessor                        |
-| [OAuth](https://oauth.net/)                   | Protocol for secure authorization         |
-| [ESLint](https://eslint.org/)                 | TypeScript linting                        |
-| [Jest](https://jestjs.io/)                    | Unit testing framework                    |
-| [Cypress](https://www.cypress.io/)            | End-to-end testing framework              | L |
-
 ## Contributing
 
-TakeNote is an open source project, and contributions of any kind are welcome! Open issues, bugs, and enhancements are all listed on the [issues](https://github.com/taniarascia/takenote/issues) tab and labeled accordingly. Feel free to open bug tickets and make feature requests. Easy bugs and features will be tagged with the `good first issue` label.
+TakeNote is an open source project, and contributions of any kind are welcome and appreciated. Open issues, bugs, and feature requests are all listed on the [issues](https://github.com/taniarascia/takenote/issues) tab and labeled accordingly. Feel free to open bug tickets and make feature requests. Easy bugs and features will be tagged with the `good first issue` label.
 
-The project is written in TypeScript, React and Redux. TypeScript is set to strict mode, with no implicit any allowed. The formatting style for the project is set by Prettier.
-
-### Style notes
-
-- [Use non-default exports](https://humanwhocodes.com/blog/2019/01/stop-using-default-exports-javascript-module/) for components
-- Imports are ordered and separated by built-in modules -> external modules -> internal modules -> css/assets/other
+View [CONTRIBUTING.md] to learn about the style guide, folder structure, scripts, and how to contribute.
 
 ## Contributors
 
@@ -287,13 +191,11 @@ Thanks goes to these wonderful people:
     <td align="center"><a href="https://github.com/miqh"><img src="https://avatars3.githubusercontent.com/u/43751307?v=4" width="50px;" alt=""/><br /><sub><b>Michael Huynh</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=miqh" title="Code">💻</a> <a href="https://github.com/taniarascia/takenote/issues?q=author%3Amiqh" title="Bug reports">🐛</a></td>
     <td align="center"><a href="https://github.com/code128"><img src="https://avatars0.githubusercontent.com/u/43435?v=4" width="50px;" alt=""/><br /><sub><b>Joshua Bloom</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=code128" title="Code">💻</a></td>
   </tr>
-  <tr>
-    <td align="center"><a href="https://github.com/Mxchaeltrxn"><img src="https://avatars3.githubusercontent.com/u/34886045?v=4" width="50px;" alt=""/><br /><sub><b>Mxchaeltrxn</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=Mxchaeltrxn" title="Code">💻</a></td>
-  </tr>
 </table>
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 ## Acknowledgements
