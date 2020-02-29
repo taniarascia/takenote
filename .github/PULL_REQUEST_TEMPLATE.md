@@ -1,10 +1,15 @@
-<!-- Reminder!
+Please read the [Contribution Guidelines](../CONTRIBUTING.md) before opening a pull request.
 
-Thank you for contributing! Please read through the following **before** opening your PR.
+## Description
 
-* Verify you have read the [Contribution Guidelines](.github/CONTRIBUTING.md).
--->
+Please include a summary of the change and which issue is fixed. List any dependencies that are required for this change.
 
-* What does this change do and why:
+Fixes #
 
-* Link to Issue (if any):
+## Browser Checklist
+
+This PR has been tested in the following browsers:
+
+- [ ] Chrome
+- [ ] Firefox
+- [ ] Safari
