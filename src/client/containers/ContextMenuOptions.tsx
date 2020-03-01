@@ -66,13 +66,13 @@ const CategoryOptions: React.FC<CategoryOptionsProps> = ({ clickedCategory }) =>
   return (
     <nav className="options-nav" data-testid={TestIDEnum.CATEGORY_OPTIONS_NAV}>
       <ContextMenuOption
-        dataTestID="category-options-rename"
+        dataTestID={TestIDEnum.CATEGORY_OPTION_RENAME}
         handler={startRename}
         icon={Edit2}
         text={StringEnum.RENAME}
       />
       <ContextMenuOption
-        dataTestID="category-option-delete-permanently"
+        dataTestID={TestIDEnum.CATEGORY_OPTION_DELETE_PERMANENTLY}
         handler={removeCategory}
         icon={X}
         text={StringEnum.DELETE_PERMANENTLY}
@@ -127,18 +127,18 @@ const NotesOptions: React.FC<NotesOptionsProps> = ({ clickedNote }) => {
   }
 
   return (
-    <nav className="options-nav" data-testid="note-options-nav">
+    <nav className="options-nav" data-testid={TestIDEnum.NOTE_OPTIONS_NAV}>
       {clickedNote.trash ? (
         <>
           <ContextMenuOption
-            dataTestID="note-option-delete-permanently"
+            dataTestID={TestIDEnum.NOTE_OPTION_DELETE_PERMANENTLY}
             handler={deleteNoteHandler}
             icon={X}
             text={StringEnum.DELETE_PERMANENTLY}
             optionType="delete"
           />
           <ContextMenuOption
-            dataTestID="note-option-restore-from-trash"
+            dataTestID={TestIDEnum.NOTE_OPTION_RESTORE_FROM_TRASH}
             handler={trashNoteHandler}
             icon={ArrowUp}
             text={StringEnum.RESTORE_FROM_TRASH}
@@ -147,13 +147,13 @@ const NotesOptions: React.FC<NotesOptionsProps> = ({ clickedNote }) => {
       ) : clickedNote.scratchpad ? null : (
         <>
           <ContextMenuOption
-            dataTestID="note-option-favorite"
+            dataTestID={TestIDEnum.NOTE_OPTION_FAVORITE}
             handler={favoriteNoteHandler}
             icon={Star}
             text={clickedNote.favorite ? StringEnum.REMOVE_FAVORITE : StringEnum.MARK_AS_FAVORITE}
           />
           <ContextMenuOption
-            dataTestID="note-option-trash"
+            dataTestID={TestIDEnum.NOTE_OPTION_TRASH}
             handler={trashNoteHandler}
             icon={Trash}
             text={StringEnum.MOVE_TO_TRASH}
@@ -162,17 +162,17 @@ const NotesOptions: React.FC<NotesOptionsProps> = ({ clickedNote }) => {
         </>
       )}
       <ContextMenuOption
-        dataTestID="note-options-download"
+        dataTestID={TestIDEnum.NOTE_OPTION_DOWNLOAD}
         handler={downloadNoteHandler}
         icon={Download}
         text={StringEnum.DOWNLOAD}
       />
       {clickedNote.category && !clickedNote.trash && (
         <ContextMenuOption
-          dataTestID="note-option-remove-category"
+          dataTestID={TestIDEnum.NOTE_OPTION_REMOVE_CATEGORY}
           handler={removeCategoryHandler}
           icon={X}
-          text="Remove category"
+          text={StringEnum.REMOVE_CATEGORY}
         />
       )}
     </nav>

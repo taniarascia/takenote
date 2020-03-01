@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { TestIDEnum } from '@resources/TestIDEnum'
+
 import { ReactSubmitEvent } from '@/types'
 
 export interface AddCategoryFormProps {
@@ -22,7 +24,7 @@ export const AddCategoryForm: React.FC<AddCategoryFormProps> = ({
   return (
     <form data-testid={dataTestID} className="category-form" onSubmit={submitHandler}>
       <input
-        data-testid="new-category-label"
+        data-testid={TestIDEnum.NEW_CATEGORY_FORM}
         aria-label="Category name"
         type="text"
         autoFocus

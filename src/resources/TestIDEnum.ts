@@ -31,4 +31,5 @@ export enum TestIDEnum {
   SIDEBAR_ACTION_CREATE_NEW_NOTE = 'sidebar-action-create-new-note',
   SIDEBAR_ACTION_SETTINGS = 'sidebar-action-settings',
   SIDEBAR_ACTION_SYNC_NOTES = 'sidebar-action-sync-notes',
+  SCRATCHPAD = 'scratchpad',
 }

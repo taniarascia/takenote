@@ -206,19 +206,19 @@ export const AppSidebar: React.FC = () => {
       <aside className="app-sidebar">
         <section className="app-sidebar-actions">
           <ActionButton
-            dataTestID="sidebar-action-create-new-note"
+            dataTestID={TestIDEnum.SIDEBAR_ACTION_CREATE_NEW_NOTE}
             handler={newNoteHandler}
             icon={Plus}
             label={StringEnum.CREATE_NEW_NOTE}
           />
           <ActionButton
-            dataTestID="sidebar-action-sync-notes"
+            dataTestID={TestIDEnum.SIDEBAR_ACTION_SYNC_NOTES}
             handler={syncNotesHandler}
             icon={syncing ? Loader : RefreshCw}
             label={StringEnum.SYNC_NOTES}
           />
           <ActionButton
-            dataTestID="sidebar-action-settings"
+            dataTestID={TestIDEnum.SIDEBAR_ACTION_SETTINGS}
             handler={settingsHandler}
             icon={Settings}
             label={StringEnum.SETTINGS}
@@ -230,7 +230,7 @@ export const AppSidebar: React.FC = () => {
           <FolderOption
             active={activeFolder === Folder.FAVORITES}
             text={StringEnum.FAVORITES}
-            dataTestID="favorites"
+            dataTestID={TestIDEnum.FOLDER_FAVORITES}
             folder={Folder.FAVORITES}
             swapFolder={_swapFolder}
             addNoteType={_addFavoriteNote}
@@ -238,7 +238,7 @@ export const AppSidebar: React.FC = () => {
           <FolderOption
             active={activeFolder === Folder.TRASH}
             text={StringEnum.TRASH}
-            dataTestID="trash"
+            dataTestID={TestIDEnum.FOLDER_TRASH}
             folder={Folder.TRASH}
             swapFolder={_swapFolder}
             addNoteType={_addTrashedNote}
@@ -325,7 +325,7 @@ export const AppSidebar: React.FC = () => {
                             )}
                           </form>
                           <div
-                            data-testid="move-category"
+                            data-testid={TestIDEnum.MOVE_CATEGORY}
                             className={
                               optionsId === category.id
                                 ? 'category-options active'

@@ -1,8 +1,8 @@
-/* eslint-disable import/no-unresolved */
 import React from 'react'
 import { Book } from 'react-feather'
 
 import { StringEnum } from '@resources/StringEnum'
+import { TestIDEnum } from '@resources/TestIDEnum'
 
 import { Folder } from '@/utils/enums'
 import { iconColor } from '@/utils/constants'
@@ -15,7 +15,7 @@ export interface AllNotesOptionProps {
 export const AllNotesOption: React.FC<AllNotesOptionProps> = ({ active, swapFolder }) => {
   return (
     <div
-      data-testid="all-notes"
+      data-testid={TestIDEnum.FOLDER_ALL_NOTES}
       className={`app-sidebar-link ${active ? 'active' : ''}`}
       onClick={() => {
         swapFolder(Folder.ALL)

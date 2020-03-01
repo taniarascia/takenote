@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { MoreHorizontal, Star } from 'react-feather'
 import _ from 'lodash'
 
+import { TestIDEnum } from '@resources/TestIDEnum'
+
 import { Folder, Shortcuts, ContextMenuEnum } from '@/utils/enums'
 import { NoteListButton } from '@/components/NoteList/NoteListButton'
 import { SearchBar } from '@/components/NoteList/SearchBar'
@@ -150,7 +152,7 @@ export const NoteList: React.FC = () => {
         <SearchBar searchRef={searchRef} searchNotes={_searchNotes} />
         {showEmptyTrash && (
           <NoteListButton
-            dataTestID="empty-trash-button"
+            dataTestID={TestIDEnum.EMPTY_TRASH_BUTTON}
             label="Empty Trash"
             handler={() => _emptyTrash()}
           >
@@ -159,7 +161,7 @@ export const NoteList: React.FC = () => {
         )}
       </div>
       <div
-        data-testid="note-list"
+        data-testid={TestIDEnum.NOTE_LIST}
         className="note-list"
         style={{ marginTop: showEmptyTrash ? '103px' : '60px' }}
       >
@@ -185,7 +187,7 @@ export const NoteList: React.FC = () => {
 
           return (
             <div
-              data-testid={'note-list-item-' + index}
+              data-testid={TestIDEnum.NOTE_LIST_ITEM + index}
               className={note.id === activeNoteId ? 'note-list-each active' : 'note-list-each'}
               key={note.id}
               onClick={() => {
@@ -215,7 +217,7 @@ export const NoteList: React.FC = () => {
               </div>
               <div
                 // TODO: make testID based off of index when we add that to a NoteItem object
-                data-testid={'note-options-div-' + index}
+                data-testid={TestIDEnum.NOTE_OPTIONS_DIV + index}
                 className={optionsId === note.id ? 'note-options active' : 'note-options'}
                 onClick={event => handleNoteOptionsClick(event, note.id)}
               >
