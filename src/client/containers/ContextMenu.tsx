@@ -2,7 +2,7 @@ import ReactDOM from 'react-dom'
 import React, { useEffect, useState, createContext } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { TestIDEnum } from '@resources/TestIDEnum'
+import { TestID } from '@resources/TestID'
 
 import { ContextMenuOptions } from '@/containers/ContextMenuOptions'
 import { addCategoryToNote, swapCategory, swapNote } from '@/slices/note'
@@ -149,7 +149,7 @@ const NotesMenu: React.FC<NotesMenuProps> = ({ note, setOptionsId }) => {
       {!note.trash && filteredCategories.length > 0 && (
         <>
           <select
-            data-testid={TestIDEnum.MOVE_TO_CATEGORY}
+            data-testid={TestID.MOVE_TO_CATEGORY}
             defaultValue=""
             className="nav-item move-to-category-select"
             onChange={event => {

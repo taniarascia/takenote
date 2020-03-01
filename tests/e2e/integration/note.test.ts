@@ -1,8 +1,8 @@
 // note.test.ts
 // Tests for managing notes (create, trash, favorite, etc)
 
-import { StringEnum } from '@resources/StringEnum'
-import { TestIDEnum } from '@resources/TestIDEnum'
+import { LabelText } from '@resources/LabelText'
+import { TestID } from '@resources/TestID'
 
 import {
   defaultInit,
@@ -104,7 +104,7 @@ describe('Manage notes test', () => {
     // favorite the note in All Notes
     navigateToAllNotes()
     clickNoteOptions()
-    testIDShouldContain(TestIDEnum.NOTE_OPTION_FAVORITE, StringEnum.MARK_AS_FAVORITE)
+    testIDShouldContain(TestID.NOTE_OPTION_FAVORITE, LabelText.MARK_AS_FAVORITE)
     clickNoteOptionFavorite()
 
     // assert there is 1 favorited note
@@ -113,7 +113,7 @@ describe('Manage notes test', () => {
 
     // assert button now says 'Remove'
     clickNoteOptions()
-    testIDShouldContain(TestIDEnum.NOTE_OPTION_FAVORITE, StringEnum.REMOVE_FAVORITE)
+    testIDShouldContain(TestID.NOTE_OPTION_FAVORITE, LabelText.REMOVE_FAVORITE)
     clickNoteOptionFavorite()
 
     // assert favorites is empty
@@ -128,7 +128,7 @@ describe('Manage notes test', () => {
     // favorite the note in All Notes
     navigateToAllNotes()
     openNoteContextMenu()
-    testIDShouldContain(TestIDEnum.NOTE_OPTION_FAVORITE, StringEnum.MARK_AS_FAVORITE)
+    testIDShouldContain(TestID.NOTE_OPTION_FAVORITE, LabelText.MARK_AS_FAVORITE)
     clickNoteOptionFavorite()
 
     // assert there is 1 favorited note
@@ -137,7 +137,7 @@ describe('Manage notes test', () => {
 
     // assert button now says 'Remove'
     openNoteContextMenu()
-    testIDShouldContain(TestIDEnum.NOTE_OPTION_FAVORITE, StringEnum.REMOVE_FAVORITE)
+    testIDShouldContain(TestID.NOTE_OPTION_FAVORITE, LabelText.REMOVE_FAVORITE)
     clickNoteOptionFavorite()
 
     // assert favorites is empty
@@ -152,9 +152,9 @@ describe('Manage notes test', () => {
     // navigate back to All Notes and move the note to trash
     navigateToAllNotes()
     clickNoteOptions()
-    testIDShouldContain(TestIDEnum.NOTE_OPTION_TRASH, StringEnum.MOVE_TO_TRASH)
+    testIDShouldContain(TestID.NOTE_OPTION_TRASH, LabelText.MOVE_TO_TRASH)
     clickNoteOptionTrash()
-    testIDShouldNotExist(TestIDEnum.NOTE_OPTION_TRASH)
+    testIDShouldNotExist(TestID.NOTE_OPTION_TRASH)
 
     // make sure the new note is in the trash
     navigateToTrash()
@@ -173,7 +173,7 @@ describe('Manage notes test', () => {
     assertNoteListLengthEquals(0)
 
     // assert the empty trash button is gone
-    testIDShouldNotExist(TestIDEnum.EMPTY_TRASH_BUTTON)
+    testIDShouldNotExist(TestID.EMPTY_TRASH_BUTTON)
   })
 
   it('should send a note to trash through context menu', () => {
@@ -184,9 +184,9 @@ describe('Manage notes test', () => {
     // navigate back to All Notes and move the note to trash
     navigateToAllNotes()
     openNoteContextMenu()
-    testIDShouldContain(TestIDEnum.NOTE_OPTION_TRASH, StringEnum.MOVE_TO_TRASH)
+    testIDShouldContain(TestID.NOTE_OPTION_TRASH, LabelText.MOVE_TO_TRASH)
     clickNoteOptionTrash()
-    testIDShouldNotExist(TestIDEnum.NOTE_OPTION_TRASH)
+    testIDShouldNotExist(TestID.NOTE_OPTION_TRASH)
 
     // make sure there is a note in the trash and empty it
     navigateToTrash()
@@ -203,12 +203,12 @@ describe('Manage notes test', () => {
     // navigate to trash and delete the active note permanently
     navigateToTrash()
     clickNoteOptions()
-    testIDShouldContain(TestIDEnum.NOTE_OPTION_DELETE_PERMANENTLY, StringEnum.DELETE_PERMANENTLY)
+    testIDShouldContain(TestID.NOTE_OPTION_DELETE_PERMANENTLY, LabelText.DELETE_PERMANENTLY)
     clickNoteOptionDeleteNotePermanently()
     assertNoteListLengthEquals(0)
 
     // assert the empty trash button is gone
-    testIDShouldNotExist(TestIDEnum.EMPTY_TRASH_BUTTON)
+    testIDShouldNotExist(TestID.EMPTY_TRASH_BUTTON)
   })
 
   it('should delete the active note in the trash permanently through context menu', () => {
@@ -219,12 +219,12 @@ describe('Manage notes test', () => {
     // navigate to trash and delete the active note permanently
     navigateToTrash()
     openNoteContextMenu()
-    testIDShouldContain(TestIDEnum.NOTE_OPTION_DELETE_PERMANENTLY, StringEnum.DELETE_PERMANENTLY)
+    testIDShouldContain(TestID.NOTE_OPTION_DELETE_PERMANENTLY, LabelText.DELETE_PERMANENTLY)
     clickNoteOptionDeleteNotePermanently()
     assertNoteListLengthEquals(0)
 
     // assert the empty trash button is gone
-    testIDShouldNotExist(TestIDEnum.EMPTY_TRASH_BUTTON)
+    testIDShouldNotExist(TestID.EMPTY_TRASH_BUTTON)
   })
 
   it('should restore the active note in the trash', function() {
@@ -239,12 +239,12 @@ describe('Manage notes test', () => {
     navigateToTrash()
     getNoteCount('trashStartCount')
     clickNoteOptions()
-    testIDShouldContain(TestIDEnum.NOTE_OPTION_RESTORE_FROM_TRASH, StringEnum.RESTORE_FROM_TRASH)
+    testIDShouldContain(TestID.NOTE_OPTION_RESTORE_FROM_TRASH, LabelText.RESTORE_FROM_TRASH)
     clickNoteOptionRestoreFromTrash()
     cy.then(() => assertNoteListLengthEquals(this.trashStartCount - 1))
 
     // assert the empty trash button is gone
-    testIDShouldNotExist(TestIDEnum.EMPTY_TRASH_BUTTON)
+    testIDShouldNotExist(TestID.EMPTY_TRASH_BUTTON)
 
     // make sure the note is back in All Notes
     navigateToAllNotes()
@@ -263,12 +263,12 @@ describe('Manage notes test', () => {
     navigateToTrash()
     getNoteCount('trashStartCount')
     openNoteContextMenu()
-    testIDShouldContain(TestIDEnum.NOTE_OPTION_RESTORE_FROM_TRASH, StringEnum.RESTORE_FROM_TRASH)
+    testIDShouldContain(TestID.NOTE_OPTION_RESTORE_FROM_TRASH, LabelText.RESTORE_FROM_TRASH)
     clickNoteOptionRestoreFromTrash()
     cy.then(() => assertNoteListLengthEquals(this.trashStartCount - 1))
 
     // assert the empty trash button is gone
-    testIDShouldNotExist(TestIDEnum.EMPTY_TRASH_BUTTON)
+    testIDShouldNotExist(TestID.EMPTY_TRASH_BUTTON)
 
     // make sure the note is back in All Notes
     navigateToAllNotes()

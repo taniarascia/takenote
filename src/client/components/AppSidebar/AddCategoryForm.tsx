@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { TestIDEnum } from '@resources/TestIDEnum'
+import { TestID } from '@resources/TestID'
 
 import { ReactSubmitEvent } from '@/types'
 
@@ -24,7 +24,7 @@ export const AddCategoryForm: React.FC<AddCategoryFormProps> = ({
   return (
     <form data-testid={dataTestID} className="category-form" onSubmit={submitHandler}>
       <input
-        data-testid={TestIDEnum.NEW_CATEGORY_FORM}
+        data-testid={TestID.NEW_CATEGORY_FORM}
         aria-label="Category name"
         type="text"
         autoFocus

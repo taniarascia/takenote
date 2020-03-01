@@ -1,5 +1,5 @@
 // data-testid
-export enum TestIDEnum {
+export enum TestID {
   ADD_CATEGORY_BUTTON = 'add-category-button',
   CATEGORY_EDIT = 'category-edit',
   CATEGORY_LIST_DIV = 'category-list-div',

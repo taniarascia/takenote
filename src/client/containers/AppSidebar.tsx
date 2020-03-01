@@ -11,8 +11,8 @@ import {
 import { useDispatch, useSelector } from 'react-redux'
 import { Droppable, Draggable } from 'react-beautiful-dnd'
 
-import { StringEnum } from '@resources/StringEnum'
-import { TestIDEnum } from '@resources/TestIDEnum'
+import { LabelText } from '@resources/LabelText'
+import { TestID } from '@resources/TestID'
 
 import { ActionButton } from '@/components/AppSidebar/ActionButton'
 import { AddCategoryButton } from '@/components/AppSidebar/AddCategoryButton'
@@ -206,22 +206,22 @@ export const AppSidebar: React.FC = () => {
       <aside className="app-sidebar">
         <section className="app-sidebar-actions">
           <ActionButton
-            dataTestID={TestIDEnum.SIDEBAR_ACTION_CREATE_NEW_NOTE}
+            dataTestID={TestID.SIDEBAR_ACTION_CREATE_NEW_NOTE}
             handler={newNoteHandler}
             icon={Plus}
-            label={StringEnum.CREATE_NEW_NOTE}
+            label={LabelText.CREATE_NEW_NOTE}
           />
           <ActionButton
-            dataTestID={TestIDEnum.SIDEBAR_ACTION_SYNC_NOTES}
+            dataTestID={TestID.SIDEBAR_ACTION_SYNC_NOTES}
             handler={syncNotesHandler}
             icon={syncing ? Loader : RefreshCw}
-            label={StringEnum.SYNC_NOTES}
+            label={LabelText.SYNC_NOTES}
           />
           <ActionButton
-            dataTestID={TestIDEnum.SIDEBAR_ACTION_SETTINGS}
+            dataTestID={TestID.SIDEBAR_ACTION_SETTINGS}
             handler={settingsHandler}
             icon={Settings}
-            label={StringEnum.SETTINGS}
+            label={LabelText.SETTINGS}
           />
         </section>
         <section className="app-sidebar-main">
@@ -229,16 +229,16 @@ export const AppSidebar: React.FC = () => {
           <AllNotesOption active={activeFolder === Folder.ALL} swapFolder={_swapFolder} />
           <FolderOption
             active={activeFolder === Folder.FAVORITES}
-            text={StringEnum.FAVORITES}
-            dataTestID={TestIDEnum.FOLDER_FAVORITES}
+            text={LabelText.FAVORITES}
+            dataTestID={TestID.FOLDER_FAVORITES}
             folder={Folder.FAVORITES}
             swapFolder={_swapFolder}
             addNoteType={_addFavoriteNote}
           />
           <FolderOption
             active={activeFolder === Folder.TRASH}
-            text={StringEnum.TRASH}
-            dataTestID={TestIDEnum.FOLDER_TRASH}
+            text={LabelText.TRASH}
+            dataTestID={TestID.FOLDER_TRASH}
             folder={Folder.TRASH}
             swapFolder={_swapFolder}
             addNoteType={_addTrashedNote}
@@ -262,7 +262,7 @@ export const AppSidebar: React.FC = () => {
                           {...draggableProvided.dragHandleProps}
                           {...draggableProvided.draggableProps}
                           ref={draggableProvided.innerRef}
-                          data-testid={TestIDEnum.CATEGORY_LIST_DIV}
+                          data-testid={TestID.CATEGORY_LIST_DIV}
                           className={determineCategoryClass(
                             category,
                             snapshot.isDragging,
@@ -309,7 +309,7 @@ export const AppSidebar: React.FC = () => {
                             <FolderIcon size={15} className="app-sidebar-icon" color={iconColor} />
                             {editingCategoryId === category.id ? (
                               <input
-                                data-testid={TestIDEnum.CATEGORY_EDIT}
+                                data-testid={TestID.CATEGORY_EDIT}
                                 className="category-edit"
                                 type="text"
                                 autoFocus
@@ -325,7 +325,7 @@ export const AppSidebar: React.FC = () => {
                             )}
                           </form>
                           <div
-                            data-testid={TestIDEnum.MOVE_CATEGORY}
+                            data-testid={TestID.MOVE_CATEGORY}
                             className={
                               optionsId === category.id
                                 ? 'category-options active'
@@ -364,9 +364,9 @@ export const AppSidebar: React.FC = () => {
             />
           ) : (
             <AddCategoryButton
-              dataTestID={TestIDEnum.ADD_CATEGORY_BUTTON}
+              dataTestID={TestID.ADD_CATEGORY_BUTTON}
               handler={setAddingTempCategory}
-              label={StringEnum.ADD_CATEGORY}
+              label={LabelText.ADD_CATEGORY}
             />
           )}
         </section>

@@ -1,6 +1,6 @@
 // Default Labels
-export enum StringEnum {
-  ADD_CATEGORY = 'Add Ccategory',
+export enum LabelText {
+  ADD_CATEGORY = 'Add Category',
   ALL_NOTES = 'All Notes',
   CREATE_NEW_NOTE = 'Create new note',
   DELETE_PERMANENTLY = 'Delete permanently',

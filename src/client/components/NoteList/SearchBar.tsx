@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { TestIDEnum } from '@resources/TestIDEnum'
+import { TestID } from '@resources/TestID'
 
 export interface SearchBarProps {
   searchRef: React.MutableRefObject<HTMLInputElement>
@@ -11,7 +11,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ searchRef, searchNotes }) 
   return (
     <input
       ref={searchRef}
-      data-testid={TestIDEnum.NOTE_SEARCH}
+      data-testid={TestID.NOTE_SEARCH}
       className="note-search"
       type="search"
       onChange={event => {
