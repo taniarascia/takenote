@@ -195,6 +195,9 @@
         & > *:not(:last-child) {
           margin-right: 0.3rem;
         }
+        &.active {
+          color: lighten($app-sidebar-color, 20%);
+        }
       }
     }
 
