@@ -38,12 +38,19 @@ interface CategoryOptionsProps {
 }
 
 const CategoryOptions: React.FC<CategoryOptionsProps> = ({ clickedCategory }) => {
-  const { setOptionsId } = useContext(MenuUtilitiesContext)
+  // ===========================================================================
+  // Dispatch
+  // ===========================================================================
   const dispatch = useDispatch()
 
   const _deleteCategory = (categoryId: string) => dispatch(deleteCategory(categoryId))
   const _setCategoryEdit = (categoryId: string, tempName: string) =>
     dispatch(setCategoryEdit({ id: categoryId, tempName }))
+
+  // ===========================================================================
+  // Context
+  // ===========================================================================
+  const { setOptionsId } = useContext(MenuUtilitiesContext)
 
   const startRename = () => {
     _setCategoryEdit(clickedCategory.id, clickedCategory.name)
@@ -77,8 +84,15 @@ interface NotesOptionsProps {
 }
 
 const NotesOptions: React.FC<NotesOptionsProps> = ({ clickedNote }) => {
-  const dispatch = useDispatch()
+  // ===========================================================================
+  // Selectors
+  // ===========================================================================
+  const { categories } = useSelector(getCategories)
 
+  // ===========================================================================
+  // Dispatch
+  // ===========================================================================
+  const dispatch = useDispatch()
   const _deleteNote = (noteId: string) => dispatch(deleteNote(noteId))
   const _toggleTrashedNote = (noteId: string) => dispatch(toggleTrashedNote(noteId))
   const _toggleFavoriteNote = (noteId: string) => dispatch(toggleFavoriteNote(noteId))
@@ -86,8 +100,6 @@ const NotesOptions: React.FC<NotesOptionsProps> = ({ clickedNote }) => {
     dispatch(addCategoryToNote({ categoryId, noteId }))
   const _swapNote = (noteId: string) => dispatch(swapNote(noteId))
   const _swapCategory = (categoryId: string) => dispatch(swapCategory(categoryId))
-
-  const { categories } = useSelector(getCategories)
 
   const deleteNoteHandler = () => _deleteNote(clickedNote.id)
   const downloadNoteHandler = () =>

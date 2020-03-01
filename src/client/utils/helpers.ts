@@ -134,3 +134,19 @@ export const determineTheme = (darkTheme: boolean, otherClass: string) => {
     return otherClass
   }
 }
+
+export const determineCategoryClass = (
+  category: CategoryItem,
+  isDragging: boolean,
+  activeCategoryId: string
+) => {
+  if (category.draggedOver) {
+    return 'category-list-each dragged-over'
+  } else if (category.id === activeCategoryId) {
+    return 'category-list-each active'
+  } else if (isDragging) {
+    return 'category-list-each dragging'
+  } else {
+    return 'category-list-each'
+  }
+}

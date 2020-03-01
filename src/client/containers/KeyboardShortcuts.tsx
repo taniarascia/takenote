@@ -12,11 +12,18 @@ import { CategoryItem, NoteItem } from '@/types'
 import { updateCodeMirrorOption, togglePreviewMarkdown, toggleDarkTheme } from '@/slices/settings'
 
 export const KeyboardShortcuts: React.FC = () => {
+  // ===========================================================================
+  // Selectors
+  // ===========================================================================
   const { categories } = useSelector(getCategories)
   const { activeCategoryId, activeFolder, activeNoteId, notes } = useSelector(getNotes)
   const { darkTheme, previewMarkdown } = useSelector(getSettings)
 
+  // ===========================================================================
+  // Dispatch
+  // ===========================================================================
   const dispatch = useDispatch()
+
   const _addNote = (note: NoteItem) => dispatch(addNote(note))
   const _swapNote = (noteId: string) => dispatch(swapNote(noteId))
   const _swapFolder = (folder: Folder) => dispatch(swapFolder(folder))
@@ -28,6 +35,9 @@ export const KeyboardShortcuts: React.FC = () => {
   const _updateCodeMirrorOption = (key: string, value: string) =>
     dispatch(updateCodeMirrorOption({ key, value }))
 
+  // ===========================================================================
+  // State
+  // ===========================================================================
   const { addingTempCategory, setAddingTempCategory } = useTempState()
   const activeNote = notes.find(note => note.id === activeNoteId)
 

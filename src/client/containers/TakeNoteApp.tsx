@@ -19,13 +19,19 @@ import { NoteItem, CategoryItem } from '@/types'
 import { getSettings, getNotes, getCategories, getSync } from '@/selectors'
 
 export const TakeNoteApp: React.FC = () => {
+  // ===========================================================================
+  // Selectors
+  // ===========================================================================
   const { darkTheme } = useSelector(getSettings)
   const { activeFolder, activeCategoryId, notes } = useSelector(getNotes)
   const { categories } = useSelector(getCategories)
   const { pendingSync } = useSelector(getSync)
-  useBeforeUnload((event: BeforeUnloadEvent) => (pendingSync ? event.preventDefault() : null))
 
+  // ===========================================================================
+  // Dispatch
+  // ===========================================================================
   const dispatch = useDispatch()
+
   const _loadNotes = () => dispatch(loadNotes())
   const _loadCategories = () => dispatch(loadCategories())
   const _loadSettings = () => dispatch(loadSettings())
@@ -47,6 +53,9 @@ export const TakeNoteApp: React.FC = () => {
     }
   }
 
+  // ===========================================================================
+  // Hooks
+  // ===========================================================================
   useEffect(() => {
     _loadNotes()
     _loadCategories()
@@ -56,6 +65,8 @@ export const TakeNoteApp: React.FC = () => {
   useInterval(() => {
     _syncState(notes, categories)
   }, 20000)
+
+  useBeforeUnload((event: BeforeUnloadEvent) => (pendingSync ? event.preventDefault() : null))
 
   return (
     <HelmetProvider>

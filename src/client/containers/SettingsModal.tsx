@@ -16,18 +16,28 @@ import { Option } from '@/components/SettingsModal/Option'
 import { Shortcut } from '@/components/SettingsModal/Shortcut'
 
 export const SettingsModal: React.FC = () => {
+  // ===========================================================================
+  // Selectors
+  // ===========================================================================
   const { codeMirrorOptions, isOpen, previewMarkdown, darkTheme } = useSelector(getSettings)
   const { currentUser } = useSelector(getAuth)
 
-  const node = useRef<HTMLDivElement>(null)
-
+  // ===========================================================================
+  // Dispatch
+  // ===========================================================================
   const dispatch = useDispatch()
+
   const _logout = () => dispatch(logout())
   const _toggleSettingsModal = () => dispatch(toggleSettingsModal())
   const _togglePreviewMarkdown = () => dispatch(togglePreviewMarkdown())
   const _toggleDarkTheme = () => dispatch(toggleDarkTheme())
   const _updateCodeMirrorOption = (key: string, value: any) =>
     dispatch(updateCodeMirrorOption({ key, value }))
+
+  // ===========================================================================
+  // Refs
+  // ===========================================================================
+  const node = useRef<HTMLDivElement>(null)
 
   const handleDomClick = (event: ReactMouseEvent) => {
     event.stopPropagation()
@@ -53,6 +63,9 @@ export const SettingsModal: React.FC = () => {
     }
   }
 
+  // ===========================================================================
+  // Hooks
+  // ===========================================================================
   useEffect(() => {
     document.addEventListener('mousedown', handleDomClick)
     document.addEventListener('keydown', handleEscPress)

@@ -7,7 +7,6 @@ import { addCategoryToNote, swapCategory, swapNote } from '@/slices/note'
 import { NoteItem, CategoryItem } from '@/types'
 import { getNotes, getCategories, getSettings } from '@/selectors'
 import { ContextMenuEnum } from '@/utils/enums'
-import { determineTheme } from '@/utils/helpers'
 
 export const MenuUtilitiesContext = createContext({
   setOptionsId: (id: string) => {},
@@ -32,19 +31,18 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({
   setOptionsId,
   type,
 }) => {
+  // ===========================================================================
+  // Selectors
+  // ===========================================================================
   const { darkTheme } = useSelector(getSettings)
 
+  // ===========================================================================
+  // State
+  // ===========================================================================
   const [elementDimensions, setElementDimensions] = useState<{
     offsetHeight: number | null
     offsetWidth: number | null
   }>({ offsetHeight: null, offsetWidth: null })
-
-  useEffect(() => {
-    if (contextMenuRef?.current) {
-      const { offsetHeight, offsetWidth } = contextMenuRef.current
-      setElementDimensions({ offsetHeight, offsetWidth })
-    }
-  }, [contextMenuRef])
 
   const getOptionsYPosition = (): Number => {
     if (elementDimensions.offsetHeight || elementDimensions.offsetWidth) {
@@ -64,6 +62,16 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({
   const contextValues = {
     setOptionsId,
   }
+
+  // ===========================================================================
+  // Hooks
+  // ===========================================================================
+  useEffect(() => {
+    if (contextMenuRef?.current) {
+      const { offsetHeight, offsetWidth } = contextMenuRef.current
+      setElementDimensions({ offsetHeight, offsetWidth })
+    }
+  }, [contextMenuRef])
 
   return ReactDOM.createPortal(
     <div className={type === ContextMenuEnum.CATEGORY || darkTheme ? 'dark' : ''}>

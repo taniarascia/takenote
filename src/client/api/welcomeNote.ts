@@ -1,7 +1,7 @@
 import uuid from 'uuid/v4'
 import moment from 'moment'
 
-import markdown from '@/api/note.md'
+import markdown from '@/api/welcomeNote.md'
 
 export const welcomeNote = {
   id: uuid(),

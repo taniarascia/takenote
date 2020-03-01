@@ -16,10 +16,17 @@ import 'codemirror/mode/gfm/gfm'
 import 'codemirror/addon/selection/active-line'
 
 export const NoteEditor: React.FC = () => {
+  // ===========================================================================
+  // Selectors
+  // ===========================================================================
   const { activeNoteId, loading, notes } = useSelector(getNotes)
   const { codeMirrorOptions, previewMarkdown } = useSelector(getSettings)
 
+  // ===========================================================================
+  // Dispatch
+  // ===========================================================================
   const dispatch = useDispatch()
+
   const _togglePreviewMarkdown = () => dispatch(togglePreviewMarkdown())
   const _updateNote = (note: NoteItem) => {
     dispatch(setPendingSync())
