@@ -3,6 +3,8 @@ import { render } from '@testing-library/react'
 import '@testing-library/jest-dom'
 import 'jest-extended'
 
+import { TestID } from '@resources/TestID'
+
 import { NoteListButton, NoteListButtonProps } from '@/components/NoteList/NoteListButton'
 
 describe('<NoteListButton />', () => {
@@ -10,7 +12,7 @@ describe('<NoteListButton />', () => {
     const enabledProps: NoteListButtonProps = {
       handler: jest.fn,
       label: 'Test',
-      dataTestID: 'note-list-button',
+      dataTestID: TestID.EMPTY_TRASH_BUTTON,
     }
 
     const component = render(<NoteListButton {...enabledProps} />)
@@ -23,11 +25,11 @@ describe('<NoteListButton />', () => {
       handler: jest.fn,
       label: 'Test',
       disabled: true,
-      dataTestID: 'note-list-button',
+      dataTestID: TestID.EMPTY_TRASH_BUTTON,
     }
 
     const component = render(<NoteListButton {...disabledProps} />)
-    const button = component.queryByTestId('note-list-button')
+    const button = component.queryByTestId(TestID.EMPTY_TRASH_BUTTON)
 
     expect(button).toBeDisabled()
   })
