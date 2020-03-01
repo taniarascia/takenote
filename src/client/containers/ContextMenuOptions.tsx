@@ -2,7 +2,8 @@ import React, { useContext } from 'react'
 import { ArrowUp, Download, Star, Trash, X, Edit2 } from 'react-feather'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { StringEnum } from '@resources/StringEnum'
+import { LabelText } from '@resources/LabelText'
+import { TestID } from '@resources/TestID'
 
 import { ContextMenuOption } from '@/components/NoteList/ContextMenuOption'
 import { downloadNote, getNoteTitle } from '@/utils/helpers'
@@ -38,12 +39,21 @@ interface CategoryOptionsProps {
 }
 
 const CategoryOptions: React.FC<CategoryOptionsProps> = ({ clickedCategory }) => {
-  const { setOptionsId } = useContext(MenuUtilitiesContext)
+  // ===========================================================================
+  // Dispatch
+  // ===========================================================================
+
   const dispatch = useDispatch()
 
   const _deleteCategory = (categoryId: string) => dispatch(deleteCategory(categoryId))
   const _setCategoryEdit = (categoryId: string, tempName: string) =>
     dispatch(setCategoryEdit({ id: categoryId, tempName }))
+
+  // ===========================================================================
+  // Context
+  // ===========================================================================
+
+  const { setOptionsId } = useContext(MenuUtilitiesContext)
 
   const startRename = () => {
     _setCategoryEdit(clickedCategory.id, clickedCategory.name)
@@ -54,18 +64,18 @@ const CategoryOptions: React.FC<CategoryOptionsProps> = ({ clickedCategory }) =>
   }
 
   return (
-    <nav className="options-nav" data-testid="category-options-nav">
+    <nav className="options-nav" data-testid={TestID.CATEGORY_OPTIONS_NAV}>
       <ContextMenuOption
-        dataTestID="category-options-rename"
+        dataTestID={TestID.CATEGORY_OPTION_RENAME}
         handler={startRename}
         icon={Edit2}
-        text={StringEnum.RENAME}
+        text={LabelText.RENAME}
       />
       <ContextMenuOption
-        dataTestID="category-option-delete-permanently"
+        dataTestID={TestID.CATEGORY_OPTION_DELETE_PERMANENTLY}
         handler={removeCategory}
         icon={X}
-        text={StringEnum.DELETE_PERMANENTLY}
+        text={LabelText.DELETE_PERMANENTLY}
         optionType="delete"
       />
     </nav>
@@ -77,6 +87,16 @@ interface NotesOptionsProps {
 }
 
 const NotesOptions: React.FC<NotesOptionsProps> = ({ clickedNote }) => {
+  // ===========================================================================
+  // Selectors
+  // ===========================================================================
+
+  const { categories } = useSelector(getCategories)
+
+  // ===========================================================================
+  // Dispatch
+  // ===========================================================================
+
   const dispatch = useDispatch()
 
   const _deleteNote = (noteId: string) => dispatch(deleteNote(noteId))
@@ -87,7 +107,9 @@ const NotesOptions: React.FC<NotesOptionsProps> = ({ clickedNote }) => {
   const _swapNote = (noteId: string) => dispatch(swapNote(noteId))
   const _swapCategory = (categoryId: string) => dispatch(swapCategory(categoryId))
 
-  const { categories } = useSelector(getCategories)
+  // ===========================================================================
+  // Handlers
+  // ===========================================================================
 
   const deleteNoteHandler = () => _deleteNote(clickedNote.id)
   const downloadNoteHandler = () =>
@@ -105,52 +127,52 @@ const NotesOptions: React.FC<NotesOptionsProps> = ({ clickedNote }) => {
   }
 
   return (
-    <nav className="options-nav" data-testid="note-options-nav">
+    <nav className="options-nav" data-testid={TestID.NOTE_OPTIONS_NAV}>
       {clickedNote.trash ? (
         <>
           <ContextMenuOption
-            dataTestID="note-option-delete-permanently"
+            dataTestID={TestID.NOTE_OPTION_DELETE_PERMANENTLY}
             handler={deleteNoteHandler}
             icon={X}
-            text={StringEnum.DELETE_PERMANENTLY}
+            text={LabelText.DELETE_PERMANENTLY}
             optionType="delete"
           />
           <ContextMenuOption
-            dataTestID="note-option-restore-from-trash"
+            dataTestID={TestID.NOTE_OPTION_RESTORE_FROM_TRASH}
             handler={trashNoteHandler}
             icon={ArrowUp}
-            text={StringEnum.RESTORE_FROM_TRASH}
+            text={LabelText.RESTORE_FROM_TRASH}
           />
         </>
       ) : clickedNote.scratchpad ? null : (
         <>
           <ContextMenuOption
-            dataTestID="note-option-favorite"
+            dataTestID={TestID.NOTE_OPTION_FAVORITE}
             handler={favoriteNoteHandler}
             icon={Star}
-            text={clickedNote.favorite ? StringEnum.REMOVE_FAVORITE : StringEnum.MARK_AS_FAVORITE}
+            text={clickedNote.favorite ? LabelText.REMOVE_FAVORITE : LabelText.MARK_AS_FAVORITE}
           />
           <ContextMenuOption
-            dataTestID="note-option-trash"
+            dataTestID={TestID.NOTE_OPTION_TRASH}
             handler={trashNoteHandler}
             icon={Trash}
-            text={StringEnum.MOVE_TO_TRASH}
+            text={LabelText.MOVE_TO_TRASH}
             optionType="delete"
           />
         </>
       )}
       <ContextMenuOption
-        dataTestID="note-options-download"
+        dataTestID={TestID.NOTE_OPTION_DOWNLOAD}
         handler={downloadNoteHandler}
         icon={Download}
-        text={StringEnum.DOWNLOAD}
+        text={LabelText.DOWNLOAD}
       />
       {clickedNote.category && !clickedNote.trash && (
         <ContextMenuOption
-          dataTestID="note-option-remove-category"
+          dataTestID={TestID.NOTE_OPTION_REMOVE_CATEGORY}
           handler={removeCategoryHandler}
           icon={X}
-          text="Remove category"
+          text={LabelText.REMOVE_CATEGORY}
         />
       )}
     </nav>

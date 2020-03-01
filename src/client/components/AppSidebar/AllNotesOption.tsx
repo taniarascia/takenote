@@ -1,8 +1,8 @@
-/* eslint-disable import/no-unresolved */
 import React from 'react'
 import { Book } from 'react-feather'
 
-import { StringEnum } from '@resources/StringEnum'
+import { LabelText } from '@resources/LabelText'
+import { TestID } from '@resources/TestID'
 
 import { Folder } from '@/utils/enums'
 import { iconColor } from '@/utils/constants'
@@ -15,14 +15,14 @@ export interface AllNotesOptionProps {
 export const AllNotesOption: React.FC<AllNotesOptionProps> = ({ active, swapFolder }) => {
   return (
     <div
-      data-testid="all-notes"
+      data-testid={TestID.FOLDER_ALL_NOTES}
       className={`app-sidebar-link ${active ? 'active' : ''}`}
       onClick={() => {
         swapFolder(Folder.ALL)
       }}
     >
       <Book size={15} className="app-sidebar-icon" color={iconColor} />
-      {StringEnum.ALL_NOTES}
+      {LabelText.ALL_NOTES}
     </div>
   )
 }

@@ -2,12 +2,13 @@ import ReactDOM from 'react-dom'
 import React, { useEffect, useState, createContext } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
+import { TestID } from '@resources/TestID'
+
 import { ContextMenuOptions } from '@/containers/ContextMenuOptions'
 import { addCategoryToNote, swapCategory, swapNote } from '@/slices/note'
 import { NoteItem, CategoryItem } from '@/types'
 import { getNotes, getCategories, getSettings } from '@/selectors'
 import { ContextMenuEnum } from '@/utils/enums'
-import { determineTheme } from '@/utils/helpers'
 
 export const MenuUtilitiesContext = createContext({
   setOptionsId: (id: string) => {},
@@ -32,12 +33,24 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({
   setOptionsId,
   type,
 }) => {
+  // ===========================================================================
+  // Selectors
+  // ===========================================================================
+
   const { darkTheme } = useSelector(getSettings)
+
+  // ===========================================================================
+  // State
+  // ===========================================================================
 
   const [elementDimensions, setElementDimensions] = useState<{
     offsetHeight: number | null
     offsetWidth: number | null
   }>({ offsetHeight: null, offsetWidth: null })
+
+  // ===========================================================================
+  // Hooks
+  // ===========================================================================
 
   useEffect(() => {
     if (contextMenuRef?.current) {
@@ -45,6 +58,14 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({
       setElementDimensions({ offsetHeight, offsetWidth })
     }
   }, [contextMenuRef])
+
+  // ===========================================================================
+  // Other
+  // ===========================================================================
+
+  const contextValues = {
+    setOptionsId,
+  }
 
   const getOptionsYPosition = (): Number => {
     if (elementDimensions.offsetHeight || elementDimensions.offsetWidth) {
@@ -59,10 +80,6 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({
     }
 
     return 0
-  }
-
-  const contextValues = {
-    setOptionsId,
   }
 
   return ReactDOM.createPortal(
@@ -107,22 +124,32 @@ interface NotesMenuProps {
 }
 
 const NotesMenu: React.FC<NotesMenuProps> = ({ note, setOptionsId }) => {
+  // ===========================================================================
+  // Selectors
+  // ===========================================================================
+
   const { categories } = useSelector(getCategories)
   const { activeCategoryId } = useSelector(getNotes)
 
+  // ===========================================================================
+  // Dispatch
+  // ===========================================================================
+
   const dispatch = useDispatch()
+
   const _addCategoryToNote = (categoryId: string, noteId: string) =>
     dispatch(addCategoryToNote({ categoryId, noteId }))
   const _swapNote = (noteId: string) => dispatch(swapNote(noteId))
   const _swapCategory = (categoryId: string) => dispatch(swapCategory(categoryId))
 
   const filteredCategories = categories.filter(({ id }) => id !== activeCategoryId)
+
   return (
     <>
       {!note.trash && filteredCategories.length > 0 && (
         <>
           <select
-            data-testid="note-options-move-to-category-select"
+            data-testid={TestID.MOVE_TO_CATEGORY}
             defaultValue=""
             className="nav-item move-to-category-select"
             onChange={event => {

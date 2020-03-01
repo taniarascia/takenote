@@ -1,8 +1,8 @@
 // testNotesHelperUtils.ts
 // Utility functions for use in note tests
 
-import { StringEnum } from '@resources/StringEnum'
-import { TestIDEnum } from '@resources/TestIDEnum'
+import { LabelText } from '@resources/LabelText'
+import { TestID } from '@resources/TestID'
 
 import {
   clickDynamicTestID,
@@ -13,7 +13,7 @@ import {
 } from './testHelperUtils'
 
 const assertNewNoteCreated = () => {
-  getDynamicTestID(TestIDEnum.NOTE_LIST_ITEM + '0').should('contain', StringEnum.NEW_NOTE)
+  getDynamicTestID(TestID.NOTE_LIST_ITEM + '0').should('contain', LabelText.NEW_NOTE)
 }
 
 const assertNoteEditorCharacterCount = (expectedCharacterCount: number) => {
@@ -30,42 +30,42 @@ const assertNoteEditorLineCount = (expectedLineCount: number) => {
 }
 
 const assertNoteListLengthEquals = (expectedLength: number) => {
-  getTestID(TestIDEnum.NOTE_LIST)
+  getTestID(TestID.NOTE_LIST)
     .children()
     .should('have.length', expectedLength)
 }
 
 const assertNoteListLengthGTE = (expectedLength: number) => {
-  getTestID(TestIDEnum.NOTE_LIST)
+  getTestID(TestID.NOTE_LIST)
     .children()
     .should('have.length.gte', expectedLength)
 }
 
 const assertNoteListTitleAtIndex = (noteIndex: number, expectedTitle: string) => {
-  getDynamicTestID(TestIDEnum.NOTE_TITLE + noteIndex)
+  getDynamicTestID(TestID.NOTE_TITLE + noteIndex)
     .children()
     .contains(expectedTitle)
 }
 
 const assertNoteOptionsOpened = () => {
-  testIDShouldExist(TestIDEnum.NOTE_OPTIONS_NAV)
+  testIDShouldExist(TestID.NOTE_OPTIONS_NAV)
 }
 
 const clickCreateNewNote = () => {
-  clickTestID(TestIDEnum.SIDEBAR_ACTION_CREATE_NEW_NOTE)
+  clickTestID(TestID.SIDEBAR_ACTION_CREATE_NEW_NOTE)
 }
 
 const clickEmptyTrash = () => {
-  clickTestID(TestIDEnum.EMPTY_TRASH_BUTTON)
+  clickTestID(TestID.EMPTY_TRASH_BUTTON)
 }
 
 const clickNoteAtIndex = (noteIndex: number) => {
-  getDynamicTestID(TestIDEnum.NOTE_LIST_ITEM + noteIndex).click()
+  getDynamicTestID(TestID.NOTE_LIST_ITEM + noteIndex).click()
 }
 
 // click a note with the specified index
 const clickNoteOptions = (noteIndex: number = 0) => {
-  clickDynamicTestID(TestIDEnum.NOTE_OPTIONS_DIV + noteIndex)
+  clickDynamicTestID(TestID.NOTE_OPTIONS_DIV + noteIndex)
 }
 
 const openNoteContextMenu = (noteIndex: number = 0) => {
@@ -75,23 +75,23 @@ const openNoteContextMenu = (noteIndex: number = 0) => {
 }
 
 const clickNoteOptionDeleteNotePermanently = () => {
-  clickTestID(TestIDEnum.NOTE_OPTION_DELETE_PERMANENTLY)
+  clickTestID(TestID.NOTE_OPTION_DELETE_PERMANENTLY)
 }
 
 const clickNoteOptionFavorite = () => {
-  clickTestID(TestIDEnum.NOTE_OPTION_FAVORITE)
+  clickTestID(TestID.NOTE_OPTION_FAVORITE)
 }
 
 const clickNoteOptionRestoreFromTrash = () => {
-  clickTestID(TestIDEnum.NOTE_OPTION_RESTORE_FROM_TRASH)
+  clickTestID(TestID.NOTE_OPTION_RESTORE_FROM_TRASH)
 }
 
 const clickNoteOptionTrash = () => {
-  clickTestID(TestIDEnum.NOTE_OPTION_TRASH)
+  clickTestID(TestID.NOTE_OPTION_TRASH)
 }
 
 const clickSyncNotes = () => {
-  clickTestID(TestIDEnum.SIDEBAR_ACTION_SYNC_NOTES)
+  clickTestID(TestID.SIDEBAR_ACTION_SYNC_NOTES)
 }
 
 const typeNoteEditor = (contentToType: string) => {
@@ -100,7 +100,7 @@ const typeNoteEditor = (contentToType: string) => {
 }
 
 const typeNoteSearch = (contentToType: string) => {
-  getTestID(TestIDEnum.NOTE_SEARCH).type(contentToType, { force: true })
+  getTestID(TestID.NOTE_SEARCH).type(contentToType, { force: true })
 }
 
 export {

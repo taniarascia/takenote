@@ -10,7 +10,7 @@ import { NoteList } from '@/containers/NoteList'
 import { SettingsModal } from '@/containers/SettingsModal'
 import { TempStateProvider } from '@/contexts/TempStateContext'
 import { useInterval, useBeforeUnload } from '@/utils/hooks'
-import { getWebsiteTitle, determineTheme } from '@/utils/helpers'
+import { getWebsiteTitle, determineTheme, getActiveCategory } from '@/utils/helpers'
 import { loadCategories, swapCategories } from '@/slices/category'
 import { loadNotes } from '@/slices/note'
 import { syncState } from '@/slices/sync'
@@ -19,13 +19,23 @@ import { NoteItem, CategoryItem } from '@/types'
 import { getSettings, getNotes, getCategories, getSync } from '@/selectors'
 
 export const TakeNoteApp: React.FC = () => {
+  // ===========================================================================
+  // Selectors
+  // ===========================================================================
+
   const { darkTheme } = useSelector(getSettings)
   const { activeFolder, activeCategoryId, notes } = useSelector(getNotes)
   const { categories } = useSelector(getCategories)
   const { pendingSync } = useSelector(getSync)
-  useBeforeUnload((event: BeforeUnloadEvent) => (pendingSync ? event.preventDefault() : null))
+
+  const activeCategory = getActiveCategory(categories, activeCategoryId)
+
+  // ===========================================================================
+  // Dispatch
+  // ===========================================================================
 
   const dispatch = useDispatch()
+
   const _loadNotes = () => dispatch(loadNotes())
   const _loadCategories = () => dispatch(loadCategories())
   const _loadSettings = () => dispatch(loadSettings())
@@ -34,7 +44,10 @@ export const TakeNoteApp: React.FC = () => {
   const _syncState = (notes: NoteItem[], categories: CategoryItem[]) =>
     dispatch(syncState({ notes, categories }))
 
-  const activeCategory = categories.find(({ id }) => id === activeCategoryId)
+  // ===========================================================================
+  // Handlers
+  // ===========================================================================
+
   const onDragEnd = (result: DropResult) => {
     const { destination, source } = result
 
@@ -47,6 +60,10 @@ export const TakeNoteApp: React.FC = () => {
     }
   }
 
+  // ===========================================================================
+  // Hooks
+  // ===========================================================================
+
   useEffect(() => {
     _loadNotes()
     _loadCategories()
@@ -56,6 +73,8 @@ export const TakeNoteApp: React.FC = () => {
   useInterval(() => {
     _syncState(notes, categories)
   }, 20000)
+
+  useBeforeUnload((event: BeforeUnloadEvent) => (pendingSync ? event.preventDefault() : null))
 
   return (
     <HelmetProvider>

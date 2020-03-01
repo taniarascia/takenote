@@ -3,6 +3,7 @@ import React from 'react'
 import { Controlled as CodeMirror } from 'react-codemirror2'
 import { useDispatch, useSelector } from 'react-redux'
 
+import { getActiveNote } from '@/utils/helpers'
 import { updateNote } from '@/slices/note'
 import { togglePreviewMarkdown } from '@/slices/settings'
 import { NoteItem } from '@/types'
@@ -16,17 +17,26 @@ import 'codemirror/mode/gfm/gfm'
 import 'codemirror/addon/selection/active-line'
 
 export const NoteEditor: React.FC = () => {
+  // ===========================================================================
+  // Selectors
+  // ===========================================================================
+
   const { activeNoteId, loading, notes } = useSelector(getNotes)
   const { codeMirrorOptions, previewMarkdown } = useSelector(getSettings)
 
+  const activeNote = getActiveNote(notes, activeNoteId)
+
+  // ===========================================================================
+  // Dispatch
+  // ===========================================================================
+
   const dispatch = useDispatch()
+
   const _togglePreviewMarkdown = () => dispatch(togglePreviewMarkdown())
   const _updateNote = (note: NoteItem) => {
     dispatch(setPendingSync())
     dispatch(updateNote(note))
   }
-
-  const activeNote = notes.find(note => note.id === activeNoteId)
 
   const renderEditor = () => {
     if (loading) {

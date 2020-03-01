@@ -1,5 +1,5 @@
 // Default Labels
-enum StringEnum {
+export enum LabelText {
   ADD_CATEGORY = 'Add Category',
   ALL_NOTES = 'All Notes',
   CREATE_NEW_NOTE = 'Create new note',
@@ -21,5 +21,3 @@ enum StringEnum {
   WELCOME_TO_TAKENOTE = 'Welcome to Takenote!',
   RENAME = 'Rename',
 }
-
-export { StringEnum }

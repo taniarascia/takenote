@@ -1,5 +1,7 @@
 import React from 'react'
 
+import { TestID } from '@resources/TestID'
+
 import { renderWithRouter } from '../testHelpers'
 
 import { ContextMenuOptions, ContextMenuOptionsProps } from '@/containers/ContextMenuOptions'
@@ -37,11 +39,11 @@ describe('<ContextMenuOptions />', () => {
     }
 
     const component = wrap(props)
-    const addToFavorites = component.queryByTestId('note-option-favorite')
-    const removeCategory = component.queryByTestId('note-option-remove-category')
-    const download = component.queryByTestId('note-options-download')
-    const deletePermanently = component.queryByTestId('note-option-delete-permanently')
-    const restoreFromTrash = component.queryByTestId('note-option-restore-from-trash')
+    const addToFavorites = component.queryByTestId(TestID.NOTE_OPTION_FAVORITE)
+    const removeCategory = component.queryByTestId(TestID.NOTE_OPTION_REMOVE_CATEGORY)
+    const download = component.queryByTestId(TestID.NOTE_OPTION_DOWNLOAD)
+    const deletePermanently = component.queryByTestId(TestID.NOTE_OPTION_DELETE_PERMANENTLY)
+    const restoreFromTrash = component.queryByTestId(TestID.NOTE_OPTION_RESTORE_FROM_TRASH)
 
     expect(addToFavorites).toBeTruthy()
     expect(download).toBeTruthy()
@@ -63,11 +65,11 @@ describe('<ContextMenuOptions />', () => {
     }
 
     const component = wrap(props)
-    const addToFavorites = component.queryByTestId('note-option-favorite')
-    const deletePermanently = component.queryByTestId('note-option-delete-permanently')
-    const restoreFromTrash = component.queryByTestId('note-option-restore-from-trash')
-    const removeCategory = component.queryByTestId('note-option-remove-category')
-    const download = component.queryByTestId('note-options-download')
+    const addToFavorites = component.queryByTestId(TestID.NOTE_OPTION_FAVORITE)
+    const removeCategory = component.queryByTestId(TestID.NOTE_OPTION_REMOVE_CATEGORY)
+    const download = component.queryByTestId(TestID.NOTE_OPTION_DOWNLOAD)
+    const deletePermanently = component.queryByTestId(TestID.NOTE_OPTION_DELETE_PERMANENTLY)
+    const restoreFromTrash = component.queryByTestId(TestID.NOTE_OPTION_RESTORE_FROM_TRASH)
 
     expect(addToFavorites).toBeFalsy()
     expect(deletePermanently).toBeTruthy()
@@ -89,11 +91,11 @@ describe('<ContextMenuOptions />', () => {
     }
 
     const component = wrap(props)
-    const addToFavorites = component.queryByTestId('note-option-favorite')
-    const deletePermanently = component.queryByTestId('note-option-delete-permanently')
-    const restoreFromTrash = component.queryByTestId('note-option-restore-from-trash')
-    const removeCategory = component.queryByTestId('note-option-remove-category')
-    const download = component.queryByTestId('note-options-download')
+    const addToFavorites = component.queryByTestId(TestID.NOTE_OPTION_FAVORITE)
+    const removeCategory = component.queryByTestId(TestID.NOTE_OPTION_REMOVE_CATEGORY)
+    const download = component.queryByTestId(TestID.NOTE_OPTION_DOWNLOAD)
+    const deletePermanently = component.queryByTestId(TestID.NOTE_OPTION_DELETE_PERMANENTLY)
+    const restoreFromTrash = component.queryByTestId(TestID.NOTE_OPTION_RESTORE_FROM_TRASH)
 
     expect(addToFavorites).toBeTruthy()
     expect(deletePermanently).toBeFalsy()

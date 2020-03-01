@@ -28,6 +28,7 @@ const TempStateProvider: FunctionComponent = ({ children }) => {
     addingTempCategory,
     setAddingTempCategory,
   }
+
   return <TempStateContext.Provider value={value}>{children}</TempStateContext.Provider>
 }
 

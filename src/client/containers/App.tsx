@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Switch, Redirect } from 'react-router-dom'
 import { Helmet, HelmetProvider } from 'react-helmet-async'
 
-import { LandingPage } from '@/containers/LandingPage'
+import { LandingPage } from '@/components/LandingPage'
 import { TakeNoteApp } from '@/containers/TakeNoteApp'
 import { PublicRoute } from '@/router/PublicRoute'
 import { PrivateRoute } from '@/router/PrivateRoute'
@@ -11,10 +11,23 @@ import { getAuth } from '@/selectors'
 import { login } from '@/slices/auth'
 
 export const App: React.FC = () => {
+  // ===========================================================================
+  // Selectors
+  // ===========================================================================
+
   const { loading } = useSelector(getAuth)
 
+  // ===========================================================================
+  // Dispatch
+  // ===========================================================================
+
   const dispatch = useDispatch()
+
   const _login = () => dispatch(login())
+
+  // ===========================================================================
+  // Hooks
+  // ===========================================================================
 
   useEffect(() => {
     _login()

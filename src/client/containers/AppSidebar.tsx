@@ -11,9 +11,12 @@ import {
 import { useDispatch, useSelector } from 'react-redux'
 import { Droppable, Draggable } from 'react-beautiful-dnd'
 
-import { StringEnum } from '@resources/StringEnum'
+import { LabelText } from '@resources/LabelText'
+import { TestID } from '@resources/TestID'
 
 import { ActionButton } from '@/components/AppSidebar/ActionButton'
+import { AddCategoryButton } from '@/components/AppSidebar/AddCategoryButton'
+import { AddCategoryForm } from '@/components/AppSidebar/AddCategoryForm'
 import { LastSyncedNotification } from '@/components/AppSidebar/LastSyncedNotification'
 import { AllNotesOption } from '@/components/AppSidebar/AllNotesOption'
 import { FolderOption } from '@/components/AppSidebar/FolderOption'
@@ -27,13 +30,11 @@ import {
   categoryDragEnter,
   categoryDragLeave,
   updateCategory,
-  deleteCategory,
   setCategoryEdit,
 } from '@/slices/category'
 import {
   addCategoryToNote,
   addNote,
-  pruneCategoryFromNotes,
   swapCategory,
   swapFolder,
   swapNote,
@@ -44,9 +45,18 @@ import { toggleSettingsModal, togglePreviewMarkdown } from '@/slices/settings'
 import { syncState } from '@/slices/sync'
 import { getSettings, getNotes, getCategories, getSync } from '@/selectors'
 import { CategoryItem, NoteItem, ReactDragEvent, ReactSubmitEvent, ReactMouseEvent } from '@/types'
-import { newNoteHandlerHelper, shouldOpenContextMenu } from '@/utils/helpers'
+import {
+  newNoteHandlerHelper,
+  shouldOpenContextMenu,
+  determineCategoryClass,
+  getActiveNote,
+} from '@/utils/helpers'
 
 export const AppSidebar: React.FC = () => {
+  // ===========================================================================
+  // Selectors
+  // ===========================================================================
+
   const {
     categories,
     editingCategory: { id: editingCategoryId, tempName: tempCategoryName },
@@ -55,9 +65,14 @@ export const AppSidebar: React.FC = () => {
   const { previewMarkdown } = useSelector(getSettings)
   const { syncing, lastSynced } = useSelector(getSync)
 
-  const contextMenuRef = useRef<HTMLDivElement>(null)
+  const activeNote = getActiveNote(notes, activeNoteId)
+
+  // ===========================================================================
+  // Dispatch
+  // ===========================================================================
 
   const dispatch = useDispatch()
+
   const _addNote = (note: NoteItem) => dispatch(addNote(note))
   const _swapNote = (noteId: string) => dispatch(swapNote(noteId))
   const _swapCategory = (categoryId: string) => dispatch(swapCategory(categoryId))
@@ -66,9 +81,6 @@ export const AppSidebar: React.FC = () => {
   const _categoryDragEnter = (category: CategoryItem) => dispatch(categoryDragEnter(category))
   const _categoryDragLeave = (category: CategoryItem) => dispatch(categoryDragLeave(category))
   const _updateCategory = (category: CategoryItem) => dispatch(updateCategory(category))
-  const _deleteCategory = (categoryId: string) => dispatch(deleteCategory(categoryId))
-  const _pruneCategoryFromNotes = (categoryId: string) =>
-    dispatch(pruneCategoryFromNotes(categoryId))
   const _syncState = (notes: NoteItem[], categories: CategoryItem[]) =>
     dispatch(syncState({ notes, categories }))
   const _toggleSettingsModal = () => dispatch(toggleSettingsModal())
@@ -80,21 +92,25 @@ export const AppSidebar: React.FC = () => {
   const _setCategoryEdit = (categoryId: string, tempName: string) =>
     dispatch(setCategoryEdit({ id: categoryId, tempName }))
 
+  // ===========================================================================
+  // Refs
+  // ===========================================================================
+  const contextMenuRef = useRef<HTMLDivElement>(null)
+
+  // ===========================================================================
+  // State
+  // ===========================================================================
   const [optionsId, setOptionsId] = useState('')
   const [optionsPosition, setOptionsPosition] = useState({ x: 0, y: 0 })
 
+  // ===========================================================================
+  // Context
+  // ===========================================================================
   const { addingTempCategory, setAddingTempCategory } = useTempState()
 
-  useEffect(() => {
-    document.addEventListener('mousedown', handleCategoryMenuClick)
-    return () => {
-      document.removeEventListener('mousedown', handleCategoryMenuClick)
-    }
-  })
-
-  const newTempCategoryHandler = () => {
-    !addingTempCategory && setAddingTempCategory(true)
-  }
+  // ===========================================================================
+  // Handlers
+  // ===========================================================================
 
   const newNoteHandler = () =>
     newNoteHandlerHelper(
@@ -174,41 +190,38 @@ export const AppSidebar: React.FC = () => {
   const syncNotesHandler = () => _syncState(notes, categories)
   const settingsHandler = () => _toggleSettingsModal()
 
-  const determineCategoryClass = (category: CategoryItem, isDragging: boolean) => {
-    if (category.draggedOver) {
-      return 'category-list-each dragged-over'
-    } else if (category.id === activeCategoryId) {
-      return 'category-list-each active'
-    } else if (isDragging) {
-      return 'category-list-each dragging'
-    } else {
-      return 'category-list-each'
-    }
-  }
+  // ===========================================================================
+  // Hooks
+  // ===========================================================================
 
-  const activeNote = notes.find(note => note.id === activeNoteId)
+  useEffect(() => {
+    document.addEventListener('mousedown', handleCategoryMenuClick)
+    return () => {
+      document.removeEventListener('mousedown', handleCategoryMenuClick)
+    }
+  })
 
   return (
     <>
       <aside className="app-sidebar">
         <section className="app-sidebar-actions">
           <ActionButton
-            dataTestID="sidebar-action-create-new-note"
+            dataTestID={TestID.SIDEBAR_ACTION_CREATE_NEW_NOTE}
             handler={newNoteHandler}
             icon={Plus}
-            label={StringEnum.CREATE_NEW_NOTE}
+            label={LabelText.CREATE_NEW_NOTE}
           />
           <ActionButton
-            dataTestID="sidebar-action-sync-notes"
+            dataTestID={TestID.SIDEBAR_ACTION_SYNC_NOTES}
             handler={syncNotesHandler}
             icon={syncing ? Loader : RefreshCw}
-            label={StringEnum.SYNC_NOTES}
+            label={LabelText.SYNC_NOTES}
           />
           <ActionButton
-            dataTestID="sidebar-action-settings"
+            dataTestID={TestID.SIDEBAR_ACTION_SETTINGS}
             handler={settingsHandler}
             icon={Settings}
-            label={StringEnum.SETTINGS}
+            label={LabelText.SETTINGS}
           />
         </section>
         <section className="app-sidebar-main">
@@ -216,16 +229,16 @@ export const AppSidebar: React.FC = () => {
           <AllNotesOption active={activeFolder === Folder.ALL} swapFolder={_swapFolder} />
           <FolderOption
             active={activeFolder === Folder.FAVORITES}
-            text={StringEnum.FAVORITES}
-            dataTestID="favorites"
+            text={LabelText.FAVORITES}
+            dataTestID={TestID.FOLDER_FAVORITES}
             folder={Folder.FAVORITES}
             swapFolder={_swapFolder}
             addNoteType={_addFavoriteNote}
           />
           <FolderOption
             active={activeFolder === Folder.TRASH}
-            text={StringEnum.TRASH}
-            dataTestID="trash"
+            text={LabelText.TRASH}
+            dataTestID={TestID.FOLDER_TRASH}
             folder={Folder.TRASH}
             swapFolder={_swapFolder}
             addNoteType={_addTrashedNote}
@@ -249,8 +262,12 @@ export const AppSidebar: React.FC = () => {
                           {...draggableProvided.dragHandleProps}
                           {...draggableProvided.draggableProps}
                           ref={draggableProvided.innerRef}
-                          data-testid="category-list-div"
-                          className={determineCategoryClass(category, snapshot.isDragging)}
+                          data-testid={TestID.CATEGORY_LIST_DIV}
+                          className={determineCategoryClass(
+                            category,
+                            snapshot.isDragging,
+                            activeCategoryId
+                          )}
                           onClick={() => {
                             const notesForNewCategory = notes.filter(
                               note => !note.trash && note.category === category.id
@@ -292,7 +309,7 @@ export const AppSidebar: React.FC = () => {
                             <FolderIcon size={15} className="app-sidebar-icon" color={iconColor} />
                             {editingCategoryId === category.id ? (
                               <input
-                                data-testid="category-edit"
+                                data-testid={TestID.CATEGORY_EDIT}
                                 className="category-edit"
                                 type="text"
                                 autoFocus
@@ -308,7 +325,7 @@ export const AppSidebar: React.FC = () => {
                             )}
                           </form>
                           <div
-                            data-testid="move-category"
+                            data-testid={TestID.MOVE_CATEGORY}
                             className={
                               optionsId === category.id
                                 ? 'category-options active'
@@ -337,40 +354,20 @@ export const AppSidebar: React.FC = () => {
             )}
           </Droppable>
           {addingTempCategory ? (
-            <form
-              data-testid="new-category-form"
-              className="category-form"
-              onSubmit={onSubmitNewCategory}
-            >
-              <input
-                data-testid="new-category-label"
-                aria-label="Category name"
-                type="text"
-                autoFocus
-                maxLength={20}
-                placeholder="New category..."
-                onChange={event => {
-                  _setCategoryEdit(editingCategoryId, event.target.value)
-                }}
-                onBlur={event => {
-                  if (!tempCategoryName || tempCategoryName.trim() === '') {
-                    resetTempCategory()
-                  } else {
-                    onSubmitNewCategory(event)
-                  }
-                }}
-              />
-            </form>
+            <AddCategoryForm
+              dataTestID={TestID.NEW_CATEGORY_FORM}
+              submitHandler={onSubmitNewCategory}
+              changeHandler={_setCategoryEdit}
+              resetHandler={resetTempCategory}
+              editingCategoryId={editingCategoryId}
+              tempCategoryName={tempCategoryName}
+            />
           ) : (
-            <button
-              data-testid="add-category-button"
-              className="category-button"
-              onClick={newTempCategoryHandler}
-              aria-label={StringEnum.ADD_CATEGORY}
-            >
-              <Plus size={15} color={iconColor} />
-              {StringEnum.ADD_CATEGORY}
-            </button>
+            <AddCategoryButton
+              dataTestID={TestID.ADD_CATEGORY_BUTTON}
+              handler={setAddingTempCategory}
+              label={LabelText.ADD_CATEGORY}
+            />
           )}
         </section>
       </aside>

@@ -2,11 +2,17 @@ import moment from 'moment'
 import uuid from 'uuid/v4'
 import { Action } from 'redux'
 
-import { StringEnum } from '@resources/StringEnum'
+import { LabelText } from '@resources/LabelText'
 
 import { Folder } from '@/utils/enums'
 import { folderMap } from '@/utils/constants'
 import { NoteItem, CategoryItem, WithPayload } from '@/types'
+
+export const getActiveNote = (notes: NoteItem[], activeNoteId: string) =>
+  notes.find(note => note.id === activeNoteId)
+
+export const getActiveCategory = (categories: CategoryItem[], activeCategoryId: string) =>
+  categories.find(({ id }) => id === activeCategoryId)
 
 export const getNoteTitle = (text: string): string => {
   // Remove whitespace from both ends
@@ -16,7 +22,7 @@ export const getNoteTitle = (text: string): string => {
 
   // Get the first line of text after any newlines
   // In the future, this should break on a full word
-  return noteText ? noteText[0].split(/\r?\n/)[0] : StringEnum.NEW_NOTE
+  return noteText ? noteText[0].split(/\r?\n/)[0] : LabelText.NEW_NOTE
 }
 
 export const noteWithFrontmatter = (note: NoteItem, category?: CategoryItem): string =>
@@ -132,5 +138,21 @@ export const determineTheme = (darkTheme: boolean, otherClass: string) => {
     return `${otherClass} dark`
   } else {
     return otherClass
+  }
+}
+
+export const determineCategoryClass = (
+  category: CategoryItem,
+  isDragging: boolean,
+  activeCategoryId: string
+) => {
+  if (category.draggedOver) {
+    return 'category-list-each dragged-over'
+  } else if (category.id === activeCategoryId) {
+    return 'category-list-each active'
+  } else if (isDragging) {
+    return 'category-list-each dragging'
+  } else {
+    return 'category-list-each'
   }
 }

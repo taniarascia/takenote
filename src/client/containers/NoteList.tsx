@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { MoreHorizontal, Star } from 'react-feather'
 import _ from 'lodash'
 
+import { TestID } from '@resources/TestID'
+
 import { Folder, Shortcuts, ContextMenuEnum } from '@/utils/enums'
 import { NoteListButton } from '@/components/NoteList/NoteListButton'
 import { SearchBar } from '@/components/NoteList/SearchBar'
@@ -19,22 +21,39 @@ import { NoteItem, ReactDragEvent, ReactMouseEvent } from '@/types'
 import { getNotes } from '@/selectors'
 
 export const NoteList: React.FC = () => {
+  // ===========================================================================
+  // Selectors
+  // ===========================================================================
+
   const { activeCategoryId, activeFolder, activeNoteId, notes, searchValue } = useSelector(getNotes)
 
-  const contextMenuRef = useRef<HTMLDivElement>(null)
-  const searchRef = React.useRef() as React.MutableRefObject<HTMLInputElement>
+  // ===========================================================================
+  // Dispatch
+  // ===========================================================================
 
   const dispatch = useDispatch()
+
   const _emptyTrash = () => dispatch(emptyTrash())
   const _pruneNotes = () => dispatch(pruneNotes())
   const _swapNote = (noteId: string) => dispatch(swapNote(noteId))
   const _searchNotes = _.debounce((searchValue: string) => dispatch(searchNotes(searchValue)), 100)
 
-  const re = new RegExp(_.escapeRegExp(searchValue), 'i')
-  const isMatch = (result: NoteItem) => re.test(result.text)
+  // ===========================================================================
+  // Refs
+  // ===========================================================================
+
+  const contextMenuRef = useRef<HTMLDivElement>(null)
+  const searchRef = React.useRef() as React.MutableRefObject<HTMLInputElement>
+
+  // ===========================================================================
+  // State
+  // ===========================================================================
 
   const [optionsId, setOptionsId] = useState('')
   const [optionsPosition, setOptionsPosition] = useState({ x: 0, y: 0 })
+
+  const re = new RegExp(_.escapeRegExp(searchValue), 'i')
+  const isMatch = (result: NoteItem) => re.test(result.text)
 
   const filter: Record<Folder, (note: NoteItem) => boolean> = {
     [Folder.CATEGORY]: note => !note.trash && note.category === activeCategoryId,
@@ -43,27 +62,24 @@ export const NoteList: React.FC = () => {
     [Folder.TRASH]: note => !!note.trash,
     [Folder.ALL]: note => !note.trash && !note.scratchpad,
   }
+
   const filteredNotes: NoteItem[] = notes
     .filter(filter[activeFolder])
     .filter(isMatch)
     .sort(sortByLastUpdated)
     .sort(sortByFavorites)
 
+  // ===========================================================================
+  // Handlers
+  // ===========================================================================
+
+  const focusSearchHandler = () => searchRef.current.focus()
+
   const handleDragStart = (event: ReactDragEvent, noteId: string = '') => {
     event.stopPropagation()
 
     event.dataTransfer.setData('text/plain', noteId)
   }
-
-  const focusSearch = () => searchRef.current.focus()
-  useKey(Shortcuts.SEARCH, () => focusSearch())
-
-  useEffect(() => {
-    document.addEventListener('mousedown', handleNoteOptionsClick)
-    return () => {
-      document.removeEventListener('mousedown', handleNoteOptionsClick)
-    }
-  })
 
   const handleNoteOptionsClick = (event: ReactMouseEvent, noteId: string = '') => {
     const clicked = event.target
@@ -117,13 +133,26 @@ export const NoteList: React.FC = () => {
 
   const showEmptyTrash = activeFolder === Folder.TRASH && filteredNotes.length > 0
 
+  // ===========================================================================
+  // Hooks
+  // ===========================================================================
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleNoteOptionsClick)
+    return () => {
+      document.removeEventListener('mousedown', handleNoteOptionsClick)
+    }
+  })
+
+  useKey(Shortcuts.SEARCH, () => focusSearchHandler())
+
   return activeFolder !== Folder.SCRATCHPAD ? (
     <aside className="note-sidebar">
       <div className="note-sidebar-header">
         <SearchBar searchRef={searchRef} searchNotes={_searchNotes} />
         {showEmptyTrash && (
           <NoteListButton
-            dataTestID="empty-trash-button"
+            dataTestID={TestID.EMPTY_TRASH_BUTTON}
             label="Empty Trash"
             handler={() => _emptyTrash()}
           >
@@ -132,7 +161,7 @@ export const NoteList: React.FC = () => {
         )}
       </div>
       <div
-        data-testid="note-list"
+        data-testid={TestID.NOTE_LIST}
         className="note-list"
         style={{ marginTop: showEmptyTrash ? '103px' : '60px' }}
       >
@@ -158,7 +187,7 @@ export const NoteList: React.FC = () => {
 
           return (
             <div
-              data-testid={'note-list-item-' + index}
+              data-testid={TestID.NOTE_LIST_ITEM + index}
               className={note.id === activeNoteId ? 'note-list-each active' : 'note-list-each'}
               key={note.id}
               onClick={() => {
@@ -188,7 +217,7 @@ export const NoteList: React.FC = () => {
               </div>
               <div
                 // TODO: make testID based off of index when we add that to a NoteItem object
-                data-testid={'note-options-div-' + index}
+                data-testid={TestID.NOTE_OPTIONS_DIV + index}
                 className={optionsId === note.id ? 'note-options active' : 'note-options'}
                 onClick={event => handleNoteOptionsClick(event, note.id)}
               >
