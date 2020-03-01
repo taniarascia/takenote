@@ -8,7 +8,6 @@ import {
   assertCategoryOptionsOpened,
   assertCategoryOrder,
   navigateToCategory,
-  removeCategory,
   selectMoveToCategoryOption,
   startEditingCategory,
   renameCategory,
@@ -32,14 +31,6 @@ describe('Category tests', () => {
   it('creates a new category with the current time', () => {
     // Skipping for now due to
     addCategory(dynamicTimeCategoryName)
-  })
-
-  it('should delete a category just created with the current time', () => {
-    addCategory(dynamicTimeCategoryName)
-
-    removeCategory(dynamicTimeCategoryName)
-
-    assertCategoryDoesNotExist(dynamicTimeCategoryName)
   })
 
   it('should add a note to new category', () => {

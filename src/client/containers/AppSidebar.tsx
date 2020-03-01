@@ -308,7 +308,7 @@ export const AppSidebar: React.FC = () => {
                             )}
                           </form>
                           <div
-                            data-testid={'category-options-div-' + index}
+                            data-testid="move-category"
                             className={
                               optionsId === category.id
                                 ? 'category-options active'

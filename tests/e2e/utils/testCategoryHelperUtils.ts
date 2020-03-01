@@ -46,13 +46,6 @@ const navigateToCategory = (categoryName: string) => {
     .click()
 }
 
-const removeCategory = (categoryName: string) => {
-  cy.contains(categoryName)
-    .parent()
-    .find(wrapWithTestIDTag(TestIDEnum.REMOVE_CATEGORY))
-    .click()
-}
-
 const moveCategory = (categoryName: string, targetName: string) => {
   cy.contains(categoryName)
     .parent()
@@ -101,7 +94,6 @@ export {
   assertCategoryOptionsOpened,
   defocusCategory,
   navigateToCategory,
-  removeCategory,
   moveCategory,
   renameCategory,
   selectMoveToCategoryOption,
