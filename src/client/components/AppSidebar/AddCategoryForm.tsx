@@ -24,7 +24,7 @@ export const AddCategoryForm: React.FC<AddCategoryFormProps> = ({
   return (
     <form data-testid={dataTestID} className="category-form" onSubmit={submitHandler}>
       <input
-        data-testid={TestID.NEW_CATEGORY_FORM}
+        data-testid={TestID.NEW_CATEGORY_INPUT}
         aria-label="Category name"
         type="text"
         autoFocus

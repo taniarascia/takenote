@@ -355,7 +355,7 @@ export const AppSidebar: React.FC = () => {
           </Droppable>
           {addingTempCategory ? (
             <AddCategoryForm
-              dataTestID="tempCategoryName"
+              dataTestID={TestID.NEW_CATEGORY_FORM}
               submitHandler={onSubmitNewCategory}
               changeHandler={_setCategoryEdit}
               resetHandler={resetTempCategory}
