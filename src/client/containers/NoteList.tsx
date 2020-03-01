@@ -189,11 +189,7 @@ export const NoteList: React.FC = () => {
               <div
                 // TODO: make testID based off of index when we add that to a NoteItem object
                 data-testid={'note-options-div-' + index}
-                className={
-                  optionsId === note.id
-                    ? 'note-options context-menu-action active '
-                    : 'note-options context-menu-action'
-                }
+                className={optionsId === note.id ? 'note-options active' : 'note-options'}
                 onClick={event => handleNoteOptionsClick(event, note.id)}
               >
                 <MoreHorizontal size={15} className="context-menu-action" />

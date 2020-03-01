@@ -52,15 +52,23 @@ $dark-editor: #3f3f3f;
           .note-options {
             color: #888;
           }
-
-          .active.note-options {
-            color: white;
-          }
         }
 
         &.active {
           background: $primary;
           color: white;
+
+          .note-options {
+            &.active {
+              color: white;
+            }
+          }
+        }
+
+        .note-options {
+          &.active {
+            color: #888;
+          }
         }
       }
     }

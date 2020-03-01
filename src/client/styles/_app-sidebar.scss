@@ -146,6 +146,10 @@
         justify-content: space-between;
         border: 1px dashed transparent;
 
+        &:focus {
+          outline: none;
+        }
+
         &:hover {
           background: lighten($app-sidebar-color, 5%);
 
@@ -194,6 +198,9 @@
 
         & > *:not(:last-child) {
           margin-right: 0.3rem;
+        }
+        &.active {
+          color: lighten($app-sidebar-color, 20%);
         }
       }
     }
