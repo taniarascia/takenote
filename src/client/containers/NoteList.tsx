@@ -22,11 +22,13 @@ export const NoteList: React.FC = () => {
   // ===========================================================================
   // Selectors
   // ===========================================================================
+
   const { activeCategoryId, activeFolder, activeNoteId, notes, searchValue } = useSelector(getNotes)
 
   // ===========================================================================
   // Dispatch
   // ===========================================================================
+
   const dispatch = useDispatch()
 
   const _emptyTrash = () => dispatch(emptyTrash())
@@ -37,12 +39,14 @@ export const NoteList: React.FC = () => {
   // ===========================================================================
   // Refs
   // ===========================================================================
+
   const contextMenuRef = useRef<HTMLDivElement>(null)
   const searchRef = React.useRef() as React.MutableRefObject<HTMLInputElement>
 
   // ===========================================================================
   // State
   // ===========================================================================
+
   const [optionsId, setOptionsId] = useState('')
   const [optionsPosition, setOptionsPosition] = useState({ x: 0, y: 0 })
 
@@ -56,20 +60,24 @@ export const NoteList: React.FC = () => {
     [Folder.TRASH]: note => !!note.trash,
     [Folder.ALL]: note => !note.trash && !note.scratchpad,
   }
+
   const filteredNotes: NoteItem[] = notes
     .filter(filter[activeFolder])
     .filter(isMatch)
     .sort(sortByLastUpdated)
     .sort(sortByFavorites)
 
+  // ===========================================================================
+  // Handlers
+  // ===========================================================================
+
+  const focusSearchHandler = () => searchRef.current.focus()
+
   const handleDragStart = (event: ReactDragEvent, noteId: string = '') => {
     event.stopPropagation()
 
     event.dataTransfer.setData('text/plain', noteId)
   }
-
-  const focusSearch = () => searchRef.current.focus()
-  useKey(Shortcuts.SEARCH, () => focusSearch())
 
   const handleNoteOptionsClick = (event: ReactMouseEvent, noteId: string = '') => {
     const clicked = event.target
@@ -126,12 +134,15 @@ export const NoteList: React.FC = () => {
   // ===========================================================================
   // Hooks
   // ===========================================================================
+
   useEffect(() => {
     document.addEventListener('mousedown', handleNoteOptionsClick)
     return () => {
       document.removeEventListener('mousedown', handleNoteOptionsClick)
     }
   })
+
+  useKey(Shortcuts.SEARCH, () => focusSearchHandler())
 
   return activeFolder !== Folder.SCRATCHPAD ? (
     <aside className="note-sidebar">

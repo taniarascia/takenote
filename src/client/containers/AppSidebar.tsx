@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Droppable, Draggable } from 'react-beautiful-dnd'
 
 import { StringEnum } from '@resources/StringEnum'
+import { TestIDEnum } from '@resources/TestIDEnum'
 
 import { ActionButton } from '@/components/AppSidebar/ActionButton'
 import { AddCategoryButton } from '@/components/AppSidebar/AddCategoryButton'
@@ -48,12 +49,14 @@ import {
   newNoteHandlerHelper,
   shouldOpenContextMenu,
   determineCategoryClass,
+  getActiveNote,
 } from '@/utils/helpers'
 
 export const AppSidebar: React.FC = () => {
   // ===========================================================================
   // Selectors
   // ===========================================================================
+
   const {
     categories,
     editingCategory: { id: editingCategoryId, tempName: tempCategoryName },
@@ -62,9 +65,12 @@ export const AppSidebar: React.FC = () => {
   const { previewMarkdown } = useSelector(getSettings)
   const { syncing, lastSynced } = useSelector(getSync)
 
+  const activeNote = getActiveNote(notes, activeNoteId)
+
   // ===========================================================================
   // Dispatch
   // ===========================================================================
+
   const dispatch = useDispatch()
 
   const _addNote = (note: NoteItem) => dispatch(addNote(note))
@@ -97,7 +103,14 @@ export const AppSidebar: React.FC = () => {
   const [optionsId, setOptionsId] = useState('')
   const [optionsPosition, setOptionsPosition] = useState({ x: 0, y: 0 })
 
+  // ===========================================================================
+  // Context
+  // ===========================================================================
   const { addingTempCategory, setAddingTempCategory } = useTempState()
+
+  // ===========================================================================
+  // Handlers
+  // ===========================================================================
 
   const newNoteHandler = () =>
     newNoteHandlerHelper(
@@ -177,11 +190,10 @@ export const AppSidebar: React.FC = () => {
   const syncNotesHandler = () => _syncState(notes, categories)
   const settingsHandler = () => _toggleSettingsModal()
 
-  const activeNote = notes.find(note => note.id === activeNoteId)
-
   // ===========================================================================
   // Hooks
   // ===========================================================================
+
   useEffect(() => {
     document.addEventListener('mousedown', handleCategoryMenuClick)
     return () => {
@@ -250,7 +262,7 @@ export const AppSidebar: React.FC = () => {
                           {...draggableProvided.dragHandleProps}
                           {...draggableProvided.draggableProps}
                           ref={draggableProvided.innerRef}
-                          data-testid="category-list-div"
+                          data-testid={TestIDEnum.CATEGORY_LIST_DIV}
                           className={determineCategoryClass(
                             category,
                             snapshot.isDragging,
@@ -297,7 +309,7 @@ export const AppSidebar: React.FC = () => {
                             <FolderIcon size={15} className="app-sidebar-icon" color={iconColor} />
                             {editingCategoryId === category.id ? (
                               <input
-                                data-testid="category-edit"
+                                data-testid={TestIDEnum.CATEGORY_EDIT}
                                 className="category-edit"
                                 type="text"
                                 autoFocus
@@ -352,7 +364,7 @@ export const AppSidebar: React.FC = () => {
             />
           ) : (
             <AddCategoryButton
-              dataTestID="add-category-button"
+              dataTestID={TestIDEnum.ADD_CATEGORY_BUTTON}
               handler={setAddingTempCategory}
               label={StringEnum.ADD_CATEGORY}
             />

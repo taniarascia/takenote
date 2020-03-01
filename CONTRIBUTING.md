@@ -30,6 +30,7 @@ Description of the project files and directories.
 │   ├── client/                # React client side code
 │   │   ├── api/               # Temporary placeholders for mock API calls
 │   │   ├── components/        # React components that are not connected to Redux
+│   │   ├── containers/        # React Redux connected containers
 │   │   ├── contexts/          # React context global state without Redux
 │   │   ├── router/            # React private and public routes
 │   │   ├── sagas/             # Redux sagas

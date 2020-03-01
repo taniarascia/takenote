@@ -34,15 +34,36 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({
   // ===========================================================================
   // Selectors
   // ===========================================================================
+
   const { darkTheme } = useSelector(getSettings)
 
   // ===========================================================================
   // State
   // ===========================================================================
+
   const [elementDimensions, setElementDimensions] = useState<{
     offsetHeight: number | null
     offsetWidth: number | null
   }>({ offsetHeight: null, offsetWidth: null })
+
+  // ===========================================================================
+  // Hooks
+  // ===========================================================================
+
+  useEffect(() => {
+    if (contextMenuRef?.current) {
+      const { offsetHeight, offsetWidth } = contextMenuRef.current
+      setElementDimensions({ offsetHeight, offsetWidth })
+    }
+  }, [contextMenuRef])
+
+  // ===========================================================================
+  // Other
+  // ===========================================================================
+
+  const contextValues = {
+    setOptionsId,
+  }
 
   const getOptionsYPosition = (): Number => {
     if (elementDimensions.offsetHeight || elementDimensions.offsetWidth) {
@@ -58,20 +79,6 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({
 
     return 0
   }
-
-  const contextValues = {
-    setOptionsId,
-  }
-
-  // ===========================================================================
-  // Hooks
-  // ===========================================================================
-  useEffect(() => {
-    if (contextMenuRef?.current) {
-      const { offsetHeight, offsetWidth } = contextMenuRef.current
-      setElementDimensions({ offsetHeight, offsetWidth })
-    }
-  }, [contextMenuRef])
 
   return ReactDOM.createPortal(
     <div className={type === ContextMenuEnum.CATEGORY || darkTheme ? 'dark' : ''}>
@@ -115,16 +122,26 @@ interface NotesMenuProps {
 }
 
 const NotesMenu: React.FC<NotesMenuProps> = ({ note, setOptionsId }) => {
+  // ===========================================================================
+  // Selectors
+  // ===========================================================================
+
   const { categories } = useSelector(getCategories)
   const { activeCategoryId } = useSelector(getNotes)
 
+  // ===========================================================================
+  // Dispatch
+  // ===========================================================================
+
   const dispatch = useDispatch()
+
   const _addCategoryToNote = (categoryId: string, noteId: string) =>
     dispatch(addCategoryToNote({ categoryId, noteId }))
   const _swapNote = (noteId: string) => dispatch(swapNote(noteId))
   const _swapCategory = (categoryId: string) => dispatch(swapCategory(categoryId))
 
   const filteredCategories = categories.filter(({ id }) => id !== activeCategoryId)
+
   return (
     <>
       {!note.trash && filteredCategories.length > 0 && (

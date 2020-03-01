@@ -3,6 +3,7 @@ import { ArrowUp, Download, Star, Trash, X, Edit2 } from 'react-feather'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { StringEnum } from '@resources/StringEnum'
+import { TestIDEnum } from '@resources/TestIDEnum'
 
 import { ContextMenuOption } from '@/components/NoteList/ContextMenuOption'
 import { downloadNote, getNoteTitle } from '@/utils/helpers'
@@ -41,6 +42,7 @@ const CategoryOptions: React.FC<CategoryOptionsProps> = ({ clickedCategory }) =>
   // ===========================================================================
   // Dispatch
   // ===========================================================================
+
   const dispatch = useDispatch()
 
   const _deleteCategory = (categoryId: string) => dispatch(deleteCategory(categoryId))
@@ -50,6 +52,7 @@ const CategoryOptions: React.FC<CategoryOptionsProps> = ({ clickedCategory }) =>
   // ===========================================================================
   // Context
   // ===========================================================================
+
   const { setOptionsId } = useContext(MenuUtilitiesContext)
 
   const startRename = () => {
@@ -61,7 +64,7 @@ const CategoryOptions: React.FC<CategoryOptionsProps> = ({ clickedCategory }) =>
   }
 
   return (
-    <nav className="options-nav" data-testid="category-options-nav">
+    <nav className="options-nav" data-testid={TestIDEnum.CATEGORY_OPTIONS_NAV}>
       <ContextMenuOption
         dataTestID="category-options-rename"
         handler={startRename}
@@ -87,12 +90,15 @@ const NotesOptions: React.FC<NotesOptionsProps> = ({ clickedNote }) => {
   // ===========================================================================
   // Selectors
   // ===========================================================================
+
   const { categories } = useSelector(getCategories)
 
   // ===========================================================================
   // Dispatch
   // ===========================================================================
+
   const dispatch = useDispatch()
+
   const _deleteNote = (noteId: string) => dispatch(deleteNote(noteId))
   const _toggleTrashedNote = (noteId: string) => dispatch(toggleTrashedNote(noteId))
   const _toggleFavoriteNote = (noteId: string) => dispatch(toggleFavoriteNote(noteId))
@@ -100,6 +106,10 @@ const NotesOptions: React.FC<NotesOptionsProps> = ({ clickedNote }) => {
     dispatch(addCategoryToNote({ categoryId, noteId }))
   const _swapNote = (noteId: string) => dispatch(swapNote(noteId))
   const _swapCategory = (categoryId: string) => dispatch(swapCategory(categoryId))
+
+  // ===========================================================================
+  // Handlers
+  // ===========================================================================
 
   const deleteNoteHandler = () => _deleteNote(clickedNote.id)
   const downloadNoteHandler = () =>

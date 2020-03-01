@@ -10,9 +10,7 @@ const addCategory = (categoryName: string) => {
   getTestID(TestIDEnum.ADD_CATEGORY_BUTTON)
     .should('contain', StringEnum.ADD_CATEGORY)
     .click()
-
   getTestID(TestIDEnum.NEW_CATEGORY_INPUT).type(categoryName)
-
   getTestID(TestIDEnum.NEW_CATEGORY_FORM).submit()
 
   cy.contains(categoryName)

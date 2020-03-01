@@ -19,12 +19,14 @@ export const SettingsModal: React.FC = () => {
   // ===========================================================================
   // Selectors
   // ===========================================================================
+
   const { codeMirrorOptions, isOpen, previewMarkdown, darkTheme } = useSelector(getSettings)
   const { currentUser } = useSelector(getAuth)
 
   // ===========================================================================
   // Dispatch
   // ===========================================================================
+
   const dispatch = useDispatch()
 
   const _logout = () => dispatch(logout())
@@ -37,7 +39,12 @@ export const SettingsModal: React.FC = () => {
   // ===========================================================================
   // Refs
   // ===========================================================================
+
   const node = useRef<HTMLDivElement>(null)
+
+  // ===========================================================================
+  // Handlers
+  // ===========================================================================
 
   const handleDomClick = (event: ReactMouseEvent) => {
     event.stopPropagation()
@@ -55,7 +62,6 @@ export const SettingsModal: React.FC = () => {
   }
   const toggleLineHighlight = () =>
     _updateCodeMirrorOption('styleActiveLine', !codeMirrorOptions.styleActiveLine)
-
   const handleEscPress = (event: KeyboardEvent) => {
     event.stopPropagation()
     if (event.key === 'Escape' && isOpen) {
@@ -66,6 +72,7 @@ export const SettingsModal: React.FC = () => {
   // ===========================================================================
   // Hooks
   // ===========================================================================
+
   useEffect(() => {
     document.addEventListener('mousedown', handleDomClick)
     document.addEventListener('keydown', handleEscPress)

@@ -8,6 +8,12 @@ import { Folder } from '@/utils/enums'
 import { folderMap } from '@/utils/constants'
 import { NoteItem, CategoryItem, WithPayload } from '@/types'
 
+export const getActiveNote = (notes: NoteItem[], activeNoteId: string) =>
+  notes.find(note => note.id === activeNoteId)
+
+export const getActiveCategory = (categories: CategoryItem[], activeCategoryId: string) =>
+  categories.find(({ id }) => id === activeCategoryId)
+
 export const getNoteTitle = (text: string): string => {
   // Remove whitespace from both ends
   // Get the first n characters

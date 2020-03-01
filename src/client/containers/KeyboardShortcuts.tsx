@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { useTempState } from '@/contexts/TempStateContext'
 import { Folder, Shortcuts } from '@/utils/enums'
-import { downloadNote, getNoteTitle, newNoteHandlerHelper } from '@/utils/helpers'
+import { downloadNote, getNoteTitle, newNoteHandlerHelper, getActiveNote } from '@/utils/helpers'
 import { useKey } from '@/utils/hooks'
 import { addNote, swapNote, toggleTrashedNote, swapFolder } from '@/slices/note'
 import { syncState } from '@/slices/sync'
@@ -15,13 +15,17 @@ export const KeyboardShortcuts: React.FC = () => {
   // ===========================================================================
   // Selectors
   // ===========================================================================
+
   const { categories } = useSelector(getCategories)
   const { activeCategoryId, activeFolder, activeNoteId, notes } = useSelector(getNotes)
   const { darkTheme, previewMarkdown } = useSelector(getSettings)
 
+  const activeNote = getActiveNote(notes, activeNoteId)
+
   // ===========================================================================
   // Dispatch
   // ===========================================================================
+
   const dispatch = useDispatch()
 
   const _addNote = (note: NoteItem) => dispatch(addNote(note))
@@ -38,8 +42,12 @@ export const KeyboardShortcuts: React.FC = () => {
   // ===========================================================================
   // State
   // ===========================================================================
+
   const { addingTempCategory, setAddingTempCategory } = useTempState()
-  const activeNote = notes.find(note => note.id === activeNoteId)
+
+  // ===========================================================================
+  // Handlers
+  // ===========================================================================
 
   const newNoteHandler = () =>
     newNoteHandlerHelper(
@@ -61,6 +69,10 @@ export const KeyboardShortcuts: React.FC = () => {
     _toggleDarkTheme()
     _updateCodeMirrorOption('theme', darkTheme ? 'base16-light' : 'new-moon')
   }
+
+  // ===========================================================================
+  // Hooks
+  // ===========================================================================
 
   useKey(Shortcuts.NEW_NOTE, () => newNoteHandler())
   useKey(Shortcuts.NEW_CATEGORY, () => newTempCategoryHandler())
