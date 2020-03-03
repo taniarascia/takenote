@@ -8,14 +8,14 @@ import { TestID } from '@resources/TestID'
 import { ContextMenuOption } from '@/components/NoteList/ContextMenuOption'
 import { downloadNote, getNoteTitle } from '@/utils/helpers'
 import {
-  deleteNote,
+  deleteNotes,
   toggleFavoriteNote,
   toggleTrashedNote,
   addCategoryToNote,
   swapCategory,
   swapNote,
 } from '@/slices/note'
-import { getCategories } from '@/selectors'
+import { getCategories, getNotes } from '@/selectors'
 import { CategoryItem, NoteItem } from '@/types'
 import { ContextMenuEnum } from '@/utils/enums'
 import { setCategoryEdit, deleteCategory } from '@/slices/category'
@@ -91,6 +91,7 @@ const NotesOptions: React.FC<NotesOptionsProps> = ({ clickedNote }) => {
   // Selectors
   // ===========================================================================
 
+  const { selectedNotesIds } = useSelector(getNotes)
   const { categories } = useSelector(getCategories)
 
   // ===========================================================================
@@ -99,7 +100,7 @@ const NotesOptions: React.FC<NotesOptionsProps> = ({ clickedNote }) => {
 
   const dispatch = useDispatch()
 
-  const _deleteNote = (noteId: string) => dispatch(deleteNote(noteId))
+  const _deleteNotes = (noteIds: Set<string>) => dispatch(deleteNotes(noteIds))
   const _toggleTrashedNote = (noteId: string) => dispatch(toggleTrashedNote(noteId))
   const _toggleFavoriteNote = (noteId: string) => dispatch(toggleFavoriteNote(noteId))
   const _addCategoryToNote = (categoryId: string, noteId: string) =>
@@ -111,7 +112,7 @@ const NotesOptions: React.FC<NotesOptionsProps> = ({ clickedNote }) => {
   // Handlers
   // ===========================================================================
 
-  const deleteNoteHandler = () => _deleteNote(clickedNote.id)
+  const deleteNotesHandler = () => _deleteNotes(new Set(selectedNotesIds))
   const downloadNoteHandler = () =>
     downloadNote(
       getNoteTitle(clickedNote.text),
@@ -132,7 +133,7 @@ const NotesOptions: React.FC<NotesOptionsProps> = ({ clickedNote }) => {
         <>
           <ContextMenuOption
             dataTestID={TestID.NOTE_OPTION_DELETE_PERMANENTLY}
-            handler={deleteNoteHandler}
+            handler={deleteNotesHandler}
             icon={X}
             text={LabelText.DELETE_PERMANENTLY}
             optionType="delete"

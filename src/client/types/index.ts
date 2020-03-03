@@ -56,6 +56,7 @@ export interface NoteState {
   notes: NoteItem[]
   activeFolder: Folder
   activeNoteId: string
+  selectedNotesIds: string[]
   activeCategoryId: string
   error: string
   loading: boolean

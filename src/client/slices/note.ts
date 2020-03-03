@@ -41,6 +41,7 @@ const initialState: NoteState = {
   activeCategoryId: '',
   activeFolder: Folder.ALL,
   activeNoteId: '',
+  selectedNotesIds: [],
   error: '',
   loading: true,
   notes: [],
@@ -64,15 +65,23 @@ const noteSlice = createSlice({
       ...state,
       notes: [...state.notes, payload],
     }),
-    deleteNote: (state, { payload }: PayloadAction<string>) => ({
+    deleteNotes: (state, { payload }: PayloadAction<Set<string>>) => ({
       ...state,
-      notes: state.notes.filter(note => note.id !== payload),
+      notes: state.notes.filter(note => !payload.has(note.id)),
       activeNoteId: getNewActiveNoteId(
         state.notes,
-        payload,
+        state.activeNoteId,
         state.activeCategoryId,
         state.activeFolder
       ),
+      selectedNotesIds: [
+        getNewActiveNoteId(
+          state.notes,
+          state.activeNoteId,
+          state.activeCategoryId,
+          state.activeFolder
+        ),
+      ],
     }),
     emptyTrash: state => ({
       ...state,
@@ -88,6 +97,7 @@ const noteSlice = createSlice({
       ...state,
       notes: payload,
       activeNoteId: getFirstNoteId(Folder.ALL, payload),
+      selectedNotesIds: [getFirstNoteId(Folder.ALL, payload)],
       loading: false,
     }),
     pruneCategoryFromNotes: (state, { payload }: PayloadAction<string>) => ({
@@ -98,7 +108,9 @@ const noteSlice = createSlice({
     }),
     pruneNotes: state => ({
       ...state,
-      notes: state.notes.filter(note => note.text !== '' || note.id === state.activeNoteId),
+      notes: state.notes.filter(
+        note => note.text !== '' || state.selectedNotesIds.includes(note.id)
+      ),
     }),
     searchNotes: (state, { payload }: PayloadAction<string>) => ({
       ...state,
@@ -109,16 +121,19 @@ const noteSlice = createSlice({
       activeCategoryId: payload,
       activeFolder: Folder.CATEGORY,
       activeNoteId: getFirstNoteId(Folder.CATEGORY, state.notes, payload),
+      selectedNotesIds: [getFirstNoteId(Folder.CATEGORY, state.notes, payload)],
     }),
     swapFolder: (state, { payload }: PayloadAction<Folder>) => ({
       ...state,
       activeFolder: payload,
       activeCategoryId: '',
       activeNoteId: getFirstNoteId(payload, state.notes),
+      selectedNotesIds: [getFirstNoteId(payload, state.notes)],
     }),
     swapNote: (state, { payload }: PayloadAction<string>) => ({
       ...state,
-      activeNoteId: payload,
+      activeNoteId:
+        state.notes.filter(({ id }) => state.selectedNotesIds.includes(id)).slice(-1)[0].id || '',
     }),
     toggleFavoriteNote: (state, { payload }: PayloadAction<string>) => ({
       ...state,
@@ -137,6 +152,9 @@ const noteSlice = createSlice({
         state.activeCategoryId,
         state.activeFolder
       ),
+      selectedNotesIds: [
+        getNewActiveNoteId(state.notes, payload, state.activeCategoryId, state.activeFolder),
+      ],
     }),
     addFavoriteNote: (state, { payload }: PayloadAction<string>) => ({
       ...state,
@@ -151,6 +169,9 @@ const noteSlice = createSlice({
         state.activeCategoryId,
         state.activeFolder
       ),
+      selectedNotesIds: [
+        getNewActiveNoteId(state.notes, payload, state.activeCategoryId, state.activeFolder),
+      ],
     }),
     updateNote: (state, { payload }: PayloadAction<NoteItem>) => ({
       ...state,
@@ -160,13 +181,26 @@ const noteSlice = createSlice({
           : note
       ),
     }),
+    updateSelectedNotes: (
+      state,
+      { payload: { noteId, multiSelect } }: PayloadAction<{ noteId: string; multiSelect: boolean }>
+    ) => ({
+      ...state,
+      selectedNotesIds: multiSelect
+        ? state.selectedNotesIds.length === 1 && state.selectedNotesIds[0] === noteId
+          ? state.selectedNotesIds
+          : state.selectedNotesIds.includes(noteId)
+          ? state.selectedNotesIds.filter(selectedNoteId => selectedNoteId !== noteId)
+          : [...state.selectedNotesIds, noteId]
+        : [noteId],
+    }),
   },
 })
 
 export const {
   addCategoryToNote,
   addNote,
-  deleteNote,
+  deleteNotes,
   emptyTrash,
   loadNotes,
   loadNotesError,
@@ -182,6 +216,7 @@ export const {
   addFavoriteNote,
   addTrashedNote,
   updateNote,
+  updateSelectedNotes,
 } = noteSlice.actions
 
 export default noteSlice.reducer

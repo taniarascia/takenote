@@ -16,7 +16,7 @@ import {
   shouldOpenContextMenu,
 } from '@/utils/helpers'
 import { useKey } from '@/utils/hooks'
-import { emptyTrash, pruneNotes, swapNote, searchNotes } from '@/slices/note'
+import { emptyTrash, pruneNotes, swapNote, searchNotes, updateSelectedNotes } from '@/slices/note'
 import { NoteItem, ReactDragEvent, ReactMouseEvent } from '@/types'
 import { getNotes } from '@/selectors'
 
@@ -25,7 +25,14 @@ export const NoteList: React.FC = () => {
   // Selectors
   // ===========================================================================
 
-  const { activeCategoryId, activeFolder, activeNoteId, notes, searchValue } = useSelector(getNotes)
+  const {
+    activeCategoryId,
+    activeFolder,
+    activeNoteId,
+    selectedNotesIds,
+    notes,
+    searchValue,
+  } = useSelector(getNotes)
 
   // ===========================================================================
   // Dispatch
@@ -33,6 +40,13 @@ export const NoteList: React.FC = () => {
 
   const dispatch = useDispatch()
 
+  const _updateSelectedNotes = ({
+    noteId,
+    multiSelect,
+  }: {
+    noteId: string
+    multiSelect: boolean
+  }) => dispatch(updateSelectedNotes({ noteId, multiSelect }))
   const _emptyTrash = () => dispatch(emptyTrash())
   const _pruneNotes = () => dispatch(pruneNotes())
   const _swapNote = (noteId: string) => dispatch(swapNote(noteId))
@@ -188,13 +202,16 @@ export const NoteList: React.FC = () => {
           return (
             <div
               data-testid={TestID.NOTE_LIST_ITEM + index}
-              className={note.id === activeNoteId ? 'note-list-each active' : 'note-list-each'}
+              className={
+                selectedNotesIds.includes(note.id) ? 'note-list-each selected' : 'note-list-each'
+              }
               key={note.id}
-              onClick={() => {
-                if (note.id !== activeNoteId) {
-                  _swapNote(note.id)
-                  _pruneNotes()
-                }
+              onClick={event => {
+                event.stopPropagation()
+
+                _updateSelectedNotes({ noteId: note.id, multiSelect: event.metaKey })
+                _swapNote(note.id)
+                _pruneNotes()
               }}
               onContextMenu={event => handleNoteRightClick(event, note.id)}
               draggable
@@ -218,7 +235,7 @@ export const NoteList: React.FC = () => {
               <div
                 // TODO: make testID based off of index when we add that to a NoteItem object
                 data-testid={TestID.NOTE_OPTIONS_DIV + index}
-                className={optionsId === note.id ? 'note-options active' : 'note-options'}
+                className={optionsId === note.id ? 'note-options selected' : 'note-options'}
                 onClick={event => handleNoteOptionsClick(event, note.id)}
               >
                 <MoreHorizontal size={15} className="context-menu-action" />

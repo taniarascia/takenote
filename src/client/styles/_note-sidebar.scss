@@ -92,7 +92,7 @@
         }
       }
 
-      &.active {
+      &.selected {
         background: $primary;
         color: white;
         border-bottom: 1px solid $primary;
@@ -108,7 +108,7 @@
         }
 
         .note-options {
-          &.active {
+          &.selected {
             color: white;
           }
         }
@@ -126,7 +126,7 @@
         z-index: 1;
         cursor: pointer;
 
-        &.active {
+        &.selected {
           color: $font-color;
         }
       }
