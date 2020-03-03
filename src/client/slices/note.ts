@@ -57,17 +57,23 @@ const noteSlice = createSlice({
       { payload }: PayloadAction<{ categoryId: string; noteId: string }>
     ) => ({
       ...state,
-      notes: state.notes.map(note =>
-        note.id === payload.noteId ? { ...note, category: payload.categoryId } : note
-      ),
+      notes: state.selectedNotesIds.includes(payload.noteId)
+        ? state.notes.map(note =>
+            state.selectedNotesIds.includes(payload.noteId)
+              ? { ...note, categoryId: payload.categoryId }
+              : note
+          )
+        : state.notes.map(note =>
+            note.id === payload.noteId ? { ...note, categoryId: payload.categoryId } : note
+          ),
     }),
     addNote: (state, { payload }: PayloadAction<NoteItem>) => ({
       ...state,
       notes: [...state.notes, payload],
     }),
-    deleteNotes: (state, { payload }: PayloadAction<Set<string>>) => ({
+    deleteNotes: (state, { payload }: PayloadAction<string[]>) => ({
       ...state,
-      notes: state.notes.filter(note => !payload.has(note.id)),
+      notes: state.notes.filter(note => !payload.includes(note.id)),
       activeNoteId: getNewActiveNoteId(
         state.notes,
         state.activeNoteId,
@@ -130,22 +136,29 @@ const noteSlice = createSlice({
       activeNoteId: getFirstNoteId(payload, state.notes),
       selectedNotesIds: [getFirstNoteId(payload, state.notes)],
     }),
-    swapNote: (state, { payload }: PayloadAction<string>) => ({
+    swapNote: (state, { payload }: PayloadAction<{ noteId?: string; multiSelect: boolean }>) => ({
       ...state,
-      activeNoteId:
-        state.notes.filter(({ id }) => state.selectedNotesIds.includes(id)).slice(-1)[0].id || '',
+      activeNoteId: payload.multiSelect
+        ? state.notes.filter(({ id }) => state.selectedNotesIds.includes(id)).slice(-1)[0].id
+        : payload.noteId!,
     }),
     toggleFavoriteNote: (state, { payload }: PayloadAction<string>) => ({
       ...state,
-      notes: state.notes.map(note =>
-        note.id === payload ? { ...note, favorite: !note.favorite } : note
-      ),
+      notes: state.selectedNotesIds.includes(payload)
+        ? state.notes.map(note =>
+            state.selectedNotesIds.includes(note.id) ? { ...note, favorite: !note.favorite } : note
+          )
+        : state.notes.map(note =>
+            note.id === payload ? { ...note, favorite: !note.favorite } : note
+          ),
     }),
     toggleTrashedNote: (state, { payload }: PayloadAction<string>) => ({
       ...state,
-      notes: state.notes.map(note =>
-        note.id === payload ? { ...note, trash: !note.trash } : note
-      ),
+      notes: state.selectedNotesIds.includes(payload)
+        ? state.notes.map(note =>
+            state.selectedNotesIds.includes(note.id) ? { ...note, trash: !note.trash } : note
+          )
+        : state.notes.map(note => (note.id === payload ? { ...note, trash: !note.trash } : note)),
       activeNoteId: getNewActiveNoteId(
         state.notes,
         payload,
