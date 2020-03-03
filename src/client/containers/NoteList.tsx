@@ -25,14 +25,9 @@ export const NoteList: React.FC = () => {
   // Selectors
   // ===========================================================================
 
-  const {
-    activeCategoryId,
-    activeFolder,
-    activeNoteId,
-    selectedNotesIds,
-    notes,
-    searchValue,
-  } = useSelector(getNotes)
+  const { activeCategoryId, activeFolder, selectedNotesIds, notes, searchValue } = useSelector(
+    getNotes
+  )
 
   // ===========================================================================
   // Dispatch
@@ -49,7 +44,8 @@ export const NoteList: React.FC = () => {
   }) => dispatch(updateSelectedNotes({ noteId, multiSelect }))
   const _emptyTrash = () => dispatch(emptyTrash())
   const _pruneNotes = () => dispatch(pruneNotes())
-  const _swapNote = (noteId: string) => dispatch(swapNote(noteId))
+  const _swapNote = (noteId: string, multiSelect: boolean) =>
+    dispatch(swapNote({ noteId, multiSelect }))
   const _searchNotes = _.debounce((searchValue: string) => dispatch(searchNotes(searchValue)), 100)
 
   // ===========================================================================
@@ -128,6 +124,9 @@ export const NoteList: React.FC = () => {
 
     // Make sure we aren't getting any null values .. any element clicked should be a sub-class of element
     if (!clicked) return
+
+    // FIXME: This feels hacky
+    if (event.ctrlKey) return
 
     // Make sure we are not right clicking on the menu
     if (optionsId && event.button == RIGHT_CLICK) return
@@ -210,7 +209,7 @@ export const NoteList: React.FC = () => {
                 event.stopPropagation()
 
                 _updateSelectedNotes({ noteId: note.id, multiSelect: event.metaKey })
-                _swapNote(note.id)
+                _swapNote(note.id, event.metaKey)
                 _pruneNotes()
               }}
               onContextMenu={event => handleNoteRightClick(event, note.id)}

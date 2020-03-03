@@ -74,7 +74,8 @@ export const AppSidebar: React.FC = () => {
   const dispatch = useDispatch()
 
   const _addNote = (note: NoteItem) => dispatch(addNote(note))
-  const _swapNote = (noteId: string) => dispatch(swapNote(noteId))
+  const _swapNote = (noteId: string, multiSelect: boolean) =>
+    dispatch(swapNote({ noteId, multiSelect }))
   const _swapCategory = (categoryId: string) => dispatch(swapCategory(categoryId))
   const _swapFolder = (folder: Folder) => dispatch(swapFolder(folder))
   const _addCategory = (category: CategoryItem) => dispatch(addCategory(category))
@@ -276,7 +277,7 @@ export const AppSidebar: React.FC = () => {
                               notesForNewCategory.length > 0 ? notesForNewCategory[0].id : ''
                             if (category.id !== activeCategoryId) {
                               _swapCategory(category.id)
-                              _swapNote(newNoteId)
+                              _swapNote(newNoteId, false)
                             }
                           }}
                           onDoubleClick={() => {

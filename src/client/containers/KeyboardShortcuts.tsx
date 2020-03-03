@@ -29,7 +29,8 @@ export const KeyboardShortcuts: React.FC = () => {
   const dispatch = useDispatch()
 
   const _addNote = (note: NoteItem) => dispatch(addNote(note))
-  const _swapNote = (noteId: string) => dispatch(swapNote(noteId))
+  const _swapNote = (noteId: string, multiSelect: boolean) =>
+    dispatch(swapNote({ noteId, multiSelect }))
   const _swapFolder = (folder: Folder) => dispatch(swapFolder(folder))
   const _toggleTrashedNote = (noteId: string) => dispatch(toggleTrashedNote(noteId))
   const _syncState = (notes: NoteItem[], categories: CategoryItem[]) =>

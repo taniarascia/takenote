@@ -100,19 +100,20 @@ const NotesOptions: React.FC<NotesOptionsProps> = ({ clickedNote }) => {
 
   const dispatch = useDispatch()
 
-  const _deleteNotes = (noteIds: Set<string>) => dispatch(deleteNotes(noteIds))
+  const _deleteNotes = (noteIds: string[]) => dispatch(deleteNotes(noteIds))
   const _toggleTrashedNote = (noteId: string) => dispatch(toggleTrashedNote(noteId))
   const _toggleFavoriteNote = (noteId: string) => dispatch(toggleFavoriteNote(noteId))
   const _addCategoryToNote = (categoryId: string, noteId: string) =>
     dispatch(addCategoryToNote({ categoryId, noteId }))
-  const _swapNote = (noteId: string) => dispatch(swapNote(noteId))
+  const _swapNote = (noteId: string, multiSelect: boolean) =>
+    dispatch(swapNote({ noteId, multiSelect }))
   const _swapCategory = (categoryId: string) => dispatch(swapCategory(categoryId))
 
   // ===========================================================================
   // Handlers
   // ===========================================================================
 
-  const deleteNotesHandler = () => _deleteNotes(new Set(selectedNotesIds))
+  const deleteNotesHandler = () => _deleteNotes(selectedNotesIds)
   const downloadNoteHandler = () =>
     downloadNote(
       getNoteTitle(clickedNote.text),
@@ -124,7 +125,7 @@ const NotesOptions: React.FC<NotesOptionsProps> = ({ clickedNote }) => {
   const removeCategoryHandler = () => {
     _addCategoryToNote('', clickedNote.id)
     _swapCategory('')
-    _swapNote(clickedNote.id)
+    _swapNote(clickedNote.id, false)
   }
 
   return (

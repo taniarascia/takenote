@@ -70,7 +70,16 @@ export const newNoteHandlerHelper = (
   swapFolder: (folder: Folder) => WithPayload<string, Action<string>>,
   togglePreviewMarkdown: () => WithPayload<undefined, Action<string>>,
   addNote: (note: NoteItem) => WithPayload<NoteItem, Action<string>>,
-  swapNote: (noteId: string) => WithPayload<string, Action<string>>
+  swapNote: (
+    noteId: string,
+    multiSelect: boolean
+  ) => WithPayload<
+    {
+      noteId: string
+      multiSelect: boolean
+    },
+    Action<string>
+  >
 ) => {
   if ([Folder.TRASH, Folder.SCRATCHPAD].indexOf(activeFolder) !== -1) {
     swapFolder(Folder.ALL)
@@ -86,7 +95,7 @@ export const newNoteHandlerHelper = (
       activeFolder === Folder.TRASH ? Folder.ALL : activeFolder
     )
     addNote(note)
-    swapNote(note.id)
+    swapNote(note.id, false)
   }
 }
 

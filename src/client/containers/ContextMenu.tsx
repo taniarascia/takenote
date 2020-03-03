@@ -139,7 +139,8 @@ const NotesMenu: React.FC<NotesMenuProps> = ({ note, setOptionsId }) => {
 
   const _addCategoryToNote = (categoryId: string, noteId: string) =>
     dispatch(addCategoryToNote({ categoryId, noteId }))
-  const _swapNote = (noteId: string) => dispatch(swapNote(noteId))
+  const _swapNote = (noteId: string, multiSelect: boolean) =>
+    dispatch(swapNote({ noteId, multiSelect }))
   const _swapCategory = (categoryId: string) => dispatch(swapCategory(categoryId))
 
   const filteredCategories = categories.filter(({ id }) => id !== activeCategoryId)
@@ -157,7 +158,7 @@ const NotesMenu: React.FC<NotesMenuProps> = ({ note, setOptionsId }) => {
 
               if (event.target.value !== activeCategoryId) {
                 _swapCategory(event.target.value)
-                _swapNote(note.id)
+                _swapNote(note.id, false)
               }
 
               setOptionsId('')
