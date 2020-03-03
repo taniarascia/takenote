@@ -40,6 +40,7 @@ import {
   swapNote,
   addFavoriteNote,
   addTrashedNote,
+  updateSelectedNotes,
 } from '@/slices/note'
 import { toggleSettingsModal, togglePreviewMarkdown } from '@/slices/settings'
 import { syncState } from '@/slices/sync'
@@ -76,6 +77,8 @@ export const AppSidebar: React.FC = () => {
   const _addNote = (note: NoteItem) => dispatch(addNote(note))
   const _swapNote = (noteId: string, multiSelect: boolean) =>
     dispatch(swapNote({ noteId, multiSelect }))
+  const _updateSelectedNotes = (noteId: string, multiSelect: boolean) =>
+    dispatch(updateSelectedNotes({ noteId, multiSelect }))
   const _swapCategory = (categoryId: string) => dispatch(swapCategory(categoryId))
   const _swapFolder = (folder: Folder) => dispatch(swapFolder(folder))
   const _addCategory = (category: CategoryItem) => dispatch(addCategory(category))
@@ -122,7 +125,8 @@ export const AppSidebar: React.FC = () => {
       _swapFolder,
       _togglePreviewMarkdown,
       _addNote,
-      _swapNote
+      _swapNote,
+      _updateSelectedNotes
     )
 
   const resetTempCategory = () => {

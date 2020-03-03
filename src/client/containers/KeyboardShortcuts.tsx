@@ -5,7 +5,13 @@ import { useTempState } from '@/contexts/TempStateContext'
 import { Folder, Shortcuts } from '@/utils/enums'
 import { downloadNote, getNoteTitle, newNoteHandlerHelper, getActiveNote } from '@/utils/helpers'
 import { useKey } from '@/utils/hooks'
-import { addNote, swapNote, toggleTrashedNote, swapFolder } from '@/slices/note'
+import {
+  addNote,
+  swapNote,
+  toggleTrashedNote,
+  swapFolder,
+  updateSelectedNotes,
+} from '@/slices/note'
 import { syncState } from '@/slices/sync'
 import { getSettings, getNotes, getCategories } from '@/selectors'
 import { CategoryItem, NoteItem } from '@/types'
@@ -31,6 +37,8 @@ export const KeyboardShortcuts: React.FC = () => {
   const _addNote = (note: NoteItem) => dispatch(addNote(note))
   const _swapNote = (noteId: string, multiSelect: boolean) =>
     dispatch(swapNote({ noteId, multiSelect }))
+  const _updateSelectedNotes = (noteId: string, multiSelect: boolean) =>
+    dispatch(updateSelectedNotes({ noteId, multiSelect }))
   const _swapFolder = (folder: Folder) => dispatch(swapFolder(folder))
   const _toggleTrashedNote = (noteId: string) => dispatch(toggleTrashedNote(noteId))
   const _syncState = (notes: NoteItem[], categories: CategoryItem[]) =>
@@ -59,7 +67,8 @@ export const KeyboardShortcuts: React.FC = () => {
       _swapFolder,
       _togglePreviewMarkdown,
       _addNote,
-      _swapNote
+      _swapNote,
+      _updateSelectedNotes
     )
   const newTempCategoryHandler = () => !addingTempCategory && setAddingTempCategory(true)
   const trashNoteHandler = () => _toggleTrashedNote(activeNote!.id)

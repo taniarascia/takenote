@@ -79,6 +79,16 @@ export const newNoteHandlerHelper = (
       multiSelect: boolean
     },
     Action<string>
+  >,
+  updateSelectedNotes: (
+    noteId: string,
+    multiSelect: boolean
+  ) => WithPayload<
+    {
+      noteId: string
+      multiSelect: boolean
+    },
+    Action<string>
   >
 ) => {
   if ([Folder.TRASH, Folder.SCRATCHPAD].indexOf(activeFolder) !== -1) {
@@ -95,6 +105,7 @@ export const newNoteHandlerHelper = (
       activeFolder === Folder.TRASH ? Folder.ALL : activeFolder
     )
     addNote(note)
+    updateSelectedNotes(note.id, false)
     swapNote(note.id, false)
   }
 }

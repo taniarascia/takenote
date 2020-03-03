@@ -35,13 +35,8 @@ export const NoteList: React.FC = () => {
 
   const dispatch = useDispatch()
 
-  const _updateSelectedNotes = ({
-    noteId,
-    multiSelect,
-  }: {
-    noteId: string
-    multiSelect: boolean
-  }) => dispatch(updateSelectedNotes({ noteId, multiSelect }))
+  const _updateSelectedNotes = (noteId: string, multiSelect: boolean) =>
+    dispatch(updateSelectedNotes({ noteId, multiSelect }))
   const _emptyTrash = () => dispatch(emptyTrash())
   const _pruneNotes = () => dispatch(pruneNotes())
   const _swapNote = (noteId: string, multiSelect: boolean) =>
@@ -208,7 +203,7 @@ export const NoteList: React.FC = () => {
               onClick={event => {
                 event.stopPropagation()
 
-                _updateSelectedNotes({ noteId: note.id, multiSelect: event.metaKey })
+                _updateSelectedNotes(note.id, event.metaKey)
                 _swapNote(note.id, event.metaKey)
                 _pruneNotes()
               }}
