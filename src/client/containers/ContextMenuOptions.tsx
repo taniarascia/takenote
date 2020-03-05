@@ -132,7 +132,6 @@ const NotesOptions: React.FC<NotesOptionsProps> = ({ clickedNote }) => {
   const trashNoteHandler = () => _toggleTrashedNote(clickedNote.id)
   const removeCategoryFromNoteHandler = () => {
     _addCategoryToNote('', clickedNote.id)
-    _swapCategory('')
     _swapNote(clickedNote.id, false)
   }
 
