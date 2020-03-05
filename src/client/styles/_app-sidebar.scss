@@ -1,12 +1,10 @@
 .app-sidebar {
-  transition: all 0.3s ease;
-  padding: 1rem 0 0.25rem;
+  padding: 0.5rem 0 0.25rem;
   background: $app-sidebar-color;
   color: $light-font-color;
   display: flex;
   flex-direction: column;
   border-right: 1px solid darken($app-sidebar-color, 10%);
-  overflow-x: hidden;
   z-index: 3;
 
   &-synced {
