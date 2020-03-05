@@ -24,6 +24,9 @@
     .app-sidebar-synced {
       display: none;
     }
+    .note-sidebar-header {
+      left: 0;
+    }
   }
 
   &.scratchpad {
@@ -56,7 +59,7 @@
 }
 
 .note-editor {
-  min-width: 500px;
+  min-width: 300px;
   .empty-editor,
   .editor,
   .previewer {
