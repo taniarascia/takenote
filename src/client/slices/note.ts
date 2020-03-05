@@ -59,7 +59,7 @@ const noteSlice = createSlice({
       ...state,
       notes: state.selectedNotesIds.includes(payload.noteId)
         ? state.notes.map(note =>
-            state.selectedNotesIds.includes(payload.noteId)
+            state.selectedNotesIds.includes(note.id)
               ? { ...note, category: payload.categoryId }
               : note
           )
