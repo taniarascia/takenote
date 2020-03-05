@@ -18,7 +18,11 @@ import {
   clickCategoryOptionDelete,
 } from '../utils/testCategoryHelperUtils'
 import { dynamicTimeCategoryName } from '../utils/testHelperEnums'
-import { defaultInit, navigateToAllNotes } from '../utils/testHelperUtils'
+import {
+  defaultInit,
+  navigateToAllNotes,
+  assertCurrentFolderOrCategory,
+} from '../utils/testHelperUtils'
 import {
   assertNoteListLengthEquals,
   clickCreateNewNote,
@@ -100,5 +104,15 @@ describe('Category tests', () => {
     clickCategoryOptionDelete()
 
     assertCategoryDoesNotExist(dynamicTimeCategoryName)
+  })
+
+  it('should redirect to All notes after deleting the category you are in', () => {
+    addCategory(dynamicTimeCategoryName)
+
+    navigateToCategory(dynamicTimeCategoryName)
+    openCategoryContextMenu(dynamicTimeCategoryName)
+    clickCategoryOptionDelete()
+
+    assertCurrentFolderOrCategory('All Notes')
   })
 })

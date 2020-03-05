@@ -6,6 +6,10 @@ import { TestID } from '@resources/TestID'
 
 import { entryPoint } from './testHelperEnums'
 
+const assertCurrentFolderOrCategory = (folderOrCategoryName: string) => {
+  cy.get('.active').should('have.text', folderOrCategoryName)
+}
+
 // takes a built string instead of a TestID .. prefer clickTestID() when possible
 const clickDynamicTestID = (dynamicTestID: string) => {
   cy.get(wrapWithTestIDTag(dynamicTestID)).click()
@@ -86,4 +90,5 @@ export {
   testIDShouldExist,
   testIDShouldNotExist,
   wrapWithTestIDTag,
+  assertCurrentFolderOrCategory,
 }

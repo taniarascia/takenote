@@ -21,7 +21,9 @@ import {
   assertNoteListLengthGTE,
   assertNoteListTitleAtIndex,
   assertNoteOptionsOpened,
+  assertNotesSelected,
   clickCreateNewNote,
+  createXUniqueNotes,
   clickEmptyTrash,
   clickNoteOptionDeleteNotePermanently,
   clickNoteOptionFavorite,
@@ -31,8 +33,17 @@ import {
   clickSyncNotes,
   typeNoteEditor,
   typeNoteSearch,
+  clearNoteSearch,
   openNoteContextMenu,
+  holdKeyAndClickNoteAtIndex,
+  trashAllNotes,
 } from '../utils/testNotesHelperUtils'
+import {
+  addCategory,
+  selectMoveToCategoryOption,
+  navigateToCategory,
+} from '../utils/testCategoryHelperUtils'
+import { dynamicTimeCategoryName } from '../utils/testHelperEnums'
 
 describe('Manage notes test', () => {
   defaultInit()
@@ -45,6 +56,9 @@ describe('Manage notes test', () => {
 
   beforeEach(() => {
     navigateToAllNotes()
+    clickCreateNewNote()
+    trashAllNotes()
+    clearNoteSearch()
     clickCreateNewNote()
   })
 
@@ -78,12 +92,12 @@ describe('Manage notes test', () => {
     assertNoteEditorLineCount(1)
     assertNoteEditorCharacterCount(sampleText.length)
 
-    // clean up state
-    clickNoteOptions()
-    clickNoteOptionTrash()
-    clickCreateNewNote()
-    navigateToTrash()
-    clickEmptyTrash()
+    // // clean up state
+    // clickNoteOptions()
+    // clickNoteOptionTrash()
+    // clickCreateNewNote()
+    // navigateToTrash()
+    // clickEmptyTrash()
   })
 
   it('should open options', () => {
@@ -345,5 +359,114 @@ describe('Manage notes test', () => {
     // make sure notes are filtered
     typeNoteSearch('note title')
     cy.then(() => assertNoteListLengthEquals(2))
+  })
+
+  it('should select multiple notes via ctrl/cmd + click', () => {
+    createXUniqueNotes(2)
+
+    // Select notes
+    holdKeyAndClickNoteAtIndex(0, 'meta')
+    holdKeyAndClickNoteAtIndex(1, 'meta')
+
+    assertNotesSelected(2)
+  })
+
+  it('should send multiple selected notes to trash via context menu', () => {
+    createXUniqueNotes(2)
+
+    holdKeyAndClickNoteAtIndex(0, 'meta')
+    holdKeyAndClickNoteAtIndex(1, 'meta')
+    openNoteContextMenu()
+    clickNoteOptionTrash()
+    assertNoteListLengthEquals(0)
+
+    navigateToTrash()
+    assertNoteListLengthEquals(2)
+  })
+
+  it('should send multiple selected notes to favorites via context menu', () => {
+    createXUniqueNotes(2)
+
+    holdKeyAndClickNoteAtIndex(0, 'meta')
+    holdKeyAndClickNoteAtIndex(1, 'meta')
+
+    openNoteContextMenu()
+    clickNoteOptionFavorite()
+    assertNoteListLengthEquals(2)
+
+    navigateToFavorites()
+    assertNoteListLengthEquals(2)
+  })
+
+  it('should remove multiple selected notes from favorites via context menu', () => {
+    navigateToFavorites()
+    createXUniqueNotes(2)
+
+    holdKeyAndClickNoteAtIndex(0, 'meta')
+    holdKeyAndClickNoteAtIndex(1, 'meta')
+
+    openNoteContextMenu()
+    clickNoteOptionFavorite()
+    assertNoteListLengthEquals(0)
+
+    navigateToAllNotes()
+    assertNoteListLengthEquals(2)
+  })
+
+  it('should send multiple selected notes to favorites when clicking on an already favorited selected note via context menu', () => {})
+
+  it('should remove multiple selected notes from favorites when clicking on a not yet favorited selected note via context menu', () => {})
+
+  it('should send multiple selected notes to a category via context menu', () => {
+    // add a category
+    addCategory(dynamicTimeCategoryName)
+
+    // navigate back to All Notes create a new note, and move it to that category
+    navigateToAllNotes()
+    createXUniqueNotes(2)
+    holdKeyAndClickNoteAtIndex(0, 'meta')
+    holdKeyAndClickNoteAtIndex(1, 'meta')
+    openNoteContextMenu()
+    selectMoveToCategoryOption(dynamicTimeCategoryName)
+    assertNoteListLengthEquals(2)
+
+    navigateToCategory(dynamicTimeCategoryName)
+    assertNoteListLengthEquals(2)
+  })
+
+  it('should restore multiple selected notes from trash', () => {
+    createXUniqueNotes(2)
+
+    holdKeyAndClickNoteAtIndex(0, 'meta')
+    holdKeyAndClickNoteAtIndex(1, 'meta')
+    openNoteContextMenu()
+    clickNoteOptionTrash()
+
+    navigateToTrash()
+    holdKeyAndClickNoteAtIndex(0, 'meta')
+    openNoteContextMenu()
+    clickNoteOptionRestoreFromTrash()
+    assertNoteListLengthEquals(0)
+
+    navigateToAllNotes()
+    assertNoteListLengthEquals(2)
+  })
+
+  it('should permanently delete multiple selected notes from trash', () => {
+    createXUniqueNotes(2)
+
+    holdKeyAndClickNoteAtIndex(0, 'meta')
+    holdKeyAndClickNoteAtIndex(1, 'meta')
+    openNoteContextMenu()
+    clickNoteOptionTrash()
+
+    navigateToTrash()
+    holdKeyAndClickNoteAtIndex(0, 'meta')
+    openNoteContextMenu()
+    clickNoteOptionDeleteNotePermanently()
+    assertNoteListLengthEquals(0)
+
+    navigateToAllNotes()
+    assertNoteListLengthEquals(0)
   })
 })
