@@ -60,11 +60,11 @@ const noteSlice = createSlice({
       notes: state.selectedNotesIds.includes(payload.noteId)
         ? state.notes.map(note =>
             state.selectedNotesIds.includes(payload.noteId)
-              ? { ...note, categoryId: payload.categoryId }
+              ? { ...note, category: payload.categoryId }
               : note
           )
         : state.notes.map(note =>
-            note.id === payload.noteId ? { ...note, categoryId: payload.categoryId } : note
+            note.id === payload.noteId ? { ...note, category: payload.categoryId } : note
           ),
     }),
     addNote: (state, { payload }: PayloadAction<NoteItem>) => ({
@@ -106,12 +106,12 @@ const noteSlice = createSlice({
       selectedNotesIds: [getFirstNoteId(Folder.ALL, payload)],
       loading: false,
     }),
-    pruneCategoryFromNotes: (state, { payload }: PayloadAction<string>) => ({
-      ...state,
-      notes: state.notes.map(note =>
-        note.category === payload ? { ...note, category: undefined } : note
-      ),
-    }),
+    // pruneCategoryFromNotes: (state, { payload }: PayloadAction<string>) => ({
+    //   ...state,
+    //   notes: state.notes.map(note =>
+    //     note.category === payload ? { ...note, category: undefined } : note
+    //   ),
+    // }),
     pruneNotes: state => ({
       ...state,
       notes: state.notes.filter(
@@ -218,7 +218,7 @@ export const {
   loadNotes,
   loadNotesError,
   loadNotesSuccess,
-  pruneCategoryFromNotes,
+  // pruneCategoryFromNotes,
   pruneNotes,
   searchNotes,
   swapCategory,
