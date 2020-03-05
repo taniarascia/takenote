@@ -21,7 +21,7 @@ export const NoteEditor: React.FC = () => {
   // Selectors
   // ===========================================================================
 
-  const { activeNoteId, loading, notes, activeFolder } = useSelector(getNotes)
+  const { activeNoteId, loading, notes } = useSelector(getNotes)
   const { codeMirrorOptions, previewMarkdown } = useSelector(getSettings)
 
   const activeNote = getActiveNote(notes, activeNoteId)
