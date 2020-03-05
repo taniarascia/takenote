@@ -6,7 +6,7 @@ import { LabelText } from '@resources/LabelText'
 import { TestID } from '@resources/TestID'
 
 import { ContextMenuOption } from '@/components/NoteList/ContextMenuOption'
-import { downloadNote, getNoteTitle } from '@/utils/helpers'
+import { downloadNotes } from '@/utils/helpers'
 import {
   deleteNotes,
   toggleFavoriteNote,
@@ -91,7 +91,7 @@ const NotesOptions: React.FC<NotesOptionsProps> = ({ clickedNote }) => {
   // Selectors
   // ===========================================================================
 
-  const { selectedNotesIds } = useSelector(getNotes)
+  const { selectedNotesIds, notes } = useSelector(getNotes)
   const { categories } = useSelector(getCategories)
 
   // ===========================================================================
@@ -114,11 +114,12 @@ const NotesOptions: React.FC<NotesOptionsProps> = ({ clickedNote }) => {
   // ===========================================================================
 
   const deleteNotesHandler = () => _deleteNotes(selectedNotesIds)
-  const downloadNoteHandler = () =>
-    downloadNote(
-      getNoteTitle(clickedNote.text),
-      clickedNote,
-      categories.find((category: CategoryItem) => category.id === clickedNote.category)
+  const downloadNotesHandler = () =>
+    downloadNotes(
+      selectedNotesIds.includes(clickedNote.id)
+        ? notes.filter(note => selectedNotesIds.includes(note.id))
+        : [clickedNote],
+      categories
     )
   const favoriteNoteHandler = () => _toggleFavoriteNote(clickedNote.id)
   const trashNoteHandler = () => _toggleTrashedNote(clickedNote.id)
@@ -165,7 +166,7 @@ const NotesOptions: React.FC<NotesOptionsProps> = ({ clickedNote }) => {
       )}
       <ContextMenuOption
         dataTestID={TestID.NOTE_OPTION_DOWNLOAD}
-        handler={downloadNoteHandler}
+        handler={downloadNotesHandler}
         icon={Download}
         text={LabelText.DOWNLOAD}
       />
