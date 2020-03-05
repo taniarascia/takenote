@@ -100,18 +100,20 @@ kbd {
   align-items: center;
   justify-content: space-between;
   background: transparent;
-  padding: 0.7rem;
+  padding: 0.8rem;
   margin: 0 0.5rem;
   border: none !important;
 }
 
 ::-webkit-scrollbar-corner {
   width: 8px;
+  height: 8px;
   background: transparent;
 }
 
 ::-webkit-scrollbar {
   width: 8px;
+  height: 8px;
   background: transparent;
 }
 
