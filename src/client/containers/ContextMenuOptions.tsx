@@ -14,10 +14,11 @@ import {
   addCategoryToNote,
   swapCategory,
   swapNote,
+  swapFolder,
 } from '@/slices/note'
 import { getCategories, getNotes } from '@/selectors'
+import { Folder, ContextMenuEnum } from '@/utils/enums'
 import { CategoryItem, NoteItem } from '@/types'
-import { ContextMenuEnum } from '@/utils/enums'
 import { setCategoryEdit, deleteCategory } from '@/slices/category'
 import { MenuUtilitiesContext } from '@/containers/ContextMenu'
 
@@ -46,6 +47,7 @@ const CategoryOptions: React.FC<CategoryOptionsProps> = ({ clickedCategory }) =>
   const dispatch = useDispatch()
 
   const _deleteCategory = (categoryId: string) => dispatch(deleteCategory(categoryId))
+  const _swapFolder = (categoryId: string) => dispatch(swapFolder(Folder.ALL))
   const _setCategoryEdit = (categoryId: string, tempName: string) =>
     dispatch(setCategoryEdit({ id: categoryId, tempName }))
 
@@ -55,25 +57,30 @@ const CategoryOptions: React.FC<CategoryOptionsProps> = ({ clickedCategory }) =>
 
   const { setOptionsId } = useContext(MenuUtilitiesContext)
 
-  const startRename = () => {
+  // ===========================================================================
+  // Handlers
+  // ===========================================================================
+
+  const startRenameHandler = () => {
     _setCategoryEdit(clickedCategory.id, clickedCategory.name)
     setOptionsId('')
   }
-  const removeCategory = () => {
+  const removeCategoryHandler = () => {
     _deleteCategory(clickedCategory.id)
+    _swapFolder('')
   }
 
   return (
     <nav className="options-nav" data-testid={TestID.CATEGORY_OPTIONS_NAV}>
       <ContextMenuOption
         dataTestID={TestID.CATEGORY_OPTION_RENAME}
-        handler={startRename}
+        handler={startRenameHandler}
         icon={Edit2}
         text={LabelText.RENAME}
       />
       <ContextMenuOption
         dataTestID={TestID.CATEGORY_OPTION_DELETE_PERMANENTLY}
-        handler={removeCategory}
+        handler={removeCategoryHandler}
         icon={X}
         text={LabelText.DELETE_PERMANENTLY}
         optionType="delete"
@@ -123,7 +130,7 @@ const NotesOptions: React.FC<NotesOptionsProps> = ({ clickedNote }) => {
     )
   const favoriteNoteHandler = () => _toggleFavoriteNote(clickedNote.id)
   const trashNoteHandler = () => _toggleTrashedNote(clickedNote.id)
-  const removeCategoryHandler = () => {
+  const removeCategoryFromNoteHandler = () => {
     _addCategoryToNote('', clickedNote.id)
     _swapCategory('')
     _swapNote(clickedNote.id, false)
@@ -173,7 +180,7 @@ const NotesOptions: React.FC<NotesOptionsProps> = ({ clickedNote }) => {
       {clickedNote.category && !clickedNote.trash && (
         <ContextMenuOption
           dataTestID={TestID.NOTE_OPTION_REMOVE_CATEGORY}
-          handler={removeCategoryHandler}
+          handler={removeCategoryFromNoteHandler}
           icon={X}
           text={LabelText.REMOVE_CATEGORY}
         />
