@@ -226,7 +226,11 @@ export const AppSidebar: React.FC = () => {
         </section>
         <section className="app-sidebar-main">
           <ScratchpadOption active={activeFolder === Folder.SCRATCHPAD} swapFolder={_swapFolder} />
-          <AllNotesOption active={activeFolder === Folder.ALL} swapFolder={_swapFolder} />
+          <AllNotesOption
+            active={activeFolder === Folder.ALL}
+            swapFolder={_swapFolder}
+            noteHandler={(e: ReactDragEvent) => console.log(e)}
+          />
           <FolderOption
             active={activeFolder === Folder.FAVORITES}
             text={LabelText.FAVORITES}

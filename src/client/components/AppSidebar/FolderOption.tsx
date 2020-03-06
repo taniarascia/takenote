@@ -38,6 +38,8 @@ export const FolderOption: React.FC<FolderOptionProps> = ({
   const noteHandler = (event: ReactDragEvent) => {
     event.preventDefault()
 
+    console.log(folder)
+
     addNoteType(event.dataTransfer.getData('text'))
     dragLeaveHandler()
   }
