@@ -138,6 +138,10 @@ const noteSlice = createSlice({
         state.activeFolder
       ),
     }),
+    addAllNote: (state, { payload }: PayloadAction<string>) => ({
+      ...state,
+      notes: state.notes.map(note => (note.id === payload ? { ...note, trash: false } : note)),
+    }),
     addFavoriteNote: (state, { payload }: PayloadAction<string>) => ({
       ...state,
       notes: state.notes.map(note => (note.id === payload ? { ...note, favorite: true } : note)),
@@ -179,6 +183,7 @@ export const {
   swapNote,
   toggleFavoriteNote,
   toggleTrashedNote,
+  addAllNote,
   addFavoriteNote,
   addTrashedNote,
   updateNote,

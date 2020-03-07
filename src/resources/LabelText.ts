@@ -1,7 +1,7 @@
 // Default Labels
 export enum LabelText {
   ADD_CATEGORY = 'Add Category',
-  ALL_NOTES = 'All Notes',
+  NOTES = 'Notes',
   CREATE_NEW_NOTE = 'Create new note',
   DELETE_PERMANENTLY = 'Delete permanently',
   DOWNLOAD = 'Download',

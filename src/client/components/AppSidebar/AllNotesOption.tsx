@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Book } from 'react-feather'
 
 import { LabelText } from '@resources/LabelText'
@@ -11,17 +11,22 @@ import { ReactDragEvent } from '@/types'
 export interface AllNotesOptionProps {
   active: boolean
   swapFolder: (folder: Folder) => {}
-  noteHandler: (event: ReactDragEvent) => void
+  addNoteType: (noteId: string) => void
 }
 
 export const AllNotesOption: React.FC<AllNotesOptionProps> = ({
   active,
   swapFolder,
-  noteHandler,
+  addNoteType,
 }) => {
+  const noteHandler = (event: ReactDragEvent) => {
+    event.preventDefault()
+    addNoteType(event.dataTransfer.getData('text'))
+  }
+
   return (
     <div
-      data-testid={TestID.FOLDER_ALL_NOTES}
+      data-testid={TestID.FOLDER_NOTES}
       className={`app-sidebar-link ${active ? 'active' : ''}`}
       onClick={() => {
         swapFolder(Folder.ALL)
@@ -32,7 +37,7 @@ export const AllNotesOption: React.FC<AllNotesOptionProps> = ({
       onDrop={noteHandler}
     >
       <Book size={15} className="app-sidebar-icon" color={iconColor} />
-      {LabelText.ALL_NOTES}
+      {LabelText.NOTES}
     </div>
   )
 }

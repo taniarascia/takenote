@@ -40,6 +40,7 @@ import {
   swapNote,
   addFavoriteNote,
   addTrashedNote,
+  addAllNote,
 } from '@/slices/note'
 import { toggleSettingsModal, togglePreviewMarkdown } from '@/slices/settings'
 import { syncState } from '@/slices/sync'
@@ -85,6 +86,7 @@ export const AppSidebar: React.FC = () => {
     dispatch(syncState({ notes, categories }))
   const _toggleSettingsModal = () => dispatch(toggleSettingsModal())
   const _togglePreviewMarkdown = () => dispatch(togglePreviewMarkdown())
+  const _addAllNote = (noteId: string) => dispatch(addAllNote(noteId))
   const _addTrashedNote = (noteId: string) => dispatch(addTrashedNote(noteId))
   const _addFavoriteNote = (noteId: string) => dispatch(addFavoriteNote(noteId))
   const _addCategoryToNote = (categoryId: string, noteId: string) =>
@@ -229,7 +231,7 @@ export const AppSidebar: React.FC = () => {
           <AllNotesOption
             active={activeFolder === Folder.ALL}
             swapFolder={_swapFolder}
-            noteHandler={(e: ReactDragEvent) => console.log(e)}
+            addNoteType={_addAllNote}
           />
           <FolderOption
             active={activeFolder === Folder.FAVORITES}

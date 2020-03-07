@@ -45,7 +45,7 @@ const getNoteCount = (noteCountAlias: string) => {
 }
 
 const navigateToAllNotes = () => {
-  clickTestID(TestID.FOLDER_ALL_NOTES)
+  clickTestID(TestID.FOLDER_NOTES)
 }
 
 const navigateToFavorites = () => {
