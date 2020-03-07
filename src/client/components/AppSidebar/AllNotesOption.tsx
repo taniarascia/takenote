@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Book } from 'react-feather'
 
 import { LabelText } from '@resources/LabelText'
