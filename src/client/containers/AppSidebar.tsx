@@ -228,8 +228,16 @@ export const AppSidebar: React.FC = () => {
         </section>
         <section className="app-sidebar-main">
           <ScratchpadOption active={activeFolder === Folder.SCRATCHPAD} swapFolder={_swapFolder} />
-          <AllNotesOption
+          {/* <AllNotesOption
             active={activeFolder === Folder.ALL}
+            folder={Folder.ALL}
+            swapFolder={_swapFolder}
+            addNoteType={_addAllNote}
+          /> */}
+          <FolderOption
+            active={activeFolder === Folder.ALL}
+            text={LabelText.NOTES}
+            dataTestID={TestID.FOLDER_NOTES}
             folder={Folder.ALL}
             swapFolder={_swapFolder}
             addNoteType={_addAllNote}

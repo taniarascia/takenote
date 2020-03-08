@@ -32,7 +32,9 @@ export const AllNotesOption: React.FC<AllNotesOptionProps> = ({
   }
   const noteHandler = (event: ReactDragEvent) => {
     event.preventDefault()
+
     addNoteType(event.dataTransfer.getData('text'))
+    dragLeaveHandler()
   }
   const determineClass = () => {
     if (active) {
@@ -51,10 +53,10 @@ export const AllNotesOption: React.FC<AllNotesOptionProps> = ({
       onClick={() => {
         swapFolder(Folder.ALL)
       }}
+      onDrop={noteHandler}
       onDragOver={(event: ReactDragEvent) => {
         event.preventDefault()
       }}
-      onDrop={noteHandler}
       onDragEnter={dragEnterHandler}
       onDragLeave={dragLeaveHandler}
     >
