@@ -49,7 +49,7 @@ module.exports = {
        * TypeScript (.ts/.tsx files)
        *
        * The TypeScript loader will compile all .ts/.tsx files to .js. Babel is
-       * not necessarry here since TypeScript is taking care of all transpiling.
+       * not necessary here since TypeScript is taking care of all transpiling.
        */
       {
         test: /\.ts(x?)$/,

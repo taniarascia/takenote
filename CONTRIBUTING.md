@@ -112,6 +112,6 @@ Coding conventions are enforced by [ESLint](.eslintrc.js) and [Prettier](.pretti
 - Trailing commas in arrays and objects
 - [Non-default exports](https://humanwhocodes.com/blog/2019/01/stop-using-default-exports-javascript-module/) are preferred for components
 - Module imports are ordered and separated: **built-in** -> **external** -> **internal** -> **css/assets/other**
-- TypeScript: strict mode, with no implicity any
+- TypeScript: strict mode, with no implicitly any
 - React: functional style with Hooks (no classes)
 - `const` preferred over `let`
