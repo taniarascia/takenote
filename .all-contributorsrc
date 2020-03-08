@@ -362,6 +362,15 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "yohix",
+      "name": "Yohix",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/61746440?v=4",
+      "profile": "https://ghuser.io/yohix",
+      "contributions": [
+        "maintenance"
+      ]
     }
   ],
   "contributorsPerLine": 7,
