@@ -193,7 +193,7 @@ Thanks goes to these wonderful people:
   <tr>
     <td align="center"><a href="https://github.com/Mxchaeltrxn"><img src="https://avatars3.githubusercontent.com/u/34886045?v=4" width="50px;" alt=""/><br /><sub><b>Mxchaeltrxn</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=Mxchaeltrxn" title="Code">💻</a></td>
     <td align="center"><a href="https://konradstaniszewski.com"><img src="https://avatars2.githubusercontent.com/u/38778413?v=4" width="50px;" alt=""/><br /><sub><b>Konrad Staniszewski</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=KonradStanski" title="Documentation">📖</a></td>
-    <td align="center"><a href="https://ghuser.io/yohix"><img src="https://avatars3.githubusercontent.com/u/61746440?v=4" width="50px;" alt=""/><br /><sub><b>Yohix</b></sub></a><br /><a href="#maintenance-yohix" title="Maintenance">🚧</a></td>
+    <td align="center"><a href="https://github.com/yohix"><img src="https://avatars3.githubusercontent.com/u/61746440?v=4" width="50px;" alt=""/><br /><sub><b>Yohix</b></sub></a><br /><a href="#maintenance-yohix" title="Maintenance">🚧</a></td>
   </tr>
 </table>
 
