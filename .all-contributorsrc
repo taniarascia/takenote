@@ -371,6 +371,15 @@
       "contributions": [
         "maintenance"
       ]
+    },
+    {
+      "login": "jackson",
+      "name": "Jackson Howard",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/4491093?v=4",
+      "profile": "https://github.com/jackson",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
