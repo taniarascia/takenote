@@ -16,7 +16,13 @@ import {
   debounceEvent,
 } from '@/utils/helpers'
 import { useKey } from '@/utils/hooks'
-import { emptyTrash, pruneNotes, swapNote, searchNotes, updateSelectedNotes } from '@/slices/note'
+import {
+  emptyTrash,
+  pruneNotes,
+  updateActiveNote,
+  searchNotes,
+  updateSelectedNotes,
+} from '@/slices/note'
 import { toggleSidebarVisibility } from '@/slices/settings'
 import { NoteItem, ReactDragEvent, ReactMouseEvent } from '@/types'
 import { getNotes, getSettings } from '@/selectors'
@@ -41,8 +47,8 @@ export const NoteList: React.FC = () => {
   const _emptyTrash = () => dispatch(emptyTrash())
   const _toggleSidebarVisibility = () => dispatch(toggleSidebarVisibility())
   const _pruneNotes = () => dispatch(pruneNotes())
-  const _swapNote = (noteId: string, multiSelect: boolean) =>
-    dispatch(swapNote({ noteId, multiSelect }))
+  const _updateActiveNote = (noteId: string, multiSelect: boolean) =>
+    dispatch(updateActiveNote({ noteId, multiSelect }))
   const _searchNotes = debounceEvent(
     (searchValue: string) => dispatch(searchNotes(searchValue)),
     100
@@ -208,7 +214,7 @@ export const NoteList: React.FC = () => {
                 event.stopPropagation()
 
                 _updateSelectedNotes(note.id, event.metaKey)
-                _swapNote(note.id, event.metaKey)
+                _updateActiveNote(note.id, event.metaKey)
                 _pruneNotes()
               }}
               onContextMenu={event => handleNoteRightClick(event, note.id)}

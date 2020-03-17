@@ -7,7 +7,7 @@ import { downloadNotes, getNoteTitle, newNoteHandlerHelper, getActiveNote } from
 import { useKey } from '@/utils/hooks'
 import {
   addNote,
-  swapNote,
+  updateActiveNote,
   toggleTrashedNote,
   swapFolder,
   updateSelectedNotes,
@@ -37,8 +37,8 @@ export const KeyboardShortcuts: React.FC = () => {
   const dispatch = useDispatch()
 
   const _addNote = (note: NoteItem) => dispatch(addNote(note))
-  const _swapNote = (noteId: string, multiSelect: boolean) =>
-    dispatch(swapNote({ noteId, multiSelect }))
+  const _updateActiveNote = (noteId: string, multiSelect: boolean) =>
+    dispatch(updateActiveNote({ noteId, multiSelect }))
   const _updateSelectedNotes = (noteId: string, multiSelect: boolean) =>
     dispatch(updateSelectedNotes({ noteId, multiSelect }))
   const _swapFolder = (folder: Folder) => dispatch(swapFolder(folder))
@@ -69,7 +69,7 @@ export const KeyboardShortcuts: React.FC = () => {
       _swapFolder,
       _togglePreviewMarkdown,
       _addNote,
-      _swapNote,
+      _updateActiveNote,
       _updateSelectedNotes
     )
   const newTempCategoryHandler = () => !addingTempCategory && setAddingTempCategory(true)

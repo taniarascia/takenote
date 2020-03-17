@@ -37,7 +37,7 @@ import {
   addNote,
   swapCategory,
   swapFolder,
-  swapNote,
+  updateActiveNote,
   addFavoriteNote,
   addTrashedNote,
   updateSelectedNotes,
@@ -75,8 +75,8 @@ export const AppSidebar: React.FC = () => {
   const dispatch = useDispatch()
 
   const _addNote = (note: NoteItem) => dispatch(addNote(note))
-  const _swapNote = (noteId: string, multiSelect: boolean) =>
-    dispatch(swapNote({ noteId, multiSelect }))
+  const _updateActiveNote = (noteId: string, multiSelect: boolean) =>
+    dispatch(updateActiveNote({ noteId, multiSelect }))
   const _updateSelectedNotes = (noteId: string, multiSelect: boolean) =>
     dispatch(updateSelectedNotes({ noteId, multiSelect }))
   const _swapCategory = (categoryId: string) => dispatch(swapCategory(categoryId))
@@ -125,7 +125,7 @@ export const AppSidebar: React.FC = () => {
       _swapFolder,
       _togglePreviewMarkdown,
       _addNote,
-      _swapNote,
+      _updateActiveNote,
       _updateSelectedNotes
     )
 
@@ -281,7 +281,7 @@ export const AppSidebar: React.FC = () => {
                               notesForNewCategory.length > 0 ? notesForNewCategory[0].id : ''
                             if (category.id !== activeCategoryId) {
                               _swapCategory(category.id)
-                              _swapNote(newNoteId, false)
+                              _updateActiveNote(newNoteId, false)
                             }
                           }}
                           onDoubleClick={() => {

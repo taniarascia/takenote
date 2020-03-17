@@ -106,7 +106,7 @@ export const newNoteHandlerHelper = (
   swapFolder: (folder: Folder) => WithPayload<string, Action<string>>,
   togglePreviewMarkdown: () => WithPayload<undefined, Action<string>>,
   addNote: (note: NoteItem) => WithPayload<NoteItem, Action<string>>,
-  swapNote: (
+  updateActiveNote: (
     noteId: string,
     multiSelect: boolean
   ) => WithPayload<
@@ -142,7 +142,7 @@ export const newNoteHandlerHelper = (
     )
     addNote(note)
     updateSelectedNotes(note.id, false)
-    swapNote(note.id, false)
+    updateActiveNote(note.id, false)
   }
 }
 

@@ -136,7 +136,10 @@ const noteSlice = createSlice({
       activeNoteId: getFirstNoteId(payload, state.notes),
       selectedNotesIds: [getFirstNoteId(payload, state.notes)],
     }),
-    swapNote: (state, { payload }: PayloadAction<{ noteId?: string; multiSelect: boolean }>) => ({
+    updateActiveNote: (
+      state,
+      { payload }: PayloadAction<{ noteId?: string; multiSelect: boolean }>
+    ) => ({
       ...state,
       activeNoteId: payload.multiSelect
         ? state.notes.filter(({ id }) => state.selectedNotesIds.includes(id)).slice(-1)[0].id
@@ -223,7 +226,7 @@ export const {
   searchNotes,
   swapCategory,
   swapFolder,
-  swapNote,
+  updateActiveNote,
   toggleFavoriteNote,
   toggleTrashedNote,
   addFavoriteNote,
