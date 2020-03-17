@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { MoreHorizontal, Star } from 'react-feather'
-import _ from 'lodash'
+import { MoreHorizontal, Star, Menu } from 'react-feather'
 
 import { TestID } from '@resources/TestID'
 
@@ -14,11 +13,13 @@ import {
   sortByLastUpdated,
   sortByFavorites,
   shouldOpenContextMenu,
+  debounceEvent,
 } from '@/utils/helpers'
 import { useKey } from '@/utils/hooks'
 import { emptyTrash, pruneNotes, swapNote, searchNotes, updateSelectedNotes } from '@/slices/note'
+import { toggleSidebarVisibility } from '@/slices/settings'
 import { NoteItem, ReactDragEvent, ReactMouseEvent } from '@/types'
-import { getNotes } from '@/selectors'
+import { getNotes, getSettings } from '@/selectors'
 
 export const NoteList: React.FC = () => {
   // ===========================================================================
@@ -38,10 +39,14 @@ export const NoteList: React.FC = () => {
   const _updateSelectedNotes = (noteId: string, multiSelect: boolean) =>
     dispatch(updateSelectedNotes({ noteId, multiSelect }))
   const _emptyTrash = () => dispatch(emptyTrash())
+  const _toggleSidebarVisibility = () => dispatch(toggleSidebarVisibility())
   const _pruneNotes = () => dispatch(pruneNotes())
   const _swapNote = (noteId: string, multiSelect: boolean) =>
     dispatch(swapNote({ noteId, multiSelect }))
-  const _searchNotes = _.debounce((searchValue: string) => dispatch(searchNotes(searchValue)), 100)
+  const _searchNotes = debounceEvent(
+    (searchValue: string) => dispatch(searchNotes(searchValue)),
+    100
+  )
 
   // ===========================================================================
   // Refs
@@ -57,7 +62,7 @@ export const NoteList: React.FC = () => {
   const [optionsId, setOptionsId] = useState('')
   const [optionsPosition, setOptionsPosition] = useState({ x: 0, y: 0 })
 
-  const re = new RegExp(_.escapeRegExp(searchValue), 'i')
+  const re = new RegExp(searchValue.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'i')
   const isMatch = (result: NoteItem) => re.test(result.text)
 
   const filter: Record<Folder, (note: NoteItem) => boolean> = {
@@ -157,22 +162,21 @@ export const NoteList: React.FC = () => {
   return activeFolder !== Folder.SCRATCHPAD ? (
     <aside className="note-sidebar">
       <div className="note-sidebar-header">
+        <div className="note-sidebar-collapse" onClick={_toggleSidebarVisibility}>
+          <Menu size={20} />
+        </div>
         <SearchBar searchRef={searchRef} searchNotes={_searchNotes} />
         {showEmptyTrash && (
           <NoteListButton
             dataTestID={TestID.EMPTY_TRASH_BUTTON}
-            label="Empty Trash"
+            label="Empty"
             handler={() => _emptyTrash()}
           >
             Empty Trash
           </NoteListButton>
         )}
       </div>
-      <div
-        data-testid={TestID.NOTE_LIST}
-        className="note-list"
-        style={{ marginTop: showEmptyTrash ? '103px' : '60px' }}
-      >
+      <div data-testid={TestID.NOTE_LIST} className="note-list">
         {filteredNotes.map((note: NoteItem, index: number) => {
           let noteTitle: string | React.ReactElement = getNoteTitle(note.text)
 

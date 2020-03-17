@@ -172,6 +172,7 @@ export const shouldOpenContextMenu = (clicked: Element) => {
       elementContainsClass('context-menu-action')) ||
     // If the element is an item of the context menu
     (!elementContainsClass('nav-item') &&
+      !elementContainsClass('options-context-menu') &&
       !elementContainsClass('nav-item-icon') &&
       !parentContainsClass('nav-item-icon')) ||
     // Or if it's a sub-element of the context menu
@@ -189,12 +190,22 @@ export const getWebsiteTitle = (activeFolder: Folder, activeCategory?: CategoryI
   }
 }
 
-export const determineTheme = (darkTheme: boolean, otherClass: string) => {
-  if (darkTheme) {
-    return `${otherClass} dark`
-  } else {
-    return otherClass
+export const determineAppClass = (
+  darkTheme: boolean,
+  sidebarVisible: boolean,
+  activeFolder: Folder
+) => {
+  let className = 'app'
+
+  if (darkTheme) className += ' dark'
+
+  if (activeFolder === Folder.SCRATCHPAD) {
+    className += ' scratchpad'
+  } else if (!sidebarVisible) {
+    className += ' sidebar-hidden'
   }
+
+  return className
 }
 
 export const determineCategoryClass = (
@@ -211,4 +222,13 @@ export const determineCategoryClass = (
   } else {
     return 'category-list-each'
   }
+}
+
+export const debounceEvent = <T extends Function>(cb: T, wait = 20) => {
+  let h = 0
+  let callable = (...args: any) => {
+    clearTimeout(h)
+    h = window.setTimeout(() => cb(...args), wait)
+  }
+  return <T>(<any>callable)
 }

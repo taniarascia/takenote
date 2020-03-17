@@ -21,7 +21,7 @@ export default {
    * 2. The code will be exchanged for an access token on the `/access_token`
    * endpoint and the user will be redirected to the app.
    *
-   * Client-side persistance
+   * Client-side persistence
    * @url https://www.taniarascia.com/full-stack-cookies-localstorage-react-express/
    *
    * A thirty day, secure, HTTP only, and same-site cookie will be set on the app

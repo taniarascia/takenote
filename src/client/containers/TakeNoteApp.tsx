@@ -10,7 +10,7 @@ import { NoteList } from '@/containers/NoteList'
 import { SettingsModal } from '@/containers/SettingsModal'
 import { TempStateProvider } from '@/contexts/TempStateContext'
 import { useInterval, useBeforeUnload } from '@/utils/hooks'
-import { getWebsiteTitle, determineTheme, getActiveCategory } from '@/utils/helpers'
+import { getWebsiteTitle, determineAppClass, getActiveCategory } from '@/utils/helpers'
 import { loadCategories, swapCategories } from '@/slices/category'
 import { loadNotes } from '@/slices/note'
 import { syncState } from '@/slices/sync'
@@ -23,7 +23,7 @@ export const TakeNoteApp: React.FC = () => {
   // Selectors
   // ===========================================================================
 
-  const { darkTheme } = useSelector(getSettings)
+  const { darkTheme, sidebarVisible } = useSelector(getSettings)
   const { activeFolder, activeCategoryId, notes } = useSelector(getNotes)
   const { categories } = useSelector(getCategories)
   const { pendingSync } = useSelector(getSync)
@@ -85,7 +85,7 @@ export const TakeNoteApp: React.FC = () => {
       </Helmet>
 
       <TempStateProvider>
-        <div className={determineTheme(darkTheme, 'app')}>
+        <div className={determineAppClass(darkTheme, sidebarVisible, activeFolder)}>
           <DragDropContext onDragEnd={onDragEnd}>
             <AppSidebar />
             <NoteList />

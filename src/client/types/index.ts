@@ -68,6 +68,7 @@ export interface SettingsState {
   previewMarkdown: boolean
   loading: boolean
   darkTheme: boolean
+  sidebarVisible: boolean
   codeMirrorOptions: { [key: string]: any }
 }
 

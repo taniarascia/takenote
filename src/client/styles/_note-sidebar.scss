@@ -1,19 +1,20 @@
 .note-sidebar {
   background: $note-sidebar-color;
   border-right: 1px solid darken($note-sidebar-color, 10%);
-  overflow-y: hidden;
-  height: 100vh;
 
   &:hover {
     overflow-y: auto;
   }
 
   &-header {
+    position: fixed;
+    top: 0;
+    left: $app-sidebar-width;
+    display: flex;
+    align-items: center;
     padding: 0.5rem;
     text-align: center;
     font-weight: 700;
-    position: fixed;
-    top: 0;
     background: $note-sidebar-color;
     width: $note-sidebar-width;
     border-bottom: 1px solid darken($note-sidebar-color, 10%);
@@ -24,6 +25,12 @@
     }
   }
 
+  &-collapse {
+    padding: 0.5rem;
+    margin-right: 0.5rem;
+    cursor: pointer;
+  }
+
   .list-button {
     cursor: pointer;
     align-items: center;
@@ -31,7 +38,7 @@
     color: $font-color;
     background: darken($note-sidebar-color, 8%);
     padding: 0.7rem;
-    margin: 0.5rem 0 0;
+    margin: 0 0 0 0.5rem;
     font-size: 0.85rem;
     font-weight: 500;
     border: none !important;
@@ -46,7 +53,6 @@
 
   .note-list {
     margin-top: 60px;
-
     &-each {
       cursor: pointer;
       padding: 0.5rem;

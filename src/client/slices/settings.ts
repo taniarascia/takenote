@@ -7,6 +7,7 @@ export const initialState: SettingsState = {
   loading: false,
   previewMarkdown: false,
   darkTheme: false,
+  sidebarVisible: true,
   codeMirrorOptions: {
     mode: 'gfm',
     theme: 'base16-light',
@@ -45,6 +46,10 @@ const settingsSlice = createSlice({
       ...state,
       darkTheme: !state.darkTheme,
     }),
+    toggleSidebarVisibility: state => ({
+      ...state,
+      sidebarVisible: !state.sidebarVisible,
+    }),
     loadSettings: state => ({
       ...state,
       loading: true,
@@ -66,6 +71,7 @@ export const {
   updateCodeMirrorOption,
   toggleDarkTheme,
   togglePreviewMarkdown,
+  toggleSidebarVisibility,
   loadSettings,
   loadSettingsError,
   loadSettingsSuccess,
