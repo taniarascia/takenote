@@ -106,12 +106,6 @@ const noteSlice = createSlice({
       selectedNotesIds: [getFirstNoteId(Folder.ALL, payload)],
       loading: false,
     }),
-    // pruneCategoryFromNotes: (state, { payload }: PayloadAction<string>) => ({
-    //   ...state,
-    //   notes: state.notes.map(note =>
-    //     note.category === payload ? { ...note, category: undefined } : note
-    //   ),
-    // }),
     pruneNotes: state => ({
       ...state,
       notes: state.notes.filter(
@@ -221,7 +215,6 @@ export const {
   loadNotes,
   loadNotesError,
   loadNotesSuccess,
-  // pruneCategoryFromNotes,
   pruneNotes,
   searchNotes,
   updateActiveCategoryId,
