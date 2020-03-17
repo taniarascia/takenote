@@ -35,7 +35,7 @@ import {
 import {
   addCategoryToNote,
   addNote,
-  swapCategory,
+  updateActiveCategoryId,
   swapFolder,
   updateActiveNote,
   addFavoriteNote,
@@ -79,7 +79,8 @@ export const AppSidebar: React.FC = () => {
     dispatch(updateActiveNote({ noteId, multiSelect }))
   const _updateSelectedNotes = (noteId: string, multiSelect: boolean) =>
     dispatch(updateSelectedNotes({ noteId, multiSelect }))
-  const _swapCategory = (categoryId: string) => dispatch(swapCategory(categoryId))
+  const _updateActiveCategoryId = (categoryId: string) =>
+    dispatch(updateActiveCategoryId(categoryId))
   const _swapFolder = (folder: Folder) => dispatch(swapFolder(folder))
   const _addCategory = (category: CategoryItem) => dispatch(addCategory(category))
   const _categoryDragEnter = (category: CategoryItem) => dispatch(categoryDragEnter(category))
@@ -280,7 +281,7 @@ export const AppSidebar: React.FC = () => {
                             const newNoteId =
                               notesForNewCategory.length > 0 ? notesForNewCategory[0].id : ''
                             if (category.id !== activeCategoryId) {
-                              _swapCategory(category.id)
+                              _updateActiveCategoryId(category.id)
                               _updateActiveNote(newNoteId, false)
                             }
                           }}

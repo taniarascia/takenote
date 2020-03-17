@@ -122,7 +122,7 @@ const noteSlice = createSlice({
       ...state,
       searchValue: payload,
     }),
-    swapCategory: (state, { payload }: PayloadAction<string>) => ({
+    updateActiveCategoryId: (state, { payload }: PayloadAction<string>) => ({
       ...state,
       activeCategoryId: payload,
       activeFolder: Folder.CATEGORY,
@@ -224,7 +224,7 @@ export const {
   // pruneCategoryFromNotes,
   pruneNotes,
   searchNotes,
-  swapCategory,
+  updateActiveCategoryId,
   swapFolder,
   updateActiveNote,
   toggleFavoriteNote,
