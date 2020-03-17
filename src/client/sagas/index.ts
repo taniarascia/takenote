@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/named
 import { all, put, takeLatest, select } from 'redux-saga/effects'
-import moment from 'moment'
+import dayjs from 'dayjs'
 import axios from 'axios'
 
 import { requestCategories, requestNotes, saveState, saveSettings, requestSettings } from '@/api'
@@ -81,7 +81,7 @@ function* fetchCategories() {
 function* postState({ payload }: SyncStateAction) {
   try {
     yield saveState(payload)
-    yield put(syncStateSuccess(moment().format()))
+    yield put(syncStateSuccess(dayjs().format()))
   } catch (error) {
     yield put(syncStateError(error.message))
   }
