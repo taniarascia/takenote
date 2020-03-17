@@ -371,6 +371,15 @@
       "contributions": [
         "maintenance"
       ]
+    },
+    {
+      "login": "jackson-elfers",
+      "name": "Jackson Elfers",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/55408089?v=4",
+      "profile": "https://github.com/jackson-elfers",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
