@@ -1,5 +1,5 @@
 import uuid from 'uuid/v4'
-import moment from 'moment'
+import dayjs from 'dayjs'
 
 import markdown from '@/api/scratchpadNote.md'
 
@@ -9,5 +9,5 @@ export const scratchpadNote = {
   category: '',
   scratchpad: true,
   favorite: false,
-  created: moment().format(),
+  created: dayjs().format(),
 }

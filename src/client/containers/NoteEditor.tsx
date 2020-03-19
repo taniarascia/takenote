@@ -1,4 +1,4 @@
-import moment from 'moment'
+import dayjs from 'dayjs'
 import React from 'react'
 import { Controlled as CodeMirror } from 'react-codemirror2'
 import { useDispatch, useSelector } from 'react-redux'
@@ -65,7 +65,7 @@ export const NoteEditor: React.FC = () => {
                 id: activeNote.id,
                 text: value,
                 created: activeNote.created,
-                lastUpdated: moment().format(),
+                lastUpdated: dayjs().format(),
               })
             }}
             onChange={(editor, data, value) => {

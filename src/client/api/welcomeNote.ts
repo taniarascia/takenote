@@ -1,5 +1,5 @@
 import uuid from 'uuid/v4'
-import moment from 'moment'
+import dayjs from 'dayjs'
 
 import markdown from '@/api/welcomeNote.md'
 
@@ -8,5 +8,5 @@ export const welcomeNote = {
   text: markdown,
   category: '',
   favorite: false,
-  created: moment().format(),
+  created: dayjs().format(),
 }

@@ -1,4 +1,4 @@
-import moment from 'moment'
+import dayjs from 'dayjs'
 import uuid from 'uuid/v4'
 import JSZip from 'jszip'
 import { Action } from 'redux'
@@ -92,8 +92,8 @@ export const downloadNotes = (notes: NoteItem[], categories: CategoryItem[]): vo
 const newNote = (categoryId?: string, folder?: Folder): NoteItem => ({
   id: uuid(),
   text: '',
-  created: moment().format(),
-  lastUpdated: moment().format(),
+  created: dayjs().format(),
+  lastUpdated: dayjs().format(),
   category: categoryId,
   favorite: folder === Folder.FAVORITES,
 })
