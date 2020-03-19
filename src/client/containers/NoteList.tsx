@@ -16,7 +16,13 @@ import {
   debounceEvent,
 } from '@/utils/helpers'
 import { useKey } from '@/utils/hooks'
-import { emptyTrash, pruneNotes, swapNote, searchNotes } from '@/slices/note'
+import {
+  emptyTrash,
+  pruneNotes,
+  updateActiveNote,
+  searchNotes,
+  updateSelectedNotes,
+} from '@/slices/note'
 import { toggleSidebarVisibility } from '@/slices/settings'
 import { NoteItem, ReactDragEvent, ReactMouseEvent } from '@/types'
 import { getNotes, getSettings } from '@/selectors'
@@ -26,7 +32,9 @@ export const NoteList: React.FC = () => {
   // Selectors
   // ===========================================================================
 
-  const { activeCategoryId, activeFolder, activeNoteId, notes, searchValue } = useSelector(getNotes)
+  const { activeCategoryId, activeFolder, selectedNotesIds, notes, searchValue } = useSelector(
+    getNotes
+  )
 
   // ===========================================================================
   // Dispatch
@@ -34,10 +42,13 @@ export const NoteList: React.FC = () => {
 
   const dispatch = useDispatch()
 
+  const _updateSelectedNotes = (noteId: string, multiSelect: boolean) =>
+    dispatch(updateSelectedNotes({ noteId, multiSelect }))
   const _emptyTrash = () => dispatch(emptyTrash())
   const _toggleSidebarVisibility = () => dispatch(toggleSidebarVisibility())
   const _pruneNotes = () => dispatch(pruneNotes())
-  const _swapNote = (noteId: string) => dispatch(swapNote(noteId))
+  const _updateActiveNote = (noteId: string, multiSelect: boolean) =>
+    dispatch(updateActiveNote({ noteId, multiSelect }))
   const _searchNotes = debounceEvent(
     (searchValue: string) => dispatch(searchNotes(searchValue)),
     100
@@ -120,6 +131,9 @@ export const NoteList: React.FC = () => {
     // Make sure we aren't getting any null values .. any element clicked should be a sub-class of element
     if (!clicked) return
 
+    // FIXME: This feels hacky
+    if (event.ctrlKey) return
+
     // Make sure we are not right clicking on the menu
     if (optionsId && event.button == RIGHT_CLICK) return
 
@@ -192,13 +206,17 @@ export const NoteList: React.FC = () => {
           return (
             <div
               data-testid={TestID.NOTE_LIST_ITEM + index}
-              className={note.id === activeNoteId ? 'note-list-each active' : 'note-list-each'}
+              className={
+                selectedNotesIds.includes(note.id) ? 'note-list-each selected' : 'note-list-each'
+              }
               key={note.id}
-              onClick={() => {
-                if (note.id !== activeNoteId) {
-                  _swapNote(note.id)
-                  _pruneNotes()
-                }
+              onClick={event => {
+                console.log('testing')
+                event.stopPropagation()
+
+                _updateSelectedNotes(note.id, event.metaKey)
+                _updateActiveNote(note.id, event.metaKey)
+                _pruneNotes()
               }}
               onContextMenu={event => handleNoteRightClick(event, note.id)}
               draggable
@@ -222,7 +240,7 @@ export const NoteList: React.FC = () => {
               <div
                 // TODO: make testID based off of index when we add that to a NoteItem object
                 data-testid={TestID.NOTE_OPTIONS_DIV + index}
-                className={optionsId === note.id ? 'note-options active' : 'note-options'}
+                className={optionsId === note.id ? 'note-options selected' : 'note-options'}
                 onClick={event => handleNoteOptionsClick(event, note.id)}
               >
                 <MoreHorizontal size={15} className="context-menu-action" />
