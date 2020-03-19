@@ -3,9 +3,15 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { useTempState } from '@/contexts/TempStateContext'
 import { Folder, Shortcuts } from '@/utils/enums'
-import { downloadNote, getNoteTitle, newNoteHandlerHelper, getActiveNote } from '@/utils/helpers'
+import { downloadNotes, getNoteTitle, newNoteHandlerHelper, getActiveNote } from '@/utils/helpers'
 import { useKey } from '@/utils/hooks'
-import { addNote, swapNote, toggleTrashedNote, swapFolder } from '@/slices/note'
+import {
+  addNote,
+  updateActiveNote,
+  toggleTrashedNote,
+  swapFolder,
+  updateSelectedNotes,
+} from '@/slices/note'
 import { syncState } from '@/slices/sync'
 import { getSettings, getNotes, getCategories } from '@/selectors'
 import { CategoryItem, NoteItem } from '@/types'
@@ -17,7 +23,9 @@ export const KeyboardShortcuts: React.FC = () => {
   // ===========================================================================
 
   const { categories } = useSelector(getCategories)
-  const { activeCategoryId, activeFolder, activeNoteId, notes } = useSelector(getNotes)
+  const { activeCategoryId, activeFolder, activeNoteId, notes, selectedNotesIds } = useSelector(
+    getNotes
+  )
   const { darkTheme, previewMarkdown } = useSelector(getSettings)
 
   const activeNote = getActiveNote(notes, activeNoteId)
@@ -29,7 +37,10 @@ export const KeyboardShortcuts: React.FC = () => {
   const dispatch = useDispatch()
 
   const _addNote = (note: NoteItem) => dispatch(addNote(note))
-  const _swapNote = (noteId: string) => dispatch(swapNote(noteId))
+  const _updateActiveNote = (noteId: string, multiSelect: boolean) =>
+    dispatch(updateActiveNote({ noteId, multiSelect }))
+  const _updateSelectedNotes = (noteId: string, multiSelect: boolean) =>
+    dispatch(updateSelectedNotes({ noteId, multiSelect }))
   const _swapFolder = (folder: Folder) => dispatch(swapFolder(folder))
   const _toggleTrashedNote = (noteId: string) => dispatch(toggleTrashedNote(noteId))
   const _syncState = (notes: NoteItem[], categories: CategoryItem[]) =>
@@ -58,12 +69,19 @@ export const KeyboardShortcuts: React.FC = () => {
       _swapFolder,
       _togglePreviewMarkdown,
       _addNote,
-      _swapNote
+      _updateActiveNote,
+      _updateSelectedNotes
     )
   const newTempCategoryHandler = () => !addingTempCategory && setAddingTempCategory(true)
   const trashNoteHandler = () => _toggleTrashedNote(activeNote!.id)
   const syncNotesHandler = () => _syncState(notes, categories)
-  const downloadNoteHandler = () => downloadNote(getNoteTitle(activeNote!.text), activeNote!)
+  const downloadNotesHandler = () =>
+    downloadNotes(
+      selectedNotesIds.includes(activeNote!.id)
+        ? notes.filter(note => selectedNotesIds.includes(note.id))
+        : [activeNote!],
+      categories
+    )
   const togglePreviewMarkdownHandler = () => _togglePreviewMarkdown()
   const toggleDarkThemeHandler = () => {
     _toggleDarkTheme()
@@ -78,7 +96,7 @@ export const KeyboardShortcuts: React.FC = () => {
   useKey(Shortcuts.NEW_CATEGORY, () => newTempCategoryHandler())
   useKey(Shortcuts.DELETE_NOTE, () => trashNoteHandler())
   useKey(Shortcuts.SYNC_NOTES, () => syncNotesHandler())
-  useKey(Shortcuts.DOWNLOAD_NOTES, () => downloadNoteHandler())
+  useKey(Shortcuts.DOWNLOAD_NOTES, () => downloadNotesHandler())
   useKey(Shortcuts.PREVIEW, () => togglePreviewMarkdownHandler())
   useKey(Shortcuts.TOGGLE_THEME, () => toggleDarkThemeHandler())
 

@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { TestID } from '@resources/TestID'
 
 import { ContextMenuOptions } from '@/containers/ContextMenuOptions'
-import { addCategoryToNote, swapCategory, swapNote } from '@/slices/note'
+import { addCategoryToNote, updateActiveCategoryId, updateActiveNote } from '@/slices/note'
 import { NoteItem, CategoryItem } from '@/types'
 import { getNotes, getCategories, getSettings } from '@/selectors'
 import { ContextMenuEnum } from '@/utils/enums'
@@ -139,8 +139,10 @@ const NotesMenu: React.FC<NotesMenuProps> = ({ note, setOptionsId }) => {
 
   const _addCategoryToNote = (categoryId: string, noteId: string) =>
     dispatch(addCategoryToNote({ categoryId, noteId }))
-  const _swapNote = (noteId: string) => dispatch(swapNote(noteId))
-  const _swapCategory = (categoryId: string) => dispatch(swapCategory(categoryId))
+  const _updateActiveNote = (noteId: string, multiSelect: boolean) =>
+    dispatch(updateActiveNote({ noteId, multiSelect }))
+  const _updateActiveCategoryId = (categoryId: string) =>
+    dispatch(updateActiveCategoryId(categoryId))
 
   const filteredCategories = categories.filter(({ id }) => id !== activeCategoryId)
 
@@ -156,8 +158,8 @@ const NotesMenu: React.FC<NotesMenuProps> = ({ note, setOptionsId }) => {
               _addCategoryToNote(event.target.value, note.id)
 
               if (event.target.value !== activeCategoryId) {
-                _swapCategory(event.target.value)
-                _swapNote(note.id)
+                _updateActiveCategoryId(event.target.value)
+                _updateActiveNote(note.id, false)
               }
 
               setOptionsId('')

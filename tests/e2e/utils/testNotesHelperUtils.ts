@@ -10,6 +10,7 @@ import {
   getDynamicTestID,
   getTestID,
   testIDShouldExist,
+  navigateToTrash,
 } from './testHelperUtils'
 
 const assertNewNoteCreated = () => {
@@ -51,6 +52,31 @@ const assertNoteOptionsOpened = () => {
   testIDShouldExist(TestID.NOTE_OPTIONS_NAV)
 }
 
+const assertNotesSelected = (expectedSelectedNotesCount: number) => {
+  cy.get('.selected').should('have.length', expectedSelectedNotesCount)
+}
+
+const trashAllNotes = () => {
+  getTestID(TestID.NOTE_LIST)
+    .children()
+    .each((_, noteIndex) => {
+      cy.get('body').type(`{meta}`, { release: false })
+      getDynamicTestID(TestID.NOTE_LIST_ITEM + noteIndex).click()
+    })
+  openNoteContextMenu()
+  clickNoteOptionTrash()
+
+  navigateToTrash()
+  clickEmptyTrash()
+}
+
+const createXUniqueNotes = (numberOfUniqueNotes: number) => {
+  for (let i = 0; i < numberOfUniqueNotes; i++) {
+    clickCreateNewNote()
+    typeNoteEditor(`note ${i}`)
+  }
+}
+
 const clickCreateNewNote = () => {
   clickTestID(TestID.SIDEBAR_ACTION_CREATE_NEW_NOTE)
 }
@@ -60,6 +86,14 @@ const clickEmptyTrash = () => {
 }
 
 const clickNoteAtIndex = (noteIndex: number) => {
+  getDynamicTestID(TestID.NOTE_LIST_ITEM + noteIndex).click()
+}
+
+const holdKeyAndClickNoteAtIndex = (
+  noteIndex: number,
+  key: 'alt' | 'ctrl' | 'meta' | 'shift' | null = null
+) => {
+  key && cy.get('body').type(`{${key}}`, { release: false })
   getDynamicTestID(TestID.NOTE_LIST_ITEM + noteIndex).click()
 }
 
@@ -103,6 +137,10 @@ const typeNoteSearch = (contentToType: string) => {
   getTestID(TestID.NOTE_SEARCH).type(contentToType, { force: true })
 }
 
+const clearNoteSearch = () => {
+  getTestID(TestID.NOTE_SEARCH).clear()
+}
+
 export {
   assertNewNoteCreated,
   assertNoteEditorCharacterCount,
@@ -111,7 +149,9 @@ export {
   assertNoteListLengthGTE,
   assertNoteListTitleAtIndex,
   assertNoteOptionsOpened,
+  assertNotesSelected,
   clickCreateNewNote,
+  createXUniqueNotes,
   clickEmptyTrash,
   clickNoteAtIndex,
   clickNoteOptionDeleteNotePermanently,
@@ -122,5 +162,8 @@ export {
   clickSyncNotes,
   typeNoteEditor,
   typeNoteSearch,
+  clearNoteSearch,
   openNoteContextMenu,
+  holdKeyAndClickNoteAtIndex,
+  trashAllNotes,
 }

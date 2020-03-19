@@ -35,11 +35,12 @@ import {
 import {
   addCategoryToNote,
   addNote,
-  swapCategory,
+  updateActiveCategoryId,
   swapFolder,
-  swapNote,
+  updateActiveNote,
   addFavoriteNote,
   addTrashedNote,
+  updateSelectedNotes,
 } from '@/slices/note'
 import { toggleSettingsModal, togglePreviewMarkdown } from '@/slices/settings'
 import { syncState } from '@/slices/sync'
@@ -74,8 +75,12 @@ export const AppSidebar: React.FC = () => {
   const dispatch = useDispatch()
 
   const _addNote = (note: NoteItem) => dispatch(addNote(note))
-  const _swapNote = (noteId: string) => dispatch(swapNote(noteId))
-  const _swapCategory = (categoryId: string) => dispatch(swapCategory(categoryId))
+  const _updateActiveNote = (noteId: string, multiSelect: boolean) =>
+    dispatch(updateActiveNote({ noteId, multiSelect }))
+  const _updateSelectedNotes = (noteId: string, multiSelect: boolean) =>
+    dispatch(updateSelectedNotes({ noteId, multiSelect }))
+  const _updateActiveCategoryId = (categoryId: string) =>
+    dispatch(updateActiveCategoryId(categoryId))
   const _swapFolder = (folder: Folder) => dispatch(swapFolder(folder))
   const _addCategory = (category: CategoryItem) => dispatch(addCategory(category))
   const _categoryDragEnter = (category: CategoryItem) => dispatch(categoryDragEnter(category))
@@ -121,7 +126,8 @@ export const AppSidebar: React.FC = () => {
       _swapFolder,
       _togglePreviewMarkdown,
       _addNote,
-      _swapNote
+      _updateActiveNote,
+      _updateSelectedNotes
     )
 
   const resetTempCategory = () => {
@@ -275,8 +281,8 @@ export const AppSidebar: React.FC = () => {
                             const newNoteId =
                               notesForNewCategory.length > 0 ? notesForNewCategory[0].id : ''
                             if (category.id !== activeCategoryId) {
-                              _swapCategory(category.id)
-                              _swapNote(newNoteId)
+                              _updateActiveCategoryId(category.id)
+                              _updateActiveNote(newNoteId, false)
                             }
                           }}
                           onDoubleClick={() => {
