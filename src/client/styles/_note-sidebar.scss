@@ -101,7 +101,7 @@
       &.selected {
         background: $primary;
         color: white;
-        border-bottom: 1px solid $primary;
+        border-bottom: 1px solid darken($primary, 5%);
 
         &:hover {
           .note-options {

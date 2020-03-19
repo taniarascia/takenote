@@ -211,6 +211,7 @@ export const NoteList: React.FC = () => {
               }
               key={note.id}
               onClick={event => {
+                console.log('testing')
                 event.stopPropagation()
 
                 _updateSelectedNotes(note.id, event.metaKey)
