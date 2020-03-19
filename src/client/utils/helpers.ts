@@ -1,5 +1,6 @@
 import moment from 'moment'
 import uuid from 'uuid/v4'
+import JSZip from 'jszip'
 import { Action } from 'redux'
 
 import { LabelText } from '@resources/LabelText'
@@ -35,21 +36,56 @@ category: ${category?.name ?? ''}
 
 ${note.text}`
 
-export const downloadNote = (filename: string, note: NoteItem, category?: CategoryItem): void => {
-  const pom = document.createElement('a')
+// Downloads a single note as a markdown file or a group of notes as a zip file.
+export const downloadNotes = (notes: NoteItem[], categories: CategoryItem[]): void => {
+  if (notes.length === 1) {
+    const pom = document.createElement('a')
 
-  pom.setAttribute(
-    'href',
-    `data:text/plain;charset=utf-8,${encodeURIComponent(noteWithFrontmatter(note, category))}`
-  )
-  pom.setAttribute('download', `${filename}.md`)
+    pom.setAttribute(
+      'href',
+      `data:text/plain;charset=utf-8,${encodeURIComponent(
+        noteWithFrontmatter(
+          notes[0],
+          categories.find((category: CategoryItem) => category.id === notes[0].category)
+        )
+      )}`
+    )
+    pom.setAttribute('download', `${getNoteTitle(notes[0].text)}.md`)
 
-  if (document.createEvent) {
-    const event = document.createEvent('MouseEvents')
-    event.initEvent('click', true, true)
-    pom.dispatchEvent(event)
+    if (document.createEvent) {
+      const event = document.createEvent('MouseEvents')
+      event.initEvent('click', true, true)
+      pom.dispatchEvent(event)
+    } else {
+      pom.click()
+    }
   } else {
-    pom.click()
+    const zip = new JSZip()
+    notes.forEach(note =>
+      zip.file(
+        `${getNoteTitle(note.text)}.md`,
+        noteWithFrontmatter(
+          note,
+          categories.find((category: CategoryItem) => category.id === note.category)
+        )
+      )
+    )
+
+    zip.generateAsync({ type: 'blob' }).then(
+      content => {
+        var downloadUrl = window.URL.createObjectURL(content)
+        var a = document.createElement('a')
+        a.href = downloadUrl
+        a.download = 'notes.zip'
+        document.body.appendChild(a)
+        a.click()
+        URL.revokeObjectURL(downloadUrl)
+      },
+      err => {
+        // TODO: error generating zip file.
+        // Generate a popup?
+      }
+    )
   }
 }
 
@@ -70,7 +106,26 @@ export const newNoteHandlerHelper = (
   swapFolder: (folder: Folder) => WithPayload<string, Action<string>>,
   togglePreviewMarkdown: () => WithPayload<undefined, Action<string>>,
   addNote: (note: NoteItem) => WithPayload<NoteItem, Action<string>>,
-  swapNote: (noteId: string) => WithPayload<string, Action<string>>
+  updateActiveNote: (
+    noteId: string,
+    multiSelect: boolean
+  ) => WithPayload<
+    {
+      noteId: string
+      multiSelect: boolean
+    },
+    Action<string>
+  >,
+  updateSelectedNotes: (
+    noteId: string,
+    multiSelect: boolean
+  ) => WithPayload<
+    {
+      noteId: string
+      multiSelect: boolean
+    },
+    Action<string>
+  >
 ) => {
   if ([Folder.TRASH, Folder.SCRATCHPAD].indexOf(activeFolder) !== -1) {
     swapFolder(Folder.ALL)
@@ -86,7 +141,8 @@ export const newNoteHandlerHelper = (
       activeFolder === Folder.TRASH ? Folder.ALL : activeFolder
     )
     addNote(note)
-    swapNote(note.id)
+    updateSelectedNotes(note.id, false)
+    updateActiveNote(note.id, false)
   }
 }
 

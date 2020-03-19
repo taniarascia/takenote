@@ -98,10 +98,10 @@
         }
       }
 
-      &.active {
+      &.selected {
         background: $primary;
         color: white;
-        border-bottom: 1px solid $primary;
+        border-bottom: 1px solid darken($primary, 5%);
 
         &:hover {
           .note-options {
@@ -114,7 +114,7 @@
         }
 
         .note-options {
-          &.active {
+          &.selected {
             color: white;
           }
         }
@@ -132,7 +132,7 @@
         z-index: 1;
         cursor: pointer;
 
-        &.active {
+        &.selected {
           color: $font-color;
         }
       }
