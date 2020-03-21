@@ -16,6 +16,7 @@ import {
   toggleDarkTheme,
   togglePreviewMarkdown,
   toggleSettingsModal,
+  updateNotesSortStrategy,
 } from '@/slices/settings'
 import { SyncStateAction } from '@/types'
 import { getSettings } from '@/selectors'
@@ -120,6 +121,7 @@ function* rootSaga() {
         togglePreviewMarkdown.type,
         updateCodeMirrorOption.type,
         toggleSettingsModal.type,
+        updateNotesSortStrategy.type,
       ],
       syncSettings
     ),

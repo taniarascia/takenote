@@ -23,7 +23,7 @@ export const getNoteTitle = (text: string): string => {
 
   // Get the first line of text after any newlines
   // In the future, this should break on a full word
-  return noteText ? noteText[0].split(/\r?\n/)[0] : LabelText.NEW_NOTE
+  return noteText ? noteText[0].trim().split(/\r?\n/)[0] : LabelText.NEW_NOTE
 }
 
 export const noteWithFrontmatter = (note: NoteItem, category?: CategoryItem): string =>
@@ -144,20 +144,6 @@ export const newNoteHandlerHelper = (
     updateSelectedNotes(note.id, false)
     updateActiveNote(note.id, false)
   }
-}
-
-export const sortByFavorites = (a: NoteItem, b: NoteItem) => {
-  if (a.favorite && !b.favorite) return -1
-  if (!a.favorite && b.favorite) return 1
-  return 0
-}
-
-export const sortByLastUpdated = (a: NoteItem, b: NoteItem) => {
-  let dateA = new Date(a.lastUpdated)
-  let dateB = new Date(b.lastUpdated)
-
-  // the first note in the list should consistently sort after if it is created at the same time
-  return dateA < dateB ? 1 : -1
 }
 
 export const shouldOpenContextMenu = (clicked: Element) => {

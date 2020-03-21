@@ -7,6 +7,7 @@ import {
   updateCodeMirrorOption,
   togglePreviewMarkdown,
   toggleDarkTheme,
+  updateNotesSortStrategy,
 } from '@/slices/settings'
 import { logout } from '@/slices/auth'
 import { shortcutMap } from '@/utils/constants'
@@ -14,6 +15,8 @@ import { ReactMouseEvent } from '@/types'
 import { getSettings, getAuth } from '@/selectors'
 import { Option } from '@/components/SettingsModal/Option'
 import { Shortcut } from '@/components/SettingsModal/Shortcut'
+import { NotesSortKey } from '@/utils/enums'
+import { NotesSortByOption } from '@/components/SettingsModal/SortByOption'
 
 export const SettingsModal: React.FC = () => {
   // ===========================================================================
@@ -22,6 +25,7 @@ export const SettingsModal: React.FC = () => {
 
   const { codeMirrorOptions, isOpen, previewMarkdown, darkTheme } = useSelector(getSettings)
   const { currentUser } = useSelector(getAuth)
+  const { notesSortKey } = useSelector(getSettings)
 
   // ===========================================================================
   // Dispatch
@@ -33,6 +37,8 @@ export const SettingsModal: React.FC = () => {
   const _toggleSettingsModal = () => dispatch(toggleSettingsModal())
   const _togglePreviewMarkdown = () => dispatch(togglePreviewMarkdown())
   const _toggleDarkTheme = () => dispatch(toggleDarkTheme())
+  const _updateNotesSortStrategy = (sortBy: NotesSortKey) =>
+    dispatch(updateNotesSortStrategy(sortBy))
   const _updateCodeMirrorOption = (key: string, value: any) =>
     dispatch(updateCodeMirrorOption({ key, value }))
 
@@ -68,7 +74,9 @@ export const SettingsModal: React.FC = () => {
       _toggleSettingsModal()
     }
   }
-
+  const updateNotesSortStrategyHandler = (selectedOption: any) => {
+    _updateNotesSortStrategy(selectedOption.value)
+  }
   // ===========================================================================
   // Hooks
   // ===========================================================================
@@ -127,6 +135,10 @@ export const SettingsModal: React.FC = () => {
             checked={previewMarkdown}
           />
           <Option title="Dark mode" toggle={toggleDarkThemeHandler} checked={darkTheme} />
+          <NotesSortByOption
+            onChange={updateNotesSortStrategyHandler}
+            currentSortOptionValue={notesSortKey}
+          />
         </section>
 
         <section className="settings-section">

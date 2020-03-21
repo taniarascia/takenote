@@ -1,7 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { Folder } from '@/utils/enums'
-import { sortByLastUpdated, sortByFavorites } from '@/utils/helpers'
 import { NoteItem, NoteState } from '@/types'
 
 const getNewActiveNoteId = (
@@ -23,10 +22,7 @@ const getNewActiveNoteId = (
 }
 
 export const getFirstNoteId = (folder: Folder, notes: NoteItem[], categoryId?: string): string => {
-  const notesNotTrash = notes
-    .filter(note => !note.trash)
-    .sort(sortByLastUpdated)
-    .sort(sortByFavorites)
+  const notesNotTrash = notes.filter(note => !note.trash)
   const firstNote = {
     [Folder.ALL]: () => notesNotTrash.find(note => !note.scratchpad),
     [Folder.CATEGORY]: () => notesNotTrash.find(note => note.category === categoryId),
