@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Folder } from '@/utils/enums'
+import { Folder, NotesSortKey } from '@/utils/enums'
 import { syncState } from '@/slices/sync'
 
 //==============================================================================
@@ -69,6 +69,7 @@ export interface SettingsState {
   loading: boolean
   darkTheme: boolean
   sidebarVisible: boolean
+  notesSortKey: NotesSortKey
   codeMirrorOptions: { [key: string]: any }
 }
 

@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { SettingsState } from '@/types'
+import { NotesSortKey } from '@/utils/enums'
 
 export const initialState: SettingsState = {
   isOpen: false,
@@ -8,6 +9,7 @@ export const initialState: SettingsState = {
   previewMarkdown: false,
   darkTheme: false,
   sidebarVisible: true,
+  notesSortKey: NotesSortKey.LAST_UPDATED,
   codeMirrorOptions: {
     mode: 'gfm',
     theme: 'base16-light',
@@ -50,6 +52,10 @@ const settingsSlice = createSlice({
       ...state,
       sidebarVisible: !state.sidebarVisible,
     }),
+    updateNotesSortStrategy: (state, { payload }: PayloadAction<NotesSortKey>) => ({
+      ...state,
+      notesSortKey: payload,
+    }),
     loadSettings: state => ({
       ...state,
       loading: true,
@@ -72,6 +78,7 @@ export const {
   toggleDarkTheme,
   togglePreviewMarkdown,
   toggleSidebarVisibility,
+  updateNotesSortStrategy,
   loadSettings,
   loadSettingsError,
   loadSettingsSuccess,

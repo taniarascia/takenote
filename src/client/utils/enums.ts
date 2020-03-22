@@ -21,3 +21,10 @@ export enum ContextMenuEnum {
   CATEGORY = 'CATEGORY',
   NOTE = 'NOTE',
 }
+
+export enum NotesSortKey {
+  LAST_UPDATED = 'lastUpdated',
+  FAVORITES = 'favorites',
+  TITLE = 'title',
+  CREATED_DATE = 'created_date',
+}
