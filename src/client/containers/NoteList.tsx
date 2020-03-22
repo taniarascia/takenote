@@ -8,13 +8,7 @@ import { Folder, Shortcuts, ContextMenuEnum } from '@/utils/enums'
 import { NoteListButton } from '@/components/NoteList/NoteListButton'
 import { SearchBar } from '@/components/NoteList/SearchBar'
 import { ContextMenu } from '@/containers/ContextMenu'
-import {
-  getNoteTitle,
-  sortByLastUpdated,
-  sortByFavorites,
-  shouldOpenContextMenu,
-  debounceEvent,
-} from '@/utils/helpers'
+import { getNoteTitle, shouldOpenContextMenu, debounceEvent } from '@/utils/helpers'
 import { useKey } from '@/utils/hooks'
 import {
   emptyTrash,
@@ -25,13 +19,15 @@ import {
 } from '@/slices/note'
 import { toggleSidebarVisibility } from '@/slices/settings'
 import { NoteItem, ReactDragEvent, ReactMouseEvent } from '@/types'
-import { getNotes, getCategories } from '@/selectors'
+import { getNotes, getSettings, getCategories } from '@/selectors'
+import { getNotesSorter } from '@/utils/notesSortStrategies'
 
 export const NoteList: React.FC = () => {
   // ===========================================================================
   // Selectors
   // ===========================================================================
 
+  const { notesSortKey } = useSelector(getSettings)
   const { activeCategoryId, activeFolder, selectedNotesIds, notes, searchValue } = useSelector(
     getNotes
   )
@@ -83,8 +79,7 @@ export const NoteList: React.FC = () => {
   const filteredNotes: NoteItem[] = notes
     .filter(filter[activeFolder])
     .filter(isMatch)
-    .sort(sortByLastUpdated)
-    .sort(sortByFavorites)
+    .sort(getNotesSorter(notesSortKey))
 
   // ===========================================================================
   // Handlers

@@ -67,6 +67,22 @@
 
     &-section {
       padding: 1.25rem 0;
+
+      select {
+        font-size: 1rem;
+        padding: 0.25rem 0.5rem;
+        height: 30px;
+        width: 140px;
+        margin: 0;
+        border-radius: 5px;
+        text-align-last: right;
+        -webkit-appearance: none;
+
+        &:active &:focus {
+          border: 1px solid lighten($primary, 15%);
+          box-shadow: 0 0 0.2rem lighten($primary, 15%);
+        }
+      }
     }
   }
 

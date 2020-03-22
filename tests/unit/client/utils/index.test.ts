@@ -24,7 +24,7 @@ describe('Utilities', () => {
       const note = `# Something
       
   and something else`
-      expect(getNoteTitle(note)).toEqual(` Something`)
+      expect(getNoteTitle(note)).toEqual(`Something`)
     })
 
     test(`should ignore newlines in the beginning`, () => {
