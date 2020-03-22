@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { MoreHorizontal, Star, Menu } from 'react-feather'
+import { MoreHorizontal, Book, Star, Menu, Folder as FolderIcon } from 'react-feather'
 
 import { TestID } from '@resources/TestID'
 
@@ -19,7 +19,7 @@ import {
 } from '@/slices/note'
 import { toggleSidebarVisibility } from '@/slices/settings'
 import { NoteItem, ReactDragEvent, ReactMouseEvent } from '@/types'
-import { getNotes, getSettings } from '@/selectors'
+import { getNotes, getSettings, getCategories } from '@/selectors'
 import { getNotesSorter } from '@/utils/notesSortStrategies'
 
 export const NoteList: React.FC = () => {
@@ -31,6 +31,7 @@ export const NoteList: React.FC = () => {
   const { activeCategoryId, activeFolder, selectedNotesIds, notes, searchValue } = useSelector(
     getNotes
   )
+  const { categories } = useSelector(getCategories)
 
   // ===========================================================================
   // Dispatch
@@ -180,12 +181,14 @@ export const NoteList: React.FC = () => {
       <div data-testid={TestID.NOTE_LIST} className="note-list">
         {filteredNotes.map((note: NoteItem, index: number) => {
           let noteTitle: string | React.ReactElement = getNoteTitle(note.text)
+          const noteCategory = categories.find(category => category.id === note.category)
 
           if (searchValue) {
             const highlightStart = noteTitle.search(re)
 
             if (highlightStart !== -1) {
               const highlightEnd = highlightStart + searchValue.length
+
               noteTitle = (
                 <>
                   {noteTitle.slice(0, highlightStart)}
@@ -206,7 +209,6 @@ export const NoteList: React.FC = () => {
               }
               key={note.id}
               onClick={event => {
-                console.log('testing')
                 event.stopPropagation()
 
                 _updateSelectedNotes(note.id, event.metaKey)
@@ -217,29 +219,46 @@ export const NoteList: React.FC = () => {
               draggable
               onDragStart={event => handleDragStart(event, note.id)}
             >
-              <div data-testid={'note-title-' + index} className="note-title">
-                {note.favorite ? (
-                  <>
-                    <div className="icon">
-                      <Star className="note-favorite" size={12} />
-                    </div>
-                    <div className="truncate-text"> {noteTitle}</div>
-                  </>
-                ) : (
-                  <>
-                    <div className="icon" />
-                    <div className="truncate-text"> {noteTitle}</div>
-                  </>
-                )}
+              <div className="note-list-outer">
+                <div data-testid={'note-title-' + index} className="note-title">
+                  {note.favorite ? (
+                    <>
+                      <div className="icon">
+                        <Star className="note-favorite" size={12} />
+                      </div>
+                      <div className="truncate-text"> {noteTitle}</div>
+                    </>
+                  ) : (
+                    <>
+                      <div className="icon" />
+                      <div className="truncate-text"> {noteTitle}</div>
+                    </>
+                  )}
+                </div>
+                <div
+                  // TODO: make testID based off of index when we add that to a NoteItem object
+                  data-testid={TestID.NOTE_OPTIONS_DIV + index}
+                  className={optionsId === note.id ? 'note-options selected' : 'note-options'}
+                  onClick={event => handleNoteOptionsClick(event, note.id)}
+                >
+                  <MoreHorizontal size={15} className="context-menu-action" />
+                </div>
               </div>
-              <div
-                // TODO: make testID based off of index when we add that to a NoteItem object
-                data-testid={TestID.NOTE_OPTIONS_DIV + index}
-                className={optionsId === note.id ? 'note-options selected' : 'note-options'}
-                onClick={event => handleNoteOptionsClick(event, note.id)}
-              >
-                <MoreHorizontal size={15} className="context-menu-action" />
-              </div>
+              {(activeFolder === Folder.ALL || activeFolder === Folder.FAVORITES) && (
+                <div className="note-category">
+                  {!!noteCategory ? (
+                    <>
+                      <FolderIcon size={12} className="context-menu-action" />
+                      {noteCategory?.name}
+                    </>
+                  ) : (
+                    <>
+                      <Book size={12} className="context-menu-action" />
+                      Notes
+                    </>
+                  )}
+                </div>
+              )}
               {optionsId === note.id && (
                 <ContextMenu
                   contextMenuRef={contextMenuRef}

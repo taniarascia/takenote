@@ -47,6 +47,10 @@ $dark-editor: #3f3f3f;
           color: white;
         }
 
+        .note-category {
+          color: rgba(255, 255, 255, 0.3);
+        }
+
         &:hover {
           background: darken($dark-sidebar, 5%);
           .note-options {
@@ -54,14 +58,18 @@ $dark-editor: #3f3f3f;
           }
         }
 
-        &.active {
+        &.selected {
           background: $primary;
           color: white;
+          border-bottom: 1px solid darken($primary, 5%);
 
           .note-options {
             &.active {
               color: white;
             }
+          }
+          .note-category {
+            color: rgba(255, 255, 255, 0.7);
           }
         }
 
