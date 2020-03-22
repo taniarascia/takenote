@@ -7,7 +7,7 @@
   }
 
   &-header {
-    position: fixed;
+    position: absolute;
     top: 0;
     left: $app-sidebar-width;
     display: flex;
@@ -53,19 +53,34 @@
 
   .note-list {
     margin-top: 60px;
+    &-outer {
+      display: flex;
+      align-items: center;
+      width: 100%;
+    }
+
     &-each {
       cursor: pointer;
       padding: 0.5rem;
       border-bottom: 1px solid darken($note-sidebar-color, 8%);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
       font-weight: 500;
       font-size: 0.85rem;
       line-height: 1.3;
 
       .highlighted {
         color: #3e64ff;
+      }
+
+      .note-category {
+        display: flex;
+        align-items: center;
+        font-size: 0.8rem;
+        color: rgba(0, 0, 0, 0.4);
+        margin-left: 25px;
+
+        svg {
+          margin-right: 0.5rem;
+        }
       }
 
       .note-title {
@@ -103,6 +118,10 @@
         color: white;
         border-bottom: 1px solid darken($primary, 5%);
 
+        .note-category {
+          color: rgba(255, 255, 255, 0.6);
+        }
+
         &:hover {
           .note-options {
             color: white;
@@ -128,7 +147,7 @@
         display: block;
         font-size: 1rem;
         color: transparent;
-        padding: 0.5rem;
+        padding: 0.4rem;
         z-index: 1;
         cursor: pointer;
 
