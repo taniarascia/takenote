@@ -64,10 +64,11 @@ const settingsSlice = createSlice({
       ...state,
       loading: false,
     }),
-    loadSettingsSuccess: (_, { payload }: PayloadAction<SettingsState>) => ({
+    loadSettingsSuccess: (state, { payload }: PayloadAction<SettingsState>) => ({
       ...payload,
       isOpen: false,
       loading: false,
+      notesSortKey: !state.notesSortKey ? NotesSortKey.LAST_UPDATED : state.notesSortKey,
     }),
   },
 })
