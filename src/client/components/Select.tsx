@@ -12,7 +12,7 @@ export interface SelectProps {
 }
 
 export const Select: React.FC<SelectProps> = ({ options, selectedValue, onChange }) => {
-  const _getSelectedOption = (options: SelectOption[], value: string): SelectOption => {
+  const getSelectedOption = (options: SelectOption[], value: string): SelectOption => {
     return options.filter((option: SelectOption) => {
       return value === option.value
     })[0]
@@ -20,7 +20,7 @@ export const Select: React.FC<SelectProps> = ({ options, selectedValue, onChange
 
   return (
     <select
-      onChange={e => onChange(_getSelectedOption(options, e.target.value))}
+      onChange={event => onChange(getSelectedOption(options, event.target.value))}
       value={selectedValue}
     >
       {options.map(selectOption => (

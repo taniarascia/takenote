@@ -71,11 +71,9 @@
       select {
         font-size: 1rem;
         padding: 0.25rem 0.5rem;
-        height: 30px;
-        width: 140px;
         margin: 0;
-        border-radius: 5px;
-        text-align-last: right;
+        height: 30px;
+        max-width: 130px;
         -webkit-appearance: none;
 
         &:active &:focus {

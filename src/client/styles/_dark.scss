@@ -88,6 +88,10 @@ $dark-editor: #3f3f3f;
     color: $light-font-color;
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 5px 5px rgba(0, 0, 0, 0.25);
 
+    svg {
+      color: rgba(255, 255, 255, 0.5);
+    }
+
     select {
       background: lighten($dark-sidebar, 8%);
       color: $light-font-color;
@@ -98,7 +102,7 @@ $dark-editor: #3f3f3f;
   .options-nav {
     .nav-item {
       &:hover {
-        background: darken($app-sidebar-color, 5%);
+        background: lighten($app-sidebar-color, 8%);
       }
       &.delete-option {
         &:hover {
