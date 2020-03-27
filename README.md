@@ -9,7 +9,7 @@
 
 <p align="center">A web-based note-taking app with GitHub sync and Markdown support. (WIP)</p>
 
-> **Warning**: TakeNote is still in active development. You can visit [takenote.dev](https://takenote.dev) to see the work in progress, but your account and the notes you create are **temporary** will not be persisted. All data will be lost once GitHub integration is complete.
+> **Warning**: TakeNote is in active development. You can visit [takenote.dev](https://takenote.dev) to see the work in progress, but your account and the notes you create are **temporary** will not be persisted. All data will be lost once GitHub integration is complete.
 
 ![Screenshot](./assets/screenshot-light.png)
 
@@ -201,6 +201,7 @@ Thanks goes to these wonderful people:
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 ## Acknowledgements

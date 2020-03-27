@@ -19,5 +19,5 @@ export enum LabelText {
   SYNC_NOTES = 'Sync notes',
   TRASH = 'Trash',
   WELCOME_TO_TAKENOTE = 'Welcome to Takenote!',
-  RENAME = 'Rename',
+  RENAME = 'Rename category',
 }
