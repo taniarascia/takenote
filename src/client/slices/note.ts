@@ -164,15 +164,29 @@ const noteSlice = createSlice({
     }),
     addFavoriteNote: (state, { payload }: PayloadAction<string>) => ({
       ...state,
-      notes: state.notes.map(note =>
-        state.selectedNotesIds.includes(note.id) ? { ...note, favorite: true } : note
-      ),
+      notes: state.notes.map(note => {
+        if (state.selectedNotesIds.includes(payload)) {
+          return state.selectedNotesIds.includes(note.id) ? { ...note, favorite: true } : note
+        }
+        if (note.id === payload) {
+          return { ...note, favorite: true }
+        }
+
+        return note
+      }),
     }),
     addTrashedNote: (state, { payload }: PayloadAction<string>) => ({
       ...state,
-      notes: state.notes.map(note =>
-        state.selectedNotesIds.includes(note.id) ? { ...note, trash: true } : note
-      ),
+      notes: state.notes.map(note => {
+        if (state.selectedNotesIds.includes(payload)) {
+          return state.selectedNotesIds.includes(note.id) ? { ...note, trash: true } : note
+        }
+        if (note.id === payload) {
+          return { ...note, trash: true }
+        }
+
+        return note
+      }),
       activeNoteId: getNewActiveNoteId(
         state.notes,
         payload,
