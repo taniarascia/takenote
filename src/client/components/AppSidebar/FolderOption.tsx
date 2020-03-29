@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Star, Trash2 } from 'react-feather'
+import { Droppable } from 'react-beautiful-dnd'
 
 import { Folder } from '@/utils/enums'
 import { iconColor } from '@/utils/constants'
@@ -61,21 +62,28 @@ export const FolderOption: React.FC<FolderOptionProps> = ({
   }
 
   return (
-    <div
-      data-testid={dataTestID}
-      className={determineClass()}
-      onClick={() => {
-        swapFolder(folder)
-      }}
-      onDrop={noteHandler}
-      onDragOver={(event: ReactDragEvent) => {
-        event.preventDefault()
-      }}
-      onDragEnter={dragEnterHandler}
-      onDragLeave={dragLeaveHandler}
-    >
-      {renderIcon()}
-      {text}
-    </div>
+    <Droppable type="NOTES" droppableId={folder}>
+      {providedDroppable => (
+        <div
+          {...providedDroppable.droppableProps}
+          ref={providedDroppable.innerRef}
+          data-testid={dataTestID}
+          className={determineClass()}
+          onClick={() => {
+            swapFolder(folder)
+          }}
+          onDrop={noteHandler}
+          onDragOver={(event: ReactDragEvent) => {
+            event.preventDefault()
+          }}
+          onDragEnter={dragEnterHandler}
+          onDragLeave={dragLeaveHandler}
+        >
+          {renderIcon()}
+          {text}
+          {providedDroppable.placeholder}
+        </div>
+      )}
+    </Droppable>
   )
 }

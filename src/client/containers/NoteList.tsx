@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { MoreHorizontal, Book, Star, Menu, Folder as FolderIcon } from 'react-feather'
+import { Droppable, Draggable } from 'react-beautiful-dnd'
 
 import { TestID } from '@resources/TestID'
 
@@ -178,100 +179,120 @@ export const NoteList: React.FC = () => {
           </NoteListButton>
         )}
       </div>
-      <div data-testid={TestID.NOTE_LIST} className="note-list">
-        {filteredNotes.map((note: NoteItem, index: number) => {
-          let noteTitle: string | React.ReactElement = getNoteTitle(note.text)
-          const noteCategory = categories.find(category => category.id === note.category)
+      <Droppable type="NOTES" droppableId={activeFolder} isDropDisabled>
+        {droppableProvided => (
+          <div
+            {...droppableProvided.droppableProps}
+            ref={droppableProvided.innerRef}
+            data-testid={TestID.NOTE_LIST}
+            className="note-list"
+          >
+            {filteredNotes.map((note: NoteItem, index: number) => {
+              let noteTitle: string | React.ReactElement = getNoteTitle(note.text)
+              const noteCategory = categories.find(category => category.id === note.category)
 
-          if (searchValue) {
-            const highlightStart = noteTitle.search(re)
+              if (searchValue) {
+                const highlightStart = noteTitle.search(re)
 
-            if (highlightStart !== -1) {
-              const highlightEnd = highlightStart + searchValue.length
+                if (highlightStart !== -1) {
+                  const highlightEnd = highlightStart + searchValue.length
 
-              noteTitle = (
-                <>
-                  {noteTitle.slice(0, highlightStart)}
-                  <strong className="highlighted">
-                    {noteTitle.slice(highlightStart, highlightEnd)}
-                  </strong>
-                  {noteTitle.slice(highlightEnd)}
-                </>
-              )
-            }
-          }
-
-          return (
-            <div
-              data-testid={TestID.NOTE_LIST_ITEM + index}
-              className={
-                selectedNotesIds.includes(note.id) ? 'note-list-each selected' : 'note-list-each'
+                  noteTitle = (
+                    <>
+                      {noteTitle.slice(0, highlightStart)}
+                      <strong className="highlighted">
+                        {noteTitle.slice(highlightStart, highlightEnd)}
+                      </strong>
+                      {noteTitle.slice(highlightEnd)}
+                    </>
+                  )
+                }
               }
-              key={note.id}
-              onClick={event => {
-                event.stopPropagation()
 
-                _updateSelectedNotes(note.id, event.metaKey)
-                _updateActiveNote(note.id, event.metaKey)
-                _pruneNotes()
-              }}
-              onContextMenu={event => handleNoteRightClick(event, note.id)}
-              draggable
-              onDragStart={event => handleDragStart(event, note.id)}
-            >
-              <div className="note-list-outer">
-                <div data-testid={'note-title-' + index} className="note-title">
-                  {note.favorite ? (
-                    <>
-                      <div className="icon">
-                        <Star className="note-favorite" size={12} />
+              return (
+                <Draggable key={note.id} draggableId={note.id} index={index}>
+                  {draggableProvided => (
+                    <div
+                      {...draggableProvided.draggableProps}
+                      {...draggableProvided.dragHandleProps}
+                      ref={draggableProvided.innerRef}
+                      data-testid={TestID.NOTE_LIST_ITEM + index}
+                      className={
+                        selectedNotesIds.includes(note.id)
+                          ? 'note-list-each selected'
+                          : 'note-list-each'
+                      }
+                      onClick={event => {
+                        event.stopPropagation()
+
+                        _updateSelectedNotes(note.id, event.metaKey)
+                        _updateActiveNote(note.id, event.metaKey)
+                        _pruneNotes()
+                      }}
+                      onContextMenu={event => handleNoteRightClick(event, note.id)}
+                      draggable
+                      onDragStart={event => handleDragStart(event, note.id)}
+                    >
+                      <div className="note-list-outer">
+                        <div data-testid={'note-title-' + index} className="note-title">
+                          {note.favorite ? (
+                            <>
+                              <div className="icon">
+                                <Star className="note-favorite" size={12} />
+                              </div>
+                              <div className="truncate-text"> {noteTitle}</div>
+                            </>
+                          ) : (
+                            <>
+                              <div className="icon" />
+                              <div className="truncate-text"> {noteTitle}</div>
+                            </>
+                          )}
+                        </div>
+                        <div
+                          // TODO: make testID based off of index when we add that to a NoteItem object
+                          data-testid={TestID.NOTE_OPTIONS_DIV + index}
+                          className={
+                            optionsId === note.id ? 'note-options selected' : 'note-options'
+                          }
+                          onClick={event => handleNoteOptionsClick(event, note.id)}
+                        >
+                          <MoreHorizontal size={15} className="context-menu-action" />
+                        </div>
                       </div>
-                      <div className="truncate-text"> {noteTitle}</div>
-                    </>
-                  ) : (
-                    <>
-                      <div className="icon" />
-                      <div className="truncate-text"> {noteTitle}</div>
-                    </>
+                      {(activeFolder === Folder.ALL || activeFolder === Folder.FAVORITES) && (
+                        <div className="note-category">
+                          {!!noteCategory ? (
+                            <>
+                              <FolderIcon size={12} className="context-menu-action" />
+                              {noteCategory?.name}
+                            </>
+                          ) : (
+                            <>
+                              <Book size={12} className="context-menu-action" />
+                              Notes
+                            </>
+                          )}
+                        </div>
+                      )}
+                      {optionsId === note.id && (
+                        <ContextMenu
+                          contextMenuRef={contextMenuRef}
+                          item={note}
+                          optionsPosition={optionsPosition}
+                          setOptionsId={setOptionsId}
+                          type={ContextMenuEnum.NOTE}
+                        />
+                      )}
+                    </div>
                   )}
-                </div>
-                <div
-                  // TODO: make testID based off of index when we add that to a NoteItem object
-                  data-testid={TestID.NOTE_OPTIONS_DIV + index}
-                  className={optionsId === note.id ? 'note-options selected' : 'note-options'}
-                  onClick={event => handleNoteOptionsClick(event, note.id)}
-                >
-                  <MoreHorizontal size={15} className="context-menu-action" />
-                </div>
-              </div>
-              {(activeFolder === Folder.ALL || activeFolder === Folder.FAVORITES) && (
-                <div className="note-category">
-                  {!!noteCategory ? (
-                    <>
-                      <FolderIcon size={12} className="context-menu-action" />
-                      {noteCategory?.name}
-                    </>
-                  ) : (
-                    <>
-                      <Book size={12} className="context-menu-action" />
-                      Notes
-                    </>
-                  )}
-                </div>
-              )}
-              {optionsId === note.id && (
-                <ContextMenu
-                  contextMenuRef={contextMenuRef}
-                  item={note}
-                  optionsPosition={optionsPosition}
-                  setOptionsId={setOptionsId}
-                  type={ContextMenuEnum.NOTE}
-                />
-              )}
-            </div>
-          )
-        })}
-      </div>
+                </Draggable>
+              )
+            })}
+            {droppableProvided.placeholder}
+          </div>
+        )}
+      </Droppable>
     </aside>
   ) : null
 }

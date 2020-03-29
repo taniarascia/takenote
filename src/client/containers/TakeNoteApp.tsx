@@ -11,8 +11,9 @@ import { SettingsModal } from '@/containers/SettingsModal'
 import { TempStateProvider } from '@/contexts/TempStateContext'
 import { useInterval, useBeforeUnload } from '@/utils/hooks'
 import { getWebsiteTitle, determineAppClass, getActiveCategory } from '@/utils/helpers'
+import { Folder } from '@/utils/enums'
 import { loadCategories, swapCategories } from '@/slices/category'
-import { loadNotes } from '@/slices/note'
+import { loadNotes, addFavoriteNote, addTrashedNote } from '@/slices/note'
 import { syncState } from '@/slices/sync'
 import { loadSettings } from '@/slices/settings'
 import { NoteItem, CategoryItem } from '@/types'
@@ -43,6 +44,8 @@ export const TakeNoteApp: React.FC = () => {
     dispatch(swapCategories({ categoryId, destinationId }))
   const _syncState = (notes: NoteItem[], categories: CategoryItem[]) =>
     dispatch(syncState({ notes, categories }))
+  const _addFavoriteNote = (noteId: string) => dispatch(addFavoriteNote(noteId))
+  const _addTrashedNote = (noteId: string) => dispatch(addTrashedNote(noteId))
 
   // ===========================================================================
   // Handlers
@@ -53,6 +56,13 @@ export const TakeNoteApp: React.FC = () => {
 
     if (!destination) return
     if (destination.droppableId === source.droppableId && destination.index === source.index) return
+
+    switch (result.destination?.droppableId) {
+      case Folder.FAVORITES:
+        _addFavoriteNote(result.draggableId)
+      case Folder.TRASH:
+        _addTrashedNote(result.draggableId)
+    }
 
     switch (result.type) {
       case 'CATEGORY':
