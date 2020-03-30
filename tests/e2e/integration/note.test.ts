@@ -37,6 +37,7 @@ import {
   openNoteContextMenu,
   holdKeyAndClickNoteAtIndex,
   trashAllNotes,
+  dragAndDrop,
 } from '../utils/testNotesHelperUtils'
 import {
   addCategory,
@@ -468,5 +469,95 @@ describe('Manage notes test', () => {
 
     navigateToAllNotes()
     assertNoteListLengthEquals(0)
+  })
+
+  it('should send a not selected note to favorites with drag & drop', () => {
+    const dt = new DataTransfer()
+
+    createXUniqueNotes(3)
+
+    holdKeyAndClickNoteAtIndex(0, 'meta')
+    holdKeyAndClickNoteAtIndex(1, 'meta')
+
+    dragAndDrop('[data-testid=note-list-item-2]', '[data-testid=favorites]')
+
+    cy.get('[data-testid=favorites]').click()
+    cy.get('[data-testid=note-list]').within(() => {
+      cy.get('.note-list-each').should('have.length', 1)
+    })
+  })
+
+  it('should send a not selected note to trash with drag & drop', () => {
+    createXUniqueNotes(3)
+
+    holdKeyAndClickNoteAtIndex(0, 'meta')
+    holdKeyAndClickNoteAtIndex(1, 'meta')
+
+    dragAndDrop('[data-testid=note-list-item-2]', '[data-testid=trash]')
+
+    cy.get('[data-testid=trash]').click()
+    cy.get('[data-testid=note-list]').within(() => {
+      cy.get('.note-list-each').should('have.length', 1)
+    })
+  })
+
+  it('should send a not selected note to a category with drag & drop', () => {
+    createXUniqueNotes(3)
+    addCategory(dynamicTimeCategoryName)
+
+    holdKeyAndClickNoteAtIndex(0, 'meta')
+    holdKeyAndClickNoteAtIndex(1, 'meta')
+
+    dragAndDrop('[data-testid=note-list-item-2]', '[data-testid=category-list-div]')
+
+    cy.get('[data-testid=category-list-div]').click()
+    cy.get('[data-testid=note-list]').within(() => {
+      cy.get('.note-list-each').should('have.length', 1)
+    })
+  })
+
+  it('should send multiple notes to favorites with drag & drop', () => {
+    createXUniqueNotes(3)
+    addCategory(dynamicTimeCategoryName)
+
+    holdKeyAndClickNoteAtIndex(0, 'meta')
+    holdKeyAndClickNoteAtIndex(1, 'meta')
+
+    dragAndDrop('[data-testid=note-list-item-0]', '[data-testid=favorites]')
+
+    cy.get('[data-testid=favorites]').click()
+    cy.get('[data-testid=note-list]').within(() => {
+      cy.get('.note-list-each').should('have.length', 2)
+    })
+  })
+
+  it('should send multiple notes to favorites with drag & drop', () => {
+    createXUniqueNotes(3)
+    addCategory(dynamicTimeCategoryName)
+
+    holdKeyAndClickNoteAtIndex(0, 'meta')
+    holdKeyAndClickNoteAtIndex(1, 'meta')
+
+    dragAndDrop('[data-testid=note-list-item-0]', '[data-testid=trash]')
+
+    cy.get('[data-testid=trash]').click()
+    cy.get('[data-testid=note-list]').within(() => {
+      cy.get('.note-list-each').should('have.length', 2)
+    })
+  })
+
+  it('should send multiple notes to a category with drag & drop', () => {
+    createXUniqueNotes(3)
+    addCategory(dynamicTimeCategoryName)
+
+    holdKeyAndClickNoteAtIndex(0, 'meta')
+    holdKeyAndClickNoteAtIndex(1, 'meta')
+
+    dragAndDrop('[data-testid=note-list-item-0]', '[data-testid=category-list-div]')
+
+    cy.get('[data-testid=category-list-div]').click()
+    cy.get('[data-testid=note-list]').within(() => {
+      cy.get('.note-list-each').should('have.length', 2)
+    })
   })
 })
