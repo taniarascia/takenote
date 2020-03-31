@@ -390,6 +390,16 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "pavlakissimos",
+      "name": "Simos",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/19609475?v=4",
+      "profile": "https://github.com/pavlakissimos",
+      "contributions": [
+        "code",
+        "test"
+      ]
     }
   ],
   "contributorsPerLine": 7,

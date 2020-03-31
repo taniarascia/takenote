@@ -141,6 +141,13 @@ const clearNoteSearch = () => {
   getTestID(TestID.NOTE_SEARCH).clear()
 }
 
+const dragAndDrop = (subject: string, element: string) => {
+  const dt = new DataTransfer()
+
+  cy.get(subject).trigger('dragstart', { dataTransfer: dt })
+  cy.get(element).trigger('drop', { dataTransfer: dt })
+}
+
 export {
   assertNewNoteCreated,
   assertNoteEditorCharacterCount,
@@ -166,4 +173,5 @@ export {
   openNoteContextMenu,
   holdKeyAndClickNoteAtIndex,
   trashAllNotes,
+  dragAndDrop,
 }
