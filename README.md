@@ -196,12 +196,12 @@ Thanks goes to these wonderful people:
     <td align="center"><a href="https://github.com/yohix"><img src="https://avatars3.githubusercontent.com/u/61746440?v=4" width="50px;" alt=""/><br /><sub><b>Yohix</b></sub></a><br /><a href="#maintenance-yohix" title="Maintenance">🚧</a></td>
     <td align="center"><a href="https://github.com/jackson-elfers"><img src="https://avatars1.githubusercontent.com/u/55408089?v=4" width="50px;" alt=""/><br /><sub><b>Jackson Elfers</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=jackson-elfers" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/vamshi-tg"><img src="https://avatars2.githubusercontent.com/u/32225088?v=4" width="50px;" alt=""/><br /><sub><b>Vamshi</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=vamshi-tg" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/pavlakissimos"><img src="https://avatars1.githubusercontent.com/u/19609475?v=4" width="50px;" alt=""/><br /><sub><b>Simos</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=pavlakissimos" title="Code">💻</a> <a href="https://github.com/taniarascia/takenote/commits?author=pavlakissimos" title="Tests">⚠️</a></td>
   </tr>
 </table>
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
-
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 ## Acknowledgements
