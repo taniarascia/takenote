@@ -57,11 +57,13 @@ export const TakeNoteApp: React.FC = () => {
     if (!destination) return
     if (destination.droppableId === source.droppableId && destination.index === source.index) return
 
-    switch (result.destination?.droppableId) {
+    switch (destination.droppableId) {
       case Folder.FAVORITES:
         _addFavoriteNote(result.draggableId)
+        break
       case Folder.TRASH:
         _addTrashedNote(result.draggableId)
+        break
     }
 
     switch (result.type) {

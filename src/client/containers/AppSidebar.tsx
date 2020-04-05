@@ -239,7 +239,6 @@ export const AppSidebar: React.FC = () => {
             dataTestID={TestID.FOLDER_FAVORITES}
             folder={Folder.FAVORITES}
             swapFolder={_swapFolder}
-            addNoteType={_addFavoriteNote}
           />
           <FolderOption
             active={activeFolder === Folder.TRASH}
@@ -247,7 +246,6 @@ export const AppSidebar: React.FC = () => {
             dataTestID={TestID.FOLDER_TRASH}
             folder={Folder.TRASH}
             swapFolder={_swapFolder}
-            addNoteType={_addTrashedNote}
           />
           <div className="category-title">
             <h2>Categories</h2>

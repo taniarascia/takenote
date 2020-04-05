@@ -1,10 +1,9 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Star, Trash2 } from 'react-feather'
 import { Droppable } from 'react-beautiful-dnd'
 
 import { Folder } from '@/utils/enums'
 import { iconColor } from '@/utils/constants'
-import { ReactDragEvent } from '@/types'
 
 export interface FolderOptionProps {
   text: string
@@ -12,7 +11,6 @@ export interface FolderOptionProps {
   dataTestID: string
   folder: Folder
   swapFolder: (folder: Folder) => void
-  addNoteType: (noteId: string) => void
 }
 
 export const FolderOption: React.FC<FolderOptionProps> = ({
@@ -21,32 +19,11 @@ export const FolderOption: React.FC<FolderOptionProps> = ({
   dataTestID,
   folder,
   swapFolder,
-  addNoteType,
 }) => {
-  const [mainSectionDragState, setMainSectionDragState] = useState({
-    [Folder.ALL]: false,
-    [Folder.FAVORITES]: false,
-    [Folder.SCRATCHPAD]: false,
-    [Folder.TRASH]: false,
-    [Folder.CATEGORY]: false,
-  })
-  const dragEnterHandler = () => {
-    setMainSectionDragState({ ...mainSectionDragState, [folder]: true })
-  }
-  const dragLeaveHandler = () => {
-    setMainSectionDragState({ ...mainSectionDragState, [folder]: false })
-  }
-  const noteHandler = (event: ReactDragEvent) => {
-    event.preventDefault()
-
-    addNoteType(event.dataTransfer.getData('text'))
-    dragLeaveHandler()
-  }
-
-  const determineClass = () => {
+  const determineClass = (isDraggingOver: boolean) => {
     if (active) {
       return 'app-sidebar-link active'
-    } else if (mainSectionDragState[folder]) {
+    } else if (isDraggingOver) {
       return 'app-sidebar-link dragged-over'
     } else {
       return 'app-sidebar-link'
@@ -63,25 +40,19 @@ export const FolderOption: React.FC<FolderOptionProps> = ({
 
   return (
     <Droppable type="NOTES" droppableId={folder}>
-      {providedDroppable => (
+      {(droppableProvided, snapshot) => (
         <div
-          {...providedDroppable.droppableProps}
-          ref={providedDroppable.innerRef}
+          {...droppableProvided.droppableProps}
+          ref={droppableProvided.innerRef}
           data-testid={dataTestID}
-          className={determineClass()}
+          className={determineClass(snapshot.isDraggingOver)}
           onClick={() => {
             swapFolder(folder)
           }}
-          onDrop={noteHandler}
-          onDragOver={(event: ReactDragEvent) => {
-            event.preventDefault()
-          }}
-          onDragEnter={dragEnterHandler}
-          onDragLeave={dragLeaveHandler}
         >
           {renderIcon()}
           {text}
-          {providedDroppable.placeholder}
+          {droppableProvided.placeholder}
         </div>
       )}
     </Droppable>
