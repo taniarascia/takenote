@@ -34,10 +34,7 @@ export const renderWithRouter = (
   return {
     ...render(
       <Provider store={store}>
-        <MemoryRouter>
-          {ui}
-          <KeyboardShortcuts />
-        </MemoryRouter>
+        <MemoryRouter>{ui}</MemoryRouter>
       </Provider>
     ),
     history,
