@@ -13,6 +13,7 @@ module.exports = {
     // Allow `@/` to map to `src/client/` in Jest tests
     '@/(.*)$': '<rootDir>/src/client/$1',
     '@resources/(.*)$': '<rootDir>/src/resources/$1',
+    '\\.(css|less)$': '<rootDir>/tests/__mocks__/styleMock.ts',
   },
   globals: {
     'ts-jest': {

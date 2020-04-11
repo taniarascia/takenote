@@ -51,6 +51,7 @@ export const NoteEditor: React.FC = () => {
       return (
         <>
           <CodeMirror
+            data-testid="codemirror-editor"
             className="editor mousetrap"
             value={activeNote.text}
             options={codeMirrorOptions}

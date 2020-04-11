@@ -8,6 +8,7 @@ import { configureStore, getDefaultMiddleware } from '@reduxjs/toolkit'
 
 import rootSaga from '@/sagas'
 import rootReducer from '@/slices'
+import { KeyboardShortcuts } from '@/containers/KeyboardShortcuts'
 
 interface RenderWithRouterOptions {
   route: string
@@ -33,7 +34,10 @@ export const renderWithRouter = (
   return {
     ...render(
       <Provider store={store}>
-        <MemoryRouter>{ui}</MemoryRouter>
+        <MemoryRouter>
+          {ui}
+          <KeyboardShortcuts />
+        </MemoryRouter>
       </Provider>
     ),
     history,
