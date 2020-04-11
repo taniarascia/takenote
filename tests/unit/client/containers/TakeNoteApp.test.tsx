@@ -1,26 +1,26 @@
 import React from 'react'
 import { mocked } from 'ts-jest/utils'
-import { fireEvent, waitForElement } from '@testing-library/react'
-import prettier from 'prettier/standalone'
+import { waitForElement } from '@testing-library/react'
+import { name, internet } from 'faker'
 
 import { renderWithRouter } from '../testHelpers'
 
-import { getCategories, getSettings, getNotes } from '@/selectors'
+import { getAuth, getCategories, getSettings, getNotes, getSync } from '@/selectors'
 import { Folder, NotesSortKey } from '@/utils/enums'
-import { NoteEditor } from '@/containers/NoteEditor'
+import { TakeNoteApp } from '@/containers/TakeNoteApp'
 
-jest.mock('prettier/standalone')
 jest.mock('@/selectors')
-const mockedPrettier = mocked(prettier, true)
+
 const mockedGetNotes = mocked(getNotes, true)
 const mockedGetSettings = mocked(getSettings, true)
 const mockedGetCategories = mocked(getCategories, true)
+const mockedGetSync = mocked(getSync, true)
+const mockedGetAuth = mocked(getAuth, true)
 
-const wrap = () => renderWithRouter(<NoteEditor />)
+const wrap = () => renderWithRouter(<TakeNoteApp />)
 
-describe('<KeyboardShortcuts />', () => {
-  test('should create a new note using the keyboard shortcut', async () => {
-    mockedPrettier.format.mockImplementation(() => 'ran prettier')
+describe('<TakeNoteApp />', () => {
+  test('should see empty editor if there are no active notes', async () => {
     mockedGetNotes.mockImplementation(() => {
       return {
         activeCategoryId: '',
@@ -64,20 +64,29 @@ describe('<KeyboardShortcuts />', () => {
         },
       }
     })
+    mockedGetSync.mockImplementation(() => {
+      return {
+        error: '',
+        syncing: false,
+        lastSynced: '',
+        pendingSync: false,
+      }
+    })
+    mockedGetAuth.mockImplementation(() => {
+      return {
+        loading: false,
+        currentUser: {
+          email: internet.email(),
+          name: name.findName(),
+          avatar_url: internet.url(),
+        },
+        isAuthenticated: true,
+        error: '',
+      }
+    })
 
     const component = wrap()
+
     await waitForElement(() => component.getByTestId('empty-editor'))
-
-    fireEvent.keyDown(component.getByTestId('empty-editor'), {
-      key: 'Control',
-    })
-    fireEvent.keyDown(component.getByTestId('empty-editor'), {
-      key: 'Option',
-    })
-    fireEvent.keyDown(component.getByTestId('empty-editor'), {
-      key: 'N',
-    })
-
-    await waitForElement(() => component.getByTestId('codemirror-editor'))
   })
 })
