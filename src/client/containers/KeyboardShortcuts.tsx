@@ -1,21 +1,28 @@
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import prettier from 'prettier/standalone'
+import parserMarkdown from 'prettier/parser-markdown'
+import parserHtml from 'prettier/parser-html'
+import parserCss from 'prettier/parser-postcss'
+import parserTs from 'prettier/parser-typescript'
+import parserJs from 'prettier/parser-babel'
 
 import { useTempState } from '@/contexts/TempStateContext'
 import { Folder, Shortcuts } from '@/utils/enums'
-import { downloadNotes, getNoteTitle, newNoteHandlerHelper, getActiveNote } from '@/utils/helpers'
+import { downloadNotes, getActiveNote, newNoteHandlerHelper } from '@/utils/helpers'
 import { useKey } from '@/utils/hooks'
 import {
   addNote,
-  updateActiveNote,
-  toggleTrashedNote,
   swapFolder,
+  toggleTrashedNote,
+  updateActiveNote,
   updateSelectedNotes,
+  updateNote,
 } from '@/slices/note'
 import { syncState } from '@/slices/sync'
-import { getSettings, getNotes, getCategories } from '@/selectors'
+import { getCategories, getNotes, getSettings } from '@/selectors'
 import { CategoryItem, NoteItem } from '@/types'
-import { updateCodeMirrorOption, togglePreviewMarkdown, toggleDarkTheme } from '@/slices/settings'
+import { toggleDarkTheme, togglePreviewMarkdown, updateCodeMirrorOption } from '@/slices/settings'
 
 export const KeyboardShortcuts: React.FC = () => {
   // ===========================================================================
@@ -78,7 +85,7 @@ export const KeyboardShortcuts: React.FC = () => {
   const downloadNotesHandler = () =>
     downloadNotes(
       selectedNotesIds.includes(activeNote!.id)
-        ? notes.filter(note => selectedNotesIds.includes(note.id))
+        ? notes.filter((note) => selectedNotesIds.includes(note.id))
         : [activeNote!],
       categories
     )
@@ -86,6 +93,22 @@ export const KeyboardShortcuts: React.FC = () => {
   const toggleDarkThemeHandler = () => {
     _toggleDarkTheme()
     _updateCodeMirrorOption('theme', darkTheme ? 'base16-light' : 'new-moon')
+  }
+  const prettifyNoteHandler = () => {
+    // format current note with prettier
+    if (activeNote && activeNote.text) {
+      const formattedText = prettier.format(activeNote.text, {
+        parser: 'markdown',
+        plugins: [parserMarkdown, parserHtml, parserCss, parserTs, parserJs],
+      })
+
+      const updatedNote = {
+        ...activeNote,
+        text: formattedText,
+      }
+
+      dispatch(updateNote(updatedNote))
+    }
   }
 
   // ===========================================================================
@@ -99,6 +122,7 @@ export const KeyboardShortcuts: React.FC = () => {
   useKey(Shortcuts.DOWNLOAD_NOTES, () => downloadNotesHandler())
   useKey(Shortcuts.PREVIEW, () => togglePreviewMarkdownHandler())
   useKey(Shortcuts.TOGGLE_THEME, () => toggleDarkThemeHandler())
+  useKey(Shortcuts.PRETTIFY, () => prettifyNoteHandler())
 
   return null
 }

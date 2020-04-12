@@ -25,6 +25,7 @@ TakeNote is a web-based note-taking app with GitHub sync (soon™️) and Markdo
 | Markdown preview | `CTRL` + `ALT` + `P`   | `CONTROL` + `OPTION` + `P` |
 | Toggle theme     | `CTRL` + `ALT` + `K`   | `CONTROL` + `OPTION` + `K` |
 | Focus search     | `CTRL` + `ALT` + `F`   | `CONTROL` + `OPTION` + `F` |
+| Run Prettier     | `CTRL` + `ALT` + `I`   | `CONTROL` + `OPTION` + `I` |
 
 ## Sync
 

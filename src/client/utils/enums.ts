@@ -15,6 +15,7 @@ export enum Shortcuts {
   PREVIEW = 'alt+ctrl+p',
   TOGGLE_THEME = 'alt+ctrl+k',
   SEARCH = 'alt+ctrl+f',
+  PRETTIFY = 'ctrl+alt+i',
 }
 
 export enum ContextMenuEnum {

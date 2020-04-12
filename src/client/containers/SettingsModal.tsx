@@ -23,9 +23,10 @@ export const SettingsModal: React.FC = () => {
   // Selectors
   // ===========================================================================
 
-  const { codeMirrorOptions, isOpen, previewMarkdown, darkTheme } = useSelector(getSettings)
+  const { codeMirrorOptions, isOpen, previewMarkdown, darkTheme, notesSortKey } = useSelector(
+    getSettings
+  )
   const { currentUser } = useSelector(getAuth)
-  const { notesSortKey } = useSelector(getSettings)
 
   // ===========================================================================
   // Dispatch

@@ -19,6 +19,7 @@ export const shortcutMap = [
   { action: 'Markdown preview', key: 'P' },
   { action: 'Toggle theme', key: 'K' },
   { action: 'Search', key: 'F' },
+  { action: 'Prettify', key: 'I' },
 ]
 
 export const notesSortOptions = [
