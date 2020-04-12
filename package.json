@@ -69,7 +69,7 @@
     "jszip": "^3.2.2",
     "mousetrap": "^1.6.3",
     "mousetrap-global-bind": "^1.1.0",
-    "prettier": "^1.19.1",
+    "prettier": "^2.0.4",
     "react": "^16.12.0",
     "react-beautiful-dnd": "^12.2.0",
     "react-codemirror2": "^6.0.0",

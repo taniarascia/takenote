@@ -2,6 +2,10 @@ import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import prettier from 'prettier/standalone'
 import parserMarkdown from 'prettier/parser-markdown'
+import parserHtml from 'prettier/parser-html'
+import parserCss from 'prettier/parser-postcss'
+import parserTs from 'prettier/parser-typescript'
+import parserJs from 'prettier/parser-babel'
 
 import { useTempState } from '@/contexts/TempStateContext'
 import { Folder, Shortcuts } from '@/utils/enums'
@@ -81,7 +85,7 @@ export const KeyboardShortcuts: React.FC = () => {
   const downloadNotesHandler = () =>
     downloadNotes(
       selectedNotesIds.includes(activeNote!.id)
-        ? notes.filter(note => selectedNotesIds.includes(note.id))
+        ? notes.filter((note) => selectedNotesIds.includes(note.id))
         : [activeNote!],
       categories
     )
@@ -95,7 +99,7 @@ export const KeyboardShortcuts: React.FC = () => {
     if (activeNote && activeNote.text) {
       const formattedText = prettier.format(activeNote.text, {
         parser: 'markdown',
-        plugins: [parserMarkdown],
+        plugins: [parserMarkdown, parserHtml, parserCss, parserTs, parserJs],
       })
 
       const updatedNote = {
