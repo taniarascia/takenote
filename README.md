@@ -197,6 +197,7 @@ Thanks goes to these wonderful people:
     <td align="center"><a href="https://github.com/jackson-elfers"><img src="https://avatars1.githubusercontent.com/u/55408089?v=4" width="50px;" alt=""/><br /><sub><b>Jackson Elfers</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=jackson-elfers" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/vamshi-tg"><img src="https://avatars2.githubusercontent.com/u/32225088?v=4" width="50px;" alt=""/><br /><sub><b>Vamshi</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=vamshi-tg" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/pavlakissimos"><img src="https://avatars1.githubusercontent.com/u/19609475?v=4" width="50px;" alt=""/><br /><sub><b>Simos</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=pavlakissimos" title="Code">💻</a> <a href="https://github.com/taniarascia/takenote/commits?author=pavlakissimos" title="Tests">⚠️</a></td>
+    <td align="center"><a href="https://github.com/ggonza89"><img src="https://avatars0.githubusercontent.com/u/5530647?v=4" width="50px;" alt=""/><br /><sub><b>Yankee</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=ggonza89" title="Code">💻</a> <a href="#ideas-ggonza89" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/taniarascia/takenote/commits?author=ggonza89" title="Tests">⚠️</a></td>
   </tr>
 </table>
 

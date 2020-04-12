@@ -400,6 +400,17 @@
         "code",
         "test"
       ]
+    },
+    {
+      "login": "ggonza89",
+      "name": "Yankee",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/5530647?v=4",
+      "profile": "https://github.com/ggonza89",
+      "contributions": [
+        "code",
+        "ideas",
+        "test"
+      ]
     }
   ],
   "contributorsPerLine": 7,
