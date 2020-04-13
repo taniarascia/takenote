@@ -2,8 +2,6 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Helmet, HelmetProvider } from 'react-helmet-async'
 import { DragDropContext, DropResult } from 'react-beautiful-dnd'
-import { DndProvider } from 'react-dnd'
-import Backend from 'react-dnd-html5-backend'
 
 import { AppSidebar } from '@/containers/AppSidebar'
 import { KeyboardShortcuts } from '@/containers/KeyboardShortcuts'
@@ -89,10 +87,8 @@ export const TakeNoteApp: React.FC = () => {
       <TempStateProvider>
         <div className={determineAppClass(darkTheme, sidebarVisible, activeFolder)}>
           <DragDropContext onDragEnd={onDragEnd}>
-            <DndProvider backend={Backend}>
-              <AppSidebar />
-              <NoteList />
-            </DndProvider>
+            <AppSidebar />
+            <NoteList />
             <NoteEditor />
           </DragDropContext>
           <KeyboardShortcuts />
