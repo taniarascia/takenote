@@ -2,8 +2,7 @@ import ReactDOM from 'react-dom'
 import React, { useEffect, useState, createContext } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { TestID } from '@resources/TestID'
-
+import { SelectCategory } from '@/components/NoteList/SelectCategory'
 import { ContextMenuOptions } from '@/containers/ContextMenuOptions'
 import { addCategoryToNote, updateActiveCategoryId, updateActiveNote } from '@/slices/note'
 import { NoteItem, CategoryItem } from '@/types'
@@ -93,7 +92,7 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({
           top: getOptionsYPosition() + 'px',
           left: optionsPosition.x + 'px',
         }}
-        onClick={event => {
+        onClick={(event) => {
           event.stopPropagation()
         }}
       >
@@ -144,40 +143,24 @@ const NotesMenu: React.FC<NotesMenuProps> = ({ note, setOptionsId }) => {
   const _updateActiveCategoryId = (categoryId: string) =>
     dispatch(updateActiveCategoryId(categoryId))
 
-  const filteredCategories = categories.filter(({ id }) => id !== activeCategoryId)
-
   return (
     <>
-      {!note.trash && filteredCategories.length > 0 && (
-        <>
-          <select
-            data-testid={TestID.MOVE_TO_CATEGORY}
-            defaultValue=""
-            className="nav-item move-to-category-select"
-            onChange={event => {
-              _addCategoryToNote(event.target.value, note.id)
+      <SelectCategory
+        onChange={(event) => {
+          _addCategoryToNote(event.target.value, note.id)
 
-              if (event.target.value !== activeCategoryId) {
-                _updateActiveCategoryId(event.target.value)
-                _updateActiveNote(note.id, false)
-              }
+          if (event.target.value !== activeCategoryId) {
+            _updateActiveCategoryId(event.target.value)
+            _updateActiveNote(note.id, false)
+          }
 
-              setOptionsId('')
-            }}
-          >
-            <option disabled value="">
-              Move to category...
-            </option>
-            {filteredCategories
-              .filter(category => category.id !== note.category)
-              .map(category => (
-                <option key={category.id} value={category.id}>
-                  {category.name}
-                </option>
-              ))}
-          </select>
-        </>
-      )}
+          setOptionsId('')
+        }}
+        categories={categories}
+        activeCategoryId={activeCategoryId}
+        note={note}
+      />
+
       <ContextMenuOptions type={ContextMenuEnum.NOTE} clickedItem={note} />
     </>
   )
