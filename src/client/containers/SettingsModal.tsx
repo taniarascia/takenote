@@ -10,7 +10,7 @@ import {
   updateNotesSortStrategy,
 } from '@/slices/settings'
 import { logout } from '@/slices/auth'
-import { shortcutMap, notesSortOptions } from '@/utils/constants'
+import { shortcutMap, notesSortOptions, directionTextOptions } from '@/utils/constants'
 import { ReactMouseEvent } from '@/types'
 import { getSettings, getAuth } from '@/selectors'
 import { Option } from '@/components/SettingsModal/Option'
@@ -78,6 +78,9 @@ export const SettingsModal: React.FC = () => {
   const updateNotesSortStrategyHandler = (selectedOption: any) => {
     _updateNotesSortStrategy(selectedOption.value)
   }
+  const updateNotesDirectionHandler = (selectedOption: any) => {
+    _updateCodeMirrorOption('direction', selectedOption.value)
+  }
   // ===========================================================================
   // Hooks
   // ===========================================================================
@@ -141,6 +144,12 @@ export const SettingsModal: React.FC = () => {
             onChange={updateNotesSortStrategyHandler}
             options={notesSortOptions}
             selectedValue={notesSortKey}
+          />
+          <SelectOptions
+            title="Direction text"
+            onChange={updateNotesDirectionHandler}
+            options={directionTextOptions}
+            selectedValue={codeMirrorOptions.direction}
           />
         </section>
 

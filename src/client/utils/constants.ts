@@ -1,4 +1,4 @@
-import { Folder, NotesSortKey } from '@/utils/enums'
+import { Folder, NotesSortKey, DirectionText } from '@/utils/enums'
 
 export const folderMap: Record<Folder, string> = {
   [Folder.ALL]: 'All Notes',
@@ -27,4 +27,9 @@ export const notesSortOptions = [
   { value: NotesSortKey.CREATED_DATE, label: 'Date Created' },
   { value: NotesSortKey.LAST_UPDATED, label: 'Last Updated' },
   { value: NotesSortKey.FAVORITES, label: 'Favorites' },
+]
+
+export const directionTextOptions = [
+  { value: DirectionText.LEFT_TO_RIGHT, label: 'Left to right' },
+  { value: DirectionText.RIGHT_TO_LEFT, label: 'Right to left' },
 ]
