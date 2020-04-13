@@ -17,7 +17,9 @@ export const SelectCategory: React.FC<SelectCategoryProps> = ({
   note,
   activeCategoryId,
 }) => {
-  const filteredCategories = categories.filter(({ id }) => id !== activeCategoryId)
+  const filteredCategories = categories
+    .filter(({ id }) => id !== activeCategoryId)
+    .filter((category) => category.id !== note.category)
   return (
     <>
       {!note.trash && filteredCategories.length > 0 && (
