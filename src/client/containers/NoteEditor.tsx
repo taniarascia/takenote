@@ -45,7 +45,11 @@ export const NoteEditor: React.FC = () => {
       return <EmptyEditor />
     } else if (previewMarkdown)
       return (
-        <PreviewEditor noteText={activeNote.text} togglePreviewMarkdown={_togglePreviewMarkdown} />
+        <PreviewEditor
+          directionText={codeMirrorOptions.direction}
+          noteText={activeNote.text}
+          togglePreviewMarkdown={_togglePreviewMarkdown}
+        />
       )
     else {
       return (
