@@ -15,6 +15,7 @@
     "jsx": "react",
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
+    "sourceMap": false,
     "paths": {
       // Allow `@/` to map to `src/client/`
       "@/*": ["./src/client/*"],
