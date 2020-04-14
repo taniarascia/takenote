@@ -10,13 +10,13 @@ import {
   updateNotesSortStrategy,
 } from '@/slices/settings'
 import { logout } from '@/slices/auth'
-import { shortcutMap } from '@/utils/constants'
+import { shortcutMap, notesSortOptions, directionTextOptions } from '@/utils/constants'
 import { ReactMouseEvent } from '@/types'
 import { getSettings, getAuth } from '@/selectors'
 import { Option } from '@/components/SettingsModal/Option'
 import { Shortcut } from '@/components/SettingsModal/Shortcut'
 import { NotesSortKey } from '@/utils/enums'
-import { NotesSortByOption } from '@/components/SettingsModal/SortByOption'
+import { SelectOptions } from '@/components/SettingsModal/SelectOptions'
 
 export const SettingsModal: React.FC = () => {
   // ===========================================================================
@@ -78,6 +78,9 @@ export const SettingsModal: React.FC = () => {
   const updateNotesSortStrategyHandler = (selectedOption: any) => {
     _updateNotesSortStrategy(selectedOption.value)
   }
+  const updateNotesDirectionHandler = (selectedOption: any) => {
+    _updateCodeMirrorOption('direction', selectedOption.value)
+  }
   // ===========================================================================
   // Hooks
   // ===========================================================================
@@ -136,9 +139,17 @@ export const SettingsModal: React.FC = () => {
             checked={previewMarkdown}
           />
           <Option title="Dark mode" toggle={toggleDarkThemeHandler} checked={darkTheme} />
-          <NotesSortByOption
+          <SelectOptions
+            title="Sort By"
             onChange={updateNotesSortStrategyHandler}
-            currentSortOptionValue={notesSortKey}
+            options={notesSortOptions}
+            selectedValue={notesSortKey}
+          />
+          <SelectOptions
+            title="Direction text"
+            onChange={updateNotesDirectionHandler}
+            options={directionTextOptions}
+            selectedValue={codeMirrorOptions.direction}
           />
         </section>
 

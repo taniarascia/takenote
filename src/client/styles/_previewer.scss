@@ -7,6 +7,14 @@
   color: #404040;
   padding: 1rem;
 
+  &_direction-ltr {
+    direction: ltr;
+  }
+
+  &_direction-rtl {
+    direction: rtl;
+  }
+
   a {
     color: $primary;
     text-decoration: none;
