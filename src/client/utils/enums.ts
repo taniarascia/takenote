@@ -29,3 +29,8 @@ export enum NotesSortKey {
   TITLE = 'title',
   CREATED_DATE = 'created_date',
 }
+
+export enum DirectionText {
+  LEFT_TO_RIGHT = 'ltr',
+  RIGHT_TO_LEFT = 'rtl',
+}

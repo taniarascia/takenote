@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { SettingsState } from '@/types'
-import { NotesSortKey } from '@/utils/enums'
+import { NotesSortKey, DirectionText } from '@/utils/enums'
 
 export const initialState: SettingsState = {
   isOpen: false,
@@ -19,6 +19,7 @@ export const initialState: SettingsState = {
     viewportMargin: Infinity,
     keyMap: 'default',
     dragDrop: false,
+    direction: DirectionText.LEFT_TO_RIGHT,
   },
 }
 
