@@ -411,6 +411,15 @@
         "ideas",
         "test"
       ]
+    },
+    {
+      "login": "G-Milevski",
+      "name": "G-Milevski",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/25174255?v=4",
+      "profile": "https://github.com/G-Milevski",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
