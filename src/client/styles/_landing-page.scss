@@ -189,6 +189,7 @@
 
     a {
       color: rgba(255, 255, 255, 0.8);
+      min-width: 100px;
       &:hover {
         color: white;
       }
