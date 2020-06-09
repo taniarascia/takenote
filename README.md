@@ -119,7 +119,7 @@ Run unit and component/integration tests.
 npm run test
 ```
 
-> If using Jest Runner in VSCode, add `"jestrunner.configPath": "config/jest.config.js"` to your settings
+> If using Jest Runner in VSCode, add `"jestrunner.configPath": "config/jest.config.js"` to your settings.
 
 Run Cypress end-to-end tests.
 
