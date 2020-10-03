@@ -18,6 +18,7 @@ export enum LabelText {
   SETTINGS = 'Settings',
   SYNC_NOTES = 'Sync notes',
   TRASH = 'Trash',
+  LINKTOREPO = 'Get More Info',
   WELCOME_TO_TAKENOTE = 'Welcome to Takenote!',
   RENAME = 'Rename category',
 }

@@ -9,6 +9,7 @@ import { ActionButton } from '@/components/AppSidebar/ActionButton'
 import { LastSyncedNotification } from '@/components/AppSidebar/LastSyncedNotification'
 import { AllNotesOption } from '@/components/AppSidebar/AllNotesOption'
 import { FolderOption } from '@/components/AppSidebar/FolderOption'
+import { LinkToRepo } from '@/components/AppSidebar/LinkToRepo'
 import { ScratchpadOption } from '@/components/AppSidebar/ScratchpadOption'
 import { Folder } from '@/utils/enums'
 import { CategoryList } from '@/containers/CategoryList'
@@ -119,6 +120,7 @@ export const AppSidebar: React.FC = () => {
             swapFolder={_swapFolder}
             addNoteType={_addTrashedNote}
           />
+          <LinkToRepo label={LabelText.LINKTOREPO} url="https://github.com/taniarascia/takenote" />
           <div className="category-title">
             <h2>Categories</h2>
           </div>
