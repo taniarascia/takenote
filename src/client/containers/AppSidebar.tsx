@@ -7,7 +7,6 @@ import { TestID } from '@resources/TestID'
 
 import { ActionButton } from '@/components/AppSidebar/ActionButton'
 import { LastSyncedNotification } from '@/components/AppSidebar/LastSyncedNotification'
-import { AllNotesOption } from '@/components/AppSidebar/AllNotesOption'
 import { FolderOption } from '@/components/AppSidebar/FolderOption'
 import { ScratchpadOption } from '@/components/AppSidebar/ScratchpadOption'
 import { Folder } from '@/utils/enums'
@@ -18,6 +17,7 @@ import {
   updateActiveNote,
   addFavoriteNote,
   addTrashedNote,
+  toggleTrashedNote,
   updateSelectedNotes,
 } from '@/slices/note'
 import { toggleSettingsModal, togglePreviewMarkdown } from '@/slices/settings'
@@ -55,6 +55,7 @@ export const AppSidebar: React.FC = () => {
   const _toggleSettingsModal = () => dispatch(toggleSettingsModal())
   const _togglePreviewMarkdown = () => dispatch(togglePreviewMarkdown())
   const _addTrashedNote = (noteId: string) => dispatch(addTrashedNote(noteId))
+  const _toggleTrashedNote = (noteId: string) => dispatch(toggleTrashedNote(noteId))
   const _addFavoriteNote = (noteId: string) => dispatch(addFavoriteNote(noteId))
 
   // ===========================================================================
@@ -102,7 +103,14 @@ export const AppSidebar: React.FC = () => {
         </section>
         <section className="app-sidebar-main">
           <ScratchpadOption active={activeFolder === Folder.SCRATCHPAD} swapFolder={_swapFolder} />
-          <AllNotesOption active={activeFolder === Folder.ALL} swapFolder={_swapFolder} />
+          <FolderOption
+            active={activeFolder === Folder.ALL}
+            swapFolder={_swapFolder}
+            text={LabelText.NOTES}
+            dataTestID={TestID.FOLDER_NOTES}
+            folder={Folder.ALL}
+            addNoteType={_toggleTrashedNote}
+          />
           <FolderOption
             active={activeFolder === Folder.FAVORITES}
             text={LabelText.FAVORITES}
