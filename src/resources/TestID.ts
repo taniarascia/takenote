@@ -8,7 +8,7 @@ export enum TestID {
   CATEGORY_OPTION_DELETE_PERMANENTLY = 'category-option-delete-permanently',
   EDIT_CATEGORY = 'edit-category',
   EMPTY_TRASH_BUTTON = 'empty-trash-button',
-  FOLDER_ALL_NOTES = 'all-notes',
+  FOLDER_NOTES = 'notes',
   FOLDER_FAVORITES = 'favorites',
   FOLDER_TRASH = 'trash',
   NEW_CATEGORY_FORM = 'new-category-form',

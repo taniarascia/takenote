@@ -42,14 +42,11 @@ const getTestID = (testIDEnum: TestID) => {
 // through 'this' asynchronously (for example, .then())
 // note: test retrieving aliased variable must use regular 'function(){}' syntax for proper 'this' scope
 const getNoteCount = (noteCountAlias: string) => {
-  getTestID(TestID.NOTE_LIST)
-    .children()
-    .its('length')
-    .as(noteCountAlias)
+  getTestID(TestID.NOTE_LIST).children().its('length').as(noteCountAlias)
 }
 
-const navigateToAllNotes = () => {
-  clickTestID(TestID.FOLDER_ALL_NOTES)
+const navigateToNotes = () => {
+  clickTestID(TestID.FOLDER_NOTES)
 }
 
 const navigateToFavorites = () => {
@@ -83,7 +80,7 @@ export {
   getNoteCount,
   getTestID,
   defaultInit,
-  navigateToAllNotes,
+  navigateToNotes,
   navigateToFavorites,
   navigateToTrash,
   testIDShouldContain,

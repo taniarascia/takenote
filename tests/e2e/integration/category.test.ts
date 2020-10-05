@@ -20,7 +20,7 @@ import {
 import { dynamicTimeCategoryName } from '../utils/testHelperEnums'
 import {
   defaultInit,
-  navigateToAllNotes,
+  navigateToNotes,
   assertCurrentFolderOrCategory,
 } from '../utils/testHelperUtils'
 import {
@@ -42,7 +42,7 @@ describe('Category tests', () => {
     addCategory(dynamicTimeCategoryName)
 
     // navigate back to All Notes create a new note, and move it to that category
-    navigateToAllNotes()
+    navigateToNotes()
     clickCreateNewNote()
     clickNoteOptions()
     selectMoveToCategoryOption(dynamicTimeCategoryName)
@@ -106,13 +106,13 @@ describe('Category tests', () => {
     assertCategoryDoesNotExist(dynamicTimeCategoryName)
   })
 
-  it('should redirect to All notes after deleting the category you are in', () => {
+  it('should redirect to notes after deleting the category you are in', () => {
     addCategory(dynamicTimeCategoryName)
 
     navigateToCategory(dynamicTimeCategoryName)
     openCategoryContextMenu(dynamicTimeCategoryName)
     clickCategoryOptionDelete()
 
-    assertCurrentFolderOrCategory('All Notes')
+    assertCurrentFolderOrCategory('Notes')
   })
 })

@@ -7,7 +7,7 @@ import { TestID } from '@resources/TestID'
 import {
   defaultInit,
   getNoteCount,
-  navigateToAllNotes,
+  navigateToNotes,
   navigateToFavorites,
   navigateToTrash,
   testIDShouldContain,
@@ -56,7 +56,7 @@ describe('Manage notes test', () => {
   })
 
   beforeEach(() => {
-    navigateToAllNotes()
+    navigateToNotes()
     clickCreateNewNote()
     trashAllNotes()
     clearNoteSearch()
@@ -117,7 +117,7 @@ describe('Manage notes test', () => {
     assertNoteListLengthEquals(0)
 
     // favorite the note in All Notes
-    navigateToAllNotes()
+    navigateToNotes()
     clickNoteOptions()
     testIDShouldContain(TestID.NOTE_OPTION_FAVORITE, LabelText.MARK_AS_FAVORITE)
     clickNoteOptionFavorite()
@@ -141,7 +141,7 @@ describe('Manage notes test', () => {
     assertNoteListLengthEquals(0)
 
     // favorite the note in All Notes
-    navigateToAllNotes()
+    navigateToNotes()
     openNoteContextMenu()
     testIDShouldContain(TestID.NOTE_OPTION_FAVORITE, LabelText.MARK_AS_FAVORITE)
     clickNoteOptionFavorite()
@@ -165,7 +165,7 @@ describe('Manage notes test', () => {
     assertNoteListLengthEquals(0)
 
     // navigate back to All Notes and move the note to trash
-    navigateToAllNotes()
+    navigateToNotes()
     clickNoteOptions()
     testIDShouldContain(TestID.NOTE_OPTION_TRASH, LabelText.MOVE_TO_TRASH)
     clickNoteOptionTrash()
@@ -197,7 +197,7 @@ describe('Manage notes test', () => {
     assertNoteListLengthEquals(0)
 
     // navigate back to All Notes and move the note to trash
-    navigateToAllNotes()
+    navigateToNotes()
     openNoteContextMenu()
     testIDShouldContain(TestID.NOTE_OPTION_TRASH, LabelText.MOVE_TO_TRASH)
     clickNoteOptionTrash()
@@ -242,7 +242,7 @@ describe('Manage notes test', () => {
     testIDShouldNotExist(TestID.EMPTY_TRASH_BUTTON)
   })
 
-  it('should restore the active note in the trash', function() {
+  it('should restore the active note in the trash', function () {
     getNoteCount('allNoteStartCount')
 
     // move note to trash
@@ -262,11 +262,11 @@ describe('Manage notes test', () => {
     testIDShouldNotExist(TestID.EMPTY_TRASH_BUTTON)
 
     // make sure the note is back in All Notes
-    navigateToAllNotes()
+    navigateToNotes()
     cy.then(() => assertNoteListLengthEquals(this.allNoteStartCount))
   })
 
-  it('should restore the active note in the trash through context menu', function() {
+  it('should restore the active note in the trash through context menu', function () {
     getNoteCount('allNoteStartCount')
 
     // move note to trash
@@ -286,11 +286,11 @@ describe('Manage notes test', () => {
     testIDShouldNotExist(TestID.EMPTY_TRASH_BUTTON)
 
     // make sure the note is back in All Notes
-    navigateToAllNotes()
+    navigateToNotes()
     cy.then(() => assertNoteListLengthEquals(this.allNoteStartCount))
   })
 
-  it('should sync some notes', function() {
+  it('should sync some notes', function () {
     const noteOneTitle = 'note 1'
     const noteTwoTitle = 'same note title'
     const noteThreeTitle = 'same note title'
@@ -332,7 +332,7 @@ describe('Manage notes test', () => {
     assertNoteListTitleAtIndex(0, noteFourTitle)
   })
 
-  it('should search some notes', function() {
+  it('should search some notes', function () {
     const noteOneTitle = 'note 1'
     const noteTwoTitle = 'same note title'
     const noteThreeTitle = 'same note title'
@@ -410,7 +410,7 @@ describe('Manage notes test', () => {
     clickNoteOptionFavorite()
     assertNoteListLengthEquals(0)
 
-    navigateToAllNotes()
+    navigateToNotes()
     assertNoteListLengthEquals(2)
   })
 
@@ -423,7 +423,7 @@ describe('Manage notes test', () => {
     addCategory(dynamicTimeCategoryName)
 
     // navigate back to All Notes create a new note, and move it to that category
-    navigateToAllNotes()
+    navigateToNotes()
     createXUniqueNotes(2)
     holdKeyAndClickNoteAtIndex(0, 'meta')
     holdKeyAndClickNoteAtIndex(1, 'meta')
@@ -449,7 +449,7 @@ describe('Manage notes test', () => {
     clickNoteOptionRestoreFromTrash()
     assertNoteListLengthEquals(0)
 
-    navigateToAllNotes()
+    navigateToNotes()
     assertNoteListLengthEquals(2)
   })
 
@@ -467,7 +467,7 @@ describe('Manage notes test', () => {
     clickNoteOptionDeleteNotePermanently()
     assertNoteListLengthEquals(0)
 
-    navigateToAllNotes()
+    navigateToNotes()
     assertNoteListLengthEquals(0)
   })
 
@@ -558,6 +558,51 @@ describe('Manage notes test', () => {
     cy.get('[data-testid=category-list-div]').click()
     cy.get('[data-testid=note-list]').within(() => {
       cy.get('.note-list-each').should('have.length', 2)
+    })
+  })
+
+  it('should send a not selected trashed note to notes with drag & drop', () => {
+    createXUniqueNotes(3)
+
+    holdKeyAndClickNoteAtIndex(0, 'meta')
+
+    dragAndDrop('[data-testid=note-list-item-0]', '[data-testid=trash]')
+
+    cy.get('[data-testid=trash]').click()
+    cy.get('[data-testid=note-list]').within(() => {
+      cy.get('.note-list-each').should('have.length', 1)
+    })
+
+    holdKeyAndClickNoteAtIndex(0, 'meta')
+
+    dragAndDrop('[data-testid=note-list-item-0]', '[data-testid=notes]')
+
+    cy.get('[data-testid=notes]').click()
+    cy.get('[data-testid=note-list]').within(() => {
+      cy.get('.note-list-each').should('have.length', 3)
+    })
+  })
+
+  it('should send multiple not selected trashed notes to notes with drag & drop', () => {
+    createXUniqueNotes(3)
+
+    holdKeyAndClickNoteAtIndex(0, 'meta')
+    holdKeyAndClickNoteAtIndex(1, 'meta')
+
+    dragAndDrop('[data-testid=note-list-item-0]', '[data-testid=trash]')
+
+    cy.get('[data-testid=trash]').click()
+    cy.get('[data-testid=note-list]').within(() => {
+      cy.get('.note-list-each').should('have.length', 2)
+    })
+
+    holdKeyAndClickNoteAtIndex(0, 'meta')
+
+    dragAndDrop('[data-testid=note-list-item-0]', '[data-testid=notes]')
+
+    cy.get('[data-testid=notes]').click()
+    cy.get('[data-testid=note-list]').within(() => {
+      cy.get('.note-list-each').should('have.length', 3)
     })
   })
 })
