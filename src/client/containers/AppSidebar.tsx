@@ -17,8 +17,8 @@ import {
   updateActiveNote,
   addFavoriteNote,
   addTrashedNote,
-  toggleTrashedNote,
   updateSelectedNotes,
+  restoreTrashedNote,
 } from '@/slices/note'
 import { toggleSettingsModal, togglePreviewMarkdown } from '@/slices/settings'
 import { syncState } from '@/slices/sync'
@@ -55,7 +55,7 @@ export const AppSidebar: React.FC = () => {
   const _toggleSettingsModal = () => dispatch(toggleSettingsModal())
   const _togglePreviewMarkdown = () => dispatch(togglePreviewMarkdown())
   const _addTrashedNote = (noteId: string) => dispatch(addTrashedNote(noteId))
-  const _toggleTrashedNote = (noteId: string) => dispatch(toggleTrashedNote(noteId))
+  const _restoreTrashedNote = (noteId: string) => dispatch(restoreTrashedNote(noteId))
   const _addFavoriteNote = (noteId: string) => dispatch(addFavoriteNote(noteId))
 
   // ===========================================================================
@@ -109,7 +109,7 @@ export const AppSidebar: React.FC = () => {
             text={LabelText.NOTES}
             dataTestID={TestID.FOLDER_NOTES}
             folder={Folder.ALL}
-            addNoteType={_toggleTrashedNote}
+            addNoteType={_restoreTrashedNote}
           />
           <FolderOption
             active={activeFolder === Folder.FAVORITES}
