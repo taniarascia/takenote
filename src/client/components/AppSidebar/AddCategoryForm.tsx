@@ -30,10 +30,10 @@ export const AddCategoryForm: React.FC<AddCategoryFormProps> = ({
         autoFocus
         maxLength={20}
         placeholder="New category..."
-        onChange={event => {
+        onChange={(event) => {
           changeHandler(editingCategoryId, event.target.value)
         }}
-        onBlur={event => {
+        onBlur={(event) => {
           if (!tempCategoryName || tempCategoryName.trim() === '') {
             resetHandler()
           } else {

@@ -13,7 +13,7 @@ const syncSlice = createSlice({
   name: 'sync',
   initialState,
   reducers: {
-    setPendingSync: state => ({
+    setPendingSync: (state) => ({
       ...state,
       pendingSync: true,
     }),

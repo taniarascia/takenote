@@ -155,7 +155,7 @@ export const SettingsModal: React.FC = () => {
 
         <section className="settings-section">
           <div className="settings-label mb-1">Keyboard Shortcuts</div>
-          {shortcutMap.map(shortcut => (
+          {shortcutMap.map((shortcut) => (
             <Shortcut action={shortcut.action} letter={shortcut.key} key={shortcut.key} />
           ))}
         </section>

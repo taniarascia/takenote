@@ -13,7 +13,7 @@ const authSlice = createSlice({
   name: 'auth',
   initialState,
   reducers: {
-    login: state => ({
+    login: (state) => ({
       ...state,
       loading: true,
     }),
@@ -29,11 +29,11 @@ const authSlice = createSlice({
       isAuthenticated: false,
       loading: false,
     }),
-    logout: state => ({
+    logout: (state) => ({
       ...state,
       loading: true,
     }),
-    logoutSuccess: state => ({
+    logoutSuccess: (state) => ({
       ...state,
       isAuthenticated: false,
       currentUser: {},

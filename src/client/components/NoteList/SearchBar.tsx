@@ -14,7 +14,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({ searchRef, searchNotes }) 
       data-testid={TestID.NOTE_SEARCH}
       className="note-search"
       type="search"
-      onChange={event => {
+      onChange={(event) => {
         event.preventDefault()
         searchNotes(event.target.value)
       }}

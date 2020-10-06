@@ -19,27 +19,21 @@ const assertNewNoteCreated = () => {
 
 const assertNoteEditorCharacterCount = (expectedCharacterCount: number) => {
   // all lines in the code editor should be descendants of the CodeMirror-code class
-  cy.get('.CodeMirror-code').each(element => {
+  cy.get('.CodeMirror-code').each((element) => {
     expect(element.text().length).to.equal(expectedCharacterCount)
   })
 }
 
 const assertNoteEditorLineCount = (expectedLineCount: number) => {
-  cy.get('.CodeMirror-code')
-    .children()
-    .should('have.length', expectedLineCount)
+  cy.get('.CodeMirror-code').children().should('have.length', expectedLineCount)
 }
 
 const assertNoteListLengthEquals = (expectedLength: number) => {
-  getTestID(TestID.NOTE_LIST)
-    .children()
-    .should('have.length', expectedLength)
+  getTestID(TestID.NOTE_LIST).children().should('have.length', expectedLength)
 }
 
 const assertNoteListLengthGTE = (expectedLength: number) => {
-  getTestID(TestID.NOTE_LIST)
-    .children()
-    .should('have.length.gte', expectedLength)
+  getTestID(TestID.NOTE_LIST).children().should('have.length.gte', expectedLength)
 }
 
 const assertNoteListTitleAtIndex = (noteIndex: number, expectedTitle: string) => {
@@ -103,9 +97,7 @@ const clickNoteOptions = (noteIndex: number = 0) => {
 }
 
 const openNoteContextMenu = (noteIndex: number = 0) => {
-  cy.get('.note-list > div')
-    .eq(noteIndex)
-    .rightclick()
+  cy.get('.note-list > div').eq(noteIndex).rightclick()
 }
 
 const clickNoteOptionDeleteNotePermanently = () => {

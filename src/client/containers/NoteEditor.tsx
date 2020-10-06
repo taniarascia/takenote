@@ -59,7 +59,7 @@ export const NoteEditor: React.FC = () => {
             className="editor mousetrap"
             value={activeNote.text}
             options={codeMirrorOptions}
-            editorDidMount={editor => {
+            editorDidMount={(editor) => {
               setTimeout(() => {
                 editor.focus()
               }, 0)
