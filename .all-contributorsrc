@@ -420,6 +420,17 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "kodyclemens",
+      "name": "Kody Clemens",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/43357615?v=4",
+      "profile": "https://kodyclemens.com",
+      "contributions": [
+        "code",
+        "test",
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
