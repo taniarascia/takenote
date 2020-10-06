@@ -1,6 +1,6 @@
 import path from 'path'
 
-import express, { Request, Response, Router, NextFunction } from 'express'
+import express, { Request, Response, Router } from 'express'
 import cookieParser from 'cookie-parser'
 import bodyParser from 'body-parser'
 import cors from 'cors'

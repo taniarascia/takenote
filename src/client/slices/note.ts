@@ -147,13 +147,18 @@ const noteSlice = createSlice({
     }),
     restoreTrashedNote: (state, { payload }: PayloadAction<string>) => ({
       ...state,
-      notes: state.selectedNotesIds.includes(payload)
-        ? state.notes.map((note) =>
-            state.selectedNotesIds.includes(note.id) && note.trash
-              ? { ...note, trash: !note.trash }
-              : note
-          )
-        : state.notes.map((note) => note),
+      notes: state.notes.map((note) => {
+        if (state.selectedNotesIds.includes(payload)) {
+          return state.selectedNotesIds.includes(note.id) && note.trash
+            ? { ...note, trash: false }
+            : note
+        }
+        if (note.id === payload) {
+          return { ...note, trash: false }
+        }
+
+        return note
+      }),
     }),
     toggleTrashedNote: (state, { payload }: PayloadAction<string>) => ({
       ...state,

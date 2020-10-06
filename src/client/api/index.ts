@@ -53,7 +53,7 @@ export const requestSettings = () =>
   new Promise(getLocalStorage('settings', 'Could not load code mirror options. An error occurred'))
 
 export const saveState = ({ categories, notes }: SyncStatePayload) =>
-  new Promise(resolve => {
+  new Promise((resolve) => {
     localStorage.setItem('categories', JSON.stringify(categories))
     localStorage.setItem('notes', JSON.stringify(notes))
 

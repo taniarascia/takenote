@@ -27,7 +27,7 @@ const settingsSlice = createSlice({
   name: 'settings',
   initialState,
   reducers: {
-    toggleSettingsModal: state => ({
+    toggleSettingsModal: (state) => ({
       ...state,
       isOpen: !state.isOpen,
     }),
@@ -41,15 +41,15 @@ const settingsSlice = createSlice({
         [payload.key]: payload.value,
       },
     }),
-    togglePreviewMarkdown: state => ({
+    togglePreviewMarkdown: (state) => ({
       ...state,
       previewMarkdown: !state.previewMarkdown,
     }),
-    toggleDarkTheme: state => ({
+    toggleDarkTheme: (state) => ({
       ...state,
       darkTheme: !state.darkTheme,
     }),
-    toggleSidebarVisibility: state => ({
+    toggleSidebarVisibility: (state) => ({
       ...state,
       sidebarVisible: !state.sidebarVisible,
     }),
@@ -57,11 +57,11 @@ const settingsSlice = createSlice({
       ...state,
       notesSortKey: payload,
     }),
-    loadSettings: state => ({
+    loadSettings: (state) => ({
       ...state,
       loading: true,
     }),
-    loadSettingsError: state => ({
+    loadSettingsError: (state) => ({
       ...state,
       loading: false,
     }),
@@ -69,7 +69,6 @@ const settingsSlice = createSlice({
       ...payload,
       isOpen: false,
       loading: false,
-      notesSortKey: !state.notesSortKey ? NotesSortKey.LAST_UPDATED : state.notesSortKey,
     }),
   },
 })

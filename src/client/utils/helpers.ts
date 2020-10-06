@@ -10,7 +10,7 @@ import { folderMap } from '@/utils/constants'
 import { NoteItem, CategoryItem, WithPayload } from '@/types'
 
 export const getActiveNote = (notes: NoteItem[], activeNoteId: string) =>
-  notes.find(note => note.id === activeNoteId)
+  notes.find((note) => note.id === activeNoteId)
 
 export const getActiveCategory = (categories: CategoryItem[], activeCategoryId: string) =>
   categories.find(({ id }) => id === activeCategoryId)
@@ -61,7 +61,7 @@ export const downloadNotes = (notes: NoteItem[], categories: CategoryItem[]): vo
     }
   } else {
     const zip = new JSZip()
-    notes.forEach(note =>
+    notes.forEach((note) =>
       zip.file(
         `${getNoteTitle(note.text)}.md`,
         noteWithFrontmatter(
@@ -72,7 +72,7 @@ export const downloadNotes = (notes: NoteItem[], categories: CategoryItem[]): vo
     )
 
     zip.generateAsync({ type: 'blob' }).then(
-      content => {
+      (content) => {
         var downloadUrl = window.URL.createObjectURL(content)
         var a = document.createElement('a')
         a.href = downloadUrl
@@ -81,7 +81,7 @@ export const downloadNotes = (notes: NoteItem[], categories: CategoryItem[]): vo
         a.click()
         URL.revokeObjectURL(downloadUrl)
       },
-      err => {
+      (err) => {
         // TODO: error generating zip file.
         // Generate a popup?
       }

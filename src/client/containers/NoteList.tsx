@@ -69,11 +69,11 @@ export const NoteList: React.FC = () => {
   const isMatch = (result: NoteItem) => re.test(result.text)
 
   const filter: Record<Folder, (note: NoteItem) => boolean> = {
-    [Folder.CATEGORY]: note => !note.trash && note.category === activeCategoryId,
-    [Folder.SCRATCHPAD]: note => !!note.scratchpad,
-    [Folder.FAVORITES]: note => !note.trash && !!note.favorite,
-    [Folder.TRASH]: note => !!note.trash,
-    [Folder.ALL]: note => !note.trash && !note.scratchpad,
+    [Folder.CATEGORY]: (note) => !note.trash && note.category === activeCategoryId,
+    [Folder.SCRATCHPAD]: (note) => !!note.scratchpad,
+    [Folder.FAVORITES]: (note) => !note.trash && !!note.favorite,
+    [Folder.TRASH]: (note) => !!note.trash,
+    [Folder.ALL]: (note) => !note.trash && !note.scratchpad,
   }
 
   const filteredNotes: NoteItem[] = notes
@@ -181,7 +181,7 @@ export const NoteList: React.FC = () => {
       <div data-testid={TestID.NOTE_LIST} className="note-list">
         {filteredNotes.map((note: NoteItem, index: number) => {
           let noteTitle: string | React.ReactElement = getNoteTitle(note.text)
-          const noteCategory = categories.find(category => category.id === note.category)
+          const noteCategory = categories.find((category) => category.id === note.category)
 
           if (searchValue) {
             const highlightStart = noteTitle.search(re)
@@ -208,16 +208,16 @@ export const NoteList: React.FC = () => {
                 selectedNotesIds.includes(note.id) ? 'note-list-each selected' : 'note-list-each'
               }
               key={note.id}
-              onClick={event => {
+              onClick={(event) => {
                 event.stopPropagation()
 
                 _updateSelectedNotes(note.id, event.metaKey)
                 _updateActiveNote(note.id, event.metaKey)
                 _pruneNotes()
               }}
-              onContextMenu={event => handleNoteRightClick(event, note.id)}
+              onContextMenu={(event) => handleNoteRightClick(event, note.id)}
               draggable
-              onDragStart={event => handleDragStart(event, note.id)}
+              onDragStart={(event) => handleDragStart(event, note.id)}
             >
               <div className="note-list-outer">
                 <div data-testid={'note-title-' + index} className="note-title">
@@ -239,7 +239,7 @@ export const NoteList: React.FC = () => {
                   // TODO: make testID based off of index when we add that to a NoteItem object
                   data-testid={TestID.NOTE_OPTIONS_DIV + index}
                   className={optionsId === note.id ? 'note-options selected' : 'note-options'}
-                  onClick={event => handleNoteOptionsClick(event, note.id)}
+                  onClick={(event) => handleNoteOptionsClick(event, note.id)}
                 >
                   <MoreHorizontal size={15} className="context-menu-action" />
                 </div>
