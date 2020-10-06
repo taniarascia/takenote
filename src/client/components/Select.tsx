@@ -20,10 +20,10 @@ export const Select: React.FC<SelectProps> = ({ options, selectedValue, onChange
 
   return (
     <select
-      onChange={event => onChange(getSelectedOption(options, event.target.value))}
+      onChange={(event) => onChange(getSelectedOption(options, event.target.value))}
       value={selectedValue}
     >
-      {options.map(selectOption => (
+      {options.map((selectOption) => (
         <option key={selectOption.value} value={selectOption.value}>
           {selectOption.label}
         </option>

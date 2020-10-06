@@ -29,13 +29,13 @@ const categorySlice = createSlice({
     }),
     categoryDragEnter: (state, { payload }: PayloadAction<CategoryItem>) => ({
       ...state,
-      categories: state.categories.map(category =>
+      categories: state.categories.map((category) =>
         category.id === payload.id ? { ...category, draggedOver: true } : category
       ),
     }),
     categoryDragLeave: (state, { payload }: PayloadAction<CategoryItem>) => ({
       ...state,
-      categories: state.categories.map(category =>
+      categories: state.categories.map((category) =>
         category.id === payload.id ? { ...category, draggedOver: false } : category
       ),
     }),
@@ -48,7 +48,7 @@ const categorySlice = createSlice({
     }),
     deleteCategory: (state, { payload }: PayloadAction<string>) => ({
       ...state,
-      categories: state.categories.filter(category => category.id !== payload),
+      categories: state.categories.filter((category) => category.id !== payload),
     }),
     loadCategories: () => initialState,
     loadCategoriesError: (state, { payload }: PayloadAction<string>) => ({
@@ -63,7 +63,7 @@ const categorySlice = createSlice({
     }),
     updateCategory: (state, { payload }: PayloadAction<CategoryItem>) => ({
       ...state,
-      categories: state.categories.map(category =>
+      categories: state.categories.map((category) =>
         category.id === payload.id ? { ...category, name: payload.name } : category
       ),
     }),

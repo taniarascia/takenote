@@ -37,7 +37,7 @@ module.exports = {
       alias: {
         map: [
           ['@', './src/client'],
-          ['@resources', './src/resources']
+          ['@resources', './src/resources'],
         ],
         extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
       },

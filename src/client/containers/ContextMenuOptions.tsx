@@ -125,7 +125,7 @@ const NotesOptions: React.FC<NotesOptionsProps> = ({ clickedNote }) => {
   const downloadNotesHandler = () =>
     downloadNotes(
       selectedNotesIds.includes(clickedNote.id)
-        ? notes.filter(note => selectedNotesIds.includes(note.id))
+        ? notes.filter((note) => selectedNotesIds.includes(note.id))
         : [clickedNote],
       categories
     )

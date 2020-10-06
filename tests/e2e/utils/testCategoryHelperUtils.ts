@@ -7,9 +7,7 @@ import { TestID } from '@resources/TestID'
 import { getTestID, wrapWithTestIDTag, testIDShouldExist, clickTestID } from './testHelperUtils'
 
 const addCategory = (categoryName: string) => {
-  getTestID(TestID.ADD_CATEGORY_BUTTON)
-    .should('contain', LabelText.ADD_CATEGORY)
-    .click()
+  getTestID(TestID.ADD_CATEGORY_BUTTON).should('contain', LabelText.ADD_CATEGORY).click()
   getTestID(TestID.NEW_CATEGORY_INPUT).type(categoryName)
   getTestID(TestID.NEW_CATEGORY_FORM).submit()
 
@@ -25,9 +23,7 @@ const assertCategoryExists = (categoryName: string) => {
 }
 
 const assertCategoryOrder = (categoryName: string, position: number) => {
-  cy.get('.category-list > div')
-    .eq(position)
-    .contains(categoryName)
+  cy.get('.category-list > div').eq(position).contains(categoryName)
 }
 
 const assertCategoryOptionsOpened = () => {
@@ -39,9 +35,7 @@ const defocusCategory = (categoryName: string) => {
 }
 
 const navigateToCategory = (categoryName: string) => {
-  cy.get('.category-list')
-    .contains(categoryName)
-    .click()
+  cy.get('.category-list').contains(categoryName).click()
 }
 
 const moveCategory = (categoryName: string, targetName: string) => {
@@ -54,16 +48,11 @@ const moveCategory = (categoryName: string, targetName: string) => {
 }
 
 const renameCategory = (oldCategoryName: string, newCategoryName: string) => {
-  getTestID(TestID.CATEGORY_EDIT)
-    .focus()
-    .clear()
-    .type(newCategoryName)
+  getTestID(TestID.CATEGORY_EDIT).focus().clear().type(newCategoryName)
 }
 
 const openCategoryContextMenu = (categoryName: string) => {
-  cy.contains(categoryName)
-    .parent()
-    .rightclick()
+  cy.contains(categoryName).parent().rightclick()
 }
 
 const selectMoveToCategoryOption = (categoryName: string) => {

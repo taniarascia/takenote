@@ -2,10 +2,10 @@ import './commands'
 
 // Since before unload alert hangs console tests, the alert has to be disabled
 // Check https://github.com/cypress-io/cypress/issues/2118 for more info
-Cypress.on('window:before:load', function(win) {
+Cypress.on('window:before:load', function (win) {
   const original = win.EventTarget.prototype.addEventListener
 
-  win.EventTarget.prototype.addEventListener = function() {
+  win.EventTarget.prototype.addEventListener = function () {
     if (arguments && arguments[0] === 'beforeunload') {
       return
     }
@@ -13,7 +13,7 @@ Cypress.on('window:before:load', function(win) {
   }
 
   Object.defineProperty(win, 'onbeforeunload', {
-    get: function() {},
-    set: function() {},
+    get: function () {},
+    set: function () {},
   })
 })
