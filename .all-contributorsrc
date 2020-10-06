@@ -428,7 +428,8 @@
       "profile": "https://kodyclemens.com",
       "contributions": [
         "code",
-        "test"
+        "test",
+        "bug"
       ]
     }
   ],
