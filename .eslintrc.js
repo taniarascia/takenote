@@ -30,6 +30,9 @@ module.exports = {
     ],
     'no-console': 1, // Warning to reduce console logs used throughout app
     'react/prop-types': 0, // Not using prop-types because we have TypeScript
+    'newline-before-return': 1,
+    'no-useless-return': 1,
+    'prefer-const': 1,
   },
   settings: {
     'import/resolver': {

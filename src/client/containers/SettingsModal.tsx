@@ -88,6 +88,7 @@ export const SettingsModal: React.FC = () => {
   useEffect(() => {
     document.addEventListener('mousedown', handleDomClick)
     document.addEventListener('keydown', handleEscPress)
+
     return () => {
       document.removeEventListener('mousedown', handleDomClick)
       document.removeEventListener('keydown', handleEscPress)

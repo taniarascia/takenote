@@ -1,4 +1,4 @@
-import { NoteItem, SyncStatePayload, SettingsState } from '../types'
+import { NoteItem, SyncPayload, SettingsState } from '../types'
 
 import { welcomeNote } from '@/api/welcomeNote'
 import { scratchpadNote } from '@/api/scratchpadNote'
@@ -6,9 +6,10 @@ import { scratchpadNote } from '@/api/scratchpadNote'
 type PromiseCallback = (value?: any) => void
 type GetLocalStorage = (
   key: string,
-  errorMsg?: string
+  errorMessage?: string
 ) => (resolve: PromiseCallback, reject: PromiseCallback) => void
-const getLocalStorage: GetLocalStorage = (key, errorMsg = 'Something went wrong') => (
+
+const getLocalStorage: GetLocalStorage = (key, errorMessage = 'Something went wrong') => (
   resolve,
   reject
 ) => {
@@ -18,7 +19,7 @@ const getLocalStorage: GetLocalStorage = (key, errorMsg = 'Something went wrong'
     resolve(JSON.parse(data))
   } else {
     reject({
-      message: errorMsg,
+      message: errorMessage,
     })
   }
 }
@@ -50,9 +51,9 @@ export const requestNotes = () => new Promise(getUserNotes())
 export const requestCategories = () => new Promise(getLocalStorage('categories'))
 
 export const requestSettings = () =>
-  new Promise(getLocalStorage('settings', 'Could not load code mirror options. An error occurred'))
+  new Promise(getLocalStorage('settings', 'Could not load settings'))
 
-export const saveState = ({ categories, notes }: SyncStatePayload) =>
+export const saveState = ({ categories, notes }: SyncPayload) =>
   new Promise((resolve) => {
     localStorage.setItem('categories', JSON.stringify(categories))
     localStorage.setItem('notes', JSON.stringify(notes))

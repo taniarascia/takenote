@@ -9,8 +9,8 @@ import { ContextMenuOption } from '@/components/NoteList/ContextMenuOption'
 import { downloadNotes } from '@/utils/helpers'
 import {
   deleteNotes,
-  toggleFavoriteNote,
-  toggleTrashedNote,
+  toggleFavoriteNotes,
+  toggleTrashNotes,
   addCategoryToNote,
   updateActiveCategoryId,
   updateActiveNote,
@@ -108,8 +108,8 @@ const NotesOptions: React.FC<NotesOptionsProps> = ({ clickedNote }) => {
   const dispatch = useDispatch()
 
   const _deleteNotes = (noteIds: string[]) => dispatch(deleteNotes(noteIds))
-  const _toggleTrashedNote = (noteId: string) => dispatch(toggleTrashedNote(noteId))
-  const _toggleFavoriteNote = (noteId: string) => dispatch(toggleFavoriteNote(noteId))
+  const _toggleTrashNotes = (noteId: string) => dispatch(toggleTrashNotes(noteId))
+  const _toggleFavoriteNotes = (noteId: string) => dispatch(toggleFavoriteNotes(noteId))
   const _addCategoryToNote = (categoryId: string, noteId: string) =>
     dispatch(addCategoryToNote({ categoryId, noteId }))
   const _updateActiveNote = (noteId: string, multiSelect: boolean) =>
@@ -129,8 +129,8 @@ const NotesOptions: React.FC<NotesOptionsProps> = ({ clickedNote }) => {
         : [clickedNote],
       categories
     )
-  const favoriteNoteHandler = () => _toggleFavoriteNote(clickedNote.id)
-  const trashNoteHandler = () => _toggleTrashedNote(clickedNote.id)
+  const favoriteNoteHandler = () => _toggleFavoriteNotes(clickedNote.id)
+  const trashNoteHandler = () => _toggleTrashNotes(clickedNote.id)
   const removeCategoryFromNoteHandler = () => {
     _addCategoryToNote('', clickedNote.id)
     _updateActiveNote(clickedNote.id, false)

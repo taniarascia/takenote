@@ -1,40 +1,39 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { SyncState, SyncStatePayload } from '@/types'
+import { SyncState, SyncPayload } from '@/types'
 
 const initialState: SyncState = {
+  pendingSync: false,
+  lastSynced: '',
   error: '',
   syncing: false,
-  lastSynced: '',
-  pendingSync: false,
 }
 
 const syncSlice = createSlice({
   name: 'sync',
   initialState,
   reducers: {
-    setPendingSync: (state) => ({
-      ...state,
-      pendingSync: true,
-    }),
-    syncState: (state, { payload }: PayloadAction<SyncStatePayload>) => ({
-      ...state,
-      syncing: true,
-    }),
-    syncStateError: (state, { payload }: PayloadAction<string>) => ({
-      ...state,
-      error: payload,
-      syncing: false,
-    }),
-    syncStateSuccess: (state, { payload }: PayloadAction<string>) => ({
-      ...state,
-      lastSynced: payload,
-      syncing: false,
-      pendingSync: false,
-    }),
+    setPendingSync: (state) => {
+      state.pendingSync = true
+    },
+
+    sync: (state, { payload }: PayloadAction<SyncPayload>) => {
+      state.syncing = true
+    },
+
+    syncError: (state, { payload }: PayloadAction<string>) => {
+      state.syncing = false
+      state.error = payload
+    },
+
+    syncSuccess: (state, { payload }: PayloadAction<string>) => {
+      state.syncing = false
+      state.lastSynced = payload
+      state.pendingSync = false
+    },
   },
 })
 
-export const { syncState, syncStateError, syncStateSuccess, setPendingSync } = syncSlice.actions
+export const { sync, syncError, syncSuccess, setPendingSync } = syncSlice.actions
 
 export default syncSlice.reducer

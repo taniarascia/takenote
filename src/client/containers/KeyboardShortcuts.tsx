@@ -14,12 +14,12 @@ import { useKey } from '@/utils/hooks'
 import {
   addNote,
   swapFolder,
-  toggleTrashedNote,
+  toggleTrashNotes,
   updateActiveNote,
   updateSelectedNotes,
   updateNote,
 } from '@/slices/note'
-import { syncState } from '@/slices/sync'
+import { sync } from '@/slices/sync'
 import { getCategories, getNotes, getSettings } from '@/selectors'
 import { CategoryItem, NoteItem } from '@/types'
 import { toggleDarkTheme, togglePreviewMarkdown, updateCodeMirrorOption } from '@/slices/settings'
@@ -49,9 +49,9 @@ export const KeyboardShortcuts: React.FC = () => {
   const _updateSelectedNotes = (noteId: string, multiSelect: boolean) =>
     dispatch(updateSelectedNotes({ noteId, multiSelect }))
   const _swapFolder = (folder: Folder) => dispatch(swapFolder(folder))
-  const _toggleTrashedNote = (noteId: string) => dispatch(toggleTrashedNote(noteId))
-  const _syncState = (notes: NoteItem[], categories: CategoryItem[]) =>
-    dispatch(syncState({ notes, categories }))
+  const _toggleTrashNotes = (noteId: string) => dispatch(toggleTrashNotes(noteId))
+  const _sync = (notes: NoteItem[], categories: CategoryItem[]) =>
+    dispatch(sync({ notes, categories }))
   const _togglePreviewMarkdown = () => dispatch(togglePreviewMarkdown())
   const _toggleDarkTheme = () => dispatch(toggleDarkTheme())
   const _updateCodeMirrorOption = (key: string, value: string) =>
@@ -80,8 +80,8 @@ export const KeyboardShortcuts: React.FC = () => {
       _updateSelectedNotes
     )
   const newTempCategoryHandler = () => !addingTempCategory && setAddingTempCategory(true)
-  const trashNoteHandler = () => _toggleTrashedNote(activeNote!.id)
-  const syncNotesHandler = () => _syncState(notes, categories)
+  const trashNoteHandler = () => _toggleTrashNotes(activeNote!.id)
+  const syncNotesHandler = () => _sync(notes, categories)
   const downloadNotesHandler = () =>
     downloadNotes(
       selectedNotesIds.includes(activeNote!.id)
