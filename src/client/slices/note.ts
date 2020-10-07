@@ -36,14 +36,14 @@ export const getFirstNoteId = (folder: Folder, notes: NoteItem[], categoryId?: s
 }
 
 const initialState: NoteState = {
+  notes: [],
   activeCategoryId: '',
   activeFolder: Folder.ALL,
   activeNoteId: '',
   selectedNotesIds: [],
+  searchValue: '',
   error: '',
   loading: true,
-  notes: [],
-  searchValue: '',
 }
 
 const noteSlice = createSlice({
@@ -53,102 +53,137 @@ const noteSlice = createSlice({
     addNote: (state, { payload }: PayloadAction<NoteItem>) => {
       state.notes.push(payload)
     },
-    addCategoryToNote: (
-      state,
-      { payload }: PayloadAction<{ categoryId: string; noteId: string }>
-    ) => ({
-      ...state,
-      notes: state.selectedNotesIds.includes(payload.noteId)
-        ? state.notes.map((note) =>
-            state.selectedNotesIds.includes(note.id)
-              ? { ...note, category: payload.categoryId }
-              : note
-          )
-        : state.notes.map((note) =>
-            note.id === payload.noteId ? { ...note, category: payload.categoryId } : note
-          ),
-    }),
-    deleteNotes: (state, { payload }: PayloadAction<string[]>) => ({
-      ...state,
-      notes: state.notes.filter((note) => !payload.includes(note.id)),
-      activeNoteId: getNewActiveNoteId(
+
+    updateNote: (state, { payload }: PayloadAction<NoteItem>) => {
+      state.notes = state.notes.map((note) =>
+        note.id === payload.id
+          ? { ...note, text: payload.text, lastUpdated: payload.lastUpdated }
+          : note
+      )
+    },
+
+    deleteNotes: (state, { payload }: PayloadAction<string[]>) => {
+      state.notes = state.notes.filter((note) => !payload.includes(note.id))
+      state.activeNoteId = getNewActiveNoteId(
         state.notes,
         state.activeNoteId,
         state.activeCategoryId,
         state.activeFolder
-      ),
-      selectedNotesIds: [
+      )
+      state.selectedNotesIds = [
         getNewActiveNoteId(
           state.notes,
           state.activeNoteId,
           state.activeCategoryId,
           state.activeFolder
         ),
-      ],
-    }),
-    emptyTrash: (state) => ({
-      ...state,
-      notes: state.notes.filter((note) => !note.trash),
-    }),
-    loadNotes: () => initialState,
-    loadNotesError: (state, { payload }: PayloadAction<string>) => ({
-      ...state,
-      loading: false,
-      error: payload,
-    }),
-    loadNotesSuccess: (state, { payload }: PayloadAction<NoteItem[]>) => ({
-      ...state,
-      notes: payload,
-      activeNoteId: getFirstNoteId(Folder.ALL, payload),
-      selectedNotesIds: [getFirstNoteId(Folder.ALL, payload)],
-      loading: false,
-    }),
-    pruneNotes: (state) => ({
-      ...state,
-      notes: state.notes.filter(
-        (note) => note.text !== '' || state.selectedNotesIds.includes(note.id)
-      ),
-    }),
-    searchNotes: (state, { payload }: PayloadAction<string>) => ({
-      ...state,
-      searchValue: payload,
-    }),
-    updateActiveCategoryId: (state, { payload }: PayloadAction<string>) => ({
-      ...state,
-      activeCategoryId: payload,
-      activeFolder: Folder.CATEGORY,
-      activeNoteId: getFirstNoteId(Folder.CATEGORY, state.notes, payload),
-      selectedNotesIds: [getFirstNoteId(Folder.CATEGORY, state.notes, payload)],
-    }),
-    swapFolder: (state, { payload }: PayloadAction<Folder>) => ({
-      ...state,
-      activeFolder: payload,
-      activeCategoryId: '',
-      activeNoteId: getFirstNoteId(payload, state.notes),
-      selectedNotesIds: [getFirstNoteId(payload, state.notes)],
-    }),
+      ]
+    },
+
+    addCategoryToNote: (
+      state,
+      { payload }: PayloadAction<{ categoryId: string; noteId: string }>
+    ) => {
+      state.notes = state.selectedNotesIds.includes(payload.noteId)
+        ? // Multi
+          state.notes.map((note) =>
+            state.selectedNotesIds.includes(note.id)
+              ? { ...note, category: payload.categoryId }
+              : note
+          )
+        : // Single
+          state.notes.map((note) =>
+            note.id === payload.noteId ? { ...note, category: payload.categoryId } : note
+          )
+    },
+
     updateActiveNote: (
       state,
       { payload }: PayloadAction<{ noteId?: string; multiSelect: boolean }>
-    ) => ({
-      ...state,
-      activeNoteId: payload.multiSelect
+    ) => {
+      state.activeNoteId = payload.multiSelect
         ? state.notes.filter(({ id }) => state.selectedNotesIds.includes(id)).slice(-1)[0].id
-        : payload.noteId!,
-    }),
-    toggleFavoriteNote: (state, { payload }: PayloadAction<string>) => ({
-      ...state,
-      notes: state.selectedNotesIds.includes(payload)
+        : payload.noteId!
+    },
+
+    updateActiveCategoryId: (state, { payload }: PayloadAction<string>) => {
+      state.activeCategoryId = payload
+      state.activeFolder = Folder.CATEGORY
+      state.activeNoteId = getFirstNoteId(Folder.CATEGORY, state.notes, payload)
+      state.selectedNotesIds = [getFirstNoteId(Folder.CATEGORY, state.notes, payload)]
+    },
+
+    swapFolder: (state, { payload }: PayloadAction<Folder>) => {
+      state.activeFolder = payload
+      state.activeCategoryId = ''
+      state.activeNoteId = getFirstNoteId(payload, state.notes)
+      state.selectedNotesIds = [getFirstNoteId(payload, state.notes)]
+    },
+
+    assignFavoriteToNotes: (state, { payload }: PayloadAction<string>) => {
+      state.notes = state.notes.map((note) => {
+        if (state.selectedNotesIds.includes(payload)) {
+          return state.selectedNotesIds.includes(note.id) ? { ...note, favorite: true } : note
+        }
+        if (note.id === payload) {
+          return { ...note, favorite: true }
+        }
+
+        return note
+      })
+    },
+
+    toggleFavoriteNotes: (state, { payload }: PayloadAction<string>) => {
+      state.notes = state.selectedNotesIds.includes(payload)
         ? state.notes.map((note) =>
             state.selectedNotesIds.includes(note.id) ? { ...note, favorite: !note.favorite } : note
           )
         : state.notes.map((note) =>
             note.id === payload ? { ...note, favorite: !note.favorite } : note
-          ),
-    }),
-    restoreTrashedNote: (state, { payload }: PayloadAction<string>) => ({
-      ...state,
-      notes: state.notes.map((note) => {
+          )
+    },
+
+    assignTrashToNotes: (state, { payload }: PayloadAction<string>) => {
+      state.notes = state.notes.map((note) => {
+        if (state.selectedNotesIds.includes(payload)) {
+          return state.selectedNotesIds.includes(note.id) ? { ...note, trash: true } : note
+        }
+        if (note.id === payload) {
+          return { ...note, trash: true }
+        }
+
+        return note
+      })
+      state.activeNoteId = getNewActiveNoteId(
+        state.notes,
+        payload,
+        state.activeCategoryId,
+        state.activeFolder
+      )
+      state.selectedNotesIds = [
+        getNewActiveNoteId(state.notes, payload, state.activeCategoryId, state.activeFolder),
+      ]
+    },
+
+    toggleTrashNotes: (state, { payload }: PayloadAction<string>) => {
+      state.notes = state.selectedNotesIds.includes(payload)
+        ? state.notes.map((note) =>
+            state.selectedNotesIds.includes(note.id) ? { ...note, trash: !note.trash } : note
+          )
+        : state.notes.map((note) => (note.id === payload ? { ...note, trash: !note.trash } : note))
+      state.activeNoteId = getNewActiveNoteId(
+        state.notes,
+        payload,
+        state.activeCategoryId,
+        state.activeFolder
+      )
+      state.selectedNotesIds = [
+        getNewActiveNoteId(state.notes, payload, state.activeCategoryId, state.activeFolder),
+      ]
+    },
+
+    unassignTrashFromNotes: (state, { payload }: PayloadAction<string>) => {
+      state.notes = state.notes.map((note) => {
         if (state.selectedNotesIds.includes(payload)) {
           return state.selectedNotesIds.includes(note.id) && note.trash
             ? { ...note, trash: false }
@@ -159,104 +194,74 @@ const noteSlice = createSlice({
         }
 
         return note
-      }),
-    }),
-    toggleTrashedNote: (state, { payload }: PayloadAction<string>) => ({
-      ...state,
-      notes: state.selectedNotesIds.includes(payload)
-        ? state.notes.map((note) =>
-            state.selectedNotesIds.includes(note.id) ? { ...note, trash: !note.trash } : note
-          )
-        : state.notes.map((note) => (note.id === payload ? { ...note, trash: !note.trash } : note)),
-      activeNoteId: getNewActiveNoteId(
-        state.notes,
-        payload,
-        state.activeCategoryId,
-        state.activeFolder
-      ),
-      selectedNotesIds: [
-        getNewActiveNoteId(state.notes, payload, state.activeCategoryId, state.activeFolder),
-      ],
-    }),
-    addFavoriteNote: (state, { payload }: PayloadAction<string>) => ({
-      ...state,
-      notes: state.notes.map((note) => {
-        if (state.selectedNotesIds.includes(payload)) {
-          return state.selectedNotesIds.includes(note.id) ? { ...note, favorite: true } : note
-        }
-        if (note.id === payload) {
-          return { ...note, favorite: true }
-        }
+      })
+    },
 
-        return note
-      }),
-    }),
-    addTrashedNote: (state, { payload }: PayloadAction<string>) => ({
-      ...state,
-      notes: state.notes.map((note) => {
-        if (state.selectedNotesIds.includes(payload)) {
-          return state.selectedNotesIds.includes(note.id) ? { ...note, trash: true } : note
-        }
-        if (note.id === payload) {
-          return { ...note, trash: true }
-        }
-
-        return note
-      }),
-      activeNoteId: getNewActiveNoteId(
-        state.notes,
-        payload,
-        state.activeCategoryId,
-        state.activeFolder
-      ),
-      selectedNotesIds: [
-        getNewActiveNoteId(state.notes, payload, state.activeCategoryId, state.activeFolder),
-      ],
-    }),
-    updateNote: (state, { payload }: PayloadAction<NoteItem>) => ({
-      ...state,
-      notes: state.notes.map((note) =>
-        note.id === payload.id
-          ? { ...note, text: payload.text, lastUpdated: payload.lastUpdated }
-          : note
-      ),
-    }),
     updateSelectedNotes: (
       state,
       { payload: { noteId, multiSelect } }: PayloadAction<{ noteId: string; multiSelect: boolean }>
-    ) => ({
-      ...state,
-      selectedNotesIds: multiSelect
+    ) => {
+      state.selectedNotesIds = multiSelect
         ? state.selectedNotesIds.length === 1 && state.selectedNotesIds[0] === noteId
           ? state.selectedNotesIds
           : state.selectedNotesIds.includes(noteId)
           ? state.selectedNotesIds.filter((selectedNoteId) => selectedNoteId !== noteId)
           : [...state.selectedNotesIds, noteId]
-        : [noteId],
-    }),
+        : [noteId]
+    },
+
+    permanentlyEmptyTrash: (state) => {
+      state.notes = state.notes.filter((note) => !note.trash)
+    },
+
+    pruneNotes: (state) => {
+      state.notes = state.notes.filter(
+        (note) => note.text !== '' || state.selectedNotesIds.includes(note.id)
+      )
+    },
+
+    searchNotes: (state, { payload }: PayloadAction<string>) => {
+      state.searchValue = payload
+    },
+
+    loadNotes: (state) => {
+      state.loading = true
+    },
+
+    loadNotesError: (state, { payload }: PayloadAction<string>) => {
+      state.loading = false
+      state.error = payload
+    },
+
+    loadNotesSuccess: (state, { payload }: PayloadAction<NoteItem[]>) => {
+      state.notes = payload
+      state.activeNoteId = getFirstNoteId(Folder.ALL, payload)
+      state.selectedNotesIds = [getFirstNoteId(Folder.ALL, payload)]
+      state.loading = false
+    },
   },
 })
 
 export const {
-  addCategoryToNote,
   addNote,
+  updateNote,
   deleteNotes,
-  emptyTrash,
+  addCategoryToNote,
+  updateActiveNote,
+  updateActiveCategoryId,
+  swapFolder,
+  assignFavoriteToNotes,
+  toggleFavoriteNotes,
+  assignTrashToNotes,
+  toggleTrashNotes,
+  unassignTrashFromNotes,
+  updateSelectedNotes,
+  permanentlyEmptyTrash,
+  pruneNotes,
+  searchNotes,
   loadNotes,
   loadNotesError,
   loadNotesSuccess,
-  pruneNotes,
-  searchNotes,
-  updateActiveCategoryId,
-  swapFolder,
-  updateActiveNote,
-  toggleFavoriteNote,
-  toggleTrashedNote,
-  addFavoriteNote,
-  addTrashedNote,
-  updateNote,
-  updateSelectedNotes,
-  restoreTrashedNote,
 } = noteSlice.actions
 
 export default noteSlice.reducer

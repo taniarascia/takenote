@@ -1,12 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { SyncState, SyncStatePayload } from '@/types'
+import { SyncState, SyncPayload } from '@/types'
 
 const initialState: SyncState = {
-  syncing: false,
   pendingSync: false,
   lastSynced: '',
   error: '',
+  syncing: false,
 }
 
 const syncSlice = createSlice({
@@ -16,14 +16,14 @@ const syncSlice = createSlice({
     setPendingSync: (state) => {
       state.pendingSync = true
     },
-    syncState: (state, { payload }: PayloadAction<SyncStatePayload>) => {
+    sync: (state, { payload }: PayloadAction<SyncPayload>) => {
       state.syncing = true
     },
-    syncStateError: (state, { payload }: PayloadAction<string>) => {
+    syncError: (state, { payload }: PayloadAction<string>) => {
       state.syncing = false
       state.error = payload
     },
-    syncStateSuccess: (state, { payload }: PayloadAction<string>) => {
+    syncSuccess: (state, { payload }: PayloadAction<string>) => {
       state.syncing = false
       state.lastSynced = payload
       state.pendingSync = false
@@ -31,6 +31,6 @@ const syncSlice = createSlice({
   },
 })
 
-export const { syncState, syncStateError, syncStateSuccess, setPendingSync } = syncSlice.actions
+export const { sync, syncError, syncSuccess, setPendingSync } = syncSlice.actions
 
 export default syncSlice.reducer

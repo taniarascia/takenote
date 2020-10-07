@@ -6,7 +6,7 @@ import axios from 'axios'
 import { requestCategories, requestNotes, requestSettings, saveState, saveSettings } from '@/api'
 import { loadCategories, loadCategoriesError, loadCategoriesSuccess } from '@/slices/category'
 import { loadNotes, loadNotesError, loadNotesSuccess } from '@/slices/note'
-import { syncState, syncStateError, syncStateSuccess } from '@/slices/sync'
+import { sync, syncError, syncSuccess } from '@/slices/sync'
 import { login, loginSuccess, loginError, logout, logoutSuccess } from '@/slices/auth'
 import {
   updateCodeMirrorOption,
@@ -18,7 +18,7 @@ import {
   toggleSettingsModal,
   updateNotesSortStrategy,
 } from '@/slices/settings'
-import { SyncStateAction } from '@/types'
+import { SyncAction } from '@/types'
 import { getSettings } from '@/selectors'
 
 /**
@@ -92,12 +92,12 @@ function* fetchSettings() {
   }
 }
 
-function* postState({ payload }: SyncStateAction) {
+function* syncData({ payload }: SyncAction) {
   try {
     yield saveState(payload)
-    yield put(syncStateSuccess(dayjs().format()))
+    yield put(syncSuccess(dayjs().format()))
   } catch (error) {
-    yield put(syncStateError(error.message))
+    yield put(syncError(error.message))
   }
 }
 
@@ -117,7 +117,7 @@ function* rootSaga() {
     takeLatest(loadNotes.type, fetchNotes),
     takeLatest(loadCategories.type, fetchCategories),
     takeLatest(loadSettings.type, fetchSettings),
-    takeLatest(syncState.type, postState),
+    takeLatest(sync.type, syncData),
     takeLatest(
       [
         toggleDarkTheme.type,

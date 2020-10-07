@@ -15,13 +15,13 @@ import {
   addNote,
   swapFolder,
   updateActiveNote,
-  addFavoriteNote,
-  addTrashedNote,
+  assignFavoriteToNotes,
+  assignTrashToNotes,
   updateSelectedNotes,
-  restoreTrashedNote,
+  unassignTrashFromNotes,
 } from '@/slices/note'
 import { toggleSettingsModal, togglePreviewMarkdown } from '@/slices/settings'
-import { syncState } from '@/slices/sync'
+import { sync } from '@/slices/sync'
 import { getSettings, getNotes, getCategories, getSync } from '@/selectors'
 import { CategoryItem, NoteItem } from '@/types'
 import { newNoteHandlerHelper, getActiveNote } from '@/utils/helpers'
@@ -50,13 +50,13 @@ export const AppSidebar: React.FC = () => {
   const _updateSelectedNotes = (noteId: string, multiSelect: boolean) =>
     dispatch(updateSelectedNotes({ noteId, multiSelect }))
   const _swapFolder = (folder: Folder) => dispatch(swapFolder(folder))
-  const _syncState = (notes: NoteItem[], categories: CategoryItem[]) =>
-    dispatch(syncState({ notes, categories }))
+  const _sync = (notes: NoteItem[], categories: CategoryItem[]) =>
+    dispatch(sync({ notes, categories }))
   const _toggleSettingsModal = () => dispatch(toggleSettingsModal())
   const _togglePreviewMarkdown = () => dispatch(togglePreviewMarkdown())
-  const _addTrashedNote = (noteId: string) => dispatch(addTrashedNote(noteId))
-  const _restoreTrashedNote = (noteId: string) => dispatch(restoreTrashedNote(noteId))
-  const _addFavoriteNote = (noteId: string) => dispatch(addFavoriteNote(noteId))
+  const _assignTrashToNotes = (noteId: string) => dispatch(assignTrashToNotes(noteId))
+  const _unassignTrashFromNotes = (noteId: string) => dispatch(unassignTrashFromNotes(noteId))
+  const _assignFavoriteToNotes = (noteId: string) => dispatch(assignFavoriteToNotes(noteId))
 
   // ===========================================================================
   // Handlers
@@ -75,7 +75,7 @@ export const AppSidebar: React.FC = () => {
       _updateSelectedNotes
     )
 
-  const syncNotesHandler = () => _syncState(notes, categories)
+  const syncNotesHandler = () => _sync(notes, categories)
   const settingsHandler = () => _toggleSettingsModal()
 
   return (
@@ -109,7 +109,7 @@ export const AppSidebar: React.FC = () => {
             text={LabelText.NOTES}
             dataTestID={TestID.FOLDER_NOTES}
             folder={Folder.ALL}
-            addNoteType={_restoreTrashedNote}
+            addNoteType={_unassignTrashFromNotes}
           />
           <FolderOption
             active={activeFolder === Folder.FAVORITES}
@@ -117,7 +117,7 @@ export const AppSidebar: React.FC = () => {
             dataTestID={TestID.FOLDER_FAVORITES}
             folder={Folder.FAVORITES}
             swapFolder={_swapFolder}
-            addNoteType={_addFavoriteNote}
+            addNoteType={_assignFavoriteToNotes}
           />
           <FolderOption
             active={activeFolder === Folder.TRASH}
@@ -125,7 +125,7 @@ export const AppSidebar: React.FC = () => {
             dataTestID={TestID.FOLDER_TRASH}
             folder={Folder.TRASH}
             swapFolder={_swapFolder}
-            addNoteType={_addTrashedNote}
+            addNoteType={_assignTrashToNotes}
           />
           <div className="category-title">
             <h2>Categories</h2>

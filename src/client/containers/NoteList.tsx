@@ -11,7 +11,7 @@ import { ContextMenu } from '@/containers/ContextMenu'
 import { getNoteTitle, shouldOpenContextMenu, debounceEvent } from '@/utils/helpers'
 import { useKey } from '@/utils/hooks'
 import {
-  emptyTrash,
+  permanentlyEmptyTrash,
   pruneNotes,
   updateActiveNote,
   searchNotes,
@@ -41,7 +41,7 @@ export const NoteList: React.FC = () => {
 
   const _updateSelectedNotes = (noteId: string, multiSelect: boolean) =>
     dispatch(updateSelectedNotes({ noteId, multiSelect }))
-  const _emptyTrash = () => dispatch(emptyTrash())
+  const _permanentlyEmptyTrash = () => dispatch(permanentlyEmptyTrash())
   const _toggleSidebarVisibility = () => dispatch(toggleSidebarVisibility())
   const _pruneNotes = () => dispatch(pruneNotes())
   const _updateActiveNote = (noteId: string, multiSelect: boolean) =>
@@ -171,7 +171,7 @@ export const NoteList: React.FC = () => {
           <NoteListButton
             dataTestID={TestID.EMPTY_TRASH_BUTTON}
             label="Empty"
-            handler={() => _emptyTrash()}
+            handler={() => _permanentlyEmptyTrash()}
           >
             Empty Trash
           </NoteListButton>

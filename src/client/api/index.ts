@@ -1,4 +1,4 @@
-import { NoteItem, SyncStatePayload, SettingsState } from '../types'
+import { NoteItem, SyncPayload, SettingsState } from '../types'
 
 import { welcomeNote } from '@/api/welcomeNote'
 import { scratchpadNote } from '@/api/scratchpadNote'
@@ -53,7 +53,7 @@ export const requestCategories = () => new Promise(getLocalStorage('categories')
 export const requestSettings = () =>
   new Promise(getLocalStorage('settings', 'Could not load settings'))
 
-export const saveState = ({ categories, notes }: SyncStatePayload) =>
+export const saveState = ({ categories, notes }: SyncPayload) =>
   new Promise((resolve) => {
     localStorage.setItem('categories', JSON.stringify(categories))
     localStorage.setItem('notes', JSON.stringify(notes))

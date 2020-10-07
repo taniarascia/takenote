@@ -12,12 +12,12 @@ const _swapCategories = (categories: CategoryItem[], categoryId: number, destina
 
 const initialState: CategoryState = {
   categories: [],
-  error: '',
-  loading: true,
   editingCategory: {
     id: '',
     tempName: '',
   },
+  error: '',
+  loading: true,
 }
 
 const categorySlice = createSlice({
@@ -27,22 +27,30 @@ const categorySlice = createSlice({
     addCategory: (state, { payload }: PayloadAction<CategoryItem>) => {
       state.categories.push(payload)
     },
+
     updateCategory: (state, { payload }: PayloadAction<CategoryItem>) => ({
       ...state,
       categories: state.categories.map((category) =>
         category.id === payload.id ? { ...category, name: payload.name } : category
       ),
     }),
+
+    deleteCategory: (state, { payload }: PayloadAction<string>) => {
+      state.categories = state.categories.filter((category) => category.id !== payload)
+    },
+
     categoryDragEnter: (state, { payload }: PayloadAction<CategoryItem>) => {
       state.categories = state.categories.map((category) =>
         category.id === payload.id ? { ...category, draggedOver: true } : category
       )
     },
+
     categoryDragLeave: (state, { payload }: PayloadAction<CategoryItem>) => {
       state.categories = state.categories.map((category) =>
         category.id === payload.id ? { ...category, draggedOver: false } : category
       )
     },
+
     swapCategories: (
       state,
       { payload }: PayloadAction<{ categoryId: number; destinationId: number }>
@@ -53,17 +61,20 @@ const categorySlice = createSlice({
         payload.destinationId
       )
     },
-    deleteCategory: (state, { payload }: PayloadAction<string>) => {
-      state.categories = state.categories.filter((category) => category.id !== payload)
-    },
+
     setCategoryEdit: (state, { payload }: PayloadAction<{ id: string; tempName: string }>) => {
       state.editingCategory = payload
     },
-    loadCategories: () => initialState,
+
+    loadCategories: (state) => {
+      state.loading = true
+    },
+
     loadCategoriesError: (state, { payload }: PayloadAction<string>) => {
       state.loading = false
       state.error = payload
     },
+
     loadCategoriesSuccess: (state, { payload }: PayloadAction<CategoryItem[]>) => {
       state.categories = payload
       state.loading = false

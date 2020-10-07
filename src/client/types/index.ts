@@ -1,7 +1,7 @@
 import React from 'react'
 
 import { Folder, NotesSortKey } from '@/utils/enums'
-import { syncState } from '@/slices/sync'
+import { sync } from '@/slices/sync'
 
 //==============================================================================
 // Items
@@ -92,14 +92,14 @@ export interface RootState {
 // API
 //==============================================================================
 
-export interface SyncStatePayload {
+export interface SyncPayload {
   categories: CategoryItem[]
   notes: NoteItem[]
 }
 
-export interface SyncStateAction {
-  type: typeof syncState.type
-  payload: SyncStatePayload
+export interface SyncAction {
+  type: typeof sync.type
+  payload: SyncPayload
 }
 
 //==============================================================================
