@@ -96,7 +96,7 @@ export const NoteList: React.FC = () => {
   const handleNoteOptionsClick = (event: ReactMouseEvent, noteId: string = '') => {
     const clicked = event.target
 
-    // Make sure we aren't getting any null values .. any element clicked should be a sub-class of element
+    // Make sure we aren't getting any null values. Any element clicked should be a sub-class of element
     if (!clicked) return
 
     // Ensure the clicked target is supposed to open the context menu
@@ -110,7 +110,6 @@ export const NoteList: React.FC = () => {
     event.stopPropagation()
 
     if (contextMenuRef.current && contextMenuRef.current.contains(clicked as HTMLDivElement)) {
-      return
     } else {
       setOptionsId(!optionsId || optionsId !== noteId ? noteId : '')
     }
@@ -140,7 +139,6 @@ export const NoteList: React.FC = () => {
     event.stopPropagation()
 
     if (contextMenuRef.current && contextMenuRef.current.contains(clicked as HTMLDivElement)) {
-      return
     } else {
       setOptionsId(!optionsId || optionsId !== noteId ? noteId : '')
     }
@@ -154,6 +152,7 @@ export const NoteList: React.FC = () => {
 
   useEffect(() => {
     document.addEventListener('mousedown', handleNoteOptionsClick)
+
     return () => {
       document.removeEventListener('mousedown', handleNoteOptionsClick)
     }

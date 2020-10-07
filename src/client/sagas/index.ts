@@ -3,7 +3,7 @@ import { all, put, takeLatest, select } from 'redux-saga/effects'
 import dayjs from 'dayjs'
 import axios from 'axios'
 
-import { requestCategories, requestNotes, saveState, saveSettings, requestSettings } from '@/api'
+import { requestCategories, requestNotes, requestSettings, saveState, saveSettings } from '@/api'
 import { loadCategories, loadCategoriesError, loadCategoriesSuccess } from '@/slices/category'
 import { loadNotes, loadNotesError, loadNotesSuccess } from '@/slices/note'
 import { syncState, syncStateError, syncStateSuccess } from '@/slices/sync'
@@ -79,6 +79,19 @@ function* fetchCategories() {
   }
 }
 
+/**
+ * Get settings from API
+ */
+function* fetchSettings() {
+  try {
+    const settings = yield requestSettings()
+
+    yield put(loadSettingsSuccess(settings))
+  } catch (error) {
+    yield put(loadSettingsError())
+  }
+}
+
 function* postState({ payload }: SyncStateAction) {
   try {
     yield saveState(payload)
@@ -93,17 +106,7 @@ function* syncSettings() {
     const settings = yield select(getSettings)
 
     yield saveSettings(settings)
-  } catch {}
-}
-
-function* fetchSettings() {
-  try {
-    const settings = yield requestSettings()
-
-    yield put(loadSettingsSuccess(settings))
-  } catch {
-    yield put(loadSettingsError())
-  }
+  } catch (error) {}
 }
 
 // If any of these functions are dispatched, invoke the appropriate saga

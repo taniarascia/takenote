@@ -22,14 +22,16 @@ const getNewActiveNoteId = (
 }
 
 export const getFirstNoteId = (folder: Folder, notes: NoteItem[], categoryId?: string): string => {
-  const notesNotTrash = notes.filter((note) => !note.trash)
+  const availableNotes = notes.filter((note) => !note.trash)
+
   const firstNote = {
-    [Folder.ALL]: () => notesNotTrash.find((note) => !note.scratchpad),
-    [Folder.CATEGORY]: () => notesNotTrash.find((note) => note.category === categoryId),
-    [Folder.FAVORITES]: () => notesNotTrash.find((note) => note.favorite),
-    [Folder.SCRATCHPAD]: () => notesNotTrash.find((note) => note.scratchpad),
+    [Folder.ALL]: () => availableNotes.find((note) => !note.scratchpad),
+    [Folder.CATEGORY]: () => availableNotes.find((note) => note.category === categoryId),
+    [Folder.FAVORITES]: () => availableNotes.find((note) => note.favorite),
+    [Folder.SCRATCHPAD]: () => availableNotes.find((note) => note.scratchpad),
     [Folder.TRASH]: () => notes.find((note) => note.trash),
   }[folder]()
+
   return firstNote ? firstNote.id : ''
 }
 
@@ -48,6 +50,9 @@ const noteSlice = createSlice({
   name: 'note',
   initialState,
   reducers: {
+    addNote: (state, { payload }: PayloadAction<NoteItem>) => {
+      state.notes.push(payload)
+    },
     addCategoryToNote: (
       state,
       { payload }: PayloadAction<{ categoryId: string; noteId: string }>
@@ -62,10 +67,6 @@ const noteSlice = createSlice({
         : state.notes.map((note) =>
             note.id === payload.noteId ? { ...note, category: payload.categoryId } : note
           ),
-    }),
-    addNote: (state, { payload }: PayloadAction<NoteItem>) => ({
-      ...state,
-      notes: [...state.notes, payload],
     }),
     deleteNotes: (state, { payload }: PayloadAction<string[]>) => ({
       ...state,
