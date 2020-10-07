@@ -16,13 +16,16 @@ const syncSlice = createSlice({
     setPendingSync: (state) => {
       state.pendingSync = true
     },
+
     sync: (state, { payload }: PayloadAction<SyncPayload>) => {
       state.syncing = true
     },
+
     syncError: (state, { payload }: PayloadAction<string>) => {
       state.syncing = false
       state.error = payload
     },
+
     syncSuccess: (state, { payload }: PayloadAction<string>) => {
       state.syncing = false
       state.lastSynced = payload
