@@ -291,47 +291,47 @@ describe('Manage notes test', () => {
   })
 
   // TODO: add manual sync back in
-  // it('should sync some notes', function () {
-  //   const noteOneTitle = 'note 1'
-  //   const noteTwoTitle = 'same note title'
-  //   const noteThreeTitle = 'same note title'
-  //   const noteFourTitle = 'note 4'
+  it.skip('should sync some notes', function () {
+    const noteOneTitle = 'note 1'
+    const noteTwoTitle = 'same note title'
+    const noteThreeTitle = 'same note title'
+    const noteFourTitle = 'note 4'
 
-  //   Cypress.on('window:before:unload', (event: BeforeUnloadEvent) =>
-  //     expect(event.returnValue).to.equal('')
-  //   )
+    Cypress.on('window:before:unload', (event: BeforeUnloadEvent) =>
+      expect(event.returnValue).to.equal('')
+    )
 
-  //   // start with a refresh so we know our current saved state
-  //   cy.reload()
-  //   getNoteCount('allNoteStartCount')
+    // start with a refresh so we know our current saved state
+    cy.reload()
+    getNoteCount('allNoteStartCount')
 
-  //   // create a new note and refresh without syncing
-  //   clickCreateNewNote()
-  //   typeNoteEditor(noteOneTitle)
-  //   cy.reload()
-  //   cy.then(() => assertNoteListLengthEquals(this.allNoteStartCount))
+    // create a new note and refresh without syncing
+    clickCreateNewNote()
+    typeNoteEditor(noteOneTitle)
+    cy.reload()
+    cy.then(() => assertNoteListLengthEquals(this.allNoteStartCount))
 
-  //   // create a few new notes and sync them
-  //   clickCreateNewNote()
-  //   typeNoteEditor(noteOneTitle)
-  //   clickCreateNewNote()
-  //   typeNoteEditor(noteTwoTitle)
-  //   clickCreateNewNote()
-  //   typeNoteEditor(noteThreeTitle)
-  //   clickCreateNewNote()
-  //   typeNoteEditor(noteFourTitle)
-  //   clickSyncNotes()
+    // create a few new notes and sync them
+    clickCreateNewNote()
+    typeNoteEditor(noteOneTitle)
+    clickCreateNewNote()
+    typeNoteEditor(noteTwoTitle)
+    clickCreateNewNote()
+    typeNoteEditor(noteThreeTitle)
+    clickCreateNewNote()
+    typeNoteEditor(noteFourTitle)
+    clickSyncNotes()
 
-  //   // make sure notes persisted
-  //   cy.reload()
-  //   cy.then(() => assertNoteListLengthEquals(this.allNoteStartCount + 4))
+    // make sure notes persisted
+    cy.reload()
+    cy.then(() => assertNoteListLengthEquals(this.allNoteStartCount + 4))
 
-  //   // make sure order is correct
-  //   assertNoteListTitleAtIndex(3, noteOneTitle)
-  //   assertNoteListTitleAtIndex(2, noteTwoTitle)
-  //   assertNoteListTitleAtIndex(1, noteThreeTitle)
-  //   assertNoteListTitleAtIndex(0, noteFourTitle)
-  // })
+    // make sure order is correct
+    assertNoteListTitleAtIndex(3, noteOneTitle)
+    assertNoteListTitleAtIndex(2, noteTwoTitle)
+    assertNoteListTitleAtIndex(1, noteThreeTitle)
+    assertNoteListTitleAtIndex(0, noteFourTitle)
+  })
 
   it('should search some notes', function () {
     const noteOneTitle = 'note 1'
