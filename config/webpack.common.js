@@ -46,13 +46,8 @@ module.exports = {
       },
       // Fonts
       {
-        test: /\.(woff(2)?|eot|ttf|otf|svg)$/,
+        test: /\.(woff(2)?|eot|ttf|otf)$/,
         type: 'asset/inline',
-      },
-      // Images
-      {
-        test: /\.(?:ico|gif|png|jpg|jpeg|webp)$/i,
-        type: 'asset/resource',
       },
       // Markdown
       {

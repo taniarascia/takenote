@@ -343,7 +343,7 @@ describe('Manage notes test', () => {
     cy.reload()
     getNoteCount('allNoteStartCount')
 
-    // create a few new notes and sync them
+    // create a few new notes
     clickCreateNewNote()
     typeNoteEditor(noteOneTitle)
     clickCreateNewNote()
@@ -352,10 +352,6 @@ describe('Manage notes test', () => {
     typeNoteEditor(noteThreeTitle)
     clickCreateNewNote()
     typeNoteEditor(noteFourTitle)
-
-    // // make sure notes persisted
-    // cy.reload()
-    // cy.then(() => assertNoteListLengthEquals(this.allNoteStartCount + 4))
 
     // make sure notes are filtered
     typeNoteSearch('note title')

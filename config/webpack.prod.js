@@ -35,6 +35,19 @@ module.exports = merge(common, {
           'sass-loader',
         ],
       },
+      // Images
+      {
+        test: /\.(?:ico|gif|png|jpg|jpeg|webp|svg)$/i,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: 'images/[name].[hash].[ext]',
+            },
+          },
+          'image-webpack-loader',
+        ],
+      },
     ],
   },
   plugins: [
@@ -59,7 +72,7 @@ module.exports = merge(common, {
     maxAssetSize: 512000,
   },
   optimization: {
-    minimizer: [new TerserJSPlugin({}), new OptimizeCSSAssetsPlugin({})],
+    minimizer: [new TerserJSPlugin(), new OptimizeCSSAssetsPlugin()],
     runtimeChunk: 'single',
   },
 })
