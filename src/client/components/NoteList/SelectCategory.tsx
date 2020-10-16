@@ -1,8 +1,7 @@
 import React from 'react'
 
 import { TestID } from '@resources/TestID'
-
-import { NoteItem, CategoryItem, NoteState } from '@/types'
+import { NoteItem, CategoryItem } from '@/types'
 
 export interface SelectCategoryProps {
   onChange: (selectedOption: any) => void
@@ -20,6 +19,7 @@ export const SelectCategory: React.FC<SelectCategoryProps> = ({
   const filteredCategories = categories
     .filter(({ id }) => id !== activeCategoryId)
     .filter((category) => category.id !== note.category)
+
   return (
     <>
       {!note.trash && filteredCategories.length > 0 && (

@@ -1,32 +1,15 @@
 const webpack = require('webpack')
-const merge = require('webpack-merge')
+const { merge } = require('webpack-merge')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 const common = require('./webpack.common.js')
 
 module.exports = merge(common, {
-  /**
-   * Mode
-   *
-   * Use development optimizations.
-   */
   mode: 'development',
-
-  /**
-   * Devtool
-   *
-   * Control how source maps are generated. This option is slowest initial build
-   * with highest quality source mapping.
-   */
   devtool: 'eval-source-map',
-
   module: {
     rules: [
-      /**
-       * Styles (development)
-       *
-       * Inject CSS into the head with source maps.
-       */
+      // Styles
       {
         test: /\.(scss|css)$/,
         use: [
@@ -38,31 +21,10 @@ module.exports = merge(common, {
           { loader: 'sass-loader', options: { sourceMap: true } },
         ],
       },
-
-      /**
-       * Images (development)
-       *
-       * Copy image files to dist folder.
-       */
-      {
-        test: /\.(?:ico|gif|png|jpg|jpeg|webp|svg)$/i,
-        loader: 'file-loader',
-        options: {
-          name: 'images/[name].[ext]',
-        },
-      },
     ],
   },
-
-  /**
-   * DevServer
-   *
-   * Spin up a server for quick development.
-   */
   devServer: {
-    // Necessary for React routing
     historyApiFallback: true,
-    // Proxy API in dev mode to different port.
     proxy: {
       '/api': 'http://localhost:5000',
     },
@@ -71,21 +33,8 @@ module.exports = merge(common, {
     hot: true,
     port: 3000,
   },
-
   plugins: [
-    /**
-     * HotModuleReplacementPlugin
-     *
-     * Only update what has changed - like injecting new CSS - without reloading
-     * the whole page.
-     */
     new webpack.HotModuleReplacementPlugin(),
-
-    /**
-     * HtmlWebpackPlugin
-     *
-     * Generates the React SPA HTML file from a template.
-     */
     new HtmlWebpackPlugin({
       template: './public/template.html',
       favicon: './public/favicon.ico',

@@ -18,6 +18,7 @@ const useTempState = () => {
   if (!context) {
     throw new Error('useTempState must be used within a TempStateContext')
   }
+
   return context
 }
 

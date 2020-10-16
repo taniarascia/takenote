@@ -1,10 +1,9 @@
 import dayjs from 'dayjs'
-import uuid from 'uuid/v4'
+import { v4 as uuid } from 'uuid'
 import JSZip from 'jszip'
 import { Action } from 'redux'
 
 import { LabelText } from '@resources/LabelText'
-
 import { Folder } from '@/utils/enums'
 import { folderMap } from '@/utils/constants'
 import { NoteItem, CategoryItem, WithPayload } from '@/types'
@@ -212,9 +211,10 @@ export const determineCategoryClass = (
 
 export const debounceEvent = <T extends Function>(cb: T, wait = 20) => {
   let h = 0
-  let callable = (...args: any) => {
+  const callable = (...args: any) => {
     clearTimeout(h)
     h = window.setTimeout(() => cb(...args), wait)
   }
+
   return <T>(<any>callable)
 }

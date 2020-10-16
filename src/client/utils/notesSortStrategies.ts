@@ -1,7 +1,7 @@
+import { NoteItem } from '@/types'
+
 import { getNoteTitle } from './helpers'
 import { NotesSortKey } from './enums'
-
-import { NoteItem } from '@/types'
 
 export interface NotesSortStrategy {
   sort: (a: NoteItem, b: NoteItem) => number

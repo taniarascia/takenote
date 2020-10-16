@@ -52,7 +52,7 @@ $dark-editor: #3f3f3f;
         }
 
         &:hover {
-          background: darken($dark-sidebar, 5%);
+          background: lighten($dark-sidebar, 5%);
           .note-options {
             color: #888;
           }

@@ -10,10 +10,10 @@ const CopyWebpackPlugin = require('copy-webpack-plugin')
  *
  * If in development mode or local production mode, search the .env file for
  * client id. If using Docker, pass a build arg.
- *
  */
 const getEnvFromDotEnvFile = dotenv.config()
 let envKeys
+
 if (getEnvFromDotEnvFile.error) {
   console.log('Getting environment variables from build args for production') // eslint-disable-line
   envKeys = {
@@ -25,24 +25,12 @@ if (getEnvFromDotEnvFile.error) {
 }
 
 module.exports = {
-  /**
-   * Entry
-   *
-   * Webpack will look at index.tsx for the entrypoint of the app.
-   */
   entry: ['./src/client/index.tsx'],
-
-  /**
-   * Output
-   *
-   * Webpack will output the assets and bundles to the dist folder.
-   */
   output: {
     path: path.resolve(__dirname, '../dist'),
-    filename: '[name].[hash].bundle.js',
+    filename: '[name].[fullhash].bundle.js',
     publicPath: '/',
   },
-
   module: {
     rules: [
       /**
@@ -56,33 +44,23 @@ module.exports = {
         loader: 'ts-loader',
         exclude: /node_modules/,
       },
-
-      /**
-       * Fonts
-       *
-       * Inline font files.
-       */
+      // Fonts
       {
-        test: /\.(woff(2)?|eot|ttf|otf|)$/,
-        loader: 'url-loader',
-        options: {
-          limit: 8192,
-          name: 'fonts/[name].[ext]',
-        },
+        test: /\.(woff(2)?|eot|ttf|otf|svg)$/,
+        type: 'asset/inline',
       },
-
-      /**
-       * Markdown
-       *
-       * Parse raw string.
-       */
+      // Images
+      {
+        test: /\.(?:ico|gif|png|jpg|jpeg|webp)$/i,
+        type: 'asset/resource',
+      },
+      // Markdown
       {
         test: /\.md$/,
-        use: 'raw-loader',
+        type: 'asset/source',
       },
     ],
   },
-
   resolve: {
     // Resolve in this order
     extensions: ['*', '.js', '.jsx', '.ts', '.tsx', '.md'],
@@ -90,31 +68,27 @@ module.exports = {
     alias: {
       '@': path.resolve(__dirname, '../src/client'),
       '@resources': path.resolve(__dirname, '../src/resources'),
+      stream: 'stream-browserify',
+      path: 'path-browserify',
     },
   },
-
   plugins: [
     // Get environment variables in React
     new webpack.DefinePlugin(envKeys),
-    /**
-     * CleanWebpackPlugin
-     *
-     * Removes/cleans build folders and unused assets when rebuilding.
-     */
     new CleanWebpackPlugin(),
-
-    /**
-     * CopyWebpackPlugin
-     *
-     * Will copy everything from the public folder to an assets folder in dist.
-     */
-    new CopyWebpackPlugin([
-      {
-        from: path.resolve(__dirname, '../public'),
-        to: 'assets',
-        // Ignore some files to prevent unnecessary duplication
-        ignore: ['*.DS_Store', 'favicon.ico', 'template.html'],
-      },
-    ]),
+    new CopyWebpackPlugin({
+      patterns: [
+        {
+          from: path.resolve(__dirname, '../public'),
+          to: 'assets',
+          globOptions: {
+            ignore: ['*.DS_Store', 'favicon.ico', 'template.html'],
+          },
+        },
+      ],
+    }),
+    new webpack.ProvidePlugin({
+      process: 'process/browser',
+    }),
   ],
 }

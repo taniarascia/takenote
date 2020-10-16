@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { LabelText } from '@resources/LabelText'
 import { TestID } from '@resources/TestID'
-
 import { ContextMenuOption } from '@/components/NoteList/ContextMenuOption'
 import { downloadNotes } from '@/utils/helpers'
 import {

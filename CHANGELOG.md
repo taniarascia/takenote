@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file.
 
+## v0.6.0 10/16/2020
+
+webpack 5
+
+### Changed
+
+- Updated all packages, notable webpack 4 to webpack 5
+- Updated webpack config to reflect breaking changes
+- Manually brought in polyfills for Node packages that are no longer polyfilled by webpack
+- Moved settings to bottom of app sidebar
+- Removed sync button
+
 ## v0.5.0 02/22/2020
 
 GitHub authentication

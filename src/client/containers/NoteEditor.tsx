@@ -11,6 +11,7 @@ import { EmptyEditor } from '@/components/Editor/EmptyEditor'
 import { PreviewEditor } from '@/components/Editor/PreviewEditor'
 import { getSettings, getNotes } from '@/selectors'
 import { setPendingSync } from '@/slices/sync'
+
 import 'codemirror/lib/codemirror.css'
 import 'codemirror/theme/base16-light.css'
 import 'codemirror/mode/gfm/gfm'

@@ -23,7 +23,6 @@ Description of the project files and directories.
 │   ├── webpack.dev.js         # Webpack development configuration (dev server)
 │   └── webpack.prod.js        # Webpack productuon configuration (dist output)
 ├── assets/                    # Supplemental assets
-├── patches/                   # Overrides for dependencies
 ├── public/                    # Files that will write to dist on build
 ├── src/                       # All TakeNote app source files
 │   ├── resources/             # Shared resources
@@ -81,7 +80,6 @@ An explanation of the `package.json` scripts.
 | `test:e2e`      | Run end-to-end tests in the command line    |
 | `test:e2e:open` | Open end-to-end tests in a browser          |
 | `test:coverage` | Get test coverage                           |
-| `postinstall`   | Apply patches                               |
 
 ## Technologies
 

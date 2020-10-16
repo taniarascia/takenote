@@ -9,6 +9,7 @@ export interface ActionButtonProps {
   handler: MouseEventHandler
   icon: Icon
   label: string
+  text: string
 }
 
 export const ActionButton: React.FC<ActionButtonProps> = ({
@@ -17,6 +18,7 @@ export const ActionButton: React.FC<ActionButtonProps> = ({
   handler,
   icon: IconCmp,
   label,
+  text,
 }) => {
   return (
     <button
@@ -27,15 +29,14 @@ export const ActionButton: React.FC<ActionButtonProps> = ({
       disabled={disabled}
       title={label}
     >
-      <span>
-        <IconCmp
-          size={18}
-          className="action-button-icon"
-          color={iconColor}
-          aria-hidden="true"
-          focusable="false"
-        />
-      </span>
+      <IconCmp
+        size={18}
+        className="action-button-icon"
+        color={iconColor}
+        aria-hidden="true"
+        focusable="false"
+      />
+      <span>{text}</span>
     </button>
   )
 }

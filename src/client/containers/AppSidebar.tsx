@@ -4,9 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { LabelText } from '@resources/LabelText'
 import { TestID } from '@resources/TestID'
-
 import { ActionButton } from '@/components/AppSidebar/ActionButton'
-import { LastSyncedNotification } from '@/components/AppSidebar/LastSyncedNotification'
 import { FolderOption } from '@/components/AppSidebar/FolderOption'
 import { ScratchpadOption } from '@/components/AppSidebar/ScratchpadOption'
 import { Folder } from '@/utils/enums'
@@ -22,7 +20,7 @@ import {
 } from '@/slices/note'
 import { toggleSettingsModal, togglePreviewMarkdown } from '@/slices/settings'
 import { sync } from '@/slices/sync'
-import { getSettings, getNotes, getCategories, getSync } from '@/selectors'
+import { getSettings, getNotes, getCategories, getSync, getAuth } from '@/selectors'
 import { CategoryItem, NoteItem } from '@/types'
 import { newNoteHandlerHelper, getActiveNote } from '@/utils/helpers'
 
@@ -35,6 +33,7 @@ export const AppSidebar: React.FC = () => {
   const { activeCategoryId, activeFolder, activeNoteId, notes } = useSelector(getNotes)
   const { previewMarkdown } = useSelector(getSettings)
   const { syncing, lastSynced } = useSelector(getSync)
+  const { currentUser } = useSelector(getAuth)
 
   const activeNote = getActiveNote(notes, activeNoteId)
 
@@ -81,26 +80,13 @@ export const AppSidebar: React.FC = () => {
   return (
     <>
       <aside className="app-sidebar">
-        <section className="app-sidebar-actions">
-          <ActionButton
-            dataTestID={TestID.SIDEBAR_ACTION_CREATE_NEW_NOTE}
-            handler={newNoteHandler}
-            icon={Plus}
-            label={LabelText.CREATE_NEW_NOTE}
-          />
-          <ActionButton
-            dataTestID={TestID.SIDEBAR_ACTION_SYNC_NOTES}
-            handler={syncNotesHandler}
-            icon={syncing ? Loader : RefreshCw}
-            label={LabelText.SYNC_NOTES}
-          />
-          <ActionButton
-            dataTestID={TestID.SIDEBAR_ACTION_SETTINGS}
-            handler={settingsHandler}
-            icon={Settings}
-            label={LabelText.SETTINGS}
-          />
-        </section>
+        <ActionButton
+          dataTestID={TestID.SIDEBAR_ACTION_CREATE_NEW_NOTE}
+          handler={newNoteHandler}
+          icon={Plus}
+          label={LabelText.CREATE_NEW_NOTE}
+          text="New note"
+        />
         <section className="app-sidebar-main">
           <ScratchpadOption active={activeFolder === Folder.SCRATCHPAD} swapFolder={_swapFolder} />
           <FolderOption
@@ -132,8 +118,24 @@ export const AppSidebar: React.FC = () => {
           </div>
           <CategoryList />
         </section>
+        <button
+          className="app-sidebar-settings"
+          data-test-id={TestID.SIDEBAR_ACTION_SETTINGS}
+          onClick={settingsHandler}
+          aria-label={LabelText.SETTINGS}
+        >
+          <div>
+            <img src={currentUser.avatar_url} alt="Profile" className="user-avatar" />
+          </div>
+          <div>
+            <div className="user-name">{currentUser.name}</div>
+            <div className="user-subtitle">Settings</div>
+          </div>
+          <div className="user-settings-icon">
+            <Settings size={16} />
+          </div>
+        </button>
       </aside>
-      {lastSynced && <LastSyncedNotification datetime={lastSynced} />}
     </>
   )
 }
