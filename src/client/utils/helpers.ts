@@ -146,6 +146,8 @@ export const newNoteHandlerHelper = (
 }
 
 export const shouldOpenContextMenu = (clicked: Element) => {
+  if (!clicked.parentElement) return
+
   const elementContainsClass = (className: string) => clicked.classList.contains(className)
 
   const parentContainsClass = (className: string) =>
