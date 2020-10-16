@@ -4,7 +4,7 @@ All notable changes to this project will be documented in this file.
 
 ## v0.6.0 10/16/2020
 
-webpack 5
+Upgrade to webpack 5.
 
 ### Changed
 
@@ -13,10 +13,11 @@ webpack 5
 - Manually brought in polyfills for Node packages that are no longer polyfilled by webpack
 - Moved settings to bottom of app sidebar
 - Removed sync button
+- Removed unnecessary patches
 
 ## v0.5.0 02/22/2020
 
-GitHub authentication
+GitHub authentication.
 
 ### Added
 
@@ -31,7 +32,7 @@ GitHub authentication
 
 ## v0.4.0 02/03/2020
 
-Initial release
+Initial release.
 
 ### Added
 
