@@ -1,13 +1,13 @@
 import React from 'react'
 import { mocked } from 'ts-jest/utils'
-import { waitForElement } from '@testing-library/react'
+import { waitFor } from '@testing-library/react'
 import { name, internet } from 'faker'
-
-import { renderWithRouter } from '../testHelpers'
 
 import { getAuth, getCategories, getSettings, getNotes, getSync } from '@/selectors'
 import { Folder, NotesSortKey } from '@/utils/enums'
 import { TakeNoteApp } from '@/containers/TakeNoteApp'
+
+import { renderWithRouter } from '../testHelpers'
 
 jest.mock('@/selectors')
 
@@ -87,6 +87,6 @@ describe('<TakeNoteApp />', () => {
 
     const component = wrap()
 
-    await waitForElement(() => component.getByTestId('empty-editor'))
+    await waitFor(() => component.getByTestId('empty-editor'))
   })
 })
