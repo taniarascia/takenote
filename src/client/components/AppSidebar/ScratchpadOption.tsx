@@ -4,7 +4,6 @@ import { Edit } from 'react-feather'
 
 import { TestID } from '@resources/TestID'
 import { LabelText } from '@resources/LabelText'
-
 import { Folder } from '@/utils/enums'
 import { iconColor } from '@/utils/constants'
 

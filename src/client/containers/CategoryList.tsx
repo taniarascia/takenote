@@ -1,11 +1,10 @@
 import React, { useRef, useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import uuid from 'uuid'
+import { v4 as uuid } from 'uuid'
 import { Droppable } from 'react-beautiful-dnd'
 
 import { LabelText } from '@resources/LabelText'
 import { TestID } from '@resources/TestID'
-
 import { CategoryOption } from '@/containers/CategoryOption'
 import { getCategories } from '@/selectors'
 import { shouldOpenContextMenu } from '@/utils/helpers'
@@ -77,7 +76,6 @@ export const CategoryList: React.FC = () => {
     event.stopPropagation()
 
     if (contextMenuRef?.current?.contains(clicked as HTMLDivElement)) {
-      return
     } else {
       setOptionsId(!optionsId || optionsId !== categoryId ? categoryId : '')
     }
@@ -128,6 +126,7 @@ export const CategoryList: React.FC = () => {
 
   useEffect(() => {
     document.addEventListener('mousedown', handleCategoryMenuClick)
+
     return () => {
       document.removeEventListener('mousedown', handleCategoryMenuClick)
     }

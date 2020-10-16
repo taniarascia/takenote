@@ -290,7 +290,8 @@ describe('Manage notes test', () => {
     cy.then(() => assertNoteListLengthEquals(this.allNoteStartCount))
   })
 
-  it('should sync some notes', function () {
+  // TODO: add manual sync back in
+  it.skip('should sync some notes', function () {
     const noteOneTitle = 'note 1'
     const noteTwoTitle = 'same note title'
     const noteThreeTitle = 'same note title'
@@ -310,7 +311,7 @@ describe('Manage notes test', () => {
     cy.reload()
     cy.then(() => assertNoteListLengthEquals(this.allNoteStartCount))
 
-    // create a few new notes and sync them
+    // create a few new notes
     clickCreateNewNote()
     typeNoteEditor(noteOneTitle)
     clickCreateNewNote()
@@ -351,11 +352,10 @@ describe('Manage notes test', () => {
     typeNoteEditor(noteThreeTitle)
     clickCreateNewNote()
     typeNoteEditor(noteFourTitle)
-    clickSyncNotes()
 
-    // make sure notes persisted
-    cy.reload()
-    cy.then(() => assertNoteListLengthEquals(this.allNoteStartCount + 4))
+    // // make sure notes persisted
+    // cy.reload()
+    // cy.then(() => assertNoteListLengthEquals(this.allNoteStartCount + 4))
 
     // make sure notes are filtered
     typeNoteSearch('note title')

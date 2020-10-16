@@ -4,9 +4,8 @@ import { Draggable } from 'react-beautiful-dnd'
 import { Folder as FolderIcon, MoreHorizontal } from 'react-feather'
 
 import { TestID } from '@resources/TestID'
-
 import { CategoryItem, ReactDragEvent, ReactMouseEvent, ReactSubmitEvent } from '@/types'
-import { determineCategoryClass, shouldOpenContextMenu } from '@/utils/helpers'
+import { determineCategoryClass } from '@/utils/helpers'
 import { getNotes, getCategories } from '@/selectors'
 import { updateActiveCategoryId, updateActiveNote, addCategoryToNote } from '@/slices/note'
 import { setCategoryEdit, categoryDragLeave, categoryDragEnter } from '@/slices/category'

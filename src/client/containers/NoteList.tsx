@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from 'react-redux'
 import { MoreHorizontal, Book, Star, Menu, Folder as FolderIcon } from 'react-feather'
 
 import { TestID } from '@resources/TestID'
-
 import { Folder, Shortcuts, ContextMenuEnum } from '@/utils/enums'
 import { NoteListButton } from '@/components/NoteList/NoteListButton'
 import { SearchBar } from '@/components/NoteList/SearchBar'

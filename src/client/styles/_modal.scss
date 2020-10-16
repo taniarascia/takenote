@@ -16,10 +16,10 @@
 }
 
 .settings-modal {
-  border-radius: 0;
+  border-radius: 0.3rem;
   background: white;
   padding: 2rem;
-  box-shadow: 2px 3px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.07), 0 5px 5px rgba(0, 0, 0, 0.2);
   text-align: left;
   width: 600px;
   max-width: 90%;
@@ -74,6 +74,7 @@
         margin: 0;
         height: 30px;
         max-width: 130px;
+        border-radius: 0.3rem;
         -webkit-appearance: none;
 
         &:active &:focus {
@@ -86,7 +87,8 @@
 
   .action-button {
     margin: 0;
-    background: $light-theme-background;
+    border-radius: 0.3rem;
+    padding: 0.5rem;
 
     &:hover,
     &:active {
