@@ -21,11 +21,6 @@ module.exports = merge(common, {
           { loader: 'sass-loader', options: { sourceMap: true } },
         ],
       },
-      // Images
-      {
-        test: /\.(?:ico|gif|png|jpg|jpeg|webp|svg)$/i,
-        type: 'asset/resource',
-      },
     ],
   },
   devServer: {

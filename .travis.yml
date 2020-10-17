@@ -13,10 +13,10 @@ addons:
 cache:
   # Caches $HOME/.npm when npm ci is default script command
   # Caches node_modules in all other cases
-  npm: true
-  directories:
+  npm: false
+  # directories:
     # we also need to cache folder with Cypress binary
-    - ~/.cache
+    # - ~/.cache
 
 services:
   # Use Docker command line

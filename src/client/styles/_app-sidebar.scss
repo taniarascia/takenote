@@ -130,9 +130,9 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    background: darken($app-sidebar-color, 3%);
+    background: darken($app-sidebar-color, 5%);
     padding: 0.75rem;
-    margin: 0.5rem;
+    margin: 0.5rem 0.5rem 1rem;
     border: none !important;
     text-align: left;
     font-size: 0.95rem;

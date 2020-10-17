@@ -35,19 +35,6 @@ module.exports = merge(common, {
           'sass-loader',
         ],
       },
-      // Images
-      {
-        test: /\.(?:ico|gif|png|jpg|jpeg|webp|svg)$/i,
-        use: [
-          {
-            loader: 'file-loader',
-            options: {
-              name: 'images/[name].[hash].[ext]',
-            },
-          },
-          'image-webpack-loader',
-        ],
-      },
     ],
   },
   plugins: [
@@ -74,5 +61,15 @@ module.exports = merge(common, {
   optimization: {
     minimizer: [new TerserJSPlugin(), new OptimizeCSSAssetsPlugin()],
     runtimeChunk: 'single',
+    splitChunks: {
+      // Cache vendors since this code won't change very often
+      cacheGroups: {
+        vendor: {
+          test: /[\\/]node_modules[\\/](react|react-dom|axios)[\\/]/,
+          name: 'vendors',
+          chunks: 'all',
+        },
+      },
+    },
   },
 })

@@ -54,6 +54,11 @@ module.exports = {
         test: /\.md$/,
         type: 'asset/source',
       },
+      // Images
+      {
+        test: /\.(?:ico|gif|png|jpg|jpeg|webp|svg)$/i,
+        type: 'asset/resource',
+      },
     ],
   },
   resolve: {
