@@ -1,35 +1,25 @@
 .note-sidebar {
   background: $note-sidebar-color;
   border-right: 1px solid darken($note-sidebar-color, 10%);
+  height: 100%;
 
   &:hover {
     overflow-y: auto;
   }
 
   &-header {
-    position: absolute;
-    top: 0;
-    left: $app-sidebar-width;
     display: flex;
     align-items: center;
     padding: 0.5rem;
     text-align: center;
     font-weight: 700;
     background: $note-sidebar-color;
-    width: $note-sidebar-width;
     border-bottom: 1px solid darken($note-sidebar-color, 10%);
-    border-right: 1px solid darken($note-sidebar-color, 10%);
     input {
       -webkit-appearance: none;
       margin: 0;
       min-width: 0;
     }
-  }
-
-  &-collapse {
-    padding: 0.5rem;
-    margin-right: 0.5rem;
-    cursor: pointer;
   }
 
   .list-button {
@@ -53,7 +43,6 @@
   }
 
   .note-list {
-    margin-top: 60px;
     &-outer {
       display: flex;
       align-items: center;
@@ -100,7 +89,6 @@
         }
 
         .truncate-text {
-          max-width: 250px;
           overflow: hidden;
           text-overflow: clip;
         }

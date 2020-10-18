@@ -186,12 +186,6 @@ export const determineAppClass = (
 
   if (darkTheme) className += ' dark'
 
-  if (activeFolder === Folder.SCRATCHPAD) {
-    className += ' scratchpad'
-  } else if (!sidebarVisible) {
-    className += ' sidebar-hidden'
-  }
-
   return className
 }
 
