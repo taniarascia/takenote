@@ -145,21 +145,23 @@ const NotesMenu: React.FC<NotesMenuProps> = ({ note, setOptionsId }) => {
 
   return (
     <>
-      <SelectCategory
-        onChange={(event) => {
-          _addCategoryToNote(event.target.value, note.id)
+      {!note.scratchpad && (
+        <SelectCategory
+          onChange={(event) => {
+            _addCategoryToNote(event.target.value, note.id)
 
-          if (event.target.value !== activeCategoryId) {
-            _updateActiveCategoryId(event.target.value)
-            _updateActiveNote(note.id, false)
-          }
+            if (event.target.value !== activeCategoryId) {
+              _updateActiveCategoryId(event.target.value)
+              _updateActiveNote(note.id, false)
+            }
 
-          setOptionsId('')
-        }}
-        categories={categories}
-        activeCategoryId={activeCategoryId}
-        note={note}
-      />
+            setOptionsId('')
+          }}
+          categories={categories}
+          activeCategoryId={activeCategoryId}
+          note={note}
+        />
+      )}
 
       <ContextMenuOptions type={ContextMenuEnum.NOTE} clickedItem={note} />
     </>

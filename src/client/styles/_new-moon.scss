@@ -22,7 +22,7 @@
 }
 
 .cm-s-new-moon span.cm-comment {
-  color: $comment;
+  color: lighten($comment, 5%);
 }
 
 .cm-s-new-moon span.cm-keyword {

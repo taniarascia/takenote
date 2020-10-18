@@ -2,10 +2,10 @@
   position: relative;
   max-height: calc(100vh);
   overflow-y: auto;
-
-  background: #f5f5f5;
+  background: white;
   color: #404040;
   padding: 1rem;
+  -webkit-font-smoothing: subpixel-antialiased;
 
   &_direction-ltr {
     direction: ltr;
@@ -18,6 +18,7 @@
   a {
     color: $primary;
     text-decoration: none;
+    font-weight: 600;
 
     &:hover {
       text-decoration: underline;
@@ -74,6 +75,8 @@
 
   h2 {
     font-size: 1.6rem;
+    border-bottom: 1px solid $note-sidebar-color;
+    padding-bottom: 0.5rem;
   }
 
   h3 {
@@ -114,7 +117,7 @@
   pre {
     border: 0;
     border-radius: 0;
-    background: $note-sidebar-color;
+    background: lighten($note-sidebar-color, 8%);
     padding: 1rem;
     tab-size: 2;
     color: #404040;
@@ -122,18 +125,24 @@
     white-space: pre-wrap;
     word-spacing: normal;
     word-break: normal;
+    border-radius: 0.3rem;
+    border: 1px solid darken($note-sidebar-color, 3%);
+    font-size: 0.9rem;
+    line-height: 1.4rem;
 
     code {
       padding: 0;
       background: transparent;
       line-height: 1.2;
+      border-width: 0;
     }
   }
 
   code {
-    padding: 2px 4px;
-    border-radius: 0;
-    background: rgba(0, 0, 0, 0.08);
+    padding: 2px 3px;
+    background: lighten($note-sidebar-color, 8%);
+    border-radius: 0.3rem;
+    border: 1px solid darken($note-sidebar-color, 3%);
   }
 
   hr {
@@ -149,6 +158,7 @@
   }
 
   table {
+    border: 1px solid $note-sidebar-color;
     border-collapse: collapse;
     border-spacing: 0;
     max-width: 100%;
