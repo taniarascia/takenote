@@ -468,8 +468,6 @@ describe('Manage notes test', () => {
   })
 
   it('should send a not selected note to favorites with drag & drop', () => {
-    const dt = new DataTransfer()
-
     createXUniqueNotes(3)
 
     holdKeyAndClickNoteAtIndex(0, 'meta')
