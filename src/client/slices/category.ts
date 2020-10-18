@@ -28,12 +28,11 @@ const categorySlice = createSlice({
       state.categories.push(payload)
     },
 
-    updateCategory: (state, { payload }: PayloadAction<CategoryItem>) => ({
-      ...state,
-      categories: state.categories.map((category) =>
+    updateCategory: (state, { payload }: PayloadAction<CategoryItem>) => {
+      state.categories = state.categories.map((category) =>
         category.id === payload.id ? { ...category, name: payload.name } : category
-      ),
-    }),
+      )
+    },
 
     deleteCategory: (state, { payload }: PayloadAction<string>) => {
       state.categories = state.categories.filter((category) => category.id !== payload)
