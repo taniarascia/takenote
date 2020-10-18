@@ -1,6 +1,6 @@
 import path from 'path'
 
-import express, { Request, Response, Router } from 'express'
+import express, { Router } from 'express'
 import cookieParser from 'cookie-parser'
 import bodyParser from 'body-parser'
 import cors from 'cors'
@@ -20,9 +20,15 @@ export default function initializeServer(router: Router) {
   app.use(helmet())
   app.use(compression())
 
+  app.use((request, response, next) => {
+    response.header('Content-Security-Policy', "img-src 'self' *.githubusercontent.com")
+
+    return next()
+  })
+
   app.use(express.static(path.join(__dirname, '../../dist/')))
   app.use('/api', router)
-  app.get('*', (request: Request, response: Response) => {
+  app.get('*', (request, response) => {
     response.sendFile(path.join(__dirname, '../../dist/index.html'))
   })
 

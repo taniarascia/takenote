@@ -4,22 +4,10 @@ import ReactMarkdown from 'react-markdown'
 export interface PreviewEditorProps {
   noteText: string
   directionText: string
-  togglePreviewMarkdown: () => {}
 }
-export const PreviewEditor: React.FC<PreviewEditorProps> = ({
-  noteText,
-  directionText,
-  togglePreviewMarkdown,
-}) => {
+
+export const PreviewEditor: React.FC<PreviewEditorProps> = ({ noteText, directionText }) => {
   return (
-    <>
-      <ReactMarkdown
-        className={`previewer previewer_direction-${directionText}`}
-        source={noteText}
-      />
-      <button className="preview-button" onClick={togglePreviewMarkdown}>
-        Edit
-      </button>
-    </>
+    <ReactMarkdown className={`previewer previewer_direction-${directionText}`} source={noteText} />
   )
 }

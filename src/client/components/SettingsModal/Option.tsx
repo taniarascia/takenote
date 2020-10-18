@@ -10,7 +10,7 @@ export interface OptionProps {
 
 export const Option: React.FC<OptionProps> = ({ title, toggle, checked }) => {
   return (
-    <div className="settings-options">
+    <div className="settings-option">
       <div>{title}</div>
       <Switch toggle={toggle} checked={checked} />
     </div>

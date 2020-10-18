@@ -1,5 +1,5 @@
 import React from 'react'
-import { Loader, Plus, Settings, RefreshCw } from 'react-feather'
+import { Plus, Settings } from 'react-feather'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { LabelText } from '@resources/LabelText'
@@ -113,9 +113,6 @@ export const AppSidebar: React.FC = () => {
             swapFolder={_swapFolder}
             addNoteType={_assignTrashToNotes}
           />
-          <div className="category-title">
-            <h2>Categories</h2>
-          </div>
           <CategoryList />
         </section>
         <button
