@@ -34,7 +34,7 @@ module.exports = {
     'no-useless-return': 1,
     'prefer-const': 1,
     'no-useless-return': 1,
-    'no-unused-vars': 1,
+    'no-unused-vars': 0,
   },
   settings: {
     'import/resolver': {

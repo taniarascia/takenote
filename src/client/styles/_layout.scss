@@ -75,8 +75,7 @@
   box-shadow: 0 10px 15px rgba(0, 0, 0, 0.07), 0 5px 5px rgba(0, 0, 0, 0.2);
 
   .move-to-category-select {
-    // This would be better as a right arrow new context
-    // menu than a dropdown
+    // This would be better as a right arrow new context menu than a dropdown
     -webkit-appearance: none;
     border-radius: 4px;
     font-size: 0.9rem;
@@ -100,6 +99,11 @@
 
     &:hover {
       background: #f0f0f0;
+      color: black;
+
+      svg {
+        color: rgba(0, 0, 0, 0.8);
+      }
     }
 
     &.delete-option {
@@ -108,7 +112,7 @@
         color: white;
 
         svg {
-          color: rgba(255, 255, 255, 0.7);
+          color: white;
         }
       }
     }

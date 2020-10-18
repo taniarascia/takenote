@@ -108,7 +108,12 @@ $dark-editor: #3f3f3f;
   .options-nav {
     .nav-item {
       &:hover {
+        color: white;
         background: lighten($app-sidebar-color, 8%);
+
+        svg {
+          color: rgba(255, 255, 255, 0.8);
+        }
       }
       &.delete-option {
         &:hover {
@@ -129,12 +134,16 @@ $dark-editor: #3f3f3f;
   }
 
   .previewer {
-    background: $dark-editor;
+    background: darken($dark-editor, 5%);
     color: $light-font-color;
     padding: 1rem;
 
     a {
       color: $tag;
+    }
+
+    h2 {
+      border-bottom: 1px solid lighten($dark-editor, 5%);
     }
 
     h1,
@@ -145,16 +154,31 @@ $dark-editor: #3f3f3f;
       color: $attribute;
     }
 
+    thead th {
+      border-bottom: 2px solid lighten($dark-editor, 5%);
+    }
+
+    tfoot th {
+      border-top: 2px solid lighten($dark-editor, 5%);
+    }
+
+    td {
+      border-bottom: 1px solid lighten($dark-editor, 5%);
+    }
+
     code {
       background: rgba(0, 0, 0, 0.2);
+      border: 1px solid $dark-editor;
     }
 
     pre {
       background: darken($dark-editor, 10%);
+      border: 1px solid $dark-editor;
 
       code {
         color: $code-font-color;
         background: transparent;
+        border-width: 0;
       }
     }
 

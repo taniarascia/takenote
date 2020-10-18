@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Star, Trash2 } from 'react-feather'
+import { Book, Star, Trash2 } from 'react-feather'
 
 import { Folder } from '@/utils/enums'
 import { iconColor } from '@/utils/constants'
@@ -55,6 +55,8 @@ export const FolderOption: React.FC<FolderOptionProps> = ({
   const renderIcon = () => {
     if (folder === 'FAVORITES') {
       return <Star size={15} className="app-sidebar-icon" color={iconColor} />
+    } else if (folder === 'ALL') {
+      return <Book size={15} className="app-sidebar-icon" color={iconColor} />
     } else {
       return <Trash2 size={15} className="app-sidebar-icon" color={iconColor} />
     }
