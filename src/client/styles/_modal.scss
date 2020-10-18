@@ -16,17 +16,17 @@
 }
 
 .settings-modal {
+  position: relative;
   border-radius: 0.3rem;
   background: white;
-  padding: 2rem;
+  padding: 2rem 2.5rem;
   box-shadow: 0 10px 15px rgba(0, 0, 0, 0.07), 0 5px 5px rgba(0, 0, 0, 0.2);
   text-align: left;
-  width: 600px;
+  width: 750px;
   max-width: 90%;
   user-select: text;
   z-index: 100;
-  margin: 1rem;
-  max-height: 90vh;
+  max-height: 92vh;
   overflow: auto;
 
   h2 {
@@ -40,10 +40,10 @@
 
     &-label {
       font-weight: 600;
-      font-size: 1.05rem;
+      font-size: 1.2rem;
     }
 
-    &-options {
+    &-option {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -55,18 +55,14 @@
       align-items: center;
       justify-content: space-between;
       padding: 0.3rem 0;
-
-      > div {
-        flex: 2.2;
-      }
-
-      > div:nth-of-type(even) {
-        flex: 1;
-      }
     }
 
     &-section {
-      padding: 1.25rem 0;
+      padding: 1.25rem;
+      margin: 0.5rem 0;
+      background: $light-theme-background;
+      border: 1px solid $note-sidebar-color;
+      border-radius: 0.3rem;
 
       select {
         font-size: 1rem;
@@ -85,7 +81,11 @@
     }
   }
 
-  .action-button {
+  .close-button {
+    cursor: pointer;
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
     margin: 0;
     border-radius: 0.3rem;
     padding: 0.5rem;
@@ -98,19 +98,21 @@
 
   .profile {
     align-items: center;
+    margin-bottom: 1.5rem;
   }
 
   .profile-picture {
     height: 100px;
     width: 100px;
     border-radius: 0;
-    border-radius: 3px;
+    border-radius: 50%;
   }
 
   .profile-details {
     padding: 0 1.5rem;
 
     h3 {
+      font-size: 1.4rem;
       margin: 0.5rem 0;
     }
   }

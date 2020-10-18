@@ -14,7 +14,7 @@ Cypress.Commands.add('dragAndDrop', { prevSubject: 'element' }, (subject, target
   const BUTTON_INDEX = 0
   const SLOPPY_CLICK_THRESHOLD = 10
   cy.contains(target).then(($target) => {
-    let coordsDrop = $target[0].getBoundingClientRect()
+    const coordsDrop = $target[0].getBoundingClientRect()
     cy.get(subject)
       .first()
       .then((subject) => {

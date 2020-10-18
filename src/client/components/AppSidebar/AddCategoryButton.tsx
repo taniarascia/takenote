@@ -21,8 +21,7 @@ export const AddCategoryButton: React.FC<AddCategoryButtonProps> = ({
       onClick={() => handler(true)}
       aria-label={label}
     >
-      <Plus size={15} color={iconColor} />
-      {label}
+      <Plus size={16} color={iconColor} />
     </button>
   )
 }

@@ -63,6 +63,12 @@ $dark-editor: #3f3f3f;
           color: white;
           border-bottom: 1px solid darken($primary, 5%);
 
+          &:hover {
+            .note-options {
+              color: white;
+            }
+          }
+
           .note-options {
             &.active {
               color: white;
@@ -176,7 +182,12 @@ $dark-editor: #3f3f3f;
     background: $dark-sidebar;
     color: $light-font-color;
 
-    .action-button {
+    .settings-section {
+      background: darken($dark-sidebar, 5%);
+      border: 1px solid lighten($dark-sidebar, 5%);
+    }
+
+    .close-button {
       background: darken($dark-sidebar, 3%);
 
       &:hover,
@@ -224,5 +235,8 @@ $dark-editor: #3f3f3f;
   ::-webkit-scrollbar-thumb {
     background: lighten($app-sidebar-color, 8%);
     border-radius: 0;
+  }
+  .Resizer {
+    opacity: 1;
   }
 }

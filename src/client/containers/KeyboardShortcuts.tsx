@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import prettier from 'prettier/standalone'
 import parserMarkdown from 'prettier/parser-markdown'
 import parserHtml from 'prettier/parser-html'
-// import parserCss from 'prettier/parser-postcss'
+import parserCss from 'prettier/parser-postcss'
 import parserTs from 'prettier/parser-typescript'
 import parserJs from 'prettier/parser-babel'
 
@@ -101,7 +101,7 @@ export const KeyboardShortcuts: React.FC = () => {
     if (activeNote && activeNote.text) {
       const formattedText = prettier.format(activeNote.text, {
         parser: 'markdown',
-        plugins: [parserMarkdown, parserHtml, parserTs, parserJs],
+        plugins: [parserMarkdown, parserHtml, parserTs, parserJs, parserCss],
       })
 
       const updatedNote = {

@@ -134,6 +134,14 @@ export const CategoryList: React.FC = () => {
 
   return (
     <>
+      <div className="category-title">
+        <h2>Categories</h2>
+        <AddCategoryButton
+          dataTestID={TestID.ADD_CATEGORY_BUTTON}
+          handler={setAddingTempCategory}
+          label={LabelText.ADD_CATEGORY}
+        />
+      </div>
       <Droppable type="CATEGORY" droppableId="Category list">
         {(droppableProvided) => (
           <div
@@ -160,7 +168,7 @@ export const CategoryList: React.FC = () => {
           </div>
         )}
       </Droppable>
-      {addingTempCategory ? (
+      {addingTempCategory && (
         <AddCategoryForm
           dataTestID={TestID.NEW_CATEGORY_FORM}
           submitHandler={onSubmitNewCategory}
@@ -168,12 +176,6 @@ export const CategoryList: React.FC = () => {
           resetHandler={resetTempCategory}
           editingCategoryId={editingCategoryId}
           tempCategoryName={tempCategoryName}
-        />
-      ) : (
-        <AddCategoryButton
-          dataTestID={TestID.ADD_CATEGORY_BUTTON}
-          handler={setAddingTempCategory}
-          label={LabelText.ADD_CATEGORY}
         />
       )}
     </>

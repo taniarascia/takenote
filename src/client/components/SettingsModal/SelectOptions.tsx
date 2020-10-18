@@ -16,7 +16,7 @@ export const SelectOptions: React.FC<OptionProps> = ({
   options,
 }) => {
   return (
-    <div className="settings-options">
+    <div className="settings-option">
       <div>{title}</div>
       <Select options={options} onChange={onChange} selectedValue={selectedValue} />
     </div>

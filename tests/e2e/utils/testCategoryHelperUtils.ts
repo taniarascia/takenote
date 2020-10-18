@@ -1,13 +1,12 @@
 // testCategoryHelperUtils.ts
 // Utility functions for use in category tests
 
-import { LabelText } from '@resources/LabelText'
 import { TestID } from '@resources/TestID'
 
 import { getTestID, wrapWithTestIDTag, testIDShouldExist, clickTestID } from './testHelperUtils'
 
 const addCategory = (categoryName: string) => {
-  getTestID(TestID.ADD_CATEGORY_BUTTON).should('contain', LabelText.ADD_CATEGORY).click()
+  getTestID(TestID.ADD_CATEGORY_BUTTON).click()
   getTestID(TestID.NEW_CATEGORY_INPUT).type(categoryName)
   getTestID(TestID.NEW_CATEGORY_FORM).submit()
 

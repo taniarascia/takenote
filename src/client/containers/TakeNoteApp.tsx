@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Helmet, HelmetProvider } from 'react-helmet-async'
 import { DragDropContext, DropResult } from 'react-beautiful-dnd'
+import SplitPane from 'react-split-pane'
 
 import { AppSidebar } from '@/containers/AppSidebar'
 import { KeyboardShortcuts } from '@/containers/KeyboardShortcuts'
@@ -87,9 +88,13 @@ export const TakeNoteApp: React.FC = () => {
       <TempStateProvider>
         <div className={determineAppClass(darkTheme, sidebarVisible, activeFolder)}>
           <DragDropContext onDragEnd={onDragEnd}>
-            <AppSidebar />
-            <NoteList />
-            <NoteEditor />
+            <SplitPane split="vertical" minSize={150} maxSize={500} defaultSize={240}>
+              <AppSidebar />
+              <SplitPane split="vertical" minSize={200} defaultSize={340} maxSize={600}>
+                <NoteList />
+                <NoteEditor />
+              </SplitPane>
+            </SplitPane>
           </DragDropContext>
           <KeyboardShortcuts />
           <SettingsModal />

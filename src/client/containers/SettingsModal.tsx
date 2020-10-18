@@ -98,17 +98,14 @@ export const SettingsModal: React.FC = () => {
   return isOpen ? (
     <div className="dimmer">
       <div ref={node} className="settings-modal">
-        <header className="settings-header mb-1">
-          <h2>Settings</h2>
-          <div
-            className="action-button"
-            onClick={() => {
-              if (isOpen) _toggleSettingsModal()
-            }}
-          >
-            <X size={20} />
-          </div>
-        </header>
+        <div
+          className="close-button"
+          onClick={() => {
+            if (isOpen) _toggleSettingsModal()
+          }}
+        >
+          <X size={20} />
+        </div>
 
         <section className="profile flex">
           <div>
@@ -116,7 +113,7 @@ export const SettingsModal: React.FC = () => {
           </div>
           <div className="profile-details">
             <h3>{currentUser.name}</h3>
-            <div className="subtitle">{currentUser.email}</div>
+            <div className="subtitle">{currentUser.bio}</div>
             <button
               onClick={() => {
                 _logout()
@@ -127,8 +124,8 @@ export const SettingsModal: React.FC = () => {
           </div>
         </section>
 
+        <div className="settings-label mb-1 mt-1">Preferences</div>
         <section className="settings-section">
-          <div className="settings-label mb-1">Options</div>
           <Option
             title="Active line highlight"
             toggle={toggleLineHighlight}
@@ -154,8 +151,8 @@ export const SettingsModal: React.FC = () => {
           />
         </section>
 
+        <div className="settings-label mb-1 mt-1">Keyboard Shortcuts</div>
         <section className="settings-section">
-          <div className="settings-label mb-1">Keyboard Shortcuts</div>
           {shortcutMap.map((shortcut) => (
             <Shortcut action={shortcut.action} letter={shortcut.key} key={shortcut.key} />
           ))}

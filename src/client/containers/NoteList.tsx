@@ -159,12 +159,9 @@ export const NoteList: React.FC = () => {
 
   useKey(Shortcuts.SEARCH, () => focusSearchHandler())
 
-  return activeFolder !== Folder.SCRATCHPAD ? (
+  return (
     <aside className="note-sidebar">
       <div className="note-sidebar-header">
-        <div className="note-sidebar-collapse" onClick={_toggleSidebarVisibility}>
-          <Menu size={20} />
-        </div>
         <SearchBar searchRef={searchRef} searchNotes={_searchNotes} />
         {showEmptyTrash && (
           <NoteListButton
@@ -271,5 +268,5 @@ export const NoteList: React.FC = () => {
         })}
       </div>
     </aside>
-  ) : null
+  )
 }

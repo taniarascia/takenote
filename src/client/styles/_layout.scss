@@ -12,29 +12,13 @@
 }
 
 .app {
-  position: relative;
-  display: grid;
-  grid-template-columns: $app-sidebar-width $note-sidebar-width auto;
   height: 100vh;
+  position: relative;
   overflow-y: hidden;
-
-  &.sidebar-hidden {
-    grid-template-columns: $note-sidebar-width auto;
-    .app-sidebar,
-    .app-sidebar-synced {
-      display: none;
-    }
-    .note-sidebar-header {
-      left: 0;
-    }
-  }
-
-  &.scratchpad {
-    grid-template-columns: $app-sidebar-width auto;
-  }
 }
 
 .app-sidebar {
+  height: 100%;
   overflow-y: hidden;
   overflow-x: hidden;
 
@@ -135,4 +119,49 @@
     margin-right: 1rem;
     color: rgba(0, 0, 0, 0.5);
   }
+}
+
+.Resizer {
+  background: #000;
+  opacity: 0.2;
+  z-index: 1;
+  box-sizing: border-box;
+  background-clip: padding-box;
+}
+
+.Resizer:hover {
+  transition: all 2s ease;
+}
+
+.Resizer.horizontal {
+  height: 11px;
+  margin: -5px 0;
+  border-top: 5px solid rgba(255, 255, 255, 0);
+  border-bottom: 5px solid rgba(255, 255, 255, 0);
+  cursor: row-resize;
+  width: 100%;
+}
+
+.Resizer.horizontal:hover {
+  border-top: 5px solid rgba(0, 0, 0, 0.5);
+  border-bottom: 5px solid rgba(0, 0, 0, 0.5);
+}
+
+.Resizer.vertical {
+  width: 11px;
+  margin: 0 -5px;
+  border-left: 5px solid rgba(255, 255, 255, 0);
+  border-right: 5px solid rgba(255, 255, 255, 0);
+  cursor: col-resize;
+}
+
+.Resizer.vertical:hover {
+  border-left: 5px solid rgba(0, 0, 0, 0.5);
+  border-right: 5px solid rgba(0, 0, 0, 0.5);
+}
+.Resizer.disabled {
+  cursor: not-allowed;
+}
+.Resizer.disabled:hover {
+  border-color: transparent;
 }

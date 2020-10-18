@@ -1,5 +1,5 @@
 import React from 'react'
-import { Loader, Plus, Settings, RefreshCw } from 'react-feather'
+import { Plus, Settings } from 'react-feather'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { LabelText } from '@resources/LabelText'
@@ -78,64 +78,59 @@ export const AppSidebar: React.FC = () => {
   const settingsHandler = () => _toggleSettingsModal()
 
   return (
-    <>
-      <aside className="app-sidebar">
-        <ActionButton
-          dataTestID={TestID.SIDEBAR_ACTION_CREATE_NEW_NOTE}
-          handler={newNoteHandler}
-          icon={Plus}
-          label={LabelText.CREATE_NEW_NOTE}
-          text="New note"
+    <aside className="app-sidebar">
+      <ActionButton
+        dataTestID={TestID.SIDEBAR_ACTION_CREATE_NEW_NOTE}
+        handler={newNoteHandler}
+        icon={Plus}
+        label={LabelText.CREATE_NEW_NOTE}
+        text="New note"
+      />
+      <section className="app-sidebar-main">
+        <ScratchpadOption active={activeFolder === Folder.SCRATCHPAD} swapFolder={_swapFolder} />
+        <FolderOption
+          active={activeFolder === Folder.ALL}
+          swapFolder={_swapFolder}
+          text={LabelText.NOTES}
+          dataTestID={TestID.FOLDER_NOTES}
+          folder={Folder.ALL}
+          addNoteType={_unassignTrashFromNotes}
         />
-        <section className="app-sidebar-main">
-          <ScratchpadOption active={activeFolder === Folder.SCRATCHPAD} swapFolder={_swapFolder} />
-          <FolderOption
-            active={activeFolder === Folder.ALL}
-            swapFolder={_swapFolder}
-            text={LabelText.NOTES}
-            dataTestID={TestID.FOLDER_NOTES}
-            folder={Folder.ALL}
-            addNoteType={_unassignTrashFromNotes}
-          />
-          <FolderOption
-            active={activeFolder === Folder.FAVORITES}
-            text={LabelText.FAVORITES}
-            dataTestID={TestID.FOLDER_FAVORITES}
-            folder={Folder.FAVORITES}
-            swapFolder={_swapFolder}
-            addNoteType={_assignFavoriteToNotes}
-          />
-          <FolderOption
-            active={activeFolder === Folder.TRASH}
-            text={LabelText.TRASH}
-            dataTestID={TestID.FOLDER_TRASH}
-            folder={Folder.TRASH}
-            swapFolder={_swapFolder}
-            addNoteType={_assignTrashToNotes}
-          />
-          <div className="category-title">
-            <h2>Categories</h2>
-          </div>
-          <CategoryList />
-        </section>
-        <button
-          className="app-sidebar-settings"
-          data-test-id={TestID.SIDEBAR_ACTION_SETTINGS}
-          onClick={settingsHandler}
-          aria-label={LabelText.SETTINGS}
-        >
-          <div>
-            <img src={currentUser.avatar_url} alt="Profile" className="user-avatar" />
-          </div>
-          <div>
-            <div className="user-name">{currentUser.name}</div>
-            <div className="user-subtitle">Settings</div>
-          </div>
-          <div className="user-settings-icon">
-            <Settings size={16} />
-          </div>
-        </button>
-      </aside>
-    </>
+        <FolderOption
+          active={activeFolder === Folder.FAVORITES}
+          text={LabelText.FAVORITES}
+          dataTestID={TestID.FOLDER_FAVORITES}
+          folder={Folder.FAVORITES}
+          swapFolder={_swapFolder}
+          addNoteType={_assignFavoriteToNotes}
+        />
+        <FolderOption
+          active={activeFolder === Folder.TRASH}
+          text={LabelText.TRASH}
+          dataTestID={TestID.FOLDER_TRASH}
+          folder={Folder.TRASH}
+          swapFolder={_swapFolder}
+          addNoteType={_assignTrashToNotes}
+        />
+        <CategoryList />
+      </section>
+      <button
+        className="app-sidebar-settings"
+        data-test-id={TestID.SIDEBAR_ACTION_SETTINGS}
+        onClick={settingsHandler}
+        aria-label={LabelText.SETTINGS}
+      >
+        <div>
+          <img src={currentUser.avatar_url} alt="Profile" className="user-avatar" />
+        </div>
+        <div>
+          <div className="user-name">{currentUser.name}</div>
+          <div className="user-subtitle">Settings</div>
+        </div>
+        <div className="user-settings-icon">
+          <Settings size={16} />
+        </div>
+      </button>
+    </aside>
   )
 }

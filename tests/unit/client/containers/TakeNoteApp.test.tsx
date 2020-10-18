@@ -1,7 +1,7 @@
 import React from 'react'
 import { mocked } from 'ts-jest/utils'
 import { waitFor } from '@testing-library/react'
-import { name, internet } from 'faker'
+import { name, internet, lorem } from 'faker'
 
 import { getAuth, getCategories, getSettings, getNotes, getSync } from '@/selectors'
 import { Folder, NotesSortKey } from '@/utils/enums'
@@ -76,7 +76,7 @@ describe('<TakeNoteApp />', () => {
       return {
         loading: false,
         currentUser: {
-          email: internet.email(),
+          bio: lorem.words(),
           name: name.findName(),
           avatar_url: internet.url(),
         },
