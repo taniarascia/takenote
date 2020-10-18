@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { MoreHorizontal, Book, Star, Menu, Folder as FolderIcon } from 'react-feather'
-import SplitPane from 'react-split-pane'
 
 import { TestID } from '@resources/TestID'
 import { Folder, Shortcuts, ContextMenuEnum } from '@/utils/enums'

@@ -1,7 +1,6 @@
 // testCategoryHelperUtils.ts
 // Utility functions for use in category tests
 
-import { LabelText } from '@resources/LabelText'
 import { TestID } from '@resources/TestID'
 
 import { getTestID, wrapWithTestIDTag, testIDShouldExist, clickTestID } from './testHelperUtils'
