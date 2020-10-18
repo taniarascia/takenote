@@ -14,7 +14,7 @@ const addCategory = (categoryName: string) => {
 }
 
 const assertCategoryDoesNotExist = (categoryName: string) => {
-  cy.find(categoryName).should('not.exist')
+  cy.findByText(categoryName).should('not.exist')
 }
 
 const assertCategoryExists = (categoryName: string) => {
