@@ -7,7 +7,7 @@
    <a href="https://travis-ci.org/taniarascia/takenote"><img src="https://travis-ci.org/taniarascia/takenote.svg?branch=master"></a>
 </p>
 
-<p align="center">A web-based note-taking app with GitHub sync and Markdown support. (WIP)</p>
+<p align="center">A free, open source notes app for the web. (WIP)</p>
 
 > **Warning**: TakeNote is in active development. You can visit [takenote.dev](https://takenote.dev) to see the work in progress, but your account and the notes you create are **temporary** will not be persisted. All data will be lost once GitHub integration is complete.
 
