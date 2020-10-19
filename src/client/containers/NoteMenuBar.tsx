@@ -69,7 +69,7 @@ export const NoteMenuBar = () => {
         <button
           className="note-menu-bar-button"
           onClick={syncNotesHandler}
-          data-test-id={TestID.TOPBAR_ACTION_SYNC_NOTES}
+          data-testid={TestID.TOPBAR_ACTION_SYNC_NOTES}
         >
           {syncing ? <Loader size={18} /> : <RefreshCw size={18} />}
         </button>

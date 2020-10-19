@@ -110,7 +110,7 @@ export const AppSidebar: React.FC = () => {
       </section>
       <button
         className="app-sidebar-settings"
-        data-test-id={TestID.SIDEBAR_ACTION_SETTINGS}
+        data-testid={TestID.SIDEBAR_ACTION_SETTINGS}
         onClick={settingsHandler}
         aria-label={LabelText.SETTINGS}
       >
