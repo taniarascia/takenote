@@ -174,6 +174,7 @@ describe('Manage notes test', () => {
     // make sure the new note is in the trash
     navigateToTrash()
     assertNoteListLengthEquals(1)
+    clickEmptyTrash()
   })
 
   it('should empty notes in trash', () => {
@@ -396,11 +397,20 @@ describe('Manage notes test', () => {
   })
 
   it('should remove multiple selected notes from favorites via context menu', () => {
-    navigateToFavorites()
     createXUniqueNotes(2)
 
     holdKeyAndClickNoteAtIndex(0, 'meta')
     holdKeyAndClickNoteAtIndex(1, 'meta')
+
+    openNoteContextMenu()
+    clickNoteOptionFavorite()
+    assertNoteListLengthEquals(2)
+
+    navigateToFavorites()
+    assertNoteListLengthEquals(2)
+
+    holdKeyAndClickNoteAtIndex(1, 'meta')
+    holdKeyAndClickNoteAtIndex(0, 'meta')
 
     openNoteContextMenu()
     clickNoteOptionFavorite()
