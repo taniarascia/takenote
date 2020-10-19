@@ -18,6 +18,7 @@ export const initialState: SettingsState = {
     keyMap: 'default',
     dragDrop: false,
     direction: DirectionText.LEFT_TO_RIGHT,
+    scrollPastEnd: false,
   },
   isOpen: false,
   loading: false,

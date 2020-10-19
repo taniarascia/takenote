@@ -28,6 +28,14 @@
   padding: 0;
 }
 
+.CodeMirror-linenumber {
+  padding-right: 15px;
+}
+
+.CodeMirror-gutter-background {
+  color: #333;
+}
+
 .CodeMirror-activeline-background {
   background: rgba(0, 0, 0, 0.05) !important;
 }

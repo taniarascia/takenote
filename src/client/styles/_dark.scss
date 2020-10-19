@@ -10,19 +10,32 @@ $dark-editor: #3f3f3f;
     border-right: 1px solid darken($dark-sidebar, 8%);
   }
 
+  .note-menu-bar {
+    background: darken($dark-sidebar, 6%);
+    border-bottom: 1px solid darken($dark-sidebar, 12%);
+
+    button {
+      color: rgba(255, 255, 255, 0.3);
+      &:hover {
+        color: rgba(255, 255, 255, 0.6);
+        background: darken($dark-sidebar, 8%);
+      }
+    }
+  }
+
   .note-sidebar {
-    background: darken($dark-sidebar, 4%);
+    background: darken($dark-sidebar, 6%);
     border-right: 1px solid darken($dark-sidebar, 8%);
 
     .note-sidebar-header {
       color: $light-font-color;
       background: darken($dark-sidebar, 4%);
-      border-color: darken($dark-sidebar, 8%);
+      border-color: darken($dark-sidebar, 12%);
 
       [type='search'] {
-        background: darken($dark-sidebar, 8%);
+        background: lighten($dark-sidebar, 5%);
         color: $light-font-color;
-        border: 1px solid darken($dark-sidebar, 8%);
+        border: 1px solid lighten($dark-sidebar, 10%);
       }
     }
 
@@ -40,7 +53,7 @@ $dark-editor: #3f3f3f;
 
     .note-list {
       .note-list-each {
-        border-bottom: 1px solid darken($dark-sidebar, 8%);
+        border-bottom: 1px solid darken($dark-sidebar, 10%);
         color: darken($light-font-color, 10%);
 
         &.active:hover .note-options {
@@ -205,10 +218,14 @@ $dark-editor: #3f3f3f;
   .settings-modal {
     background: $dark-sidebar;
     color: $light-font-color;
-
-    .settings-section {
-      background: darken($dark-sidebar, 5%);
-      border: 1px solid lighten($dark-sidebar, 5%);
+    .settings-option {
+      border-color: darken($dark-sidebar, 5%);
+      h3 {
+        color: rgba(255, 255, 255, 0.6);
+      }
+      .description {
+        color: rgba(255, 255, 255, 0.6);
+      }
     }
 
     .close-button {

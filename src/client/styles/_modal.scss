@@ -40,14 +40,30 @@
 
     &-label {
       font-weight: 600;
-      font-size: 1.2rem;
+      font-size: 1.3rem;
+      margin: 1.5rem 0 1rem 0;
     }
 
     &-option {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0.25rem 0;
+      padding: 1rem 0;
+      border-bottom: 1px solid $note-sidebar-color;
+      &:last-of-type {
+        border-bottom: none;
+      }
+      h3 {
+        margin-top: 0;
+        margin-bottom: 0.5rem;
+        font-weight: 500;
+        font-size: 1rem;
+      }
+      .description {
+        font-size: 0.9rem;
+        color: rgba(0, 0, 0, 0.5);
+        margin: 0;
+      }
     }
 
     &-shortcut {
@@ -58,12 +74,6 @@
     }
 
     &-section {
-      padding: 1.25rem;
-      margin: 0.5rem 0;
-      background: $light-theme-background;
-      border: 1px solid $note-sidebar-color;
-      border-radius: 0.3rem;
-
       select {
         font-size: 1rem;
         padding: 0.25rem 0.5rem;

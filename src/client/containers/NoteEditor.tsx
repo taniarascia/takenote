@@ -5,8 +5,8 @@ import { useDispatch, useSelector } from 'react-redux'
 
 import { getActiveNote } from '@/utils/helpers'
 import { updateNote } from '@/slices/note'
-import { togglePreviewMarkdown } from '@/slices/settings'
 import { NoteItem } from '@/types'
+import { NoteMenuBar } from '@/containers/NoteMenuBar'
 import { EmptyEditor } from '@/components/Editor/EmptyEditor'
 import { PreviewEditor } from '@/components/Editor/PreviewEditor'
 import { getSettings, getNotes } from '@/selectors'
@@ -16,6 +16,7 @@ import 'codemirror/lib/codemirror.css'
 import 'codemirror/theme/base16-light.css'
 import 'codemirror/mode/gfm/gfm'
 import 'codemirror/addon/selection/active-line'
+import 'codemirror/addon/scroll/scrollpastend'
 
 export const NoteEditor: React.FC = () => {
   // ===========================================================================
@@ -33,7 +34,6 @@ export const NoteEditor: React.FC = () => {
 
   const dispatch = useDispatch()
 
-  const _togglePreviewMarkdown = () => dispatch(togglePreviewMarkdown())
   const _updateNote = (note: NoteItem) => {
     dispatch(setPendingSync())
     dispatch(updateNote(note))
@@ -46,10 +46,15 @@ export const NoteEditor: React.FC = () => {
       return <EmptyEditor />
     } else if (previewMarkdown)
       return (
-        <PreviewEditor directionText={codeMirrorOptions.direction} noteText={activeNote.text} />
+        <>
+          <NoteMenuBar />
+          <PreviewEditor directionText={codeMirrorOptions.direction} noteText={activeNote.text} />
+        </>
       )
-    else {
-      return (
+
+    return (
+      <>
+        <NoteMenuBar />
         <CodeMirror
           data-testid="codemirror-editor"
           className="editor mousetrap"
@@ -89,8 +94,8 @@ export const NoteEditor: React.FC = () => {
             })
           }}
         />
-      )
-    }
+      </>
+    )
   }
 
   return <main className="note-editor">{renderEditor()}</main>

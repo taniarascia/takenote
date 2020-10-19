@@ -11,7 +11,6 @@ import {
   toggleFavoriteNotes,
   toggleTrashNotes,
   addCategoryToNote,
-  updateActiveCategoryId,
   updateActiveNote,
   swapFolder,
 } from '@/slices/note'
@@ -113,8 +112,6 @@ const NotesOptions: React.FC<NotesOptionsProps> = ({ clickedNote }) => {
     dispatch(addCategoryToNote({ categoryId, noteId }))
   const _updateActiveNote = (noteId: string, multiSelect: boolean) =>
     dispatch(updateActiveNote({ noteId, multiSelect }))
-  const _updateActiveCategoryId = (categoryId: string) =>
-    dispatch(updateActiveCategoryId(categoryId))
 
   // ===========================================================================
   // Handlers

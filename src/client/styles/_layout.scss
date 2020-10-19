@@ -44,10 +44,12 @@
 
 .note-editor {
   min-width: 300px;
-  .empty-editor,
+  .empty-editor {
+    height: calc(100vh);
+  }
   .editor,
   .previewer {
-    height: calc(100vh);
+    height: calc(100vh - 30px);
   }
 }
 

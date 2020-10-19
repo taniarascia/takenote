@@ -1,7 +1,6 @@
 import { welcomeNote } from '@/api/welcomeNote'
 import { scratchpadNote } from '@/api/scratchpadNote'
-
-import { NoteItem, SyncPayload, SettingsState } from '../types'
+import { NoteItem, SyncPayload, SettingsState } from '@/types'
 
 type PromiseCallback = (value?: any) => void
 type GetLocalStorage = (

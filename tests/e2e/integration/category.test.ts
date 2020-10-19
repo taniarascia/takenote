@@ -29,7 +29,7 @@ import {
   clickNoteOptions,
 } from '../utils/testNotesHelperUtils'
 
-describe('Category tests', () => {
+describe('Categories', () => {
   defaultInit()
 
   it('creates a new category with the current time', () => {

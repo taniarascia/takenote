@@ -19,9 +19,8 @@ import {
   unassignTrashFromNotes,
 } from '@/slices/note'
 import { toggleSettingsModal, togglePreviewMarkdown } from '@/slices/settings'
-import { sync } from '@/slices/sync'
-import { getSettings, getNotes, getCategories, getSync, getAuth } from '@/selectors'
-import { CategoryItem, NoteItem } from '@/types'
+import { getSettings, getNotes, getAuth } from '@/selectors'
+import { NoteItem } from '@/types'
 import { newNoteHandlerHelper, getActiveNote } from '@/utils/helpers'
 
 export const AppSidebar: React.FC = () => {
@@ -29,10 +28,8 @@ export const AppSidebar: React.FC = () => {
   // Selectors
   // ===========================================================================
 
-  const { categories } = useSelector(getCategories)
   const { activeCategoryId, activeFolder, activeNoteId, notes } = useSelector(getNotes)
   const { previewMarkdown } = useSelector(getSettings)
-  const { syncing, lastSynced } = useSelector(getSync)
   const { currentUser } = useSelector(getAuth)
 
   const activeNote = getActiveNote(notes, activeNoteId)
@@ -49,8 +46,6 @@ export const AppSidebar: React.FC = () => {
   const _updateSelectedNotes = (noteId: string, multiSelect: boolean) =>
     dispatch(updateSelectedNotes({ noteId, multiSelect }))
   const _swapFolder = (folder: Folder) => dispatch(swapFolder(folder))
-  const _sync = (notes: NoteItem[], categories: CategoryItem[]) =>
-    dispatch(sync({ notes, categories }))
   const _toggleSettingsModal = () => dispatch(toggleSettingsModal())
   const _togglePreviewMarkdown = () => dispatch(togglePreviewMarkdown())
   const _assignTrashToNotes = (noteId: string) => dispatch(assignTrashToNotes(noteId))
@@ -74,7 +69,6 @@ export const AppSidebar: React.FC = () => {
       _updateSelectedNotes
     )
 
-  const syncNotesHandler = () => _sync(notes, categories)
   const settingsHandler = () => _toggleSettingsModal()
 
   return (
