@@ -51,7 +51,11 @@ const noteSlice = createSlice({
   initialState,
   reducers: {
     addNote: (state, { payload }: PayloadAction<NoteItem>) => {
-      state.notes.push(payload)
+      const draftNote = state.notes.find((note) => note.text === '')
+
+      if (!draftNote) {
+        state.notes.push(payload)
+      }
     },
 
     updateNote: (state, { payload }: PayloadAction<NoteItem>) => {
