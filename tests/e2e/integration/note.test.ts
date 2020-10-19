@@ -622,6 +622,19 @@ describe('Manage notes test', () => {
     })
   })
 
+  it('should not move multiple notes that are already in Notes when dragged & dropped on Notes', () => {
+    createXUniqueNotes(3)
+
+    holdKeyAndClickNoteAtIndex(0, 'meta')
+    holdKeyAndClickNoteAtIndex(2, 'meta')
+
+    dragAndDrop('[data-testid=note-list-item-0]', '[data-testid=notes]')
+
+    cy.get('[data-testid=note-list]').within(() => {
+      cy.get('.note-list-each').should('have.length', 3)
+    })
+  })
+
   it('should not create a new draft note if one already exists', () => {
     clickCreateNewNote()
 
