@@ -9,7 +9,7 @@ export const Shortcut: React.FC<ShortcutProps> = ({ action, letter }) => {
   return (
     <div className="settings-shortcut">
       <div>{action}</div>
-      <div>
+      <div className="keys">
         <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>{letter}</kbd>
       </div>
     </div>

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { X } from 'react-feather'
+import { X, Command, Settings, Layers } from 'react-feather'
 
 import {
   toggleSettingsModal,
@@ -17,6 +17,8 @@ import { Option } from '@/components/SettingsModal/Option'
 import { Shortcut } from '@/components/SettingsModal/Shortcut'
 import { NotesSortKey } from '@/utils/enums'
 import { SelectOptions } from '@/components/SettingsModal/SelectOptions'
+import { Tabs } from '@/components/Tabs/Tabs'
+import { TabPanel } from '@/components/Tabs/TabPanel'
 
 export const SettingsModal: React.FC = () => {
   // ===========================================================================
@@ -99,7 +101,7 @@ export const SettingsModal: React.FC = () => {
 
   return isOpen ? (
     <div className="dimmer">
-      <div ref={node} className="settings-modal">
+      <aside ref={node} className="settings-modal">
         <div
           className="close-button"
           onClick={() => {
@@ -126,55 +128,92 @@ export const SettingsModal: React.FC = () => {
           </div>
         </section>
 
-        <div className="settings-label">Preferences</div>
         <section className="settings-section">
-          <Option
-            title="Active line highlight"
-            description="Controls whether the editor should highlight the active line"
-            toggle={toggleLineHighlight}
-            checked={codeMirrorOptions.styleActiveLine}
-          />
-          <Option
-            title="Scroll past end"
-            description="Controls whether the editor will add blank space to the end of all files"
-            toggle={toggleScrollPastEnd}
-            checked={codeMirrorOptions.scrollPastEnd}
-          />
-          <Option
-            title="Markdown preview"
-            description="Controls whether markdown preview mode is enabled"
-            toggle={togglePreviewMarkdownHandler}
-            checked={previewMarkdown}
-          />
-          <Option
-            title="Dark mode"
-            description="Controls the theme of the application and editor"
-            toggle={toggleDarkThemeHandler}
-            checked={darkTheme}
-          />
-          <SelectOptions
-            title="Sort By"
-            description="Controls the sort strategy of the notes"
-            onChange={updateNotesSortStrategyHandler}
-            options={notesSortOptions}
-            selectedValue={notesSortKey}
-          />
-          <SelectOptions
-            title="Text direction"
-            description="Controls the direction of the text"
-            onChange={updateNotesDirectionHandler}
-            options={directionTextOptions}
-            selectedValue={codeMirrorOptions.direction}
-          />
+          <Tabs>
+            <TabPanel label="Preferences" icon={Settings}>
+              <Option
+                title="Active line highlight"
+                description="Controls whether the editor should highlight the active line"
+                toggle={toggleLineHighlight}
+                checked={codeMirrorOptions.styleActiveLine}
+              />
+              <Option
+                title="Scroll past end"
+                description="Controls whether the editor will add blank space to the end of all files"
+                toggle={toggleScrollPastEnd}
+                checked={codeMirrorOptions.scrollPastEnd}
+              />
+              <Option
+                title="Markdown preview"
+                description="Controls whether markdown preview mode is enabled"
+                toggle={togglePreviewMarkdownHandler}
+                checked={previewMarkdown}
+              />
+              <Option
+                title="Dark mode"
+                description="Controls the theme of the application and editor"
+                toggle={toggleDarkThemeHandler}
+                checked={darkTheme}
+              />
+              <SelectOptions
+                title="Sort By"
+                description="Controls the sort strategy of the notes"
+                onChange={updateNotesSortStrategyHandler}
+                options={notesSortOptions}
+                selectedValue={notesSortKey}
+              />
+              <SelectOptions
+                title="Text direction"
+                description="Controls the direction of the text"
+                onChange={updateNotesDirectionHandler}
+                options={directionTextOptions}
+                selectedValue={codeMirrorOptions.direction}
+              />
+            </TabPanel>
+            <TabPanel label="Keyboard shortcuts" icon={Command}>
+              {shortcutMap.map((shortcut) => (
+                <Shortcut action={shortcut.action} letter={shortcut.key} key={shortcut.key} />
+              ))}
+            </TabPanel>
+            <TabPanel label="About TakeNote" icon={Layers}>
+              <p>
+                TakeNote is a simple, minimalist note-taking app that integrates with GitHub,
+                created for developers who want to write in plain text or Markdown and have their
+                notes accessible from the web, without any fluff.
+              </p>
+              <p>
+                This app has no tracking or analytics and does not retain any user data. All data
+                exists only in GitHub.
+              </p>
+              <p>
+                TakeNote was created by{' '}
+                <a href="https://www.taniarascia.com" target="_blank" rel="noreferrer">
+                  Tania Rascia
+                </a>{' '}
+                with the help of{' '}
+                <a
+                  href="https://github.com/taniarascia/takenote/graphs/contributors"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  the open-source community
+                </a>
+                .
+              </p>
+              <p>
+                <a
+                  className="button"
+                  href="https://github.com/taniarascia/takenote"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  View source
+                </a>
+              </p>
+            </TabPanel>
+          </Tabs>
         </section>
-
-        <div className="settings-label">Keyboard Shortcuts</div>
-        <section className="settings-section">
-          {shortcutMap.map((shortcut) => (
-            <Shortcut action={shortcut.action} letter={shortcut.key} key={shortcut.key} />
-          ))}
-        </section>
-      </div>
+      </aside>
     </div>
   ) : null
 }
