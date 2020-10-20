@@ -1,15 +1,17 @@
-Please read the [Contribution Guidelines](../CONTRIBUTING.md) before opening a pull request.
-
 ## Description
 
-Please include a summary of the change and which issue is fixed. List any dependencies that are required for this change.
+Please read the [Contribution Guidelines](../CONTRIBUTING.md) before opening a pull request. Include a summary of the change and which issue is fixed.
 
-Fixes # <-- put the issue number here
+Closes # <-- link the issue number here
 
-## Browser Checklist
+### Browser checklist
 
 This PR has been tested in the following browsers:
 
 - [ ] Chrome
 - [ ] Firefox
 - [ ] Safari
+
+### Testing checklist
+
+- [ ] End-to-end tests have been created if necessary

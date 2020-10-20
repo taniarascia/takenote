@@ -21,6 +21,19 @@ code {
   font-family: $monospace;
 }
 
+a {
+  color: $primary;
+  text-decoration: none;
+  font-weight: 600;
+  &:hover {
+    color: lighten($primary, 10%);
+  }
+}
+
+p {
+  line-height: 1.4;
+}
+
 ::selection {
   background: $primary;
   color: white;

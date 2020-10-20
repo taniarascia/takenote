@@ -19,13 +19,14 @@
   position: relative;
   border-radius: 0.3rem;
   background: white;
-  padding: 2rem 2.5rem;
+  padding: 2rem;
   box-shadow: 0 10px 15px rgba(0, 0, 0, 0.07), 0 5px 5px rgba(0, 0, 0, 0.2);
   text-align: left;
-  width: 750px;
+  width: 850px;
   max-width: 90%;
   user-select: text;
   z-index: 100;
+  height: 685px;
   max-height: 92vh;
   overflow: auto;
 
@@ -41,7 +42,7 @@
     &-label {
       font-weight: 600;
       font-size: 1.3rem;
-      margin: 1.5rem 0 1rem 0;
+      margin: 0.5rem 0 1rem 0;
     }
 
     &-option {
@@ -63,6 +64,7 @@
         font-size: 0.9rem;
         color: rgba(0, 0, 0, 0.5);
         margin: 0;
+        line-height: 1.3;
       }
     }
 
@@ -71,6 +73,10 @@
       align-items: center;
       justify-content: space-between;
       padding: 0.3rem 0;
+      font-size: 0.95rem;
+      .keys {
+        width: 180px;
+      }
     }
 
     &-section {
@@ -123,7 +129,7 @@
 
     h3 {
       font-size: 1.4rem;
-      margin: 0.5rem 0;
+      margin: 0 0 0.5rem 0;
     }
   }
 
