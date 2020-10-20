@@ -43,11 +43,15 @@
 }
 
 .note-editor {
+  position: relative;
   min-width: 300px;
-  .empty-editor,
+  .empty-editor {
+    height: calc(100vh);
+  }
   .editor,
   .previewer {
-    height: calc(100vh);
+    padding-top: 5 0px;
+    height: 100vh;
   }
 }
 

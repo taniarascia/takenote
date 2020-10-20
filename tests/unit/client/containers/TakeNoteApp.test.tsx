@@ -50,6 +50,7 @@ describe('<TakeNoteApp />', () => {
           viewportMargin: Infinity,
           keyMap: 'default',
           dragDrop: false,
+          scrollPastEnd: true,
         },
       }
     })

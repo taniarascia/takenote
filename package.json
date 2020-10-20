@@ -1,7 +1,7 @@
 {
   "name": "takenote",
-  "version": "0.6.0",
-  "description": "A free, open source notes app for the web.",
+  "version": "0.6.1",
+  "description": "A free, open-source notes app for the web.",
   "author": "Tania Rascia",
   "license": "MIT",
   "private": false,
