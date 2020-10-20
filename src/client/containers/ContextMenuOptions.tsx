@@ -135,19 +135,34 @@ const NotesOptions: React.FC<NotesOptionsProps> = ({ clickedNote }) => {
   return (
     <nav className="options-nav" data-testid={TestID.NOTE_OPTIONS_NAV}>
       {clickedNote.text === '' ? null : clickedNote.trash ? (
+      <ContextMenuOption
+        dataTestID={TestID.NOTE_OPTION_DOWNLOAD}
+        handler={downloadNotesHandler}
+        icon={Download}
+        text={LabelText.DOWNLOAD}
+      />
+      {clickedNote.category && !clickedNote.trash && (
+        <ContextMenuOption
+          dataTestID={TestID.NOTE_OPTION_REMOVE_CATEGORY}
+          handler={removeCategoryFromNoteHandler}
+          icon={X}
+          text={LabelText.REMOVE_CATEGORY}
+        />
+      )}
+      {clickedNote.trash ? (
         <>
+          <ContextMenuOption
+            dataTestID={TestID.NOTE_OPTION_RESTORE_FROM_TRASH}
+            handler={trashNoteHandler}
+            icon={ArrowUp}
+            text={LabelText.RESTORE_FROM_TRASH}
+          />
           <ContextMenuOption
             dataTestID={TestID.NOTE_OPTION_DELETE_PERMANENTLY}
             handler={deleteNotesHandler}
             icon={X}
             text={LabelText.DELETE_PERMANENTLY}
             optionType="delete"
-          />
-          <ContextMenuOption
-            dataTestID={TestID.NOTE_OPTION_RESTORE_FROM_TRASH}
-            handler={trashNoteHandler}
-            icon={ArrowUp}
-            text={LabelText.RESTORE_FROM_TRASH}
           />
         </>
       ) : clickedNote.scratchpad ? null : (
