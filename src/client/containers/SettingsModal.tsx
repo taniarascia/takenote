@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { X } from 'react-feather'
+import { X, Download } from 'react-feather'
 
 import {
   toggleSettingsModal,
@@ -10,13 +10,15 @@ import {
   updateNotesSortStrategy,
 } from '@/slices/settings'
 import { logout } from '@/slices/auth'
-import { shortcutMap, notesSortOptions, directionTextOptions } from '@/utils/constants'
+import { shortcutMap, notesSortOptions, directionTextOptions, iconColor } from '@/utils/constants'
 import { ReactMouseEvent } from '@/types'
-import { getSettings, getAuth } from '@/selectors'
+import { getSettings, getAuth, getNotes, getCategories } from '@/selectors'
 import { Option } from '@/components/SettingsModal/Option'
 import { Shortcut } from '@/components/SettingsModal/Shortcut'
 import { NotesSortKey } from '@/utils/enums'
+import { downloadNotes } from '@/utils/helpers'
 import { SelectOptions } from '@/components/SettingsModal/SelectOptions'
+import { SvgOption } from '@/components/SettingsModal/SvgOption'
 
 export const SettingsModal: React.FC = () => {
   // ===========================================================================
@@ -27,6 +29,8 @@ export const SettingsModal: React.FC = () => {
     getSettings
   )
   const { currentUser } = useSelector(getAuth)
+  const { selectedNotesIds, notes } = useSelector(getNotes)
+  const { categories } = useSelector(getCategories)
 
   // ===========================================================================
   // Dispatch
@@ -81,6 +85,7 @@ export const SettingsModal: React.FC = () => {
   const updateNotesDirectionHandler = (selectedOption: any) => {
     _updateCodeMirrorOption('direction', selectedOption.value)
   }
+  const downloadNotesHandler = () => downloadNotes(notes, categories)
   // ===========================================================================
   // Hooks
   // ===========================================================================
@@ -156,6 +161,12 @@ export const SettingsModal: React.FC = () => {
           {shortcutMap.map((shortcut) => (
             <Shortcut action={shortcut.action} letter={shortcut.key} key={shortcut.key} />
           ))}
+        </section>
+        <div className="settings-label mb-1 mt-1">Data Management</div>
+        <section className="settings-section">
+          <SvgOption title="Download All Notes (zip)" onClick={downloadNotesHandler}>
+            <Download size={16} fill={iconColor} cursor="pointer" />
+          </SvgOption>
         </section>
       </div>
     </div>
