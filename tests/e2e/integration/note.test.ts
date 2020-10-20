@@ -57,29 +57,30 @@ describe('Manage notes test', () => {
 
   beforeEach(() => {
     navigateToNotes()
-    clickCreateNewNote()
+    createXUniqueNotes(1)
     trashAllNotes()
     clearNoteSearch()
-    clickCreateNewNote()
+    createXUniqueNotes(1)
   })
 
   it('should try to create a few new notes', () => {
     clickCreateNewNote()
-    assertNoteListLengthEquals(1)
+    assertNoteListLengthEquals(2)
     assertNewNoteCreated()
 
     clickCreateNewNote()
-    assertNoteListLengthEquals(1)
+    assertNoteListLengthEquals(2)
     assertNewNoteCreated()
 
     clickCreateNewNote()
-    assertNoteListLengthEquals(1)
+    assertNoteListLengthEquals(2)
     assertNewNoteCreated()
   })
 
   it('should update a note', () => {
     const sampleText = 'Sample note text.'
 
+    clickCreateNewNote()
     // add some text to the editor
     typeNoteEditor(sampleText)
     assertNoteEditorLineCount(1)
@@ -370,7 +371,7 @@ describe('Manage notes test', () => {
   })
 
   it('should send multiple selected notes to trash via context menu', () => {
-    createXUniqueNotes(2)
+    createXUniqueNotes(1)
 
     holdKeyAndClickNoteAtIndex(0, 'meta')
     holdKeyAndClickNoteAtIndex(1, 'meta')
@@ -383,7 +384,7 @@ describe('Manage notes test', () => {
   })
 
   it('should send multiple selected notes to favorites via context menu', () => {
-    createXUniqueNotes(2)
+    createXUniqueNotes(1)
 
     holdKeyAndClickNoteAtIndex(0, 'meta')
     holdKeyAndClickNoteAtIndex(1, 'meta')
@@ -397,7 +398,7 @@ describe('Manage notes test', () => {
   })
 
   it('should remove multiple selected notes from favorites via context menu', () => {
-    createXUniqueNotes(2)
+    createXUniqueNotes(1)
 
     holdKeyAndClickNoteAtIndex(0, 'meta')
     holdKeyAndClickNoteAtIndex(1, 'meta')
@@ -430,7 +431,7 @@ describe('Manage notes test', () => {
 
     // navigate back to All Notes create a new note, and move it to that category
     navigateToNotes()
-    createXUniqueNotes(2)
+    createXUniqueNotes(1)
     holdKeyAndClickNoteAtIndex(0, 'meta')
     holdKeyAndClickNoteAtIndex(1, 'meta')
     openNoteContextMenu()
@@ -442,7 +443,7 @@ describe('Manage notes test', () => {
   })
 
   it('should restore multiple selected notes from trash', () => {
-    createXUniqueNotes(2)
+    createXUniqueNotes(1)
 
     holdKeyAndClickNoteAtIndex(0, 'meta')
     holdKeyAndClickNoteAtIndex(1, 'meta')
@@ -460,7 +461,7 @@ describe('Manage notes test', () => {
   })
 
   it('should permanently delete multiple selected notes from trash', () => {
-    createXUniqueNotes(2)
+    createXUniqueNotes(1)
 
     holdKeyAndClickNoteAtIndex(0, 'meta')
     holdKeyAndClickNoteAtIndex(1, 'meta')
@@ -478,7 +479,7 @@ describe('Manage notes test', () => {
   })
 
   it('should send a not selected note to favorites with drag & drop', () => {
-    createXUniqueNotes(3)
+    createXUniqueNotes(2)
 
     holdKeyAndClickNoteAtIndex(0, 'meta')
     holdKeyAndClickNoteAtIndex(1, 'meta')
@@ -492,7 +493,7 @@ describe('Manage notes test', () => {
   })
 
   it('should send a not selected note to trash with drag & drop', () => {
-    createXUniqueNotes(3)
+    createXUniqueNotes(2)
 
     holdKeyAndClickNoteAtIndex(0, 'meta')
     holdKeyAndClickNoteAtIndex(1, 'meta')
@@ -506,7 +507,7 @@ describe('Manage notes test', () => {
   })
 
   it('should send a not selected note to a category with drag & drop', () => {
-    createXUniqueNotes(3)
+    createXUniqueNotes(2)
     addCategory(dynamicTimeCategoryName)
 
     holdKeyAndClickNoteAtIndex(0, 'meta')
@@ -521,7 +522,7 @@ describe('Manage notes test', () => {
   })
 
   it('should send multiple notes to favorites with drag & drop', () => {
-    createXUniqueNotes(3)
+    createXUniqueNotes(2)
     addCategory(dynamicTimeCategoryName)
 
     holdKeyAndClickNoteAtIndex(0, 'meta')
@@ -536,7 +537,7 @@ describe('Manage notes test', () => {
   })
 
   it('should send multiple notes to favorites with drag & drop', () => {
-    createXUniqueNotes(3)
+    createXUniqueNotes(2)
     addCategory(dynamicTimeCategoryName)
 
     holdKeyAndClickNoteAtIndex(0, 'meta')
@@ -551,7 +552,7 @@ describe('Manage notes test', () => {
   })
 
   it('should send multiple notes to a category with drag & drop', () => {
-    createXUniqueNotes(3)
+    createXUniqueNotes(2)
     addCategory(dynamicTimeCategoryName)
 
     holdKeyAndClickNoteAtIndex(0, 'meta')
@@ -566,7 +567,7 @@ describe('Manage notes test', () => {
   })
 
   it('should send a not selected trashed note to notes with drag & drop', () => {
-    createXUniqueNotes(3)
+    createXUniqueNotes(2)
 
     holdKeyAndClickNoteAtIndex(0, 'meta')
 
@@ -588,7 +589,7 @@ describe('Manage notes test', () => {
   })
 
   it('should send multiple not selected trashed notes to notes with drag & drop', () => {
-    createXUniqueNotes(3)
+    createXUniqueNotes(2)
 
     holdKeyAndClickNoteAtIndex(0, 'meta')
     holdKeyAndClickNoteAtIndex(1, 'meta')
@@ -611,7 +612,7 @@ describe('Manage notes test', () => {
   })
 
   it('should not move a note that is already in Notes when dragged & dropped on Notes', () => {
-    createXUniqueNotes(3)
+    createXUniqueNotes(2)
 
     holdKeyAndClickNoteAtIndex(0, 'meta')
 
@@ -623,7 +624,7 @@ describe('Manage notes test', () => {
   })
 
   it('should not move multiple notes that are already in Notes when dragged & dropped on Notes', () => {
-    createXUniqueNotes(3)
+    createXUniqueNotes(2)
 
     holdKeyAndClickNoteAtIndex(0, 'meta')
     holdKeyAndClickNoteAtIndex(2, 'meta')
@@ -643,7 +644,7 @@ describe('Manage notes test', () => {
     clickCreateNewNote()
 
     cy.get('[data-testid=note-list]').within(() => {
-      cy.get('.note-list-each').should('have.length', 1)
+      cy.get('.note-list-each').should('have.length', 2)
     })
   })
 })

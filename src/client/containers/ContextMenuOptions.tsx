@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { ArrowUp, Download, Star, Trash, X, Edit2 } from 'react-feather'
+import { ArrowUp, Download, Star, Trash, X, Edit2, AlertTriangle } from 'react-feather'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { LabelText } from '@resources/LabelText'
@@ -137,7 +137,7 @@ const NotesOptions: React.FC<NotesOptionsProps> = ({ clickedNote }) => {
 
   return (
     <nav className="options-nav" data-testid={TestID.NOTE_OPTIONS_NAV}>
-      {clickedNote.trash ? (
+      {clickedNote.text === '' ? null : clickedNote.trash ? (
         <>
           <ContextMenuOption
             dataTestID={TestID.NOTE_OPTION_DELETE_PERMANENTLY}
@@ -170,12 +170,14 @@ const NotesOptions: React.FC<NotesOptionsProps> = ({ clickedNote }) => {
           />
         </>
       )}
-      <ContextMenuOption
-        dataTestID={TestID.NOTE_OPTION_DOWNLOAD}
-        handler={downloadNotesHandler}
-        icon={Download}
-        text={LabelText.DOWNLOAD}
-      />
+      {clickedNote.text === '' ? null : (
+        <ContextMenuOption
+          dataTestID={TestID.NOTE_OPTION_DOWNLOAD}
+          handler={downloadNotesHandler}
+          icon={Download}
+          text={LabelText.DOWNLOAD}
+        />
+      )}
       {clickedNote.category && !clickedNote.trash && (
         <ContextMenuOption
           dataTestID={TestID.NOTE_OPTION_REMOVE_CATEGORY}
@@ -184,6 +186,12 @@ const NotesOptions: React.FC<NotesOptionsProps> = ({ clickedNote }) => {
           text={LabelText.REMOVE_CATEGORY}
         />
       )}
+      {clickedNote.text === '' ? (
+        <div className="nav-item">
+          <AlertTriangle size="16" />
+          {LabelText.ADD_CONTENT_NOTE}
+        </div>
+      ) : null}
     </nav>
   )
 }
