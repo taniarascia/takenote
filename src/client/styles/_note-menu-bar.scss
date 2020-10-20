@@ -5,11 +5,17 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 99;
 
   nav {
     display: flex;
     align-items: stretch;
     justify-content: flex-end;
+    align-self: stretch;
   }
 
   .last-synced {
@@ -23,7 +29,7 @@
     border: none;
     border-radius: 0;
     color: lighten($font-color, 15%);
-    padding: 1rem;
+    padding: 0 1rem;
     margin: 0;
     &:hover {
       color: $font-color;
