@@ -1,0 +1,42 @@
+.note-menu-bar {
+  height: 49px;
+  border-bottom: 1px solid darken($note-sidebar-color, 5%);
+  background: $note-sidebar-color;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 99;
+
+  nav {
+    display: flex;
+    align-items: stretch;
+    justify-content: flex-end;
+    align-self: stretch;
+  }
+
+  .last-synced {
+    font-size: 0.7rem;
+    padding: 0 0.5rem;
+    align-self: center;
+  }
+
+  .note-menu-bar-button {
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    color: lighten($font-color, 15%);
+    padding: 0 1rem;
+    margin: 0;
+    &:hover {
+      color: $font-color;
+      background: darken($note-sidebar-color, 5%);
+    }
+    &:active svg {
+      transform: scale(1.1);
+    }
+  }
+}

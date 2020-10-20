@@ -117,7 +117,7 @@ const clickNoteOptionTrash = () => {
 }
 
 const clickSyncNotes = () => {
-  clickTestID(TestID.SIDEBAR_ACTION_SYNC_NOTES)
+  clickTestID(TestID.TOPBAR_ACTION_SYNC_NOTES)
 }
 
 const typeNoteEditor = (contentToType: string) => {

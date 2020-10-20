@@ -69,6 +69,8 @@ export const SettingsModal: React.FC = () => {
   }
   const toggleLineHighlight = () =>
     _updateCodeMirrorOption('styleActiveLine', !codeMirrorOptions.styleActiveLine)
+  const toggleScrollPastEnd = () =>
+    _updateCodeMirrorOption('scrollPastEnd', !codeMirrorOptions.scrollPastEnd)
   const handleEscPress = (event: KeyboardEvent) => {
     event.stopPropagation()
     if (event.key === 'Escape' && isOpen) {
@@ -124,34 +126,49 @@ export const SettingsModal: React.FC = () => {
           </div>
         </section>
 
-        <div className="settings-label mb-1 mt-1">Preferences</div>
+        <div className="settings-label">Preferences</div>
         <section className="settings-section">
           <Option
             title="Active line highlight"
+            description="Controls whether the editor should highlight the active line"
             toggle={toggleLineHighlight}
             checked={codeMirrorOptions.styleActiveLine}
           />
           <Option
+            title="Scroll past end"
+            description="Controls whether the editor will add blank space to the end of all files"
+            toggle={toggleScrollPastEnd}
+            checked={codeMirrorOptions.scrollPastEnd}
+          />
+          <Option
             title="Markdown preview"
+            description="Controls whether markdown preview mode is enabled"
             toggle={togglePreviewMarkdownHandler}
             checked={previewMarkdown}
           />
-          <Option title="Dark mode" toggle={toggleDarkThemeHandler} checked={darkTheme} />
+          <Option
+            title="Dark mode"
+            description="Controls the theme of the application and editor"
+            toggle={toggleDarkThemeHandler}
+            checked={darkTheme}
+          />
           <SelectOptions
             title="Sort By"
+            description="Controls the sort strategy of the notes"
             onChange={updateNotesSortStrategyHandler}
             options={notesSortOptions}
             selectedValue={notesSortKey}
           />
           <SelectOptions
-            title="Direction text"
+            title="Text direction"
+            description="Controls the direction of the text"
             onChange={updateNotesDirectionHandler}
             options={directionTextOptions}
             selectedValue={codeMirrorOptions.direction}
           />
         </section>
 
-        <div className="settings-label mb-1 mt-1">Keyboard Shortcuts</div>
+        <div className="settings-label">Keyboard Shortcuts</div>
         <section className="settings-section">
           {shortcutMap.map((shortcut) => (
             <Shortcut action={shortcut.action} letter={shortcut.key} key={shortcut.key} />

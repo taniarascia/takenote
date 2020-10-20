@@ -16,8 +16,8 @@ const clickDynamicTestID = (dynamicTestID: string) => {
 }
 
 // optional second parameter to click at supported areas (e.g. 'right' 'left') default is 'center'
-const clickTestID = (testIDEnum: TestID, clickOption: string = 'center') => {
-  cy.get(wrapWithTestIDTag(testIDEnum)).click(clickOption)
+const clickTestID = (testIDEnum: TestID) => {
+  cy.get(wrapWithTestIDTag(testIDEnum)).click()
 }
 
 const defaultInit = () => {
