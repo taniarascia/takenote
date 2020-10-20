@@ -30,6 +30,6 @@ export enum TestID {
   MOVE_CATEGORY = 'move-category',
   SIDEBAR_ACTION_CREATE_NEW_NOTE = 'sidebar-action-create-new-note',
   SIDEBAR_ACTION_SETTINGS = 'sidebar-action-settings',
-  SIDEBAR_ACTION_SYNC_NOTES = 'sidebar-action-sync-notes',
+  TOPBAR_ACTION_SYNC_NOTES = 'topbar-action-sync-notes',
   SCRATCHPAD = 'scratchpad',
 }

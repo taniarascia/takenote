@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## v0.6.1 10/19/2020
+
+Add top menu bar.
+
+### Changed
+
+- Add top menu bar for preview, sync, settings, and other note options
+- Update settings UI
+- Add sync test back
+- Organize end-to-end tests
+
 ## v0.6.0 10/16/2020
 
 Upgrade to webpack 5.
