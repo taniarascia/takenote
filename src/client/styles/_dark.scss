@@ -32,10 +32,10 @@ $dark-editor: #3f3f3f;
       background: darken($dark-sidebar, 4%);
       border-color: darken($dark-sidebar, 12%);
 
-      [type='search'] {
+      input {
         background: lighten($dark-sidebar, 5%);
         color: $light-font-color;
-        border: 1px solid lighten($dark-sidebar, 10%);
+        border: 1px solid darken($dark-sidebar, 10%);
       }
     }
 
@@ -65,7 +65,7 @@ $dark-editor: #3f3f3f;
         }
 
         &:hover {
-          background: lighten($dark-sidebar, 5%);
+          background: $dark-sidebar;
           .note-options {
             color: #888;
           }
@@ -149,7 +149,6 @@ $dark-editor: #3f3f3f;
   .previewer {
     background: darken($dark-editor, 5%);
     color: $light-font-color;
-    padding: 1rem;
 
     a {
       color: $tag;
@@ -279,5 +278,9 @@ $dark-editor: #3f3f3f;
   }
   .Resizer {
     opacity: 1;
+  }
+
+  .last-synced {
+    color: rgba(255, 255, 255, 0.35);
   }
 }
