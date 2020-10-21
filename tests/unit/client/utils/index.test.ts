@@ -5,7 +5,7 @@ describe('Utilities', () => {
   describe('getNoteTitle', () => {
     test(`should return 45 characters`, () => {
       const note = `This is your world. This is gonna be a happy little seascape. I'm gonna start with a little Alizarin crimson and a touch of Prussian blue`
-      expect(getNoteTitle(note)).toEqual(note.slice(0, 45))
+      expect(getNoteTitle(note)).toEqual(note.slice(0, 45).trim())
     })
 
     test(`should trim both ends`, () => {
