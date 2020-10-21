@@ -9,8 +9,8 @@ describe('Utilities', () => {
     })
 
     test(`should trim both ends`, () => {
-      const note = ` This is your world. This is gonna be a `
-      expect(getNoteTitle(note)).toEqual(`This is your world. This is gonna be a`)
+      const note = ` This is your world. This is gonna be a happy `
+      expect(getNoteTitle(note)).toEqual(`This is your world. This is gonna be a happy`)
     })
 
     test(`should only return the first line`, () => {
