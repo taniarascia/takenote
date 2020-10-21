@@ -1,12 +1,11 @@
 import express from 'express'
-import * as dotenv from 'dotenv'
 
 import syncHandler from '../handlers/sync'
 import checkAuth from '../middleware/checkAuth'
+import getUser from '../middleware/getUser'
 
 const router = express.Router()
-dotenv.config()
 
-router.get('/sync', checkAuth, syncHandler.sync)
+router.get('/sync', checkAuth, getUser, syncHandler.sync)
 
 export default router

@@ -95,6 +95,7 @@ function* fetchSettings() {
 function* syncData({ payload }: SyncAction) {
   try {
     yield saveState(payload)
+    yield axios('/api/sync/sync')
     yield put(syncSuccess(dayjs().format()))
   } catch (error) {
     yield put(syncError(error.message))

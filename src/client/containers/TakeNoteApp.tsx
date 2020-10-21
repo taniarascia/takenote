@@ -42,8 +42,8 @@ export const TakeNoteApp: React.FC = () => {
   const _loadSettings = () => dispatch(loadSettings())
   const _swapCategories = (categoryId: number, destinationId: number) =>
     dispatch(swapCategories({ categoryId, destinationId }))
-  const _sync = (notes: NoteItem[], categories: CategoryItem[]) =>
-    dispatch(sync({ notes, categories }))
+  // const _sync = (notes: NoteItem[], categories: CategoryItem[]) =>
+  //   dispatch(sync({ notes, categories }))
 
   // ===========================================================================
   // Handlers
@@ -71,9 +71,9 @@ export const TakeNoteApp: React.FC = () => {
     _loadSettings()
   }, [])
 
-  useInterval(() => {
-    _sync(notes, categories)
-  }, 20000)
+  // useInterval(() => {
+  //   _sync(notes, categories)
+  // }, 20000)
 
   useBeforeUnload((event: BeforeUnloadEvent) => (pendingSync ? event.preventDefault() : null))
 

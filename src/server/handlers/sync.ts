@@ -1,18 +1,20 @@
 import { Request, Response } from 'express'
-import * as dotenv from 'dotenv'
 
-// import { SDK } from '../utils/helpers'
-// import { Method } from '../utils/enums'
-
-dotenv.config()
+import { SDK } from '../utils/helpers'
+import { Method } from '../utils/enums'
 
 export default {
   sync: async (request: Request, response: Response) => {
-    const { accessToken } = response.locals
+    const { accessToken, userData } = response.locals
+    // https://docs.github.com/en/free-pro-team@latest/rest/reference/repos#create-or-update-file-contents
+    //api.github.com/repos/<owner>/<repository>/contents/<filename.extension>
+
+    response.status(200).send({ message: 'Success' })
 
     try {
     } catch (error) {
-      response.redirect('/')
+      console.log(error)
+      response.status(400).send({ message: 'Error' })
     }
   },
 }
