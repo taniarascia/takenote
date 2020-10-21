@@ -88,7 +88,7 @@ export const TakeNoteApp: React.FC = () => {
       <TempStateProvider>
         <div className={determineAppClass(darkTheme, sidebarVisible, activeFolder)}>
           <DragDropContext onDragEnd={onDragEnd}>
-            <SplitPane split="vertical" minSize={150} maxSize={500} defaultSize={230}>
+            <SplitPane split="vertical" minSize={150} maxSize={500} defaultSize={240}>
               <AppSidebar />
               <SplitPane split="vertical" minSize={200} maxSize={600} defaultSize={330}>
                 <NoteList />

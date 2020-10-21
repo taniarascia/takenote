@@ -326,4 +326,8 @@ $dark-editor: #3f3f3f;
       }
     }
   }
+
+  .slider {
+    background-color: darken($dark-sidebar, 10%);
+  }
 }
