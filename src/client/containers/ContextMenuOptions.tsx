@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { LabelText } from '@resources/LabelText'
 import { TestID } from '@resources/TestID'
 import { ContextMenuOption } from '@/components/NoteList/ContextMenuOption'
-import { downloadNotes } from '@/utils/helpers'
+import { downloadNotes, isDraftNote } from '@/utils/helpers'
 import {
   deleteNotes,
   toggleFavoriteNotes,
@@ -137,7 +137,7 @@ const NotesOptions: React.FC<NotesOptionsProps> = ({ clickedNote }) => {
 
   return (
     <nav className="options-nav" data-testid={TestID.NOTE_OPTIONS_NAV}>
-      {clickedNote.text === '' ? null : clickedNote.trash ? (
+      {!isDraftNote(clickedNote) && clickedNote.trash && (
         <>
           <ContextMenuOption
             dataTestID={TestID.NOTE_OPTION_DELETE_PERMANENTLY}
@@ -153,7 +153,8 @@ const NotesOptions: React.FC<NotesOptionsProps> = ({ clickedNote }) => {
             text={LabelText.RESTORE_FROM_TRASH}
           />
         </>
-      ) : clickedNote.scratchpad ? null : (
+      )}
+      {!isDraftNote(clickedNote) && !clickedNote.scratchpad && !clickedNote.trash && (
         <>
           <ContextMenuOption
             dataTestID={TestID.NOTE_OPTION_FAVORITE}
@@ -170,7 +171,7 @@ const NotesOptions: React.FC<NotesOptionsProps> = ({ clickedNote }) => {
           />
         </>
       )}
-      {clickedNote.text === '' ? null : (
+      {!isDraftNote(clickedNote) && (
         <ContextMenuOption
           dataTestID={TestID.NOTE_OPTION_DOWNLOAD}
           handler={downloadNotesHandler}
@@ -186,12 +187,12 @@ const NotesOptions: React.FC<NotesOptionsProps> = ({ clickedNote }) => {
           text={LabelText.REMOVE_CATEGORY}
         />
       )}
-      {clickedNote.text === '' ? (
+      {isDraftNote(clickedNote) && (
         <div className="nav-item">
           <AlertTriangle size="16" />
           {LabelText.ADD_CONTENT_NOTE}
         </div>
-      ) : null}
+      )}
     </nav>
   )
 }

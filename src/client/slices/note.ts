@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { Folder } from '@/utils/enums'
 import { NoteItem, NoteState } from '@/types'
+import { isDraftNote } from '@/utils/helpers'
 
 const getNewActiveNoteId = (
   notes: NoteItem[],
@@ -51,7 +52,7 @@ const noteSlice = createSlice({
   initialState,
   reducers: {
     addNote: (state, { payload }: PayloadAction<NoteItem>) => {
-      const draftNote = state.notes.find((note) => note.text === '')
+      const draftNote = state.notes.find((note) => isDraftNote(note))
 
       if (!draftNote) {
         state.notes.push(payload)
