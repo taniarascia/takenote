@@ -214,3 +214,7 @@ export const debounceEvent = <T extends Function>(cb: T, wait = 20) => {
 
   return <T>(<any>callable)
 }
+
+export const isDraftNote = (note: NoteItem) => {
+  return note.text === ''
+}

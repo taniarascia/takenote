@@ -32,4 +32,5 @@ export enum TestID {
   SIDEBAR_ACTION_SETTINGS = 'sidebar-action-settings',
   TOPBAR_ACTION_SYNC_NOTES = 'topbar-action-sync-notes',
   SCRATCHPAD = 'scratchpad',
+  NOTE_OPTION_ADD_CONTENT_NOTE = 'note-option-add-content-note',
 }

@@ -12,7 +12,6 @@ import {
   navigateToTrash,
   testIDShouldContain,
   testIDShouldNotExist,
-  assertCurrentFolderOrCategory,
 } from '../utils/testHelperUtils'
 import {
   assertNewNoteCreated,
@@ -47,7 +46,7 @@ import {
 } from '../utils/testCategoryHelperUtils'
 import { dynamicTimeCategoryName } from '../utils/testHelperEnums'
 
-describe('Notes', () => {
+describe('Manage notes test', () => {
   defaultInit()
 
   before(() => {
@@ -58,33 +57,30 @@ describe('Notes', () => {
 
   beforeEach(() => {
     navigateToNotes()
-    clickCreateNewNote()
+    createXUniqueNotes(1)
     trashAllNotes()
     clearNoteSearch()
-    clickCreateNewNote()
+    createXUniqueNotes(1)
   })
 
-  // =====================================================================================
-  // Notes
-  // =====================================================================================
-
-  it('should try to create a few new notes but only allow one at a time without editing', () => {
+  it('should try to create a few new notes', () => {
     clickCreateNewNote()
-    assertNoteListLengthEquals(1)
+    assertNoteListLengthEquals(2)
     assertNewNoteCreated()
 
     clickCreateNewNote()
-    assertNoteListLengthEquals(1)
+    assertNoteListLengthEquals(2)
     assertNewNoteCreated()
 
     clickCreateNewNote()
-    assertNoteListLengthEquals(1)
+    assertNoteListLengthEquals(2)
     assertNewNoteCreated()
   })
 
   it('should update a note', () => {
     const sampleText = 'Sample note text.'
 
+    clickCreateNewNote()
     // add some text to the editor
     typeNoteEditor(sampleText)
     assertNoteEditorLineCount(1)
@@ -97,9 +93,16 @@ describe('Notes', () => {
     typeNoteEditor('{backspace}{backspace}{backspace}{backspace}')
     assertNoteEditorLineCount(1)
     assertNoteEditorCharacterCount(sampleText.length)
+
+    // // clean up state
+    // clickNoteOptions()
+    // clickNoteOptionTrash()
+    // clickCreateNewNote()
+    // navigateToTrash()
+    // clickEmptyTrash()
   })
 
-  it('should open context menu via three dots menu next to each note title', () => {
+  it('should open options', () => {
     clickNoteOptions()
     assertNoteOptionsOpened()
   })
@@ -107,59 +110,6 @@ describe('Notes', () => {
   it('should open context menu through right click', () => {
     openNoteContextMenu()
     assertNoteOptionsOpened()
-  })
-
-  it('should select multiple notes via ctrl/cmd + click', () => {
-    createXUniqueNotes(2)
-
-    // Select notes
-    holdKeyAndClickNoteAtIndex(0, 'meta')
-    holdKeyAndClickNoteAtIndex(1, 'meta')
-
-    assertNotesSelected(2)
-  })
-
-  it('should not move a note that is already in Notes when dragged & dropped on Notes', () => {
-    createXUniqueNotes(3)
-
-    holdKeyAndClickNoteAtIndex(0, 'meta')
-
-    dragAndDrop('[data-testid=note-list-item-0]', '[data-testid=notes]')
-
-    cy.get('[data-testid=note-list]').within(() => {
-      cy.get('.note-list-each').should('have.length', 3)
-    })
-  })
-
-  it('should not move multiple notes that are already in Notes when dragged & dropped on Notes', () => {
-    createXUniqueNotes(3)
-
-    holdKeyAndClickNoteAtIndex(0, 'meta')
-    holdKeyAndClickNoteAtIndex(2, 'meta')
-
-    dragAndDrop('[data-testid=note-list-item-0]', '[data-testid=notes]')
-
-    cy.get('[data-testid=note-list]').within(() => {
-      cy.get('.note-list-each').should('have.length', 3)
-    })
-  })
-
-  // =====================================================================================
-  // Favorites
-  // =====================================================================================
-
-  it('should create a new note in favorites', () => {
-    // make sure favorites is empty
-    navigateToFavorites()
-    assertNoteListLengthEquals(0)
-
-    clickCreateNewNote()
-    typeNoteEditor('My favorite note')
-    assertNoteListLengthEquals(1)
-
-    // assert button now says 'Remove'
-    clickNoteOptions()
-    testIDShouldContain(TestID.NOTE_OPTION_FAVORITE, LabelText.REMOVE_FAVORITE)
   })
 
   it('should add a note to favorites', () => {
@@ -210,96 +160,6 @@ describe('Notes', () => {
     assertNoteListLengthEquals(0)
   })
 
-  it('should send multiple selected notes to favorites via context menu', () => {
-    createXUniqueNotes(2)
-
-    holdKeyAndClickNoteAtIndex(0, 'meta')
-    holdKeyAndClickNoteAtIndex(1, 'meta')
-
-    openNoteContextMenu()
-    clickNoteOptionFavorite()
-    assertNoteListLengthEquals(2)
-
-    navigateToFavorites()
-    assertNoteListLengthEquals(2)
-  })
-
-  it('should remove multiple selected notes from favorites via context menu', () => {
-    navigateToFavorites()
-    createXUniqueNotes(2)
-
-    holdKeyAndClickNoteAtIndex(0, 'meta')
-    holdKeyAndClickNoteAtIndex(1, 'meta')
-
-    openNoteContextMenu()
-    clickNoteOptionFavorite()
-    assertNoteListLengthEquals(0)
-
-    navigateToNotes()
-    assertNoteListLengthEquals(2)
-  })
-
-  it('should send a not selected note to favorites with drag & drop', () => {
-    createXUniqueNotes(3)
-
-    holdKeyAndClickNoteAtIndex(0, 'meta')
-    holdKeyAndClickNoteAtIndex(1, 'meta')
-
-    dragAndDrop('[data-testid=note-list-item-2]', '[data-testid=favorites]')
-
-    cy.get('[data-testid=favorites]').click()
-    cy.get('[data-testid=note-list]').within(() => {
-      cy.get('.note-list-each').should('have.length', 1)
-    })
-  })
-
-  it('should send multiple notes to favorites with drag & drop', () => {
-    createXUniqueNotes(3)
-    addCategory(dynamicTimeCategoryName)
-
-    holdKeyAndClickNoteAtIndex(0, 'meta')
-    holdKeyAndClickNoteAtIndex(1, 'meta')
-
-    dragAndDrop('[data-testid=note-list-item-0]', '[data-testid=favorites]')
-
-    cy.get('[data-testid=favorites]').click()
-    cy.get('[data-testid=note-list]').within(() => {
-      cy.get('.note-list-each').should('have.length', 2)
-    })
-  })
-
-  it('should send multiple notes to favorites with drag & drop', () => {
-    createXUniqueNotes(3)
-    addCategory(dynamicTimeCategoryName)
-
-    holdKeyAndClickNoteAtIndex(0, 'meta')
-    holdKeyAndClickNoteAtIndex(1, 'meta')
-
-    dragAndDrop('[data-testid=note-list-item-0]', '[data-testid=trash]')
-
-    cy.get('[data-testid=trash]').click()
-    cy.get('[data-testid=note-list]').within(() => {
-      cy.get('.note-list-each').should('have.length', 2)
-    })
-  })
-
-  it('should send multiple selected notes to favorites when clicking on an already favorited selected note via context menu', () => {})
-
-  it('should remove multiple selected notes from favorites when clicking on a not yet favorited selected note via context menu', () => {})
-
-  // =====================================================================================
-  // Trash
-  // =====================================================================================
-
-  it('should not create a new note in the trash', () => {
-    // make sure trash is currently empty
-    navigateToTrash()
-    assertNoteListLengthEquals(0)
-
-    clickCreateNewNote()
-    assertCurrentFolderOrCategory('Notes')
-  })
-
   it('should send a note to trash', () => {
     // make sure trash is currently empty
     navigateToTrash()
@@ -315,9 +175,10 @@ describe('Notes', () => {
     // make sure the new note is in the trash
     navigateToTrash()
     assertNoteListLengthEquals(1)
+    clickEmptyTrash()
   })
 
-  it('should permanently empty notes in trash', () => {
+  it('should empty notes in trash', () => {
     // move note to trash
     clickNoteOptions()
     clickNoteOptionTrash()
@@ -431,210 +292,8 @@ describe('Notes', () => {
     cy.then(() => assertNoteListLengthEquals(this.allNoteStartCount))
   })
 
-  it('should send multiple not selected trashed notes to notes with drag & drop', () => {
-    createXUniqueNotes(3)
-
-    holdKeyAndClickNoteAtIndex(0, 'meta')
-    holdKeyAndClickNoteAtIndex(1, 'meta')
-
-    dragAndDrop('[data-testid=note-list-item-0]', '[data-testid=trash]')
-
-    cy.get('[data-testid=trash]').click()
-    cy.get('[data-testid=note-list]').within(() => {
-      cy.get('.note-list-each').should('have.length', 2)
-    })
-
-    holdKeyAndClickNoteAtIndex(0, 'meta')
-
-    dragAndDrop('[data-testid=note-list-item-0]', '[data-testid=notes]')
-
-    cy.get('[data-testid=notes]').click()
-    cy.get('[data-testid=note-list]').within(() => {
-      cy.get('.note-list-each').should('have.length', 3)
-    })
-  })
-
-  it('should send multiple selected notes to trash via context menu', () => {
-    createXUniqueNotes(2)
-
-    holdKeyAndClickNoteAtIndex(0, 'meta')
-    holdKeyAndClickNoteAtIndex(1, 'meta')
-    openNoteContextMenu()
-    clickNoteOptionTrash()
-    assertNoteListLengthEquals(0)
-
-    navigateToTrash()
-    assertNoteListLengthEquals(2)
-  })
-
-  it('should restore multiple selected notes from trash', () => {
-    createXUniqueNotes(2)
-
-    holdKeyAndClickNoteAtIndex(0, 'meta')
-    holdKeyAndClickNoteAtIndex(1, 'meta')
-    openNoteContextMenu()
-    clickNoteOptionTrash()
-
-    navigateToTrash()
-    holdKeyAndClickNoteAtIndex(0, 'meta')
-    openNoteContextMenu()
-    clickNoteOptionRestoreFromTrash()
-    assertNoteListLengthEquals(0)
-
-    navigateToNotes()
-    assertNoteListLengthEquals(2)
-  })
-
-  it('should permanently delete multiple selected notes from trash', () => {
-    createXUniqueNotes(2)
-
-    holdKeyAndClickNoteAtIndex(0, 'meta')
-    holdKeyAndClickNoteAtIndex(1, 'meta')
-    openNoteContextMenu()
-    clickNoteOptionTrash()
-
-    navigateToTrash()
-    holdKeyAndClickNoteAtIndex(0, 'meta')
-    openNoteContextMenu()
-    clickNoteOptionDeleteNotePermanently()
-    assertNoteListLengthEquals(0)
-
-    navigateToNotes()
-    assertNoteListLengthEquals(0)
-  })
-
-  it('should send a not selected note to trash with drag & drop', () => {
-    createXUniqueNotes(3)
-
-    holdKeyAndClickNoteAtIndex(0, 'meta')
-    holdKeyAndClickNoteAtIndex(1, 'meta')
-
-    dragAndDrop('[data-testid=note-list-item-2]', '[data-testid=trash]')
-
-    cy.get('[data-testid=trash]').click()
-    cy.get('[data-testid=note-list]').within(() => {
-      cy.get('.note-list-each').should('have.length', 1)
-    })
-  })
-
-  it('should send a not selected trashed note to notes with drag & drop', () => {
-    createXUniqueNotes(3)
-
-    holdKeyAndClickNoteAtIndex(0, 'meta')
-
-    dragAndDrop('[data-testid=note-list-item-0]', '[data-testid=trash]')
-
-    cy.get('[data-testid=trash]').click()
-    cy.get('[data-testid=note-list]').within(() => {
-      cy.get('.note-list-each').should('have.length', 1)
-    })
-
-    holdKeyAndClickNoteAtIndex(0, 'meta')
-
-    dragAndDrop('[data-testid=note-list-item-0]', '[data-testid=notes]')
-
-    cy.get('[data-testid=notes]').click()
-    cy.get('[data-testid=note-list]').within(() => {
-      cy.get('.note-list-each').should('have.length', 3)
-    })
-  })
-
-  // =====================================================================================
-  // Categories
-  // =====================================================================================
-
-  it('should create a new note within a category', () => {
-    navigateToNotes()
-
-    addCategory(dynamicTimeCategoryName)
-    // make sure it ended up in the category
-    navigateToCategory(dynamicTimeCategoryName)
-
-    clickCreateNewNote()
-    assertNoteListLengthEquals(1)
-  })
-
-  it('should send multiple notes to a category with drag & drop', () => {
-    createXUniqueNotes(3)
-    addCategory(dynamicTimeCategoryName)
-
-    holdKeyAndClickNoteAtIndex(0, 'meta')
-    holdKeyAndClickNoteAtIndex(1, 'meta')
-
-    dragAndDrop('[data-testid=note-list-item-0]', '[data-testid=category-list-div]')
-
-    cy.get('[data-testid=category-list-div]').click()
-    cy.get('[data-testid=note-list]').within(() => {
-      cy.get('.note-list-each').should('have.length', 2)
-    })
-  })
-
-  it('should send multiple selected notes to a category via context menu', () => {
-    // add a category
-    addCategory(dynamicTimeCategoryName)
-
-    // navigate back to All Notes create a new note, and move it to that category
-    navigateToNotes()
-    createXUniqueNotes(2)
-    holdKeyAndClickNoteAtIndex(0, 'meta')
-    holdKeyAndClickNoteAtIndex(1, 'meta')
-    openNoteContextMenu()
-    selectMoveToCategoryOption(dynamicTimeCategoryName)
-    assertNoteListLengthEquals(2)
-
-    navigateToCategory(dynamicTimeCategoryName)
-    assertNoteListLengthEquals(2)
-  })
-
-  it('should send a not selected note to a category with drag & drop', () => {
-    createXUniqueNotes(3)
-    addCategory(dynamicTimeCategoryName)
-
-    holdKeyAndClickNoteAtIndex(0, 'meta')
-    holdKeyAndClickNoteAtIndex(1, 'meta')
-
-    dragAndDrop('[data-testid=note-list-item-2]', '[data-testid=category-list-div]')
-
-    cy.get('[data-testid=category-list-div]').click()
-    cy.get('[data-testid=note-list]').within(() => {
-      cy.get('.note-list-each').should('have.length', 1)
-    })
-  })
-
-  // =====================================================================================
-  // Search
-  // =====================================================================================
-
-  it('should search some notes', function () {
-    const noteOneTitle = 'note 1'
-    const noteTwoTitle = 'same note title'
-    const noteThreeTitle = 'same note title'
-    const noteFourTitle = 'note 4'
-
-    // start with a refresh so we know our current saved state
-    cy.reload()
-    getNoteCount('allNoteStartCount')
-
-    // create a few new notes
-    clickCreateNewNote()
-    typeNoteEditor(noteOneTitle)
-    clickCreateNewNote()
-    typeNoteEditor(noteTwoTitle)
-    clickCreateNewNote()
-    typeNoteEditor(noteThreeTitle)
-    clickCreateNewNote()
-    typeNoteEditor(noteFourTitle)
-
-    // make sure notes are filtered
-    typeNoteSearch('note title')
-    cy.then(() => assertNoteListLengthEquals(2))
-  })
-
-  // =====================================================================================
-  // Sync
-  // =====================================================================================
-
-  it('should sync some notes', function () {
+  // TODO: add manual sync back in
+  it.skip('should sync some notes', function () {
     const noteOneTitle = 'note 1'
     const noteTwoTitle = 'same note title'
     const noteThreeTitle = 'same note title'
@@ -674,5 +333,318 @@ describe('Notes', () => {
     assertNoteListTitleAtIndex(2, noteTwoTitle)
     assertNoteListTitleAtIndex(1, noteThreeTitle)
     assertNoteListTitleAtIndex(0, noteFourTitle)
+  })
+
+  it('should search some notes', function () {
+    const noteOneTitle = 'note 1'
+    const noteTwoTitle = 'same note title'
+    const noteThreeTitle = 'same note title'
+    const noteFourTitle = 'note 4'
+
+    // start with a refresh so we know our current saved state
+    cy.reload()
+    getNoteCount('allNoteStartCount')
+
+    // create a few new notes
+    clickCreateNewNote()
+    typeNoteEditor(noteOneTitle)
+    clickCreateNewNote()
+    typeNoteEditor(noteTwoTitle)
+    clickCreateNewNote()
+    typeNoteEditor(noteThreeTitle)
+    clickCreateNewNote()
+    typeNoteEditor(noteFourTitle)
+
+    // make sure notes are filtered
+    typeNoteSearch('note title')
+    cy.then(() => assertNoteListLengthEquals(2))
+  })
+
+  it('should select multiple notes via ctrl/cmd + click', () => {
+    createXUniqueNotes(2)
+
+    // Select notes
+    holdKeyAndClickNoteAtIndex(0, 'meta')
+    holdKeyAndClickNoteAtIndex(1, 'meta')
+
+    assertNotesSelected(2)
+  })
+
+  it('should send multiple selected notes to trash via context menu', () => {
+    createXUniqueNotes(1)
+
+    holdKeyAndClickNoteAtIndex(0, 'meta')
+    holdKeyAndClickNoteAtIndex(1, 'meta')
+    openNoteContextMenu()
+    clickNoteOptionTrash()
+    assertNoteListLengthEquals(0)
+
+    navigateToTrash()
+    assertNoteListLengthEquals(2)
+  })
+
+  it('should send multiple selected notes to favorites via context menu', () => {
+    createXUniqueNotes(1)
+
+    holdKeyAndClickNoteAtIndex(0, 'meta')
+    holdKeyAndClickNoteAtIndex(1, 'meta')
+
+    openNoteContextMenu()
+    clickNoteOptionFavorite()
+    assertNoteListLengthEquals(2)
+
+    navigateToFavorites()
+    assertNoteListLengthEquals(2)
+  })
+
+  it('should remove multiple selected notes from favorites via context menu', () => {
+    createXUniqueNotes(1)
+
+    holdKeyAndClickNoteAtIndex(0, 'meta')
+    holdKeyAndClickNoteAtIndex(1, 'meta')
+
+    openNoteContextMenu()
+    clickNoteOptionFavorite()
+    assertNoteListLengthEquals(2)
+
+    navigateToFavorites()
+    assertNoteListLengthEquals(2)
+
+    holdKeyAndClickNoteAtIndex(1, 'meta')
+    holdKeyAndClickNoteAtIndex(0, 'meta')
+
+    openNoteContextMenu()
+    clickNoteOptionFavorite()
+    assertNoteListLengthEquals(0)
+
+    navigateToNotes()
+    assertNoteListLengthEquals(2)
+  })
+
+  it('should send multiple selected notes to favorites when clicking on an already favorited selected note via context menu', () => {})
+
+  it('should remove multiple selected notes from favorites when clicking on a not yet favorited selected note via context menu', () => {})
+
+  it('should send multiple selected notes to a category via context menu', () => {
+    // add a category
+    addCategory(dynamicTimeCategoryName)
+
+    // navigate back to All Notes create a new note, and move it to that category
+    navigateToNotes()
+    createXUniqueNotes(1)
+    holdKeyAndClickNoteAtIndex(0, 'meta')
+    holdKeyAndClickNoteAtIndex(1, 'meta')
+    openNoteContextMenu()
+    selectMoveToCategoryOption(dynamicTimeCategoryName)
+    assertNoteListLengthEquals(2)
+
+    navigateToCategory(dynamicTimeCategoryName)
+    assertNoteListLengthEquals(2)
+  })
+
+  it('should restore multiple selected notes from trash', () => {
+    createXUniqueNotes(1)
+
+    holdKeyAndClickNoteAtIndex(0, 'meta')
+    holdKeyAndClickNoteAtIndex(1, 'meta')
+    openNoteContextMenu()
+    clickNoteOptionTrash()
+
+    navigateToTrash()
+    holdKeyAndClickNoteAtIndex(0, 'meta')
+    openNoteContextMenu()
+    clickNoteOptionRestoreFromTrash()
+    assertNoteListLengthEquals(0)
+
+    navigateToNotes()
+    assertNoteListLengthEquals(2)
+  })
+
+  it('should permanently delete multiple selected notes from trash', () => {
+    createXUniqueNotes(1)
+
+    holdKeyAndClickNoteAtIndex(0, 'meta')
+    holdKeyAndClickNoteAtIndex(1, 'meta')
+    openNoteContextMenu()
+    clickNoteOptionTrash()
+
+    navigateToTrash()
+    holdKeyAndClickNoteAtIndex(0, 'meta')
+    openNoteContextMenu()
+    clickNoteOptionDeleteNotePermanently()
+    assertNoteListLengthEquals(0)
+
+    navigateToNotes()
+    assertNoteListLengthEquals(0)
+  })
+
+  it('should send a not selected note to favorites with drag & drop', () => {
+    createXUniqueNotes(2)
+
+    holdKeyAndClickNoteAtIndex(0, 'meta')
+    holdKeyAndClickNoteAtIndex(1, 'meta')
+
+    dragAndDrop('[data-testid=note-list-item-2]', '[data-testid=favorites]')
+
+    cy.get('[data-testid=favorites]').click()
+    cy.get('[data-testid=note-list]').within(() => {
+      cy.get('.note-list-each').should('have.length', 1)
+    })
+  })
+
+  it('should send a not selected note to trash with drag & drop', () => {
+    createXUniqueNotes(2)
+
+    holdKeyAndClickNoteAtIndex(0, 'meta')
+    holdKeyAndClickNoteAtIndex(1, 'meta')
+
+    dragAndDrop('[data-testid=note-list-item-2]', '[data-testid=trash]')
+
+    cy.get('[data-testid=trash]').click()
+    cy.get('[data-testid=note-list]').within(() => {
+      cy.get('.note-list-each').should('have.length', 1)
+    })
+  })
+
+  it('should send a not selected note to a category with drag & drop', () => {
+    createXUniqueNotes(2)
+    addCategory(dynamicTimeCategoryName)
+
+    holdKeyAndClickNoteAtIndex(0, 'meta')
+    holdKeyAndClickNoteAtIndex(1, 'meta')
+
+    dragAndDrop('[data-testid=note-list-item-2]', '[data-testid=category-list-div]')
+
+    cy.get('[data-testid=category-list-div]').click()
+    cy.get('[data-testid=note-list]').within(() => {
+      cy.get('.note-list-each').should('have.length', 1)
+    })
+  })
+
+  it('should send multiple notes to favorites with drag & drop', () => {
+    createXUniqueNotes(2)
+    addCategory(dynamicTimeCategoryName)
+
+    holdKeyAndClickNoteAtIndex(0, 'meta')
+    holdKeyAndClickNoteAtIndex(1, 'meta')
+
+    dragAndDrop('[data-testid=note-list-item-0]', '[data-testid=favorites]')
+
+    cy.get('[data-testid=favorites]').click()
+    cy.get('[data-testid=note-list]').within(() => {
+      cy.get('.note-list-each').should('have.length', 2)
+    })
+  })
+
+  it('should send multiple notes to favorites with drag & drop', () => {
+    createXUniqueNotes(2)
+    addCategory(dynamicTimeCategoryName)
+
+    holdKeyAndClickNoteAtIndex(0, 'meta')
+    holdKeyAndClickNoteAtIndex(1, 'meta')
+
+    dragAndDrop('[data-testid=note-list-item-0]', '[data-testid=trash]')
+
+    cy.get('[data-testid=trash]').click()
+    cy.get('[data-testid=note-list]').within(() => {
+      cy.get('.note-list-each').should('have.length', 2)
+    })
+  })
+
+  it('should send multiple notes to a category with drag & drop', () => {
+    createXUniqueNotes(2)
+    addCategory(dynamicTimeCategoryName)
+
+    holdKeyAndClickNoteAtIndex(0, 'meta')
+    holdKeyAndClickNoteAtIndex(1, 'meta')
+
+    dragAndDrop('[data-testid=note-list-item-0]', '[data-testid=category-list-div]')
+
+    cy.get('[data-testid=category-list-div]').click()
+    cy.get('[data-testid=note-list]').within(() => {
+      cy.get('.note-list-each').should('have.length', 2)
+    })
+  })
+
+  it('should send a not selected trashed note to notes with drag & drop', () => {
+    createXUniqueNotes(2)
+
+    holdKeyAndClickNoteAtIndex(0, 'meta')
+
+    dragAndDrop('[data-testid=note-list-item-0]', '[data-testid=trash]')
+
+    cy.get('[data-testid=trash]').click()
+    cy.get('[data-testid=note-list]').within(() => {
+      cy.get('.note-list-each').should('have.length', 1)
+    })
+
+    holdKeyAndClickNoteAtIndex(0, 'meta')
+
+    dragAndDrop('[data-testid=note-list-item-0]', '[data-testid=notes]')
+
+    cy.get('[data-testid=notes]').click()
+    cy.get('[data-testid=note-list]').within(() => {
+      cy.get('.note-list-each').should('have.length', 3)
+    })
+  })
+
+  it('should send multiple not selected trashed notes to notes with drag & drop', () => {
+    createXUniqueNotes(2)
+
+    holdKeyAndClickNoteAtIndex(0, 'meta')
+    holdKeyAndClickNoteAtIndex(1, 'meta')
+
+    dragAndDrop('[data-testid=note-list-item-0]', '[data-testid=trash]')
+
+    cy.get('[data-testid=trash]').click()
+    cy.get('[data-testid=note-list]').within(() => {
+      cy.get('.note-list-each').should('have.length', 2)
+    })
+
+    holdKeyAndClickNoteAtIndex(0, 'meta')
+
+    dragAndDrop('[data-testid=note-list-item-0]', '[data-testid=notes]')
+
+    cy.get('[data-testid=notes]').click()
+    cy.get('[data-testid=note-list]').within(() => {
+      cy.get('.note-list-each').should('have.length', 3)
+    })
+  })
+
+  it('should not move a note that is already in Notes when dragged & dropped on Notes', () => {
+    createXUniqueNotes(2)
+
+    holdKeyAndClickNoteAtIndex(0, 'meta')
+
+    dragAndDrop('[data-testid=note-list-item-0]', '[data-testid=notes]')
+
+    cy.get('[data-testid=note-list]').within(() => {
+      cy.get('.note-list-each').should('have.length', 3)
+    })
+  })
+
+  it('should not move multiple notes that are already in Notes when dragged & dropped on Notes', () => {
+    createXUniqueNotes(2)
+
+    holdKeyAndClickNoteAtIndex(0, 'meta')
+    holdKeyAndClickNoteAtIndex(2, 'meta')
+
+    dragAndDrop('[data-testid=note-list-item-0]', '[data-testid=notes]')
+
+    cy.get('[data-testid=note-list]').within(() => {
+      cy.get('.note-list-each').should('have.length', 3)
+    })
+  })
+
+  it('should not create a new draft note if one already exists', () => {
+    clickCreateNewNote()
+
+    cy.get('[data-testid=trash]').click()
+
+    clickCreateNewNote()
+
+    cy.get('[data-testid=note-list]').within(() => {
+      cy.get('.note-list-each').should('have.length', 2)
+    })
   })
 })

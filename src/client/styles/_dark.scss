@@ -2,6 +2,16 @@ $dark-sidebar: #333;
 $dark-editor: #3f3f3f;
 
 .dark {
+  a {
+    color: lighten($primary, 8%);
+    &:hover {
+      color: lighten($primary, 15%);
+    }
+    &.button {
+      color: white;
+    }
+  }
+
   .loading {
     background: #222;
   }
@@ -15,10 +25,10 @@ $dark-editor: #3f3f3f;
     border-bottom: 1px solid darken($dark-sidebar, 12%);
 
     button {
-      color: rgba(255, 255, 255, 0.3);
+      color: rgba(255, 255, 255, 0.5);
       &:hover {
-        color: rgba(255, 255, 255, 0.6);
-        background: darken($dark-sidebar, 8%);
+        color: rgba(255, 255, 255, 0.7);
+        background: darken($dark-sidebar, 10%);
       }
     }
   }
@@ -220,10 +230,10 @@ $dark-editor: #3f3f3f;
     .settings-option {
       border-color: darken($dark-sidebar, 5%);
       h3 {
-        color: rgba(255, 255, 255, 0.6);
+        color: rgba(255, 255, 255, 0.8);
       }
       .description {
-        color: rgba(255, 255, 255, 0.6);
+        color: rgba(255, 255, 255, 0.5);
       }
     }
 
@@ -282,5 +292,38 @@ $dark-editor: #3f3f3f;
 
   .last-synced {
     color: rgba(255, 255, 255, 0.35);
+  }
+
+  .tab-list {
+    border-color: darken($dark-sidebar, 10%);
+  }
+
+  .tabs {
+    p {
+      color: rgba(255, 255, 255, 0.7);
+    }
+    h3 {
+      color: white;
+    }
+  }
+
+  .tab {
+    svg {
+      color: rgba(255, 255, 255, 0.4);
+    }
+    &.active {
+      background: darken($dark-sidebar, 6%) !important;
+      color: white;
+      svg {
+        color: $primary !important;
+      }
+    }
+    &:hover {
+      background: lighten($dark-sidebar, 6%);
+      color: white;
+      svg {
+        color: rgba(255, 255, 255, 0.7);
+      }
+    }
   }
 }

@@ -11,15 +11,15 @@ export const folderMap: Record<Folder, string> = {
 export const iconColor = 'rgba(255, 255, 255, 0.25)'
 
 export const shortcutMap = [
-  { action: 'New note', key: 'N' },
-  { action: 'Delete note', key: 'U' },
-  { action: 'Create category', key: 'C' },
-  { action: 'Download note', key: 'O' },
-  { action: 'Sync notes', key: 'L' },
+  { action: 'Create a new note', key: 'N' },
+  { action: 'Delete a note', key: 'U' },
+  { action: 'Create a category', key: 'C' },
+  { action: 'Download a note', key: 'O' },
+  { action: 'Sync all notes', key: 'L' },
   { action: 'Markdown preview', key: 'P' },
   { action: 'Toggle theme', key: 'K' },
-  { action: 'Search', key: 'F' },
-  { action: 'Prettify', key: 'I' },
+  { action: 'Search notes', key: 'F' },
+  { action: 'Prettify a note', key: 'I' },
 ]
 
 export const notesSortOptions = [

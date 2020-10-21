@@ -20,4 +20,5 @@ export enum LabelText {
   TRASH = 'Trash',
   WELCOME_TO_TAKENOTE = 'Welcome to Takenote!',
   RENAME = 'Rename category',
+  ADD_CONTENT_NOTE = 'Please add content to this new note to access the menu options.',
 }

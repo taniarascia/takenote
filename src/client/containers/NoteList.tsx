@@ -211,7 +211,7 @@ export const NoteList: React.FC = () => {
                 _pruneNotes()
               }}
               onContextMenu={(event) => handleNoteRightClick(event, note.id)}
-              draggable
+              draggable={note.text !== ''}
               onDragStart={(event) => handleDragStart(event, note.id)}
             >
               <div className="note-list-outer">
