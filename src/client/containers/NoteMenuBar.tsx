@@ -23,7 +23,7 @@ export const NoteMenuBar = () => {
 
   const { notes, activeNoteId } = useSelector(getNotes)
   const { categories } = useSelector(getCategories)
-  const { syncing, lastSynced } = useSelector(getSync)
+  const { syncing, lastSynced, pendingSync } = useSelector(getSync)
   const { darkTheme } = useSelector(getSettings)
   const activeNote = notes.find((note) => note.id === activeNoteId)!
 
@@ -59,26 +59,30 @@ export const NoteMenuBar = () => {
 
   return (
     <section className="note-menu-bar">
+      {activeNoteId ? (
+        <nav>
+          <button className="note-menu-bar-button" onClick={_togglePreviewMarkdown}>
+            <Eye size={18} />
+          </button>
+          {!activeNote.scratchpad && (
+            <>
+              <button className="note-menu-bar-button" onClick={favoriteNoteHandler}>
+                <Star size={18} />
+              </button>
+              <button className="note-menu-bar-button" onClick={trashNoteHandler}>
+                <Trash2 size={18} />
+              </button>
+            </>
+          )}
+          <button className="note-menu-bar-button">
+            <Download size={18} onClick={downloadNotesHandler} />
+          </button>
+        </nav>
+      ) : (
+        <div />
+      )}
       <nav>
-        <button className="note-menu-bar-button" onClick={_togglePreviewMarkdown}>
-          <Eye size={18} />
-        </button>
-        {!activeNote.scratchpad && (
-          <>
-            <button className="note-menu-bar-button" onClick={favoriteNoteHandler}>
-              <Star size={18} />
-            </button>
-            <button className="note-menu-bar-button" onClick={trashNoteHandler}>
-              <Trash2 size={18} />
-            </button>
-          </>
-        )}
-        <button className="note-menu-bar-button">
-          <Download size={18} onClick={downloadNotesHandler} />
-        </button>
-      </nav>
-      <nav>
-        <LastSyncedNotification datetime={lastSynced} />
+        <LastSyncedNotification datetime={lastSynced} pending={pendingSync} syncing={syncing} />
         <button
           className="note-menu-bar-button"
           onClick={syncNotesHandler}

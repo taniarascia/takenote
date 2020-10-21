@@ -1,6 +1,4 @@
-import { welcomeNote } from '@/api/welcomeNote'
-import { scratchpadNote } from '@/api/scratchpadNote'
-import { NoteItem, SyncPayload, SettingsState } from '@/types'
+import { SyncPayload, SettingsState } from '@/types'
 
 type PromiseCallback = (value?: any) => void
 type GetLocalStorage = (
@@ -23,36 +21,11 @@ const getLocalStorage: GetLocalStorage = (key, errorMessage = 'Something went wr
   }
 }
 
-const getUserNotes = () => (resolve: PromiseCallback, reject: PromiseCallback) => {
-  const notes: any = localStorage.getItem('notes')
-
-  // check if there is any data in localstorage
-  if (!notes) {
-    // if there is none (i.e. new user), create the welcomeNote and scratchpadNote
-    resolve([scratchpadNote, welcomeNote])
-  } else if (Array.isArray(JSON.parse(notes))) {
-    // if there is (existing user), show the user's notes
-    resolve(
-      // find does not work if the array is empty.
-      JSON.parse(notes).length === 0 || !JSON.parse(notes).find((note: NoteItem) => note.scratchpad)
-        ? [scratchpadNote, ...JSON.parse(notes)]
-        : JSON.parse(notes)
-    )
-  } else {
-    reject({
-      message: 'Something went wrong',
-    })
-  }
-}
-
-export const requestNotes = () => new Promise(getUserNotes())
-
-export const requestCategories = () => new Promise(getLocalStorage('categories'))
-
-export const requestSettings = () =>
+export const requestNotesMock = () => new Promise(getLocalStorage('notes'))
+export const requestCategoriesMock = () => new Promise(getLocalStorage('categories'))
+export const requestSettingsMock = () =>
   new Promise(getLocalStorage('settings', 'Could not load settings'))
-
-export const saveState = ({ categories, notes }: SyncPayload) =>
+export const saveStateMock = ({ categories, notes }: SyncPayload) =>
   new Promise((resolve) => {
     localStorage.setItem('categories', JSON.stringify(categories))
     localStorage.setItem('notes', JSON.stringify(notes))

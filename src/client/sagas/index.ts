@@ -1,31 +1,16 @@
-// eslint-disable-next-line import/named
 import { all, put, takeLatest, select } from 'redux-saga/effects'
 import dayjs from 'dayjs'
 import axios from 'axios'
 
-import { requestCategories, requestNotes, requestSettings, saveState, saveSettings } from '@/api'
 import { loadCategories, loadCategoriesError, loadCategoriesSuccess } from '@/slices/category'
 import { loadNotes, loadNotesError, loadNotesSuccess } from '@/slices/note'
 import { sync, syncError, syncSuccess } from '@/slices/sync'
 import { login, loginSuccess, loginError, logout, logoutSuccess } from '@/slices/auth'
-import {
-  updateCodeMirrorOption,
-  loadSettingsSuccess,
-  loadSettingsError,
-  loadSettings,
-  toggleDarkTheme,
-  togglePreviewMarkdown,
-  toggleSettingsModal,
-  updateNotesSortStrategy,
-} from '@/slices/settings'
+import { loadSettingsSuccess, loadSettingsError, loadSettings } from '@/slices/settings'
 import { SyncAction } from '@/types'
 import { getSettings, getNotes, getCategories } from '@/selectors'
 
-/**
- * Log in user
- *
- * Hit the Express endpoint to get the current GitHub user from the cookie
- */
+// Hit the Express endpoint to get the current GitHub user from the cookie
 function* loginUser() {
   try {
     const { data } = yield axios('/api/auth/login')
@@ -36,11 +21,7 @@ function* loginUser() {
   }
 }
 
-/**
- * Log out user
- *
- * Remove the access token cookie from Express
- */
+// Remove the access token cookie from Express
 function* logoutUser() {
   try {
     yield axios('/api/auth/logout')
@@ -51,42 +32,34 @@ function* logoutUser() {
   }
 }
 
-/**
- * Get notes from API
- */
+// Get notes from API
 function* fetchNotes() {
   try {
-    // requestNotes is a temporary mock API
-    const notes = yield requestNotes()
+    const { data } = yield axios('/api/sync/notes')
 
-    yield put(loadNotesSuccess(notes))
+    yield put(loadNotesSuccess(data))
   } catch (error) {
     yield put(loadNotesError(error.message))
   }
 }
 
-/**
- * Get categories from API
- */
+// Get categories from API
 function* fetchCategories() {
   try {
-    // requestCategories is a temporary mock API
-    const categories = yield requestCategories()
+    const { data } = yield axios('/api/sync/categories')
 
-    yield put(loadCategoriesSuccess(categories))
+    yield put(loadCategoriesSuccess(data))
   } catch (error) {
     yield put(loadCategoriesError(error.message))
   }
 }
 
-/**
- * Get settings from API
- */
+// Get settings from API
 function* fetchSettings() {
   try {
-    const settings = yield requestSettings()
+    const { data } = yield axios('/api/sync/settings')
 
-    yield put(loadSettingsSuccess(settings))
+    yield put(loadSettingsSuccess(data))
   } catch (error) {
     yield put(loadSettingsError())
   }
@@ -100,20 +73,11 @@ function* syncData({ payload }: SyncAction) {
   const body = { notes, categories, settings }
 
   try {
-    yield saveState(payload)
     yield axios.post('/api/sync', body)
     yield put(syncSuccess(dayjs().format()))
   } catch (error) {
     yield put(syncError(error.message))
   }
-}
-
-function* syncSettings() {
-  try {
-    const settings = yield select(getSettings)
-
-    yield saveSettings(settings)
-  } catch (error) {}
 }
 
 // If any of these functions are dispatched, invoke the appropriate saga
@@ -125,16 +89,6 @@ function* rootSaga() {
     takeLatest(loadCategories.type, fetchCategories),
     takeLatest(loadSettings.type, fetchSettings),
     takeLatest(sync.type, syncData),
-    takeLatest(
-      [
-        toggleDarkTheme.type,
-        togglePreviewMarkdown.type,
-        updateCodeMirrorOption.type,
-        toggleSettingsModal.type,
-        updateNotesSortStrategy.type,
-      ],
-      syncSettings
-    ),
   ])
 }
 

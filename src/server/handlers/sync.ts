@@ -35,6 +35,8 @@ export default {
           content: JSON.stringify(settings, null, 2),
         }),
       ])
+
+      // Create tree path
       const treeItems = [
         {
           path: 'notes.json',
@@ -78,11 +80,95 @@ export default {
         force: true,
       })
 
-      response.status(200).send({ message: 'Success' })
+      response.status(200).send({ message: 'Successly commited to takenote-data' })
     } catch (error) {
-      console.log(error.response.data)
-      console.log(error.message)
-      response.status(400).send({ message: error.message })
+      response
+        .status(400)
+        .send({ message: error.message || 'Something went wrong while syncing data' })
+    }
+  },
+
+  getNotes: async (request: Request, response: Response) => {
+    const { accessToken, userData } = response.locals
+    const username = userData.login
+    const repo = 'takenote-data'
+
+    try {
+      const { data } = await SDK(
+        Method.GET,
+        `/repos/${username}/${repo}/contents/notes.json`,
+        accessToken
+      )
+
+      const notes = Buffer.from(data.content, 'base64').toString()
+
+      try {
+        JSON.parse(notes)
+      } catch (error) {
+        response.status(400).send({ message: error.message || 'Must be valid JSON.' })
+      }
+
+      response.status(200).send(notes)
+    } catch (error) {
+      response
+        .status(400)
+        .send({ message: error.message || 'Something went wrong while fetching note data' })
+    }
+  },
+
+  getCategories: async (request: Request, response: Response) => {
+    const { accessToken, userData } = response.locals
+    const username = userData.login
+    const repo = 'takenote-data'
+
+    try {
+      const { data } = await SDK(
+        Method.GET,
+        `/repos/${username}/${repo}/contents/categories.json`,
+        accessToken
+      )
+
+      const categories = Buffer.from(data.content, 'base64').toString()
+
+      try {
+        JSON.parse(categories)
+      } catch (error) {
+        response.status(400).send({ message: error.message || 'Must be valid JSON.' })
+      }
+
+      response.status(200).send(categories)
+    } catch (error) {
+      response
+        .status(400)
+        .send({ message: error.message || 'Something went wrong while fetching category data' })
+    }
+  },
+
+  getSettings: async (request: Request, response: Response) => {
+    const { accessToken, userData } = response.locals
+    const username = userData.login
+    const repo = 'takenote-data'
+
+    try {
+      const { data } = await SDK(
+        Method.GET,
+        `/repos/${username}/${repo}/contents/settings.json`,
+        accessToken
+      )
+
+      const settings = Buffer.from(data.content, 'base64').toString()
+
+      try {
+        JSON.parse(settings)
+      } catch (error) {
+        response.status(400).send({ message: error.message || 'Must be valid JSON.' })
+      }
+
+      response.status(200).send(settings)
+    } catch (error) {
+      response
+        .status(400)
+        .send({ message: error.message || 'Something went wrong while fetching category data' })
     }
   },
 }

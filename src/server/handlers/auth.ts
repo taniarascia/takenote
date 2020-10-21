@@ -2,6 +2,8 @@ import { Request, Response } from 'express'
 import axios from 'axios'
 import * as dotenv from 'dotenv'
 
+import { welcomeNote } from '../utils/defaultNotes/welcomeNote'
+import { scratchpadNote } from '../utils/defaultNotes/scratchpadNote'
 import { thirtyDayCookie } from '../utils/constants'
 import { SDK } from '../utils/helpers'
 import { Method } from '../utils/enums'
@@ -138,7 +140,7 @@ async function createTakeNoteDataRepo(username: string, accessToken: string): Pr
 }
 
 async function createInitialCommit(username: string, accessToken: string): Promise<void> {
-  const readme = Buffer.from('Hello World!').toString('base64')
+  const readme = Buffer.from([scratchpadNote, welcomeNote]).toString('base64')
   const initialCommit = {
     message: 'Initial commit',
     content: readme,
@@ -147,7 +149,7 @@ async function createInitialCommit(username: string, accessToken: string): Promi
   try {
     await SDK(
       Method.PUT,
-      `/repos/${username}/takenote-data/contents/README.md`,
+      `/repos/${username}/takenote-data/contents/notes.json`,
       accessToken,
       initialCommit
     )

@@ -177,13 +177,13 @@ export const SettingsModal: React.FC = () => {
             </TabPanel>
             <TabPanel label="About TakeNote" icon={Layers}>
               <p>
-                TakeNote is a simple, minimalist note-taking app that integrates with GitHub,
-                created for developers who want to write in plain text or Markdown and have their
-                notes accessible from the web, without any fluff.
+                TakeNote is minimalist note-taking app that integrates with GitHub. It was created
+                for developers who want to write in plain text or Markdown and have their notes
+                accessible from the web without any fluff or extra features.
               </p>
               <p>
                 This app has no tracking or analytics and does not retain any user data. All data
-                exists only in GitHub.
+                exists only in GitHub, in the <b>takenote-data</b> repo.
               </p>
               <p>
                 TakeNote was created by{' '}

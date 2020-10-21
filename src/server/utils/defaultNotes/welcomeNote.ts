@@ -1,7 +1,7 @@
 import { v4 as uuid } from 'uuid'
 import dayjs from 'dayjs'
 
-import markdown from '@/api/welcomeNote.md'
+import markdown from './welcomeNote.md'
 
 export const welcomeNote = {
   id: uuid(),
