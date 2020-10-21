@@ -93,9 +93,9 @@ function* fetchSettings() {
 }
 
 function* syncData({ payload }: SyncAction) {
-  const notes = yield select(getNotes)
-  const categories = yield select(getCategories)
-  const settings = yield select(getSettings)
+  const { notes } = yield select(getNotes)
+  const { categories } = yield select(getCategories)
+  const { settings } = yield select(getSettings)
 
   const body = { notes, categories, settings }
 

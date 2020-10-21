@@ -84,7 +84,7 @@ export const NoteMenuBar = () => {
           onClick={syncNotesHandler}
           data-testid={TestID.TOPBAR_ACTION_SYNC_NOTES}
         >
-          {syncing ? <Loader size={18} /> : <RefreshCw size={18} />}
+          {syncing ? <Loader size={18} className="rotating-svg" /> : <RefreshCw size={18} />}
         </button>
         <button className="note-menu-bar-button" onClick={toggleDarkThemeHandler}>
           {darkTheme ? <Sun size={18} /> : <Moon size={18} />}

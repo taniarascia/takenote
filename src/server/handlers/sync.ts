@@ -1,4 +1,5 @@
 import { Request, Response } from 'express'
+import dayjs from 'dayjs'
 
 import { SDK } from '../utils/helpers'
 import { Method } from '../utils/enums'
@@ -28,18 +29,16 @@ export default {
       // Create commit
       // https://docs.github.com/en/free-pro-team@latest/rest/reference/git#create-a-commit
       const commit = await SDK(Method.POST, `/repos/${username}/${repo}/git/commits`, accessToken, {
-        message: 'Notes ' + Date.now(),
+        message: 'Notes ' + dayjs(Date.now()).format('h:mm A M/D/YYYY'),
         tree: tree.data.sha,
       })
 
       // Update a reference
       // https://docs.github.com/en/free-pro-team@latest/rest/reference/git#update-a-reference
-      const update = await SDK(
-        Method.POST,
-        `/repos/${username}/${repo}/git/refs/heads/master`,
-        accessToken,
-        { sha: commit.data.sha, force: true }
-      )
+      await SDK(Method.POST, `/repos/${username}/${repo}/git/refs/heads/master`, accessToken, {
+        sha: commit.data.sha,
+        force: true,
+      })
 
       response.status(200).send({ message: 'Success' })
     } catch (error) {
