@@ -221,3 +221,20 @@ kbd {
     transform: scale(1);
   }
 }
+
+.rotating-svg {
+  animation-name: rotating;
+  animation-duration: 15.5s;
+  animation-iteration-count: infinite;
+  transform-origin: 50% 50%;
+  display: inline-block;
+}
+
+@keyframes rotating {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
