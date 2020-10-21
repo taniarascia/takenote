@@ -1,16 +1,17 @@
 import React, { useContext } from 'react'
-import { ArrowUp, Download, Star, Trash, X, Edit2 } from 'react-feather'
+import { ArrowUp, Download, Star, Trash, X, Edit2, AlertTriangle } from 'react-feather'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { LabelText } from '@resources/LabelText'
 import { TestID } from '@resources/TestID'
 import { ContextMenuOption } from '@/components/NoteList/ContextMenuOption'
-import { downloadNotes } from '@/utils/helpers'
+import { downloadNotes, isDraftNote } from '@/utils/helpers'
 import {
   deleteNotes,
   toggleFavoriteNotes,
   toggleTrashNotes,
   addCategoryToNote,
+  updateActiveCategoryId,
   updateActiveNote,
   swapFolder,
 } from '@/slices/note'
@@ -112,6 +113,8 @@ const NotesOptions: React.FC<NotesOptionsProps> = ({ clickedNote }) => {
     dispatch(addCategoryToNote({ categoryId, noteId }))
   const _updateActiveNote = (noteId: string, multiSelect: boolean) =>
     dispatch(updateActiveNote({ noteId, multiSelect }))
+  const _updateActiveCategoryId = (categoryId: string) =>
+    dispatch(updateActiveCategoryId(categoryId))
 
   // ===========================================================================
   // Handlers
@@ -134,28 +137,8 @@ const NotesOptions: React.FC<NotesOptionsProps> = ({ clickedNote }) => {
 
   return (
     <nav className="options-nav" data-testid={TestID.NOTE_OPTIONS_NAV}>
-      <ContextMenuOption
-        dataTestID={TestID.NOTE_OPTION_DOWNLOAD}
-        handler={downloadNotesHandler}
-        icon={Download}
-        text={LabelText.DOWNLOAD}
-      />
-      {clickedNote.category && !clickedNote.trash && (
-        <ContextMenuOption
-          dataTestID={TestID.NOTE_OPTION_REMOVE_CATEGORY}
-          handler={removeCategoryFromNoteHandler}
-          icon={X}
-          text={LabelText.REMOVE_CATEGORY}
-        />
-      )}
-      {clickedNote.trash ? (
+      {!isDraftNote(clickedNote) && clickedNote.trash && (
         <>
-          <ContextMenuOption
-            dataTestID={TestID.NOTE_OPTION_RESTORE_FROM_TRASH}
-            handler={trashNoteHandler}
-            icon={ArrowUp}
-            text={LabelText.RESTORE_FROM_TRASH}
-          />
           <ContextMenuOption
             dataTestID={TestID.NOTE_OPTION_DELETE_PERMANENTLY}
             handler={deleteNotesHandler}
@@ -163,8 +146,15 @@ const NotesOptions: React.FC<NotesOptionsProps> = ({ clickedNote }) => {
             text={LabelText.DELETE_PERMANENTLY}
             optionType="delete"
           />
+          <ContextMenuOption
+            dataTestID={TestID.NOTE_OPTION_RESTORE_FROM_TRASH}
+            handler={trashNoteHandler}
+            icon={ArrowUp}
+            text={LabelText.RESTORE_FROM_TRASH}
+          />
         </>
-      ) : clickedNote.scratchpad ? null : (
+      )}
+      {!isDraftNote(clickedNote) && !clickedNote.scratchpad && !clickedNote.trash && (
         <>
           <ContextMenuOption
             dataTestID={TestID.NOTE_OPTION_FAVORITE}
@@ -180,6 +170,28 @@ const NotesOptions: React.FC<NotesOptionsProps> = ({ clickedNote }) => {
             optionType="delete"
           />
         </>
+      )}
+      {!isDraftNote(clickedNote) && (
+        <ContextMenuOption
+          dataTestID={TestID.NOTE_OPTION_DOWNLOAD}
+          handler={downloadNotesHandler}
+          icon={Download}
+          text={LabelText.DOWNLOAD}
+        />
+      )}
+      {clickedNote.category && !clickedNote.trash && (
+        <ContextMenuOption
+          dataTestID={TestID.NOTE_OPTION_REMOVE_CATEGORY}
+          handler={removeCategoryFromNoteHandler}
+          icon={X}
+          text={LabelText.REMOVE_CATEGORY}
+        />
+      )}
+      {isDraftNote(clickedNote) && (
+        <div className="nav-item">
+          <AlertTriangle size="16" />
+          {LabelText.ADD_CONTENT_NOTE}
+        </div>
       )}
     </nav>
   )

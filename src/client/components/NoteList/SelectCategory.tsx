@@ -22,7 +22,7 @@ export const SelectCategory: React.FC<SelectCategoryProps> = ({
 
   return (
     <>
-      {!note.trash && filteredCategories.length > 0 && (
+      {!note.trash && note.text !== '' && filteredCategories.length > 0 && (
         <select
           data-testid={TestID.MOVE_TO_CATEGORY}
           defaultValue=""

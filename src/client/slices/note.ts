@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { Folder } from '@/utils/enums'
 import { NoteItem, NoteState } from '@/types'
+import { isDraftNote } from '@/utils/helpers'
 
 const getNewActiveNoteId = (
   notes: NoteItem[],
@@ -51,7 +52,11 @@ const noteSlice = createSlice({
   initialState,
   reducers: {
     addNote: (state, { payload }: PayloadAction<NoteItem>) => {
-      state.notes.push(payload)
+      const draftNote = state.notes.find((note) => isDraftNote(note))
+
+      if (!draftNote) {
+        state.notes.push(payload)
+      }
     },
 
     updateNote: (state, { payload }: PayloadAction<NoteItem>) => {
@@ -111,6 +116,7 @@ const noteSlice = createSlice({
       state.activeFolder = Folder.CATEGORY
       state.activeNoteId = getFirstNoteId(Folder.CATEGORY, state.notes, payload)
       state.selectedNotesIds = [getFirstNoteId(Folder.CATEGORY, state.notes, payload)]
+      state.notes = state.notes.filter((note) => note.text !== '')
     },
 
     swapFolder: (state, { payload }: PayloadAction<Folder>) => {
@@ -118,6 +124,7 @@ const noteSlice = createSlice({
       state.activeCategoryId = ''
       state.activeNoteId = getFirstNoteId(payload, state.notes)
       state.selectedNotesIds = [getFirstNoteId(payload, state.notes)]
+      state.notes = state.notes.filter((note) => note.text !== '')
     },
 
     assignFavoriteToNotes: (state, { payload }: PayloadAction<string>) => {
