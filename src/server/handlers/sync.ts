@@ -6,8 +6,10 @@ import { Method } from '../utils/enums'
 export default {
   sync: async (request: Request, response: Response) => {
     const { accessToken, userData } = response.locals
-    // https://docs.github.com/en/free-pro-team@latest/rest/reference/repos#create-or-update-file-contents
-    //api.github.com/repos/<owner>/<repository>/contents/<filename.extension>
+    const { body } = request
+    const username = userData.login
+
+    console.log(body)
 
     response.status(200).send({ message: 'Success' })
 

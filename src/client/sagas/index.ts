@@ -19,7 +19,7 @@ import {
   updateNotesSortStrategy,
 } from '@/slices/settings'
 import { SyncAction } from '@/types'
-import { getSettings } from '@/selectors'
+import { getSettings, getNotes, getCategories } from '@/selectors'
 
 /**
  * Log in user
@@ -93,9 +93,14 @@ function* fetchSettings() {
 }
 
 function* syncData({ payload }: SyncAction) {
+  const notes = yield select(getNotes)
+  const categories = yield select(getCategories)
+
+  const body = { notes, categories }
+
   try {
     yield saveState(payload)
-    yield axios('/api/sync/sync')
+    yield axios.post('/api/sync/sync', body)
     yield put(syncSuccess(dayjs().format()))
   } catch (error) {
     yield put(syncError(error.message))
