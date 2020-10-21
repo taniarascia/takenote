@@ -88,6 +88,7 @@ export default {
 
       if (isFirstTimeLoggingIn) {
         await createTakeNoteDataRepo(username, accessToken)
+        await createInitialCommit(username, accessToken)
       }
 
       response.status(200).send(data)
@@ -130,7 +131,26 @@ async function createTakeNoteDataRepo(username: string, accessToken: string): Pr
     allow_rebase_merge: false,
   }
   try {
-    const { data } = await SDK(Method.POST, `/user/repos`, accessToken, takenoteDataRepo)
+    await SDK(Method.POST, `/user/repos`, accessToken, takenoteDataRepo)
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+async function createInitialCommit(username: string, accessToken: string): Promise<void> {
+  const readme = Buffer.from('Hello World!').toString('base64')
+  const initialCommit = {
+    message: 'Initial commit',
+    content: readme,
+    branch: 'master',
+  }
+  try {
+    await SDK(
+      Method.PUT,
+      `/repos/${username}/takenote-data/contents/README.md`,
+      accessToken,
+      initialCommit
+    )
   } catch (error) {
     throw new Error(error)
   }

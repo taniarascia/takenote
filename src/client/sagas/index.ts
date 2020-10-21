@@ -100,7 +100,7 @@ function* syncData({ payload }: SyncAction) {
 
   try {
     yield saveState(payload)
-    yield axios.post('/api/sync/sync', body)
+    yield axios.post('/api/sync', body)
     yield put(syncSuccess(dayjs().format()))
   } catch (error) {
     yield put(syncError(error.message))

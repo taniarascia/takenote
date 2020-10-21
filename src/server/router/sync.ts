@@ -6,6 +6,6 @@ import getUser from '../middleware/getUser'
 
 const router = express.Router()
 
-router.get('/sync', checkAuth, getUser, syncHandler.sync)
+router.post('/', checkAuth, getUser, syncHandler.sync)
 
 export default router
