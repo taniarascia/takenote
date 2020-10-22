@@ -16,11 +16,13 @@ import { getSettings, getAuth, getNotes, getCategories } from '@/selectors'
 import { Option } from '@/components/SettingsModal/Option'
 import { Shortcut } from '@/components/SettingsModal/Shortcut'
 import { SelectOptions } from '@/components/SettingsModal/SelectOptions'
+import { IconButton } from '@/components/SettingsModal/IconButton'
 import { NotesSortKey } from '@/utils/enums'
 import { downloadNotes } from '@/utils/helpers'
-import { SvgOption } from '@/components/SettingsModal/SvgOption'
 import { Tabs } from '@/components/Tabs/Tabs'
 import { TabPanel } from '@/components/Tabs/TabPanel'
+import { LabelText } from '@resources/LabelText'
+import { TestID } from '@resources/TestID'
 
 export const SettingsModal: React.FC = () => {
   // ===========================================================================
@@ -180,6 +182,14 @@ export const SettingsModal: React.FC = () => {
                 <Shortcut action={shortcut.action} letter={shortcut.key} key={shortcut.key} />
               ))}
             </TabPanel>
+            <TabPanel label="Data management" icon={Command}>
+              <IconButton
+                dataTestID={TestID.SETTINGS_MODAL_DOWNLOAD_NOTES}
+                handler={downloadNotesHandler}
+                icon={Download}
+                text={LabelText.DOWNLOAD_ALL_NOTES}
+              />
+            </TabPanel>
             <TabPanel label="About TakeNote" icon={Layers}>
               <p>
                 TakeNote is a simple, minimalist note-taking app that integrates with GitHub,
@@ -217,19 +227,6 @@ export const SettingsModal: React.FC = () => {
               </p>
             </TabPanel>
           </Tabs>
-        </section>
-
-        <div className="settings-label">Keyboard Shortcuts</div>
-        <section className="settings-section">
-          {shortcutMap.map((shortcut) => (
-            <Shortcut action={shortcut.action} letter={shortcut.key} key={shortcut.key} />
-          ))}
-        </section>
-        <div className="settings-label mb-1 mt-1">Data Management</div>
-        <section className="settings-section">
-          <SvgOption title="Download All Notes (zip)" onClick={downloadNotesHandler}>
-            <Download size={16} fill={iconColor} cursor="pointer" />
-          </SvgOption>
         </section>
       </aside>
     </div>
