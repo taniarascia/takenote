@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { X, Command, Settings, Layers } from 'react-feather'
+import { X, Command, Settings, Layers, Download } from 'react-feather'
 
 import {
   toggleSettingsModal,
@@ -10,15 +10,19 @@ import {
   updateNotesSortStrategy,
 } from '@/slices/settings'
 import { logout } from '@/slices/auth'
-import { shortcutMap, notesSortOptions, directionTextOptions } from '@/utils/constants'
+import { shortcutMap, notesSortOptions, directionTextOptions, iconColor } from '@/utils/constants'
 import { ReactMouseEvent } from '@/types'
-import { getSettings, getAuth } from '@/selectors'
+import { getSettings, getAuth, getNotes, getCategories } from '@/selectors'
 import { Option } from '@/components/SettingsModal/Option'
 import { Shortcut } from '@/components/SettingsModal/Shortcut'
-import { NotesSortKey } from '@/utils/enums'
 import { SelectOptions } from '@/components/SettingsModal/SelectOptions'
+import { IconButton } from '@/components/SettingsModal/IconButton'
+import { NotesSortKey } from '@/utils/enums'
+import { downloadNotes } from '@/utils/helpers'
 import { Tabs } from '@/components/Tabs/Tabs'
 import { TabPanel } from '@/components/Tabs/TabPanel'
+import { LabelText } from '@resources/LabelText'
+import { TestID } from '@resources/TestID'
 
 export const SettingsModal: React.FC = () => {
   // ===========================================================================
@@ -29,6 +33,8 @@ export const SettingsModal: React.FC = () => {
     getSettings
   )
   const { currentUser } = useSelector(getAuth)
+  const { selectedNotesIds, notes } = useSelector(getNotes)
+  const { categories } = useSelector(getCategories)
 
   // ===========================================================================
   // Dispatch
@@ -85,6 +91,7 @@ export const SettingsModal: React.FC = () => {
   const updateNotesDirectionHandler = (selectedOption: any) => {
     _updateCodeMirrorOption('direction', selectedOption.value)
   }
+  const downloadNotesHandler = () => downloadNotes(notes, categories)
   // ===========================================================================
   // Hooks
   // ===========================================================================
@@ -174,6 +181,14 @@ export const SettingsModal: React.FC = () => {
               {shortcutMap.map((shortcut) => (
                 <Shortcut action={shortcut.action} letter={shortcut.key} key={shortcut.key} />
               ))}
+            </TabPanel>
+            <TabPanel label="Data management" icon={Command}>
+              <IconButton
+                dataTestID={TestID.SETTINGS_MODAL_DOWNLOAD_NOTES}
+                handler={downloadNotesHandler}
+                icon={Download}
+                text={LabelText.DOWNLOAD_ALL_NOTES}
+              />
             </TabPanel>
             <TabPanel label="About TakeNote" icon={Layers}>
               <p>
