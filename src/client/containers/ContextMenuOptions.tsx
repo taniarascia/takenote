@@ -100,6 +100,10 @@ const NotesOptions: React.FC<NotesOptionsProps> = ({ clickedNote }) => {
   const { selectedNotesIds, notes } = useSelector(getNotes)
   const { categories } = useSelector(getCategories)
 
+  const selectedNotes = notes.filter((note) => selectedNotesIds.includes(note.id))
+  const isSelectedNotesDiffFavor =
+    selectedNotes.filter((note) => note.favorite !== selectedNotes[0].favorite).length > 0
+
   // ===========================================================================
   // Dispatch
   // ===========================================================================
@@ -123,9 +127,7 @@ const NotesOptions: React.FC<NotesOptionsProps> = ({ clickedNote }) => {
   const deleteNotesHandler = () => _deleteNotes(selectedNotesIds)
   const downloadNotesHandler = () =>
     downloadNotes(
-      selectedNotesIds.includes(clickedNote.id)
-        ? notes.filter((note) => selectedNotesIds.includes(note.id))
-        : [clickedNote],
+      selectedNotesIds.includes(clickedNote.id) ? selectedNotes : [clickedNote],
       categories
     )
   const favoriteNoteHandler = () => _toggleFavoriteNotes(clickedNote.id)
@@ -160,7 +162,13 @@ const NotesOptions: React.FC<NotesOptionsProps> = ({ clickedNote }) => {
             dataTestID={TestID.NOTE_OPTION_FAVORITE}
             handler={favoriteNoteHandler}
             icon={Star}
-            text={clickedNote.favorite ? LabelText.REMOVE_FAVORITE : LabelText.MARK_AS_FAVORITE}
+            text={
+              isSelectedNotesDiffFavor
+                ? LabelText.TOGGLE_FAVORITE
+                : clickedNote.favorite
+                ? LabelText.REMOVE_FAVORITE
+                : LabelText.MARK_AS_FAVORITE
+            }
           />
           <ContextMenuOption
             dataTestID={TestID.NOTE_OPTION_TRASH}
