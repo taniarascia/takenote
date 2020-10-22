@@ -25,17 +25,16 @@ export const IconButton: React.FC<IconButtonProps> = ({
       onClick={handler}
       disabled={disabled}
       title={text}
+      className="icon-button"
     >
-      <div className="button-content">
-        <IconCmp
-          size={18}
-          className="button-icon"
-          color={iconColor}
-          aria-hidden="true"
-          focusable="false"
-        />
-        {text}
-      </div>
+      <IconCmp
+        size={18}
+        className="button-icon"
+        color={iconColor}
+        aria-hidden="true"
+        focusable="false"
+      />
+      {text}
     </button>
   )
 }

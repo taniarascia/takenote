@@ -44,6 +44,15 @@
     }
   }
 
+  &.icon-button {
+    display: flex;
+    align-items: center;
+    svg {
+      margin-right: 0.75rem;
+      stroke: rgba(255, 255, 255, 0.7);
+    }
+  }
+
   &.github-button {
     display: inline-flex;
     align-items: center;

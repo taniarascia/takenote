@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { X, Command, Settings, Layers, Download } from 'react-feather'
+import { X, Command, Settings, Archive, Layers, Download } from 'react-feather'
 
 import {
   toggleSettingsModal,
@@ -182,7 +182,7 @@ export const SettingsModal: React.FC = () => {
                 <Shortcut action={shortcut.action} letter={shortcut.key} key={shortcut.key} />
               ))}
             </TabPanel>
-            <TabPanel label="Data management" icon={Command}>
+            <TabPanel label="Data management" icon={Archive}>
               <IconButton
                 dataTestID={TestID.SETTINGS_MODAL_DOWNLOAD_NOTES}
                 handler={downloadNotesHandler}
