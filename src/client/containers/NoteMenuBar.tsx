@@ -13,7 +13,7 @@ import {
 } from '@/slices/settings'
 import { toggleFavoriteNotes, toggleTrashNotes } from '@/slices/note'
 import { getCategories, getNotes, getSync, getSettings } from '@/selectors'
-import { downloadNotes } from '@/utils/helpers'
+import { downloadNotes, isDraftNote } from '@/utils/helpers'
 import { sync } from '@/slices/sync'
 
 export const NoteMenuBar = () => {
@@ -59,7 +59,7 @@ export const NoteMenuBar = () => {
 
   return (
     <section className="note-menu-bar">
-      {activeNoteId ? (
+      {activeNote && !isDraftNote(activeNote) ? (
         <nav>
           <button className="note-menu-bar-button" onClick={_togglePreviewMarkdown}>
             <Eye size={18} />
@@ -69,7 +69,7 @@ export const NoteMenuBar = () => {
               <button className="note-menu-bar-button" onClick={favoriteNoteHandler}>
                 <Star size={18} />
               </button>
-              <button className="note-menu-bar-button" onClick={trashNoteHandler}>
+              <button className="note-menu-bar-button trash" onClick={trashNoteHandler}>
                 <Trash2 size={18} />
               </button>
             </>

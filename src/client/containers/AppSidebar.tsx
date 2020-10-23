@@ -68,8 +68,6 @@ export const AppSidebar: React.FC = () => {
       _updateSelectedNotes
     )
 
-  const settingsHandler = () => _toggleSettingsModal()
-
   return (
     <aside className="app-sidebar">
       <ActionButton

@@ -27,6 +27,7 @@ import {
   assertNoteListLengthEquals,
   clickCreateNewNote,
   clickNoteOptions,
+  createXUniqueNotes,
 } from '../utils/testNotesHelperUtils'
 
 describe('Categories', () => {
@@ -43,7 +44,7 @@ describe('Categories', () => {
 
     // navigate back to All Notes create a new note, and move it to that category
     navigateToNotes()
-    clickCreateNewNote()
+    createXUniqueNotes(1)
     clickNoteOptions()
     selectMoveToCategoryOption(dynamicTimeCategoryName)
 

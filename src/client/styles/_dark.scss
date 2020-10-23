@@ -26,6 +26,11 @@ $dark-editor: #3f3f3f;
 
     button {
       color: rgba(255, 255, 255, 0.5);
+      &.trash {
+        &:hover {
+          color: darken($error, 8%);
+        }
+      }
       &:hover {
         color: rgba(255, 255, 255, 0.7);
         background: darken($dark-sidebar, 10%);
