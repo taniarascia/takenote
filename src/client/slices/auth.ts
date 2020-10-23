@@ -34,6 +34,8 @@ const authSlice = createSlice({
     },
 
     logoutSuccess: (state) => {
+      localStorage.clear()
+
       state.isAuthenticated = false
       state.currentUser = {}
       state.error = ''
