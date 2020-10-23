@@ -13,21 +13,23 @@
 
 ![Screenshot](./assets/takenote-light.png)
 
-### Fast and simple
+## Features
 
-TakeNote was made by developers for developers - a simple, plain-text note-taking app for the web with Markdown support. What you see is what you paste. No WYSIWIG, no formatting pasted from the web, and no features you don't need or want.
-
-### Intuitive
-
-Drag-and-drop notes into categories, instantly search through notes, and pin your favorites to the top.
-
-### Beautiful
-
-Enjoy a beautiful, clean design reminiscent of your IDE with light and dark themes.
-
-### Sync to GitHub
-
-In progress!
+- Open source and web-based
+- Plain text notes
+- Markdown preview
+- Syntax highlighting
+- Keyboard shortcuts
+- Drag and drop
+- Favorites and categories
+- Multi-note actions
+- Multi-cursor editing
+- Light/dark theme
+- Search notes
+- Prettify notes
+- No WYSIWYG
+- No database
+- No tracking or analytics
 
 ## Reviews
 

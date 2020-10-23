@@ -1,5 +1,5 @@
 .cm-s-new-moon .CodeMirror-gutters {
-  background: #2d2d2d !important;
+  background: #333333 !important;
 }
 
 .cm-s-new-moon .CodeMirror-foldgutter-open,
@@ -12,7 +12,7 @@
 }
 
 .cm-s-new-moon {
-  background-color: #2d2d2d;
+  background-color: #333333;
   color: $code-font-color;
 }
 
@@ -114,9 +114,9 @@
 }
 
 .cm-s-new-moon div.CodeMirror-selected {
-  background: #545454;
+  background: rgba(255, 255, 255, 0.5);
 }
 
 .cm-s-new-moon .CodeMirror-focused div.CodeMirror-selected {
-  background: #4f4f4f;
+  background: rgba(255, 255, 255, 0.7);
 }
