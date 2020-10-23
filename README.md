@@ -13,21 +13,23 @@
 
 ![Screenshot](./assets/takenote-light.png)
 
-### Fast and simple
+## Features
 
-TakeNote was made by developers for developers - a simple, plain-text note-taking app for the web with Markdown support. What you see is what you paste. No WYSIWIG, no formatting pasted from the web, and no features you don't need or want.
-
-### Intuitive
-
-Drag-and-drop notes into categories, instantly search through notes, and pin your favorites to the top.
-
-### Beautiful
-
-Enjoy a beautiful, clean design reminiscent of your IDE with light and dark themes.
-
-### Sync to GitHub
-
-In progress!
+- Open source and web-based
+- Plain text notes
+- Markdown preview
+- Syntax highlighting
+- Keyboard shortcuts
+- Drag and drop
+- Favorites and categories
+- Multi-note actions
+- Multi-cursor editing
+- Light/dark theme
+- Search notes
+- Prettify notes
+- No WYSIWYG
+- No database
+- No tracking or analytics
 
 ## Reviews
 
@@ -202,12 +204,12 @@ Thanks goes to these wonderful people:
   <tr>
     <td align="center"><a href="https://github.com/G-Milevski"><img src="https://avatars2.githubusercontent.com/u/25174255?v=4" width="50px;" alt=""/><br /><sub><b>G-Milevski</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=G-Milevski" title="Code">💻</a></td>
     <td align="center"><a href="https://kodyclemens.com"><img src="https://avatars0.githubusercontent.com/u/43357615?v=4" width="50px;" alt=""/><br /><sub><b>Kody Clemens</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=kodyclemens" title="Code">💻</a> <a href="https://github.com/taniarascia/takenote/commits?author=kodyclemens" title="Tests">⚠️</a> <a href="https://github.com/taniarascia/takenote/issues?q=author%3Akodyclemens" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://github.com/qpeela"><img src="https://avatars3.githubusercontent.com/u/5824914?v=4" width="50px;" alt=""/><br /><sub><b>Vladimir Yamshikov</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=qpeela" title="Code">💻</a> <a href="https://github.com/taniarascia/takenote/issues?q=author%3Aqpeela" title="Bug reports">🐛</a></td>
   </tr>
 </table>
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
-
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 ## Acknowledgements

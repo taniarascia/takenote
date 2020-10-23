@@ -25,7 +25,7 @@ export function useInterval(callback: () => void, delay: number | null) {
 }
 
 export function useKey(key: string, action: () => void) {
-  let actionRef = useRef(noop)
+  const actionRef = useRef(noop)
   actionRef.current = action
 
   useEffect(() => {
@@ -35,6 +35,7 @@ export function useKey(key: string, action: () => void) {
         actionRef.current()
       }
     })
+
     return () => mousetrap.unbind(key)
   }, [key])
 }
@@ -66,6 +67,7 @@ export function useBeforeUnload(handler: Function = () => {}) {
 
       if (typeof returnValue === 'string') {
         event.returnValue = returnValue
+
         return returnValue
       }
     }

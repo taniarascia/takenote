@@ -4,16 +4,21 @@ TakeNote is a free, open-source notes app with GitHub sync (soon™️). Check o
 
 ## Features
 
-- Organize with categories and bookmarks
-- Shortcuts for common actions
-- Light/dark mode
-- Drag and drop
+- Open source and web-based
+- Plain text notes
+- Markdown preview
 - Syntax highlighting
+- Keyboard shortcuts
+- Drag and drop
+- Favorites and categories
 - Multi-note actions
 - Multi-cursor editing
-- Markdown preview
-- Prettify notes
+- Light/dark theme
 - Search notes
+- Prettify notes
+- No WYSIWYG
+- No database
+- No tracking or analytics
 
 ## Keyboard shortcuts
 

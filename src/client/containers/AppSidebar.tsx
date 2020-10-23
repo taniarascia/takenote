@@ -1,5 +1,5 @@
 import React from 'react'
-import { Plus, Settings } from 'react-feather'
+import { Plus } from 'react-feather'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { LabelText } from '@resources/LabelText'
@@ -19,7 +19,7 @@ import {
   unassignTrashFromNotes,
 } from '@/slices/note'
 import { toggleSettingsModal, togglePreviewMarkdown } from '@/slices/settings'
-import { getSettings, getNotes, getAuth } from '@/selectors'
+import { getSettings, getNotes } from '@/selectors'
 import { NoteItem } from '@/types'
 import { newNoteHandlerHelper, getActiveNote } from '@/utils/helpers'
 
@@ -30,7 +30,6 @@ export const AppSidebar: React.FC = () => {
 
   const { activeCategoryId, activeFolder, activeNoteId, notes } = useSelector(getNotes)
   const { previewMarkdown } = useSelector(getSettings)
-  const { currentUser } = useSelector(getAuth)
 
   const activeNote = getActiveNote(notes, activeNoteId)
 
@@ -69,8 +68,6 @@ export const AppSidebar: React.FC = () => {
       _updateSelectedNotes
     )
 
-  const settingsHandler = () => _toggleSettingsModal()
-
   return (
     <aside className="app-sidebar">
       <ActionButton
@@ -108,23 +105,6 @@ export const AppSidebar: React.FC = () => {
         />
         <CategoryList />
       </section>
-      <button
-        className="app-sidebar-settings"
-        data-testid={TestID.SIDEBAR_ACTION_SETTINGS}
-        onClick={settingsHandler}
-        aria-label={LabelText.SETTINGS}
-      >
-        <div>
-          <img src={currentUser.avatar_url} alt="Profile" className="user-avatar" />
-        </div>
-        <div>
-          <div className="user-name">{currentUser.name}</div>
-          <div className="user-subtitle">Settings</div>
-        </div>
-        <div className="user-settings-icon">
-          <Settings size={16} />
-        </div>
-      </button>
     </aside>
   )
 }

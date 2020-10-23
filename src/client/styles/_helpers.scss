@@ -49,11 +49,11 @@
     height: 0;
 
     &:checked + .slider {
-      background: $primary;
+      background: #72ce6e;
     }
 
     &:focus + .slider {
-      box-shadow: 0 0 1px $primary;
+      box-shadow: 0 0 1px #72ce6e;
     }
 
     &:checked + .slider:before {
@@ -76,13 +76,14 @@
   &:before {
     position: absolute;
     content: '';
-    height: 16px;
-    width: 16px;
-    left: 4px;
-    bottom: 4px;
+    height: 20px;
+    width: 20px;
+    left: 2px;
+    bottom: 2px;
     background: white;
     transition: 0.4s;
     border-radius: 50%;
+    box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.07), 2px 3px 2px rgba(0, 0, 0, 0.2);
   }
 }
 
@@ -218,5 +219,22 @@ kbd {
   100% {
     opacity: 1;
     transform: scale(1);
+  }
+}
+
+.rotating-svg {
+  animation-name: rotating;
+  animation-duration: 15.5s;
+  animation-iteration-count: infinite;
+  transform-origin: 50% 50%;
+  display: inline-block;
+}
+
+@keyframes rotating {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }
