@@ -11,7 +11,12 @@ import { NoteList } from '@/containers/NoteList'
 import { SettingsModal } from '@/containers/SettingsModal'
 import { TempStateProvider } from '@/contexts/TempStateContext'
 import { useInterval, useBeforeUnload } from '@/utils/hooks'
-import { getWebsiteTitle, determineAppClass, getActiveCategory } from '@/utils/helpers'
+import {
+  getWebsiteTitle,
+  determineAppClass,
+  getActiveCategory,
+  getNoteBarConf,
+} from '@/utils/helpers'
 import { loadCategories, swapCategories } from '@/slices/category'
 import { loadNotes } from '@/slices/note'
 import { sync } from '@/slices/sync'
@@ -90,7 +95,7 @@ export const TakeNoteApp: React.FC = () => {
           <DragDropContext onDragEnd={onDragEnd}>
             <SplitPane split="vertical" minSize={150} maxSize={500} defaultSize={240}>
               <AppSidebar />
-              <SplitPane split="vertical" minSize={200} maxSize={600} defaultSize={330}>
+              <SplitPane split="vertical" {...getNoteBarConf(activeFolder)}>
                 <NoteList />
                 <NoteEditor />
               </SplitPane>
