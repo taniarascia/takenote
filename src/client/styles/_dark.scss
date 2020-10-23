@@ -22,10 +22,15 @@ $dark-editor: #3f3f3f;
 
   .note-menu-bar {
     background: darken($dark-sidebar, 6%);
-    border-bottom: 1px solid darken($dark-sidebar, 12%);
+    border-color: darken($dark-sidebar, 12%);
 
     button {
       color: rgba(255, 255, 255, 0.5);
+      &.trash {
+        &:hover {
+          color: darken($error, 8%);
+        }
+      }
       &:hover {
         color: rgba(255, 255, 255, 0.7);
         background: darken($dark-sidebar, 10%);
@@ -164,10 +169,6 @@ $dark-editor: #3f3f3f;
       color: $tag;
     }
 
-    h2 {
-      border-bottom: 1px solid lighten($dark-editor, 5%);
-    }
-
     h1,
     h2,
     h3,
@@ -176,16 +177,11 @@ $dark-editor: #3f3f3f;
       color: $attribute;
     }
 
-    thead th {
-      border-bottom: 2px solid lighten($dark-editor, 5%);
-    }
-
-    tfoot th {
-      border-top: 2px solid lighten($dark-editor, 5%);
-    }
-
+    table,
+    thead th,
+    tfoot th,
     td {
-      border-bottom: 1px solid lighten($dark-editor, 5%);
+      border-color: darken($dark-editor, 20%);
     }
 
     code {
@@ -291,7 +287,7 @@ $dark-editor: #3f3f3f;
   }
 
   .last-synced {
-    color: rgba(255, 255, 255, 0.35);
+    color: rgba(255, 255, 255, 0.4);
   }
 
   .tab-list {
@@ -325,5 +321,9 @@ $dark-editor: #3f3f3f;
         color: rgba(255, 255, 255, 0.7);
       }
     }
+  }
+
+  .slider {
+    background-color: darken($dark-sidebar, 10%);
   }
 }
