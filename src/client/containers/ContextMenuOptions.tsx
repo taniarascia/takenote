@@ -101,8 +101,9 @@ const NotesOptions: React.FC<NotesOptionsProps> = ({ clickedNote }) => {
   const { categories } = useSelector(getCategories)
 
   const selectedNotes = notes.filter((note) => selectedNotesIds.includes(note.id))
-  const isSelectedNotesDiffFavor =
-    selectedNotes.filter((note) => note.favorite !== selectedNotes[0].favorite).length > 0
+  const isSelectedNotesDiffFavor = Boolean(
+    selectedNotes.find((note) => note.favorite) && selectedNotes.find((note) => !note.favorite)
+  )
 
   // ===========================================================================
   // Dispatch
