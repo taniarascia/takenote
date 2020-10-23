@@ -63,5 +63,5 @@ export const saveState = ({ categories, notes }: SyncPayload) =>
     })
   })
 
-export const saveSettings = (settings: SettingsState) =>
+export const saveSettings = ({ isOpen, ...settings }: SettingsState) =>
   Promise.resolve(localStorage.setItem('settings', JSON.stringify(settings)))
