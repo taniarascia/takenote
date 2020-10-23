@@ -431,6 +431,16 @@
         "test",
         "bug"
       ]
+    },
+    {
+      "login": "qpeela",
+      "name": "Vladimir Yamshikov",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/5824914?v=4",
+      "profile": "https://github.com/qpeela",
+      "contributions": [
+        "code",
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
