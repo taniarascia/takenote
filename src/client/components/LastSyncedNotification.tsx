@@ -3,10 +3,28 @@ import dayjs from 'dayjs'
 
 export interface LastSyncedNotificationProps {
   datetime: string
+  pending: boolean
+  syncing: boolean
 }
 
-export const LastSyncedNotification: React.FC<LastSyncedNotificationProps> = ({ datetime }) => {
-  return (
-    <div className="last-synced">{datetime && dayjs(datetime).format('h:mm A on M/D/YYYY')}</div>
-  )
+export const LastSyncedNotification: React.FC<LastSyncedNotificationProps> = ({
+  datetime,
+  pending,
+  syncing,
+}) => {
+  const renderLastSynced = () => {
+    if (syncing) {
+      return <i>Syncing...</i>
+    }
+
+    if (pending) {
+      return <i>Unsaved changes</i>
+    }
+
+    if (datetime) {
+      return <span>{dayjs(datetime).format('h:mm A on M/D/YYYY')}</span>
+    }
+  }
+
+  return <div className="last-synced">{renderLastSynced()}</div>
 }

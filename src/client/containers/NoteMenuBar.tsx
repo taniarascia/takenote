@@ -13,7 +13,7 @@ import {
 } from '@/slices/settings'
 import { toggleFavoriteNotes, toggleTrashNotes } from '@/slices/note'
 import { getCategories, getNotes, getSync, getSettings } from '@/selectors'
-import { downloadNotes } from '@/utils/helpers'
+import { downloadNotes, isDraftNote } from '@/utils/helpers'
 import { sync } from '@/slices/sync'
 
 export const NoteMenuBar = () => {
@@ -23,7 +23,7 @@ export const NoteMenuBar = () => {
 
   const { notes, activeNoteId } = useSelector(getNotes)
   const { categories } = useSelector(getCategories)
-  const { syncing, lastSynced } = useSelector(getSync)
+  const { syncing, lastSynced, pendingSync } = useSelector(getSync)
   const { darkTheme } = useSelector(getSettings)
   const activeNote = notes.find((note) => note.id === activeNoteId)!
 
@@ -59,32 +59,36 @@ export const NoteMenuBar = () => {
 
   return (
     <section className="note-menu-bar">
+      {activeNote && !isDraftNote(activeNote) ? (
+        <nav>
+          <button className="note-menu-bar-button" onClick={_togglePreviewMarkdown}>
+            <Eye size={18} />
+          </button>
+          {!activeNote.scratchpad && (
+            <>
+              <button className="note-menu-bar-button" onClick={favoriteNoteHandler}>
+                <Star size={18} />
+              </button>
+              <button className="note-menu-bar-button trash" onClick={trashNoteHandler}>
+                <Trash2 size={18} />
+              </button>
+            </>
+          )}
+          <button className="note-menu-bar-button">
+            <Download size={18} onClick={downloadNotesHandler} />
+          </button>
+        </nav>
+      ) : (
+        <div />
+      )}
       <nav>
-        <button className="note-menu-bar-button" onClick={_togglePreviewMarkdown}>
-          <Eye size={18} />
-        </button>
-        {!activeNote.scratchpad && (
-          <>
-            <button className="note-menu-bar-button" onClick={favoriteNoteHandler}>
-              <Star size={18} />
-            </button>
-            <button className="note-menu-bar-button" onClick={trashNoteHandler}>
-              <Trash2 size={18} />
-            </button>
-          </>
-        )}
-        <button className="note-menu-bar-button">
-          <Download size={18} onClick={downloadNotesHandler} />
-        </button>
-      </nav>
-      <nav>
-        <LastSyncedNotification datetime={lastSynced} />
+        <LastSyncedNotification datetime={lastSynced} pending={pendingSync} syncing={syncing} />
         <button
           className="note-menu-bar-button"
           onClick={syncNotesHandler}
           data-testid={TestID.TOPBAR_ACTION_SYNC_NOTES}
         >
-          {syncing ? <Loader size={18} /> : <RefreshCw size={18} />}
+          {syncing ? <Loader size={18} className="rotating-svg" /> : <RefreshCw size={18} />}
         </button>
         <button className="note-menu-bar-button" onClick={toggleDarkThemeHandler}>
           {darkTheme ? <Sun size={18} /> : <Moon size={18} />}

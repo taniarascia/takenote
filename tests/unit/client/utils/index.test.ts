@@ -3,14 +3,14 @@ import { Folder } from '@/utils/enums'
 
 describe('Utilities', () => {
   describe('getNoteTitle', () => {
-    test(`should return 38 characters`, () => {
+    test(`should return 45 characters`, () => {
       const note = `This is your world. This is gonna be a happy little seascape. I'm gonna start with a little Alizarin crimson and a touch of Prussian blue`
-      expect(getNoteTitle(note)).toEqual(note.slice(0, 38))
+      expect(getNoteTitle(note)).toEqual(note.slice(0, 45).trim())
     })
 
     test(`should trim both ends`, () => {
-      const note = ` This is your world. This is gonna be a `
-      expect(getNoteTitle(note)).toEqual(`This is your world. This is gonna be a`)
+      const note = ` This is your world. This is gonna be a happy`
+      expect(getNoteTitle(note)).toEqual(`This is your world. This is gonna be a happy`)
     })
 
     test(`should only return the first line`, () => {
