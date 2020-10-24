@@ -51,7 +51,7 @@ describe('categorySlice', () => {
   })
 
   test('should delete the category name on deleteCategory', () => {
-    const initialStateBeforeUpdateCategory = {
+    const initialStateBeforeDeleteCategory = {
       ...initialState,
       categories: [
         {
@@ -77,14 +77,14 @@ describe('categorySlice', () => {
         },
       ],
     }
-    const result = reducer(initialStateBeforeUpdateCategory, deleteCategory('456'))
+    const result = reducer(initialStateBeforeDeleteCategory, deleteCategory('456'))
 
     expect(result).toEqual(nextState)
   })
 
   test('should set draggedOver to true on categoryDragEnter', () => {
     const payload = { id: '123', name: 'note 0 renamed', draggedOver: false }
-    const initialStateBeforeUpdateCategory = {
+    const initialStateBeforeCategoryDragEnter = {
       ...initialState,
       categories: [
         {
@@ -105,13 +105,13 @@ describe('categorySlice', () => {
       ],
     }
 
-    const result = reducer(initialStateBeforeUpdateCategory, categoryDragEnter(payload))
+    const result = reducer(initialStateBeforeCategoryDragEnter, categoryDragEnter(payload))
     expect(result).toEqual(nextState)
   })
 
   test('should set draggedOver to false on categoryDragLeave', () => {
     const payload = { id: '123', name: 'note 0 renamed', draggedOver: false }
-    const initialStateBeforeUpdateCategory = {
+    const initialStateBeforeCategoryDragLeave = {
       ...initialState,
       categories: [
         {
@@ -132,7 +132,7 @@ describe('categorySlice', () => {
       ],
     }
 
-    const result = reducer(initialStateBeforeUpdateCategory, categoryDragLeave(payload))
+    const result = reducer(initialStateBeforeCategoryDragLeave, categoryDragLeave(payload))
     expect(result).toEqual(nextState)
   })
 
@@ -141,7 +141,7 @@ describe('categorySlice', () => {
       categoryId: 0,
       destinationId: 2,
     }
-    const initialStateBeforeUpdateCategory = {
+    const initialStateBeforeSwapCategories = {
       ...initialState,
       categories: [
         {
@@ -182,7 +182,7 @@ describe('categorySlice', () => {
         },
       ],
     }
-    const result = reducer(initialStateBeforeUpdateCategory, swapCategories(payload))
+    const result = reducer(initialStateBeforeSwapCategories, swapCategories(payload))
 
     expect(result).toEqual(nextState)
   })
