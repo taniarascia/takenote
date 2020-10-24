@@ -39,7 +39,13 @@ describe('SycSlice', () => {
 
   test('should set syncing to false, pendingSync to false and lastSynced to payload on syncSuccess', () => {
     const payload = 'lastUpdated'
-    const nextState = { ...initialState, syncing: false, lastSynced: payload, pendingSync: false, error: '' }
+    const nextState = {
+      ...initialState,
+      syncing: false,
+      lastSynced: payload,
+      pendingSync: false,
+      error: '',
+    }
     const result = reducer(initialState, syncSuccess(payload))
 
     expect(result).toEqual(nextState)

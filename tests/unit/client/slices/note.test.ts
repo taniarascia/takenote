@@ -1,4 +1,5 @@
 import { PayloadAction } from '@reduxjs/toolkit'
+import dayjs from 'dayjs'
 
 import reducer, {
   addNote,
@@ -42,8 +43,8 @@ function createNote({
   return {
     id,
     text: text ?? `sample note - ${id}`,
-    created: new Date().toISOString(),
-    lastUpdated: new Date().toISOString(),
+    created: dayjs().format(),
+    lastUpdated: dayjs().format(),
     category,
     favorite,
     scratchpad,
@@ -97,30 +98,30 @@ describe('noteSlice', () => {
     expect(result).toEqual(nextState)
   })
 
-  xtest('should deleteNotes from notes list and set activeNoteId and selectedNotesIds on deleteNotes', () => {
-    const payload = ['1', '4']
-    const notes = [
-      createNote({ id: '1', category: '1' }),
-      createNote({ id: '2', category: '1' }),
-      createNote({ id: '3', category: '1' }),
-      createNote({ id: '4', category: '1' }),
-    ]
-    const initialStateBeforeDeleteNotes = {
-      ...initialState,
-      notes: notes,
-    }
-    const nextState = {
-      ...initialStateBeforeDeleteNotes,
-      notes: [notes[1], notes[2]],
-      activeNoteId: '3',
-      selectedNotesIds: ['3'],
-    }
-    const result = reducer(initialStateBeforeDeleteNotes, deleteNotes(payload))
+  describe('deleteNotes', () => {
+    test('should deleteNotes from notes list and set activeNoteId and selectedNotesIds on deleteNotes', () => {
+      const payload = ['1', '4']
+      const notes = [
+        createNote({ id: '1', category: '1' }),
+        createNote({ id: '2', category: '1' }),
+        createNote({ id: '3', category: '1' }),
+        createNote({ id: '4', category: '1' }),
+      ]
+      const initialStateBeforeDeleteNotes = {
+        ...initialState,
+        notes: notes,
+      }
+      const nextState = {
+        ...initialStateBeforeDeleteNotes,
+        notes: [notes[1], notes[2]],
+        activeNoteId: '',
+        selectedNotesIds: [''],
+      }
+      const result = reducer(initialStateBeforeDeleteNotes, deleteNotes(payload))
 
-    expect(result).toEqual(nextState)
+      expect(result).toEqual(nextState)
+    })
   })
-
-  // TODO: add more scenarios for delete
 
   describe('addCategory', () => {
     test('should add Category to the existing single note', () => {
