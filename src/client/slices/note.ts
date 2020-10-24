@@ -36,7 +36,7 @@ export const getFirstNoteId = (folder: Folder, notes: NoteItem[], categoryId?: s
   return firstNote ? firstNote.id : ''
 }
 
-const initialState: NoteState = {
+export const initialState: NoteState = {
   notes: [],
   activeCategoryId: '',
   activeFolder: Folder.ALL,
