@@ -104,12 +104,13 @@ describe('noteSlice', () => {
       const notes = [
         createNote({ id: '1', category: '1' }),
         createNote({ id: '2', category: '1' }),
-        createNote({ id: '3', category: '1' }),
+        createNote({ id: '3' }),
         createNote({ id: '4', category: '1' }),
       ]
       const initialStateBeforeDeleteNotes = {
         ...initialState,
         notes: notes,
+        activeCategoryId: '1',
       }
       const nextState = {
         ...initialStateBeforeDeleteNotes,
@@ -216,55 +217,109 @@ describe('noteSlice', () => {
     })
   })
 
-  test('should update active category id , active note id, selected note ids and filter the draft notes on updateActiveCategoryId', () => {
-    const payload = '3'
-    const initialStateBeforeUpdatingActiveCategoryId = {
-      ...initialState,
-      notes: [
-        createNote({ id: '1', category: '3' }),
-        createNote({ id: '4', category: '3', text: '' }),
-        createNote({ id: '7', category: '3' }),
-      ],
-    }
-    const nextState = {
-      ...initialStateBeforeUpdatingActiveCategoryId,
-      activeFolder: Folder.CATEGORY,
-      activeCategoryId: '3',
-      activeNoteId: '1',
-      selectedNotesIds: ['1'],
-      notes: [createNote({ id: '1', category: '3' }), createNote({ id: '7', category: '3' })],
-    }
-    const result = reducer(
-      initialStateBeforeUpdatingActiveCategoryId,
-      updateActiveCategoryId(payload)
-    )
+  describe('updateActiveCategory', () => {
+    test('should update active category id , active note id, selected note ids and filter the draft notes on updateActiveCategoryId', () => {
+      const payload = '3'
+      const initialStateBeforeUpdatingActiveCategoryId = {
+        ...initialState,
+        notes: [
+          createNote({ id: '1', category: '3' }),
+          createNote({ id: '4', category: '3', text: '' }),
+          createNote({ id: '7', category: '3' }),
+        ],
+      }
+      const nextState = {
+        ...initialStateBeforeUpdatingActiveCategoryId,
+        activeFolder: Folder.CATEGORY,
+        activeCategoryId: '3',
+        activeNoteId: '1',
+        selectedNotesIds: ['1'],
+        notes: [createNote({ id: '1', category: '3' }), createNote({ id: '7', category: '3' })],
+      }
+      const result = reducer(
+        initialStateBeforeUpdatingActiveCategoryId,
+        updateActiveCategoryId(payload)
+      )
 
-    expect(result).toEqual(nextState)
+      expect(result).toEqual(nextState)
+    })
   })
 
-  test('should swap folders and set payload folder as active folder', () => {
-    const payload = Folder.FAVORITES
-    const notes = [
-      createNote({ id: '1', category: '3' }),
-      createNote({ id: '2', favorite: true }),
-      createNote({ id: '4', category: '3', text: '' }),
-      createNote({ id: '7', category: '3', favorite: true }),
-    ]
-    const initialStateBeforeUpdatingActiveFolder = {
-      ...initialState,
-      notes: notes,
-    }
-    const nextState = {
-      ...initialStateBeforeUpdatingActiveFolder,
-      activeFolder: Folder.FAVORITES,
-      activeCategoryId: '',
-      activeNoteId: '2',
-      selectedNotesIds: ['2'],
-      notes: [notes[0], notes[1], notes[3]],
-    }
-    const result = reducer(initialStateBeforeUpdatingActiveFolder, swapFolder(payload))
+  describe('swapFolder', () => {
+    test('should swap folders and set FAVORITES folder as active folder', () => {
+      const payload = Folder.FAVORITES
+      const notes = [
+        createNote({ id: '1', category: '3' }),
+        createNote({ id: '2', favorite: true }),
+        createNote({ id: '4', category: '3', text: '' }),
+        createNote({ id: '7', category: '3', favorite: true }),
+      ]
+      const initialStateBeforeUpdatingActiveFolder = {
+        ...initialState,
+        notes: notes,
+      }
+      const nextState = {
+        ...initialStateBeforeUpdatingActiveFolder,
+        activeFolder: Folder.FAVORITES,
+        activeCategoryId: '',
+        activeNoteId: '2',
+        selectedNotesIds: ['2'],
+        notes: [notes[0], notes[1], notes[3]],
+      }
+      const result = reducer(initialStateBeforeUpdatingActiveFolder, swapFolder(payload))
 
-    expect(result).toEqual(nextState)
+      expect(result).toEqual(nextState)
+    })
+
+    test('should swap folders and set SCRATCHPAD folder as active folder', () => {
+      const payload = Folder.SCRATCHPAD
+      const notes = [
+        createNote({ id: '1', category: '3' }),
+        createNote({ id: '2', scratchpad: true }),
+        createNote({ id: '4', category: '3', text: '' }),
+        createNote({ id: '7', category: '3', scratchpad: true }),
+      ]
+      const initialStateBeforeUpdatingActiveFolder = {
+        ...initialState,
+        notes: notes,
+      }
+      const nextState = {
+        ...initialStateBeforeUpdatingActiveFolder,
+        activeFolder: Folder.SCRATCHPAD,
+        activeCategoryId: '',
+        activeNoteId: '2',
+        selectedNotesIds: ['2'],
+        notes: [notes[0], notes[1], notes[3]],
+      }
+      const result = reducer(initialStateBeforeUpdatingActiveFolder, swapFolder(payload))
+
+      expect(result).toEqual(nextState)
+    })
+
+    test('should swap folders and set TRASH folder as active folder', () => {
+      const payload = Folder.TRASH
+      const notes = [
+        createNote({ id: '1', category: '3' }),
+        createNote({ id: '2', trash: true }),
+        createNote({ id: '4', category: '3', text: '' }),
+        createNote({ id: '7', category: '3', trash: true }),
+      ]
+      const initialStateBeforeUpdatingActiveFolder = {
+        ...initialState,
+        notes: notes,
+      }
+      const nextState = {
+        ...initialStateBeforeUpdatingActiveFolder,
+        activeFolder: Folder.TRASH,
+        activeCategoryId: '',
+        activeNoteId: '2',
+        selectedNotesIds: ['2'],
+        notes: [notes[0], notes[1], notes[3]],
+      }
+      const result = reducer(initialStateBeforeUpdatingActiveFolder, swapFolder(payload))
+
+      expect(result).toEqual(nextState)
+    })
   })
 
   describe('assignFavorite', () => {
@@ -318,36 +373,72 @@ describe('noteSlice', () => {
     })
   })
 
-  test('should toggle Favorite notes', () => {
-    const payload = '1'
-    const notes = [
-      createNote({ id: '1', category: '3', favorite: true }),
-      createNote({ id: '2' }),
-      createNote({ id: '3' }),
-    ]
-    const initialStateBeforeTogglingFavoriteToNotes = {
-      ...initialState,
-      notes: notes,
-      selectedNotesIds: ['2', '1'],
-    }
-    const nextState = {
-      ...initialStateBeforeTogglingFavoriteToNotes,
-      notes: [
-        {
-          ...notes[0],
-          favorite: false,
-        },
-        {
-          ...notes[1],
-          favorite: true,
-        },
-        notes[2],
-      ],
-      selectedNotesIds: ['2', '1'],
-    }
-    const result = reducer(initialStateBeforeTogglingFavoriteToNotes, toggleFavoriteNotes(payload))
+  describe('toggleFavoriteNotes', () => {
+    test('should toggle Favorite notes for selected ids', () => {
+      const payload = '1'
+      const notes = [
+        createNote({ id: '1', category: '3', favorite: true }),
+        createNote({ id: '2' }),
+        createNote({ id: '3' }),
+      ]
+      const initialStateBeforeTogglingFavoriteToNotes = {
+        ...initialState,
+        notes: notes,
+        selectedNotesIds: ['2', '1'],
+      }
+      const nextState = {
+        ...initialStateBeforeTogglingFavoriteToNotes,
+        notes: [
+          {
+            ...notes[0],
+            favorite: false,
+          },
+          {
+            ...notes[1],
+            favorite: true,
+          },
+          notes[2],
+        ],
+        selectedNotesIds: ['2', '1'],
+      }
+      const result = reducer(
+        initialStateBeforeTogglingFavoriteToNotes,
+        toggleFavoriteNotes(payload)
+      )
 
-    expect(result).toEqual(nextState)
+      expect(result).toEqual(nextState)
+    })
+    test('should toggle Favorite notes only for passed id when there are no selectedNotesIds', () => {
+      const payload = '1'
+      const notes = [
+        createNote({ id: '1', category: '3', favorite: true }),
+        createNote({ id: '2' }),
+        createNote({ id: '3' }),
+      ]
+      const initialStateBeforeTogglingFavoriteToNotes = {
+        ...initialState,
+        notes: notes,
+        selectedNotesIds: [],
+      }
+      const nextState = {
+        ...initialStateBeforeTogglingFavoriteToNotes,
+        notes: [
+          {
+            ...notes[0],
+            favorite: false,
+          },
+          notes[1],
+          notes[2],
+        ],
+        selectedNotesIds: [],
+      }
+      const result = reducer(
+        initialStateBeforeTogglingFavoriteToNotes,
+        toggleFavoriteNotes(payload)
+      )
+
+      expect(result).toEqual(nextState)
+    })
   })
 
   describe('assignTrash', () => {
@@ -570,6 +661,26 @@ describe('noteSlice', () => {
       const nextState = {
         ...initialStateBeforeUpdatingSelectedNotes,
         selectedNotesIds: ['2', '3'],
+      }
+
+      const result = reducer(initialStateBeforeUpdatingSelectedNotes, updateSelectedNotes(payload))
+
+      expect(result).toEqual(nextState)
+    })
+
+    test('should update selected notes ids when multiSelect is true and selectedNotesIds are more than 1', () => {
+      const payload = {
+        noteId: '4',
+        multiSelect: true,
+      }
+      const initialStateBeforeUpdatingSelectedNotes = {
+        ...initialState,
+        selectedNotesIds: ['2', '3'],
+        notes: [createNote({ id: '2' }), createNote({ id: '3' }), createNote({ id: '4' })],
+      }
+      const nextState = {
+        ...initialStateBeforeUpdatingSelectedNotes,
+        selectedNotesIds: ['2', '3', '4'],
       }
 
       const result = reducer(initialStateBeforeUpdatingSelectedNotes, updateSelectedNotes(payload))
