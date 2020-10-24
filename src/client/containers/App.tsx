@@ -5,10 +5,12 @@ import { Helmet, HelmetProvider } from 'react-helmet-async'
 
 import { LandingPage } from '@/components/LandingPage'
 import { TakeNoteApp } from '@/containers/TakeNoteApp'
+import { MobileMsg } from '@/components/MobileMsg'
 import { PublicRoute } from '@/router/PublicRoute'
 import { PrivateRoute } from '@/router/PrivateRoute'
 import { getAuth } from '@/selectors'
 import { login } from '@/slices/auth'
+import { useViewport } from '@/utils/hooks'
 
 export const App: React.FC = () => {
   // ===========================================================================
@@ -16,6 +18,8 @@ export const App: React.FC = () => {
   // ===========================================================================
 
   const { loading } = useSelector(getAuth)
+
+  const { width } = useViewport()
 
   // ===========================================================================
   // Dispatch
@@ -45,7 +49,9 @@ export const App: React.FC = () => {
     )
   }
 
-  return (
+  return width <= 760 ? (
+    <MobileMsg></MobileMsg>
+  ) : (
     <HelmetProvider>
       <Helmet>
         <meta charSet="utf-8" />

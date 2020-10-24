@@ -63,6 +63,11 @@
   display: flex !important;
 }
 
+.mobile-msg {
+  display: flex !important;
+  background: $light-theme-background;
+}
+
 .editor,
 .previewer {
   display: block !important;
