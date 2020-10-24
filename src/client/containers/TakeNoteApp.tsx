@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Helmet, HelmetProvider } from 'react-helmet-async'
 import { DragDropContext, DropResult } from 'react-beautiful-dnd'
 import SplitPane from 'react-split-pane'
+import dayjs from 'dayjs'
+import localizedFormat from 'dayjs/plugin/localizedFormat'
 
 import { AppSidebar } from '@/containers/AppSidebar'
 import { KeyboardShortcuts } from '@/containers/KeyboardShortcuts'
@@ -11,13 +13,21 @@ import { NoteList } from '@/containers/NoteList'
 import { SettingsModal } from '@/containers/SettingsModal'
 import { TempStateProvider } from '@/contexts/TempStateContext'
 import { useInterval, useBeforeUnload } from '@/utils/hooks'
-import { getWebsiteTitle, determineAppClass, getActiveCategory } from '@/utils/helpers'
+import {
+  getWebsiteTitle,
+  determineAppClass,
+  getActiveCategory,
+  getDayJsLocale,
+} from '@/utils/helpers'
 import { loadCategories, swapCategories } from '@/slices/category'
 import { loadNotes } from '@/slices/note'
 import { sync } from '@/slices/sync'
 import { loadSettings } from '@/slices/settings'
 import { NoteItem, CategoryItem } from '@/types'
 import { getSettings, getNotes, getCategories, getSync } from '@/selectors'
+
+dayjs.extend(localizedFormat)
+dayjs.locale(getDayJsLocale(navigator.language))
 
 export const TakeNoteApp: React.FC = () => {
   // ===========================================================================

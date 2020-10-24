@@ -218,3 +218,16 @@ export const debounceEvent = <T extends Function>(cb: T, wait = 20) => {
 export const isDraftNote = (note: NoteItem) => {
   return note.text === ''
 }
+
+export const getDayJsLocale = (languagetoken: string): string => {
+  try {
+    require('dayjs/locale/' + languagetoken + '.js')
+
+    return languagetoken
+  } catch (error) {
+    if (languagetoken.includes('-'))
+      return getDayJsLocale(languagetoken.substring(0, languagetoken.lastIndexOf('-')))
+
+    return 'en'
+  }
+}
