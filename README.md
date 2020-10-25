@@ -206,6 +206,7 @@ Thanks goes to these wonderful people:
     <td align="center"><a href="https://kodyclemens.com"><img src="https://avatars0.githubusercontent.com/u/43357615?v=4" width="50px;" alt=""/><br /><sub><b>Kody Clemens</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=kodyclemens" title="Code">💻</a> <a href="https://github.com/taniarascia/takenote/commits?author=kodyclemens" title="Tests">⚠️</a> <a href="https://github.com/taniarascia/takenote/issues?q=author%3Akodyclemens" title="Bug reports">🐛</a></td>
     <td align="center"><a href="https://github.com/qpeela"><img src="https://avatars3.githubusercontent.com/u/5824914?v=4" width="50px;" alt=""/><br /><sub><b>Vladimir Yamshikov</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=qpeela" title="Code">💻</a> <a href="https://github.com/taniarascia/takenote/issues?q=author%3Aqpeela" title="Bug reports">🐛</a></td>
     <td align="center"><a href="https://about.me/ronan696"><img src="https://avatars1.githubusercontent.com/u/13074003?v=4" width="50px;" alt=""/><br /><sub><b>Ronan D'Souza</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=ronan696" title="Code">💻</a></td>
+    <td align="center"><a href="http://modprog.de"><img src="https://avatars0.githubusercontent.com/u/11978847?v=4" width="50px;" alt=""/><br /><sub><b>Roland Fredenhagen</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=ModProg" title="Code">💻</a></td>
   </tr>
 </table>
 

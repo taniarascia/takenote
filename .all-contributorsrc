@@ -450,6 +450,15 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "ModProg",
+      "name": "Roland Fredenhagen",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/11978847?v=4",
+      "profile": "http://modprog.de",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
