@@ -62,7 +62,7 @@ export const downloadNotes = (notes: NoteItem[], categories: CategoryItem[]): vo
     const zip = new JSZip()
     notes.forEach((note) =>
       zip.file(
-        `${getNoteTitle(note.text)}.md`,
+        `${getNoteTitle(note.text)} (${note.id.substring(0, 6)}).md`,
         noteWithFrontmatter(
           note,
           categories.find((category: CategoryItem) => category.id === note.category)
