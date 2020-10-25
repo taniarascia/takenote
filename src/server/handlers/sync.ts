@@ -134,32 +134,4 @@ export default {
         .send({ message: error.message || 'Something went wrong while fetching category data' })
     }
   },
-
-  getSettings: async (request: Request, response: Response) => {
-    const { accessToken, userData } = response.locals
-    const username = userData.login
-    const repo = 'takenote-data'
-
-    try {
-      const { data } = await SDK(
-        Method.GET,
-        `/repos/${username}/${repo}/contents/settings.json`,
-        accessToken
-      )
-
-      const settings = Buffer.from(data.content, 'base64').toString()
-
-      try {
-        JSON.parse(settings)
-      } catch (error) {
-        response.status(400).send({ message: error.message || 'Must be valid JSON.' })
-      }
-
-      response.status(200).send(settings)
-    } catch (error) {
-      response
-        .status(400)
-        .send({ message: error.message || 'Something went wrong while fetching category data' })
-    }
-  },
 }

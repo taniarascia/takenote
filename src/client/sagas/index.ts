@@ -18,9 +18,9 @@ import {
   updateNotesSortStrategy,
 } from '@/slices/settings'
 import { SyncAction } from '@/types'
-import { getSettings, getNotes, getCategories } from '@/selectors'
+import { getSettings } from '@/selectors'
 
-const isDemo = true
+const isDemo = false
 
 // Hit the Express endpoint to get the current GitHub user from the cookie
 function* loginUser() {
@@ -88,11 +88,7 @@ function* fetchCategories() {
 function* fetchSettings() {
   let data
   try {
-    if (isDemo) {
-      data = yield requestSettings()
-    } else {
-      data = (yield axios('/api/sync/settings')).data
-    }
+    data = yield requestSettings()
 
     yield put(loadSettingsSuccess(data))
   } catch (error) {

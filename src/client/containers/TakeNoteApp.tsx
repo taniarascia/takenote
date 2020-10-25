@@ -84,7 +84,7 @@ export const TakeNoteApp: React.FC = () => {
 
   useInterval(() => {
     _sync(notes, categories)
-  }, 20000)
+  }, 50000)
 
   useBeforeUnload((event: BeforeUnloadEvent) => (pendingSync ? event.preventDefault() : null))
 

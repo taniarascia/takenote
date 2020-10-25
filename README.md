@@ -44,7 +44,9 @@ Hidden within the code is an alternate version that contain a Node/Express serve
 - I do not want to worry about GitHub rate limiting from the server
 - There is no way to batch create many files from the GitHub API, leading to a suboptimal GitHub storage solution
 
-However, I'm leaving the code available so you can feel free to host your own TakeNote instance or study the code for learning purposes.
+However, I'm leaving the code available so you can feel free to host your own TakeNote instance or study the code for learning purposes. I do not provide support or guidance for these purposes.
+
+TakeNote was created with TypeScript, React, Redux, Node, Express, Codemirror, Webpack, Jest, Cypress, Feather Icons, ESLint, and Mousetrap, among other awesome open-source software.
 
 ## Demo Development
 
@@ -64,7 +66,7 @@ npm run client
 
 ## Full Application Development
 
-In `src/client/sagas/index.ts`, change `isDemo` to false.
+In `src/client/sagas/index.ts` and `src/client/components/LandingPage.tsx`, change `isDemo` to false.
 
 ### Pre-Installation
 
