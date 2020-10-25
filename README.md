@@ -9,7 +9,7 @@
 
 <p align="center">A free, open-source notes app for the web. (Demo only)</p>
 
-> **Note**: TakeNote is available as a demo only. You can use the app at [takenote.dev](https://takenote.dev) but the notes are only persisted in local storage (therefore temporary). However, you can download all notes as a zip.
+> **Note**: TakeNote is available as a demo only. You can use the app at [takenote.dev](https://takenote.dev) but the notes are only persisted in temporary local storage. However, you can download all notes as a zip.
 
 ![Screenshot](./assets/takenote-light.png)
 
@@ -34,7 +34,37 @@
 
 > _"I think the lack of extra crap is a feature."_ — Craig Lam
 
-## Setup
+TakeNote is a note-taking app for the web. You can use the demo app at [takenote.dev](https://takenote.dev). It is a static site without a database and does not sync your notes to the cloud. The notes are persisted temporarily in local storage, but you can download all notes in markdown format as a zip.
+
+Hidden within the code is an alternate version that contain a Node/Express server and integration with GitHub. This version involves creating an OAuth application for GitHub and signing up to it with private repository permissions. Instead of backing up to local storage, your notes will back up to a private repository in your account called `takenote-data`. Due to the following reasons I'm choosing not to deploy or maintain this portion of the application:
+
+- I do not want to maintain a free app with users alongside my career and other commitments
+- I do not want to request private repository permissions from users
+- I do not want to maintain an active server
+- I do not want to worry about GitHub rate limiting from the server
+- There is no way to batch create many files from the GitHub API, leading to a suboptimal GitHub storage solution
+
+However, I'm leaving the code available so you can feel free to host your own TakeNote instance or study the code for learning purposes.
+
+## Demo Development
+
+Clone and install.
+
+```bash
+git clone git@github.com:taniarascia/takenote
+cd takenote
+npm i
+```
+
+Run a development server.
+
+```bash
+npm run client
+```
+
+## Full Application Development
+
+In `src/client/sagas/index.ts`, change `isDemo` to false.
 
 ### Pre-Installation
 
