@@ -10,7 +10,7 @@ const _swapCategories = (categories: CategoryItem[], categoryId: number, destina
   return newCategories
 }
 
-const initialState: CategoryState = {
+export const initialState: CategoryState = {
   categories: [],
   editingCategory: {
     id: '',
