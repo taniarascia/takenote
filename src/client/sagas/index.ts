@@ -20,7 +20,7 @@ import {
 import { SyncAction } from '@/types'
 import { getSettings } from '@/selectors'
 
-const isDemo = false
+const isDemo = true
 
 // Hit the Express endpoint to get the current GitHub user from the cookie
 function* loginUser() {

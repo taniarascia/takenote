@@ -8,7 +8,7 @@ import logo from '@resources/assets/logo-square-color.svg'
 import githubLogo from '@resources/assets/github-logo.png'
 
 const clientId = process.env.CLIENT_ID
-const isDemo = false
+const isDemo = true
 
 const loginButton = (text: string) => (
   <a
