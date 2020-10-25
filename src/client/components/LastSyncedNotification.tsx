@@ -22,7 +22,7 @@ export const LastSyncedNotification: React.FC<LastSyncedNotificationProps> = ({
     }
 
     if (datetime) {
-      return <span>{dayjs(datetime).format('h:mm A on M/D/YYYY')}</span>
+      return <span>{dayjs(datetime).format('LT on L')}</span>
     }
   }
 

@@ -218,3 +218,44 @@ export const debounceEvent = <T extends Function>(cb: T, wait = 20) => {
 export const isDraftNote = (note: NoteItem) => {
   return note.text === ''
 }
+
+export const getDayJsLocale = (languagetoken: string): string => {
+  try {
+    require('dayjs/locale/' + languagetoken + '.js')
+
+    return languagetoken
+  } catch (error) {
+    if (languagetoken.includes('-'))
+      return getDayJsLocale(languagetoken.substring(0, languagetoken.lastIndexOf('-')))
+
+    return 'en'
+  }
+}
+
+export const getNoteBarConf = (
+  activeFolder: Folder
+): {
+  minSize?: number
+  maxSize?: number
+  defaultSize?: number
+  allowResize?: boolean
+  resizerStyle?: React.CSSProperties
+} => {
+  switch (activeFolder) {
+    case Folder.SCRATCHPAD:
+      return {
+        minSize: 0,
+        maxSize: 0,
+        defaultSize: 0,
+        allowResize: false,
+        resizerStyle: { display: 'none' },
+      }
+
+    default:
+      return {
+        minSize: 200,
+        maxSize: 600,
+        defaultSize: 330,
+      }
+  }
+}

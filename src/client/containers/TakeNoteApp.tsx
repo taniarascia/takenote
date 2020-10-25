@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Helmet, HelmetProvider } from 'react-helmet-async'
 import { DragDropContext, DropResult } from 'react-beautiful-dnd'
 import SplitPane from 'react-split-pane'
+import dayjs from 'dayjs'
+import localizedFormat from 'dayjs/plugin/localizedFormat'
 
 import { AppSidebar } from '@/containers/AppSidebar'
 import { KeyboardShortcuts } from '@/containers/KeyboardShortcuts'
@@ -11,11 +13,20 @@ import { NoteList } from '@/containers/NoteList'
 import { SettingsModal } from '@/containers/SettingsModal'
 import { TempStateProvider } from '@/contexts/TempStateContext'
 import { useBeforeUnload } from '@/utils/hooks'
-import { getWebsiteTitle, determineAppClass, getActiveCategory } from '@/utils/helpers'
+import {
+  getWebsiteTitle,
+  determineAppClass,
+  getActiveCategory,
+  getDayJsLocale,
+  getNoteBarConf,
+} from '@/utils/helpers'
 import { loadCategories, swapCategories } from '@/slices/category'
 import { loadNotes } from '@/slices/note'
 import { loadSettings } from '@/slices/settings'
 import { getSettings, getNotes, getCategories, getSync } from '@/selectors'
+
+dayjs.extend(localizedFormat)
+dayjs.locale(getDayJsLocale(navigator.language))
 
 export const TakeNoteApp: React.FC = () => {
   // ===========================================================================
@@ -82,7 +93,7 @@ export const TakeNoteApp: React.FC = () => {
           <DragDropContext onDragEnd={onDragEnd}>
             <SplitPane split="vertical" minSize={150} maxSize={500} defaultSize={240}>
               <AppSidebar />
-              <SplitPane split="vertical" minSize={200} maxSize={600} defaultSize={330}>
+              <SplitPane split="vertical" {...getNoteBarConf(activeFolder)}>
                 <NoteList />
                 <NoteEditor />
               </SplitPane>
