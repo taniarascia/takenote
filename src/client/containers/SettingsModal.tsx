@@ -79,6 +79,8 @@ export const SettingsModal: React.FC = () => {
     _updateCodeMirrorOption('styleActiveLine', !codeMirrorOptions.styleActiveLine)
   const toggleScrollPastEnd = () =>
     _updateCodeMirrorOption('scrollPastEnd', !codeMirrorOptions.scrollPastEnd)
+  const toggleLineNumbersHandler = () =>
+    _updateCodeMirrorOption('lineNumbers', !codeMirrorOptions.lineNumbers)
   const handleEscPress = (event: KeyboardEvent) => {
     event.stopPropagation()
     if (event.key === 'Escape' && isOpen) {
@@ -143,6 +145,12 @@ export const SettingsModal: React.FC = () => {
                 description="Controls whether the editor should highlight the active line"
                 toggle={toggleLineHighlight}
                 checked={codeMirrorOptions.styleActiveLine}
+              />
+              <Option
+                title="Display line numbers"
+                description="Controls whether the editor should display line numbers"
+                toggle={toggleLineNumbersHandler}
+                checked={codeMirrorOptions.lineNumbers}
               />
               <Option
                 title="Scroll past end"
