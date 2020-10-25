@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/named
 import { all, put, takeLatest, select } from 'redux-saga/effects'
 import dayjs from 'dayjs'
 import axios from 'axios'
@@ -21,29 +20,31 @@ import {
 import { SyncAction } from '@/types'
 import { getSettings } from '@/selectors'
 
-/**
- * Log in user
- *
- * Hit the Express endpoint to get the current GitHub user from the cookie
- */
+const isDemo = true
+
+// Hit the Express endpoint to get the current GitHub user from the cookie
 function* loginUser() {
   try {
-    const { data } = yield axios('/api/auth/login')
+    if (isDemo) {
+      yield put(loginSuccess({ name: 'Demo User' }))
+    } else {
+      const { data } = yield axios('/api/auth/login')
 
-    yield put(loginSuccess(data))
+      yield put(loginSuccess(data))
+    }
   } catch (error) {
     yield put(loginError(error.message))
   }
 }
 
-/**
- * Log out user
- *
- * Remove the access token cookie from Express
- */
+// Remove the access token cookie from Express
 function* logoutUser() {
   try {
-    yield axios('/api/auth/logout')
+    if (isDemo) {
+      yield put(logoutSuccess())
+    } else {
+      yield axios('/api/auth/logout')
+    }
 
     yield put(logoutSuccess())
   } catch (error) {
@@ -51,42 +52,45 @@ function* logoutUser() {
   }
 }
 
-/**
- * Get notes from API
- */
+// Get notes from API
 function* fetchNotes() {
+  let data
   try {
-    // requestNotes is a temporary mock API
-    const notes = yield requestNotes()
+    if (isDemo) {
+      data = yield requestNotes()
+    } else {
+      data = (yield axios('/api/sync/notes')).data
+    }
 
-    yield put(loadNotesSuccess(notes))
+    yield put(loadNotesSuccess(data))
   } catch (error) {
     yield put(loadNotesError(error.message))
   }
 }
 
-/**
- * Get categories from API
- */
+// Get categories from API
 function* fetchCategories() {
+  let data
   try {
-    // requestCategories is a temporary mock API
-    const categories = yield requestCategories()
+    if (isDemo) {
+      data = yield requestCategories()
+    } else {
+      data = (yield axios('/api/sync/categories')).data
+    }
 
-    yield put(loadCategoriesSuccess(categories))
+    yield put(loadCategoriesSuccess(data))
   } catch (error) {
     yield put(loadCategoriesError(error.message))
   }
 }
 
-/**
- * Get settings from API
- */
+// Get settings from API
 function* fetchSettings() {
+  let data
   try {
-    const settings = yield requestSettings()
+    data = yield requestSettings()
 
-    yield put(loadSettingsSuccess(settings))
+    yield put(loadSettingsSuccess(data))
   } catch (error) {
     yield put(loadSettingsError())
   }
@@ -94,7 +98,11 @@ function* fetchSettings() {
 
 function* syncData({ payload }: SyncAction) {
   try {
-    yield saveState(payload)
+    if (isDemo) {
+      yield saveState(payload)
+    } else {
+      yield axios.post('/api/sync', payload)
+    }
     yield put(syncSuccess(dayjs().format()))
   } catch (error) {
     yield put(syncError(error.message))

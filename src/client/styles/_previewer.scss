@@ -2,7 +2,7 @@
   position: relative;
   max-height: calc(100vh);
   overflow-y: auto;
-  background: white;
+  background: #fafafa;
   color: #404040;
   padding: 1rem;
   -webkit-font-smoothing: subpixel-antialiased;
@@ -53,7 +53,7 @@
   h4,
   h5 {
     margin: 0 0 1.5rem 0;
-    font-weight: 700;
+    font-weight: 600;
     line-height: 1.2;
 
     &:not(:first-child) {
@@ -65,7 +65,7 @@
   h1:not(:first-child),
   h2:not(:first-child),
   h3:not(:first-child) {
-    margin-top: 2rem;
+    margin-top: 3rem;
   }
 
   // Heading individual styles
@@ -74,13 +74,11 @@
   }
 
   h2 {
-    font-size: 1.6rem;
-    border-bottom: 1px solid $note-sidebar-color;
-    padding-bottom: 0.5rem;
+    font-size: 1.5rem;
   }
 
   h3 {
-    font-size: 1.4rem;
+    font-size: 1.3rem;
   }
 
   h4 {

@@ -33,7 +33,7 @@ export const SettingsModal: React.FC = () => {
     getSettings
   )
   const { currentUser } = useSelector(getAuth)
-  const { selectedNotesIds, notes } = useSelector(getNotes)
+  const { notes } = useSelector(getNotes)
   const { categories } = useSelector(getCategories)
 
   // ===========================================================================
@@ -122,7 +122,9 @@ export const SettingsModal: React.FC = () => {
 
         <section className="profile flex">
           <div>
-            <img src={currentUser.avatar_url} alt="Profile" className="profile-picture" />
+            {currentUser.avatar_url && (
+              <img src={currentUser.avatar_url} alt="Profile" className="profile-picture" />
+            )}
           </div>
           <div className="profile-details">
             <h3>{currentUser.name}</h3>
@@ -205,7 +207,7 @@ export const SettingsModal: React.FC = () => {
               </p>
               <p>
                 This app has no tracking or analytics and does not retain any user data. All data
-                exists only in GitHub.
+                exists only in GitHub, in the <b>takenote-data</b> repo.
               </p>
               <p>
                 TakeNote was created by{' '}
