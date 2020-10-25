@@ -8,7 +8,7 @@ export default {
   sync: async (request: Request, response: Response) => {
     const { accessToken, userData } = response.locals
     const {
-      body: { notes, categories, settings },
+      body: { notes, categories },
     } = request
     const username = userData.login
     const repo = 'takenote-data'
@@ -24,15 +24,12 @@ export default {
 
       // Create blobs
       // https://docs.github.com/en/free-pro-team@latest/rest/reference/git#create-a-blob
-      const [noteBlob, categoryBlob, settingsBlob] = await Promise.all([
+      const [noteBlob, categoryBlob] = await Promise.all([
         SDK(Method.POST, `/repos/${username}/${repo}/git/blobs`, accessToken, {
           content: JSON.stringify(notes, null, 2),
         }),
         SDK(Method.POST, `/repos/${username}/${repo}/git/blobs`, accessToken, {
           content: JSON.stringify(categories, null, 2),
-        }),
-        SDK(Method.POST, `/repos/${username}/${repo}/git/blobs`, accessToken, {
-          content: JSON.stringify(settings, null, 2),
         }),
       ])
 
@@ -47,12 +44,6 @@ export default {
         {
           path: 'categories.json',
           sha: categoryBlob.data.sha,
-          mode: '100644',
-          type: 'blob',
-        },
-        {
-          path: 'settings.json',
-          sha: settingsBlob.data.sha,
           mode: '100644',
           type: 'blob',
         },

@@ -12,7 +12,7 @@ import { NoteEditor } from '@/containers/NoteEditor'
 import { NoteList } from '@/containers/NoteList'
 import { SettingsModal } from '@/containers/SettingsModal'
 import { TempStateProvider } from '@/contexts/TempStateContext'
-import { useBeforeUnload } from '@/utils/hooks'
+import { useInterval, useBeforeUnload } from '@/utils/hooks'
 import {
   getWebsiteTitle,
   determineAppClass,
@@ -21,6 +21,8 @@ import {
   getNoteBarConf,
 } from '@/utils/helpers'
 import { loadCategories, swapCategories } from '@/slices/category'
+import { sync } from '@/slices/sync'
+import { NoteItem, CategoryItem } from '@/types'
 import { loadNotes } from '@/slices/note'
 import { loadSettings } from '@/slices/settings'
 import { getSettings, getNotes, getCategories, getSync } from '@/selectors'
@@ -51,6 +53,8 @@ export const TakeNoteApp: React.FC = () => {
   const _loadSettings = () => dispatch(loadSettings())
   const _swapCategories = (categoryId: number, destinationId: number) =>
     dispatch(swapCategories({ categoryId, destinationId }))
+  const _sync = (notes: NoteItem[], categories: CategoryItem[]) =>
+    dispatch(sync({ notes, categories }))
 
   // ===========================================================================
   // Handlers
@@ -77,6 +81,10 @@ export const TakeNoteApp: React.FC = () => {
     _loadCategories()
     _loadSettings()
   }, [])
+
+  useInterval(() => {
+    _sync(notes, categories)
+  }, 20000)
 
   useBeforeUnload((event: BeforeUnloadEvent) => (pendingSync ? event.preventDefault() : null))
 

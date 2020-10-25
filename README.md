@@ -7,16 +7,14 @@
    <a href="https://travis-ci.org/taniarascia/takenote"><img src="https://travis-ci.org/taniarascia/takenote.svg?branch=master"></a>
 </p>
 
-<p align="center">A free, open-source notes app for the web. (WIP)</p>
+<p align="center">A free, open-source notes app for the web. (Demo only)</p>
 
-> **Warning**: TakeNote is in active development. You can visit [takenote.dev](https://takenote.dev) to see the work in progress, but your account and the notes you create are **temporary** will not be persisted. All data will be lost once GitHub integration is complete.
+> **Note**: TakeNote is available as a demo only. You can use the app at [takenote.dev](https://takenote.dev) but the notes are only persisted in local storage (therefore temporary). However, you can download all notes as a zip.
 
 ![Screenshot](./assets/takenote-light.png)
 
 ## Features
 
-- Open source and web-based
-- GitHub sync
 - Plain text notes
 - Markdown preview
 - Syntax highlighting

@@ -1,12 +1,14 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 import lightScreen from '@resources/assets/screenshot-light.png'
 import darkScreen from '@resources/assets/screenshot-dark.png'
 import squareLogo from '@resources/assets/logo-square-white.svg'
-import icon from '@resources/assets/logo-square-color.svg'
+import logo from '@resources/assets/logo-square-color.svg'
 import githubLogo from '@resources/assets/github-logo.png'
 
 const clientId = process.env.CLIENT_ID
+const isDemo = true
 
 const loginButton = (text: string) => (
   <a
@@ -24,18 +26,33 @@ export const LandingPage: React.FC = () => {
       <section className="content">
         <div className="container-small">
           <div className="lead">
+            <img src={logo} height="200" width="200" alt="TakeNote" />
             <h1>
               The Note Taking App
               <br /> for Developers
             </h1>
             <p className="subtitle">A free, open-source notes app for the web.</p>
             <div className="new-signup">
-              <p>
-                TakeNote does not have a database or users. It simply links with your GitHub account
-                for authentication, and stores the data in a private <code>takenotes-data</code>{' '}
-                repo.
-              </p>
-              <div className="cta">{loginButton('Sign Up with GitHub')}</div>
+              {isDemo ? (
+                <div>
+                  <p>
+                    TakeNote is only available as a demo. Your notes will be saved to local storage
+                    and <b>not</b> persisted in any database or cloud.
+                  </p>
+                  <a className="button" href="/app">
+                    View Demo
+                  </a>
+                </div>
+              ) : (
+                <div>
+                  <p>
+                    TakeNote does not have a database or users. It simply links with your GitHub
+                    account for authentication, and stores the data in a private{' '}
+                    <code>takenotes-data</code> repo.
+                  </p>
+                  <div className="cta">{loginButton('Sign Up with GitHub')}</div>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -49,7 +66,6 @@ export const LandingPage: React.FC = () => {
           <div className="features">
             <h2 className="text-center">Features</h2>
             <ul>
-              <li>GitHub sync</li>
               <li>Plain text notes</li>
               <li>Markdown preview</li>
               <li>Syntax highlighting</li>
