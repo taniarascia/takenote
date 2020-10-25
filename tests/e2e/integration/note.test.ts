@@ -292,8 +292,7 @@ describe('Manage notes test', () => {
     cy.then(() => assertNoteListLengthEquals(this.allNoteStartCount))
   })
 
-  // TODO: add manual sync back in
-  it.skip('should sync some notes', function () {
+  it('should sync some notes', function () {
     const noteOneTitle = 'note 1'
     const noteTwoTitle = 'same note title'
     const noteThreeTitle = 'same note title'

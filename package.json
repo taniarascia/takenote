@@ -1,6 +1,6 @@
 {
   "name": "takenote",
-  "version": "0.6.1",
+  "version": "0.7.0",
   "description": "A free, open-source notes app for the web.",
   "author": "Tania Rascia",
   "license": "MIT",
@@ -15,7 +15,6 @@
     "start": "node -r ts-node/register/transpile-only src/server/index.ts",
     "test": "jest --config config/jest.config.js",
     "test:e2e": "cypress run --config-file config/cypress.config.json",
-    "test:e2e:only": "# Usage: npm run e2e:only -- <note/category> \n func() { npm run test:e2e -- --spec \"tests/e2e/integration/${1}.test.ts\"; }; func",
     "test:e2e:open": "cypress open --config-file config/cypress.config.json",
     "test:coverage": "jest --config config/jest.config.js --coverage --watchAll=false",
     "test:coverage:ci": "jest --config config/jest.config.js --ci --coverage --watchAll=false && cat ./coverage/lcov.info | coveralls",
