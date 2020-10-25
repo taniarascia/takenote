@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { SyncState, SyncPayload } from '@/types'
 
-const initialState: SyncState = {
+export const initialState: SyncState = {
   pendingSync: false,
   lastSynced: '',
   error: '',

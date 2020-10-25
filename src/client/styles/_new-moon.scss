@@ -1,5 +1,12 @@
 .cm-s-new-moon .CodeMirror-gutters {
   background: #333333 !important;
+  // Remove white border when line numbers are displayed
+  border-right: 0px;
+}
+
+.cm-s-new-moon .CodeMirror-linenumber {
+  // Adjust color of line number
+  color: #4f4f4f;
 }
 
 .cm-s-new-moon .CodeMirror-foldgutter-open,

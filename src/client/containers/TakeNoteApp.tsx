@@ -18,6 +18,7 @@ import {
   determineAppClass,
   getActiveCategory,
   getDayJsLocale,
+  getNoteBarConf,
 } from '@/utils/helpers'
 import { loadCategories, swapCategories } from '@/slices/category'
 import { loadNotes } from '@/slices/note'
@@ -100,7 +101,7 @@ export const TakeNoteApp: React.FC = () => {
           <DragDropContext onDragEnd={onDragEnd}>
             <SplitPane split="vertical" minSize={150} maxSize={500} defaultSize={240}>
               <AppSidebar />
-              <SplitPane split="vertical" minSize={200} maxSize={600} defaultSize={330}>
+              <SplitPane split="vertical" {...getNoteBarConf(activeFolder)}>
                 <NoteList />
                 <NoteEditor />
               </SplitPane>
