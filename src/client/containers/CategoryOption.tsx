@@ -6,11 +6,17 @@ import { Folder as FolderIcon, MoreHorizontal } from 'react-feather'
 import { TestID } from '@resources/TestID'
 import { CategoryItem, ReactDragEvent, ReactMouseEvent, ReactSubmitEvent } from '@/types'
 import { determineCategoryClass } from '@/utils/helpers'
-import { getNotes, getCategories } from '@/selectors'
-import { updateActiveCategoryId, updateActiveNote, addCategoryToNote } from '@/slices/note'
+import { getNotes, getCategories, getSettings } from '@/selectors'
+import {
+  updateActiveCategoryId,
+  updateActiveNote,
+  updateSelectedNotes,
+  addCategoryToNote,
+} from '@/slices/note'
 import { setCategoryEdit, categoryDragLeave, categoryDragEnter } from '@/slices/category'
 import { iconColor } from '@/utils/constants'
 import { ContextMenuEnum } from '@/utils/enums'
+import { getNotesSorter } from '@/utils/notesSortStrategies'
 import { ContextMenu } from '@/containers/ContextMenu'
 
 interface CategoryOptionProps {
@@ -50,6 +56,7 @@ export const CategoryOption: React.FC<CategoryOptionProps> = ({
   const {
     editingCategory: { id: editingCategoryId, tempName: tempCategoryName },
   } = useSelector(getCategories)
+  const { notesSortKey } = useSelector(getSettings)
 
   // ===========================================================================
   // Dispatch
@@ -61,6 +68,8 @@ export const CategoryOption: React.FC<CategoryOptionProps> = ({
     dispatch(updateActiveCategoryId(categoryId))
   const _updateActiveNote = (noteId: string, multiSelect: boolean) =>
     dispatch(updateActiveNote({ noteId, multiSelect }))
+  const _updateSelectedNotes = (noteId: string, multiSelect: boolean) =>
+    dispatch(updateSelectedNotes({ noteId, multiSelect }))
   const _setCategoryEdit = (categoryId: string, tempName: string) =>
     dispatch(setCategoryEdit({ id: categoryId, tempName }))
   const _addCategoryToNote = (categoryId: string, noteId: string) =>
@@ -78,13 +87,17 @@ export const CategoryOption: React.FC<CategoryOptionProps> = ({
           data-testid={TestID.CATEGORY_LIST_DIV}
           className={determineCategoryClass(category, snapshot.isDragging, activeCategoryId)}
           onClick={() => {
-            const notesForNewCategory = notes.filter(
-              (note) => !note.trash && note.category === category.id
-            )
-            const newNoteId = notesForNewCategory.length > 0 ? notesForNewCategory[0].id : ''
+            const notesForNewCategory = notes
+              .filter((note) => !note.trash && note.category === category.id)
+              .sort(getNotesSorter(notesSortKey))
+
+            const defaultActiveNoteId =
+              notesForNewCategory.length > 0 ? notesForNewCategory[0].id : ''
+
             if (category.id !== activeCategoryId) {
               _updateActiveCategoryId(category.id)
-              _updateActiveNote(newNoteId, false)
+              _updateActiveNote(defaultActiveNoteId, false)
+              _updateSelectedNotes(defaultActiveNoteId, false)
             }
           }}
           onDoubleClick={() => {
