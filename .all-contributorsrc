@@ -441,6 +441,15 @@
         "code",
         "bug"
       ]
+    },
+    {
+      "login": "ronan696",
+      "name": "Ronan D'Souza",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/13074003?v=4",
+      "profile": "https://about.me/ronan696",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
