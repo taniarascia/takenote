@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express'
 
 const checkAuth = async (request: Request, response: Response, next: NextFunction) => {
-  const accessToken = request.cookies?.accessTokenGH
+  const accessToken = request.cookies?.githubAccessToken
 
   if (accessToken) {
     response.locals.accessToken = accessToken

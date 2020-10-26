@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file.
 
+## v0.7.1 10/25/2020
+
+Add GitHub integration.
+
+### Changed
+
+- Add code for integrating GitHub sync (https://github.com/taniarascia/takenote/pull/389)
+- Create demo mode for takenote.dev deployment
+- Add tests for selectors
+- Hide note list in Scratchpad view
+- Localized dates
+- Various bug fixes
+- Additional settings
+
 ## v0.6.1 10/19/2020
 
 Add top menu bar.

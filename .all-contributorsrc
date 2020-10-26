@@ -441,6 +441,43 @@
         "code",
         "bug"
       ]
+    },
+    {
+      "login": "ronan696",
+      "name": "Ronan D'Souza",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/13074003?v=4",
+      "profile": "https://about.me/ronan696",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "ModProg",
+      "name": "Roland Fredenhagen",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/11978847?v=4",
+      "profile": "http://modprog.de",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "PranjaliPatil14",
+      "name": "Pranjali Pramod Patil",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/31987627?v=4",
+      "profile": "https://github.com/PranjaliPatil14",
+      "contributions": [
+        "test"
+      ]
+    },
+    {
+      "login": "cbrgm",
+      "name": "Chris Bargmann",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/24737434?v=4",
+      "profile": "https://cbrgm.net",
+      "contributions": [
+        "ideas",
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
