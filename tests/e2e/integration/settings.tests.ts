@@ -50,6 +50,9 @@ import {
   assertSettingsMenuIsClosed,
   closeSettingsByClickingX,
   closeSettingsByClickingOutsideWindow,
+  toggleDarkMode,
+  assertDarkModeActive,
+  assertDarkModeInactive,
 } from '../utils/testSettingsUtils'
 import { dynamicTimeCategoryName } from '../utils/testHelperEnums'
 
@@ -58,24 +61,44 @@ describe('Settings', () => {
 
   before(() => {})
 
-  beforeEach(() => {})
+  beforeEach(() => {
+    navigateToSettings()
+  })
+
+  afterEach(() => {
+    closeSettingsByClickingOutsideWindow()
+  })
 
   it('should open settings menu', () => {
-    navigateToSettings()
     assertSettingsMenuIsOpen()
   })
 
   it('should close settings menu on clicking X', () => {
     closeSettingsByClickingX()
     assertSettingsMenuIsClosed()
+    navigateToSettings()
   })
 
-  it('should close settings menu on clicking outside of window', () => {})
-  it('should toggle preferences: dark mode', () => {})
-  it('should toggle preferences: active line height', () => {})
-  it('should toggle preferences: markdown preview', () => {})
-  it('should change sort order: last updated', () => {})
-  it('should change sort order: favorites', () => {})
-  it('should change sort order: title (alphabetical)', () => {})
-  it('should change sort order: date created', () => {})
+  it('should close settings menu on clicking outside of window', () => {
+    closeSettingsByClickingOutsideWindow()
+    assertSettingsMenuIsClosed()
+    navigateToSettings()
+  })
+
+  it.skip('should toggle preferences: active line height', () => {})
+
+  it('should toggle preferences: dark mode ON', () => {
+    toggleDarkMode()
+    assertDarkModeActive()
+  })
+
+  it('should toggle preferences: dark mode OFF', () => {
+    toggleDarkMode()
+    assertDarkModeInactive()
+  })
+  it.skip('should toggle preferences: markdown preview', () => {})
+  it.skip('should change sort order: last updated', () => {})
+  it.skip('should change sort order: favorites', () => {})
+  it.skip('should change sort order: title (alphabetical)', () => {})
+  it.skip('should change sort order: date created', () => {})
 })

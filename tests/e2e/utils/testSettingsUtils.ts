@@ -24,7 +24,19 @@ const closeSettingsByClickingX = () => {
 }
 
 const closeSettingsByClickingOutsideWindow = () => {
-  cy.get('.dimmer').click()
+  cy.get('.dimmer').click('topLeft')
+}
+
+const toggleDarkMode = () => {
+  clickTestID(TestID.DARK_MODE_TOGGLE)
+}
+
+const assertDarkModeActive = () => {
+  cy.get('.settings-modal').should('have.css', 'background-color', 'rgb(51, 51, 51)')
+}
+
+const assertDarkModeInactive = () => {
+  cy.get('.settings-modal').should('have.css', 'background-color', 'rgb(255, 255, 255)')
 }
 
 export {
@@ -33,4 +45,7 @@ export {
   assertSettingsMenuIsClosed,
   closeSettingsByClickingX,
   closeSettingsByClickingOutsideWindow,
+  toggleDarkMode,
+  assertDarkModeActive,
+  assertDarkModeInactive,
 }
