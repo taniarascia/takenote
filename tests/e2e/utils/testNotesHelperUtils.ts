@@ -53,7 +53,8 @@ const assertNotesSelected = (expectedSelectedNotesCount: number) => {
 const trashAllNotes = () => {
   getTestID(TestID.NOTE_LIST)
     .children()
-    .each((_, noteIndex) => {
+    .each((el, noteIndex) => {
+      if (el.hasClass('selected')) return
       cy.get('body').type(`{meta}`, { release: false })
       getDynamicTestID(TestID.NOTE_LIST_ITEM + noteIndex).click()
     })

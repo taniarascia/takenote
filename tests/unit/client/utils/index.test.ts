@@ -9,7 +9,7 @@ describe('Utilities', () => {
     })
 
     test(`should trim both ends`, () => {
-      const note = ` This is your world. This is gonna be a happy`
+      const note = ` This is your world. This is gonna be a happy `
       expect(getNoteTitle(note)).toEqual(`This is your world. This is gonna be a happy`)
     })
 

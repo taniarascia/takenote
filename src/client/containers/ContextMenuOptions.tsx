@@ -11,7 +11,6 @@ import {
   toggleFavoriteNotes,
   toggleTrashNotes,
   addCategoryToNote,
-  updateActiveCategoryId,
   updateActiveNote,
   swapFolder,
 } from '@/slices/note'
@@ -118,8 +117,6 @@ const NotesOptions: React.FC<NotesOptionsProps> = ({ clickedNote }) => {
     dispatch(addCategoryToNote({ categoryId, noteId }))
   const _updateActiveNote = (noteId: string, multiSelect: boolean) =>
     dispatch(updateActiveNote({ noteId, multiSelect }))
-  const _updateActiveCategoryId = (categoryId: string) =>
-    dispatch(updateActiveCategoryId(categoryId))
 
   // ===========================================================================
   // Handlers
@@ -138,9 +135,9 @@ const NotesOptions: React.FC<NotesOptionsProps> = ({ clickedNote }) => {
     _updateActiveNote(clickedNote.id, false)
   }
 
-  return (
+  return !isDraftNote(clickedNote) ? (
     <nav className="options-nav" data-testid={TestID.NOTE_OPTIONS_NAV}>
-      {!isDraftNote(clickedNote) && clickedNote.trash && (
+      {clickedNote.trash && (
         <>
           <ContextMenuOption
             dataTestID={TestID.NOTE_OPTION_DELETE_PERMANENTLY}
@@ -157,7 +154,7 @@ const NotesOptions: React.FC<NotesOptionsProps> = ({ clickedNote }) => {
           />
         </>
       )}
-      {!isDraftNote(clickedNote) && !clickedNote.scratchpad && !clickedNote.trash && (
+      {!clickedNote.scratchpad && !clickedNote.trash && (
         <>
           <ContextMenuOption
             dataTestID={TestID.NOTE_OPTION_FAVORITE}
@@ -180,14 +177,6 @@ const NotesOptions: React.FC<NotesOptionsProps> = ({ clickedNote }) => {
           />
         </>
       )}
-      {!isDraftNote(clickedNote) && (
-        <ContextMenuOption
-          dataTestID={TestID.NOTE_OPTION_DOWNLOAD}
-          handler={downloadNotesHandler}
-          icon={Download}
-          text={LabelText.DOWNLOAD}
-        />
-      )}
       {clickedNote.category && !clickedNote.trash && (
         <ContextMenuOption
           dataTestID={TestID.NOTE_OPTION_REMOVE_CATEGORY}
@@ -196,12 +185,12 @@ const NotesOptions: React.FC<NotesOptionsProps> = ({ clickedNote }) => {
           text={LabelText.REMOVE_CATEGORY}
         />
       )}
-      {isDraftNote(clickedNote) && (
-        <div className="nav-item">
-          <AlertTriangle size="16" />
-          {LabelText.ADD_CONTENT_NOTE}
-        </div>
-      )}
+      <ContextMenuOption
+        dataTestID={TestID.NOTE_OPTION_DOWNLOAD}
+        handler={downloadNotesHandler}
+        icon={Download}
+        text={LabelText.DOWNLOAD}
+      />
     </nav>
-  )
+  ) : null
 }

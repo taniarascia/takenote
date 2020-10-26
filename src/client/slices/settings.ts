@@ -44,10 +44,6 @@ const settingsSlice = createSlice({
       state.darkTheme = !state.darkTheme
     },
 
-    toggleSidebarVisibility: (state) => {
-      state.sidebarVisible = !state.sidebarVisible
-    },
-
     updateNotesSortStrategy: (state, { payload }: PayloadAction<NotesSortKey>) => {
       state.notesSortKey = payload
     },
@@ -71,7 +67,6 @@ export const {
   updateCodeMirrorOption,
   toggleDarkTheme,
   togglePreviewMarkdown,
-  toggleSidebarVisibility,
   updateNotesSortStrategy,
   loadSettings,
   loadSettingsError,
