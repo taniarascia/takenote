@@ -63,9 +63,12 @@
   display: flex !important;
 }
 
-.mobile-msg {
-  display: flex !important;
-  background: $light-theme-background;
+.subtitle-mobile {
+  color: $primary;
+  line-height: 1.6;
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin: 1rem auto 1.5rem;
 }
 
 .editor,

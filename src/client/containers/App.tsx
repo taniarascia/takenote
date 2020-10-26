@@ -49,7 +49,7 @@ export const App: React.FC = () => {
     )
   }
 
-  return width <= 760 ? (
+  return width <= 1024 ? (
     <MobileMsg />
   ) : (
     <HelmetProvider>
