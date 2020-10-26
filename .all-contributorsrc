@@ -468,6 +468,16 @@
       "contributions": [
         "test"
       ]
+    },
+    {
+      "login": "cbrgm",
+      "name": "Chris Bargmann",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/24737434?v=4",
+      "profile": "https://cbrgm.net",
+      "contributions": [
+        "ideas",
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
