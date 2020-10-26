@@ -62,6 +62,23 @@ const noteSlice = createSlice({
       )
     },
 
+    updateNotes: (
+      state,
+      {
+        payload,
+      }: PayloadAction<{ notes: NoteItem[]; activeFolder: Folder; activeCategoryId?: string }>
+    ) => {
+      state.notes = payload.notes
+      state.activeNoteId = getFirstNoteId(
+        payload.activeFolder,
+        payload.notes,
+        payload.activeCategoryId
+      )
+      state.selectedNotesIds = [
+        getFirstNoteId(payload.activeFolder, payload.notes, payload.activeCategoryId),
+      ]
+    },
+
     deleteNotes: (state, { payload }: PayloadAction<string[]>) => {
       state.notes = state.notes.filter((note) => !payload.includes(note.id))
       state.activeNoteId = getNewActiveNoteId(
@@ -245,6 +262,7 @@ const noteSlice = createSlice({
 export const {
   addNote,
   updateNote,
+  updateNotes,
   deleteNotes,
   addCategoryToNote,
   updateActiveNote,

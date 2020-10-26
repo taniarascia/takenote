@@ -9,13 +9,15 @@ import {
   toggleDarkTheme,
   updateNotesSortStrategy,
 } from '@/slices/settings'
+import { updateNotes } from '@/slices/note'
 import { logout } from '@/slices/auth'
 import { shortcutMap, notesSortOptions, directionTextOptions } from '@/utils/constants'
-import { ReactMouseEvent } from '@/types'
-import { getSettings, getAuth } from '@/selectors'
+import { NoteItem, ReactMouseEvent } from '@/types'
+import { getSettings, getAuth, getNotes } from '@/selectors'
 import { Option } from '@/components/SettingsModal/Option'
 import { Shortcut } from '@/components/SettingsModal/Shortcut'
 import { NotesSortKey } from '@/utils/enums'
+import { getNotesSorter } from '@/utils/notesSortStrategies'
 import { SelectOptions } from '@/components/SettingsModal/SelectOptions'
 import { Tabs } from '@/components/Tabs/Tabs'
 import { TabPanel } from '@/components/Tabs/TabPanel'
@@ -29,6 +31,7 @@ export const SettingsModal: React.FC = () => {
     getSettings
   )
   const { currentUser } = useSelector(getAuth)
+  const { notes, activeFolder, activeCategoryId } = useSelector(getNotes)
 
   // ===========================================================================
   // Dispatch
@@ -44,6 +47,8 @@ export const SettingsModal: React.FC = () => {
     dispatch(updateNotesSortStrategy(sortBy))
   const _updateCodeMirrorOption = (key: string, value: any) =>
     dispatch(updateCodeMirrorOption({ key, value }))
+  const _sortAndUpdateNotes = (compareFn: (a: NoteItem, b: NoteItem) => number) =>
+    dispatch(updateNotes({ notes: [...notes].sort(compareFn), activeFolder, activeCategoryId }))
 
   // ===========================================================================
   // Refs
@@ -81,6 +86,7 @@ export const SettingsModal: React.FC = () => {
   }
   const updateNotesSortStrategyHandler = (selectedOption: any) => {
     _updateNotesSortStrategy(selectedOption.value)
+    _sortAndUpdateNotes(getNotesSorter(selectedOption.value))
   }
   const updateNotesDirectionHandler = (selectedOption: any) => {
     _updateCodeMirrorOption('direction', selectedOption.value)
