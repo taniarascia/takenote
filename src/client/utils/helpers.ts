@@ -216,7 +216,7 @@ export const debounceEvent = <T extends Function>(cb: T, wait = 20) => {
 }
 
 export const isDraftNote = (note: NoteItem) => {
-  return note.text === ''
+  return !note.scratchpad && note.text === ''
 }
 
 export const getDayJsLocale = (languagetoken: string): string => {

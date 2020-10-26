@@ -8,6 +8,7 @@ import { addCategoryToNote, updateActiveCategoryId, updateActiveNote } from '@/s
 import { NoteItem, CategoryItem } from '@/types'
 import { getNotes, getCategories, getSettings } from '@/selectors'
 import { ContextMenuEnum } from '@/utils/enums'
+import { isDraftNote } from '@/utils/helpers'
 
 export const MenuUtilitiesContext = createContext({
   setOptionsId: (id: string) => {},
@@ -143,7 +144,7 @@ const NotesMenu: React.FC<NotesMenuProps> = ({ note, setOptionsId }) => {
   const _updateActiveCategoryId = (categoryId: string) =>
     dispatch(updateActiveCategoryId(categoryId))
 
-  return (
+  return !isDraftNote(note) ? (
     <>
       {!note.scratchpad && (
         <SelectCategory
@@ -162,8 +163,7 @@ const NotesMenu: React.FC<NotesMenuProps> = ({ note, setOptionsId }) => {
           note={note}
         />
       )}
-
       <ContextMenuOptions type={ContextMenuEnum.NOTE} clickedItem={note} />
     </>
-  )
+  ) : null
 }
