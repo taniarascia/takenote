@@ -51,8 +51,14 @@ import {
   closeSettingsByClickingX,
   closeSettingsByClickingOutsideWindow,
   toggleDarkMode,
+  toggleMarkdownPreview,
+  toggleLineNumbers,
   assertDarkModeActive,
   assertDarkModeInactive,
+  assertMarkdownPreviewActive,
+  assertMarkdownPreviewInactive,
+  assertLineNumbersActive,
+  assertLineNumbersInactive,
 } from '../utils/testSettingsUtils'
 import { dynamicTimeCategoryName } from '../utils/testHelperEnums'
 
@@ -87,16 +93,36 @@ describe('Settings', () => {
 
   it.skip('should toggle preferences: active line height', () => {})
 
-  it('should toggle preferences: dark mode ON', () => {
+  it('should toggle preferences: dark mode [on]', () => {
     toggleDarkMode()
     assertDarkModeActive()
   })
 
-  it('should toggle preferences: dark mode OFF', () => {
+  it('should toggle preferences: dark mode [off]', () => {
     toggleDarkMode()
     assertDarkModeInactive()
   })
-  it.skip('should toggle preferences: markdown preview', () => {})
+
+  it('should toggle preferences: markdown preview [on]', () => {
+    toggleMarkdownPreview()
+    assertMarkdownPreviewActive()
+  })
+
+  it('should toggle preferences: markdown preview [off]', () => {
+    toggleMarkdownPreview()
+    assertMarkdownPreviewInactive()
+  })
+
+  it('should toggle preferences: line numbers [on]', () => {
+    toggleLineNumbers()
+    assertLineNumbersActive()
+  })
+
+  it('should toggle preferences: line numbers [off]', () => {
+    toggleLineNumbers()
+    assertLineNumbersInactive()
+  })
+
   it.skip('should change sort order: last updated', () => {})
   it.skip('should change sort order: favorites', () => {})
   it.skip('should change sort order: title (alphabetical)', () => {})
