@@ -1,6 +1,7 @@
 // Default Labels
 export enum LabelText {
   ADD_CATEGORY = 'Add category',
+  COLLAPSE_CATEGORY = 'Collapse Category List',
   NOTES = 'Notes',
   CREATE_NEW_NOTE = 'Create new note',
   DELETE_PERMANENTLY = 'Delete permanently',

@@ -16,6 +16,9 @@ import {
   openCategoryContextMenu,
   clickCategoryOptionRename,
   clickCategoryOptionDelete,
+  collapseCategoryList,
+  assertCategoryListExists,
+  assertCategoryListDoesNotExists,
 } from '../utils/testCategoryHelperUtils'
 import { dynamicTimeCategoryName } from '../utils/testHelperEnums'
 import {
@@ -32,6 +35,22 @@ import {
 
 describe('Categories', () => {
   defaultInit()
+
+  it('should hide the category list on click of category', () => {
+    addCategory(dynamicTimeCategoryName)
+
+    collapseCategoryList()
+
+    assertCategoryListDoesNotExists()
+  })
+
+  it('should show category list on add new category', () => {
+    collapseCategoryList()
+
+    addCategory(dynamicTimeCategoryName)
+
+    assertCategoryListExists()
+  })
 
   it('creates a new category with the current time', () => {
     // Skipping for now due to
