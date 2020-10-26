@@ -6,10 +6,7 @@ import reducer, {
   togglePreviewMarkdown,
   updateCodeMirrorOption,
   toggleDarkTheme,
-  toggleSidebarVisibility,
-  updateNotesSortStrategy,
 } from '@/slices/settings'
-import { NotesSortKey } from '@/utils/enums'
 
 describe('settings slice', () => {
   it('should return the initial state on first run', () => {
@@ -51,13 +48,6 @@ describe('settings slice', () => {
   it('should toggle dark theme state', () => {
     const nextState = { ...initialState, darkTheme: !initialState.darkTheme }
     const result = reducer(initialState, toggleDarkTheme())
-
-    expect(result).toEqual(nextState)
-  })
-
-  it('should toggle sidebar visibility state', () => {
-    const nextState = { ...initialState, sidebarVisible: !initialState.sidebarVisible }
-    const result = reducer(initialState, toggleSidebarVisibility())
 
     expect(result).toEqual(nextState)
   })

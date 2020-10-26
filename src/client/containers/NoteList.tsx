@@ -7,7 +7,7 @@ import { Folder, Shortcuts, ContextMenuEnum } from '@/utils/enums'
 import { NoteListButton } from '@/components/NoteList/NoteListButton'
 import { SearchBar } from '@/components/NoteList/SearchBar'
 import { ContextMenu } from '@/containers/ContextMenu'
-import { getNoteTitle, shouldOpenContextMenu, debounceEvent } from '@/utils/helpers'
+import { getNoteTitle, shouldOpenContextMenu, debounceEvent, isDraftNote } from '@/utils/helpers'
 import { useKey } from '@/utils/hooks'
 import {
   permanentlyEmptyTrash,
@@ -16,7 +16,6 @@ import {
   searchNotes,
   updateSelectedNotes,
 } from '@/slices/note'
-import { toggleSidebarVisibility } from '@/slices/settings'
 import { NoteItem, ReactDragEvent, ReactMouseEvent } from '@/types'
 import { getNotes, getSettings, getCategories } from '@/selectors'
 import { getNotesSorter } from '@/utils/notesSortStrategies'
@@ -41,7 +40,6 @@ export const NoteList: React.FC = () => {
   const _updateSelectedNotes = (noteId: string, multiSelect: boolean) =>
     dispatch(updateSelectedNotes({ noteId, multiSelect }))
   const _permanentlyEmptyTrash = () => dispatch(permanentlyEmptyTrash())
-  const _toggleSidebarVisibility = () => dispatch(toggleSidebarVisibility())
   const _pruneNotes = () => dispatch(pruneNotes())
   const _updateActiveNote = (noteId: string, multiSelect: boolean) =>
     dispatch(updateActiveNote({ noteId, multiSelect }))
@@ -230,14 +228,18 @@ export const NoteList: React.FC = () => {
                     </>
                   )}
                 </div>
-                <div
-                  // TODO: make testID based off of index when we add that to a NoteItem object
-                  data-testid={TestID.NOTE_OPTIONS_DIV + index}
-                  className={optionsId === note.id ? 'note-options selected' : 'note-options'}
-                  onClick={(event) => handleNoteOptionsClick(event, note.id)}
-                >
-                  <MoreHorizontal size={15} className="context-menu-action" />
-                </div>
+                {!isDraftNote(note) ? (
+                  <div
+                    // TODO: make testID based off of index when we add that to a NoteItem object
+                    data-testid={TestID.NOTE_OPTIONS_DIV + index}
+                    className={optionsId === note.id ? 'note-options selected' : 'note-options'}
+                    onClick={(event) => handleNoteOptionsClick(event, note.id)}
+                  >
+                    <MoreHorizontal size={15} className="context-menu-action" />
+                  </div>
+                ) : (
+                  <div className="note-options">&nbsp;</div>
+                )}
               </div>
               {(activeFolder === Folder.ALL || activeFolder === Folder.FAVORITES) && (
                 <div className="note-category">
@@ -254,7 +256,7 @@ export const NoteList: React.FC = () => {
                   )}
                 </div>
               )}
-              {optionsId === note.id && (
+              {optionsId === note.id && !isDraftNote(note) && (
                 <ContextMenu
                   contextMenuRef={contextMenuRef}
                   item={note}
