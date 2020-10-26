@@ -124,31 +124,24 @@ describe('Settings', () => {
     navigateToSettings()
   })
 
-  it('should change sort order: favorites', () => {
-    selectOptionInSortByDropdown('Favorites')
-    closeSettingsByClickingX()
-    assertNoteContainsText('note-list-item-0', 'note 3')
-    navigateToSettings()
-  })
-
   it('should change sort order: last updated', () => {
     selectOptionInSortByDropdown('Last Updated')
     closeSettingsByClickingX()
-    assertNoteContainsText('note-list-item-0', 'note 10')
+    assertNoteContainsText('note-list-item-2', 'note 10')
     navigateToSettings()
   })
 
   it('should change sort order: title (alphabetical)', () => {
     selectOptionInSortByDropdown('Title')
     closeSettingsByClickingX()
-    assertNoteContainsText('note-list-item-0', 'B')
+    assertNoteContainsText('note-list-item-2', 'B')
     navigateToSettings()
   })
 
   it('should change sort order: date created', () => {
     selectOptionInSortByDropdown('Date Created')
     closeSettingsByClickingX()
-    assertNoteContainsText('note-list-item-0', 'note 10')
+    assertNoteContainsText('note-list-item-2', 'note 10')
     navigateToSettings()
   })
 })
