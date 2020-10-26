@@ -1,6 +1,49 @@
-import { welcomeNote } from '@/api/welcomeNote'
-import { scratchpadNote } from '@/api/scratchpadNote'
+import { v4 as uuid } from 'uuid'
+import dayjs from 'dayjs'
+
 import { NoteItem, SyncPayload, SettingsState } from '@/types'
+
+const scratchpadNote = {
+  id: uuid(),
+  text: `# Scratchpad
+
+The easiest note to find.`,
+  category: '',
+  scratchpad: true,
+  favorite: false,
+  created: dayjs().format(),
+}
+
+const markdown = `# Welcome to Takenote!
+
+TakeNote is a free, open-source notes app for the web. It is a demo project only, and does not integrate with any database or cloud. Your notes are saved in local storage and will not be permanently persisted. You can download all notes in markdown format as a zip. 
+
+View the source on [Github](https://github.com/taniarascia/takenote).
+
+## Features
+
+- Plain text notes
+- Markdown preview
+- Syntax highlighting
+- Keyboard shortcuts
+- Drag and drop
+- Favorites and categories
+- Multi-note actions
+- Multi-cursor editing
+- Light/dark theme
+- Search notes
+- Prettify notes
+- No WYSIWYG
+- No database
+- No tracking or analytics`
+
+const welcomeNote = {
+  id: uuid(),
+  text: markdown,
+  category: '',
+  favorite: false,
+  created: dayjs().format(),
+}
 
 type PromiseCallback = (value?: any) => void
 type GetLocalStorage = (
@@ -45,13 +88,6 @@ const getUserNotes = () => (resolve: PromiseCallback, reject: PromiseCallback) =
   }
 }
 
-export const requestNotes = () => new Promise(getUserNotes())
-
-export const requestCategories = () => new Promise(getLocalStorage('categories'))
-
-export const requestSettings = () =>
-  new Promise(getLocalStorage('settings', 'Could not load settings'))
-
 export const saveState = ({ categories, notes }: SyncPayload) =>
   new Promise((resolve) => {
     localStorage.setItem('categories', JSON.stringify(categories))
@@ -65,3 +101,7 @@ export const saveState = ({ categories, notes }: SyncPayload) =>
 
 export const saveSettings = ({ isOpen, ...settings }: SettingsState) =>
   Promise.resolve(localStorage.setItem('settings', JSON.stringify(settings)))
+
+export const requestNotes = () => new Promise(getUserNotes())
+export const requestCategories = () => new Promise(getLocalStorage('categories'))
+export const requestSettings = () => new Promise(getLocalStorage('settings'))

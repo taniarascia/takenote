@@ -21,10 +21,10 @@ import {
   getNoteBarConf,
 } from '@/utils/helpers'
 import { loadCategories, swapCategories } from '@/slices/category'
-import { loadNotes } from '@/slices/note'
 import { sync } from '@/slices/sync'
-import { loadSettings } from '@/slices/settings'
 import { NoteItem, CategoryItem } from '@/types'
+import { loadNotes } from '@/slices/note'
+import { loadSettings } from '@/slices/settings'
 import { getSettings, getNotes, getCategories, getSync } from '@/selectors'
 
 dayjs.extend(localizedFormat)
@@ -84,7 +84,7 @@ export const TakeNoteApp: React.FC = () => {
 
   useInterval(() => {
     _sync(notes, categories)
-  }, 20000)
+  }, 50000)
 
   useBeforeUnload((event: BeforeUnloadEvent) => (pendingSync ? event.preventDefault() : null))
 

@@ -33,7 +33,7 @@ export const SettingsModal: React.FC = () => {
     getSettings
   )
   const { currentUser } = useSelector(getAuth)
-  const { selectedNotesIds, notes } = useSelector(getNotes)
+  const { notes } = useSelector(getNotes)
   const { categories } = useSelector(getCategories)
 
   // ===========================================================================
@@ -122,7 +122,9 @@ export const SettingsModal: React.FC = () => {
 
         <section className="profile flex">
           <div>
-            <img src={currentUser.avatar_url} alt="Profile" className="profile-picture" />
+            {currentUser.avatar_url && (
+              <img src={currentUser.avatar_url} alt="Profile" className="profile-picture" />
+            )}
           </div>
           <div className="profile-details">
             <h3>{currentUser.name}</h3>
@@ -207,12 +209,13 @@ export const SettingsModal: React.FC = () => {
             </TabPanel>
             <TabPanel label="About TakeNote" icon={Layers}>
               <p>
-                TakeNote is a minimalist note-taking app for developers that integrates with GitHub.
-                Write in plain text and have your notes accessible from the web.
+                TakeNote is a minimalist note-taking app for developers. Write in plain text and
+                have your notes accessible from the web.
               </p>
               <p>
-                This app has no tracking or analytics and does not retain any user data. All data
-                exists only in GitHub.
+                This app has no tracking or analytics and does not retain any user data. Notes are
+                persisted in local storage and can be downloaded as markdown files from the data
+                management tab.
               </p>
               <p>
                 TakeNote was created by{' '}

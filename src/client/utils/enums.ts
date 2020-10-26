@@ -25,7 +25,6 @@ export enum ContextMenuEnum {
 
 export enum NotesSortKey {
   LAST_UPDATED = 'lastUpdated',
-  FAVORITES = 'favorites',
   TITLE = 'title',
   CREATED_DATE = 'created_date',
 }

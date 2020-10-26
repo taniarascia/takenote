@@ -3,7 +3,7 @@ import checkAuth from '../../../../src/server/middleware/checkAuth'
 describe(`checkAuth middleware`, () => {
   let requestMock: any
   let responseMock: any
-  let nextMock = jest.fn()
+  const nextMock = jest.fn()
   const statusSend = jest.fn()
 
   beforeEach(() => {
@@ -21,7 +21,7 @@ describe(`checkAuth middleware`, () => {
   test(`should pass saved cookies to locals`, async () => {
     requestMock = {
       cookies: {
-        accessTokenGH: 'test access token',
+        githubAccessToken: 'test access token',
       },
     }
 

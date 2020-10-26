@@ -124,7 +124,7 @@ const noteSlice = createSlice({
       state.activeCategoryId = ''
       state.activeNoteId = getFirstNoteId(payload, state.notes)
       state.selectedNotesIds = [getFirstNoteId(payload, state.notes)]
-      state.notes = state.notes.filter((note) => note.text !== '')
+      state.notes = state.notes.filter((note) => note.scratchpad || note.text !== '')
     },
 
     assignFavoriteToNotes: (state, { payload }: PayloadAction<string>) => {
@@ -223,7 +223,7 @@ const noteSlice = createSlice({
 
     pruneNotes: (state) => {
       state.notes = state.notes.filter(
-        (note) => note.text !== '' || state.selectedNotesIds.includes(note.id)
+        (note) => note.scratchpad || note.text !== '' || state.selectedNotesIds.includes(note.id)
       )
     },
 

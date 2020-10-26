@@ -7,13 +7,11 @@ export interface NotesSortStrategy {
   sort: (a: NoteItem, b: NoteItem) => number
 }
 
-const favorites: NotesSortStrategy = {
-  sort: (a: NoteItem, b: NoteItem): number => {
-    if (a.favorite && !b.favorite) return -1
-    if (!a.favorite && b.favorite) return 1
+const withFavorites = (sortFunction: NotesSortStrategy['sort']) => (a: NoteItem, b: NoteItem) => {
+  if (a.favorite && !b.favorite) return -1
+  if (!a.favorite && b.favorite) return 1
 
-    return 0
-  },
+  return sortFunction(a, b)
 }
 
 const createdDate: NotesSortStrategy = {
@@ -48,9 +46,9 @@ const title: NotesSortStrategy = {
 
 export const sortStrategyMap: { [key in NotesSortKey]: NotesSortStrategy } = {
   [NotesSortKey.LAST_UPDATED]: lastUpdated,
-  [NotesSortKey.FAVORITES]: favorites,
   [NotesSortKey.TITLE]: title,
   [NotesSortKey.CREATED_DATE]: createdDate,
 }
 
-export const getNotesSorter = (notesSortKey: NotesSortKey) => sortStrategyMap[notesSortKey].sort
+export const getNotesSorter = (notesSortKey: NotesSortKey) =>
+  withFavorites(sortStrategyMap[notesSortKey].sort)

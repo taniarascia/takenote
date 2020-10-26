@@ -2,6 +2,7 @@ import React from 'react'
 
 import { TestID } from '@resources/TestID'
 import { NoteItem, CategoryItem } from '@/types'
+import { isDraftNote } from '@/utils/helpers'
 
 export interface SelectCategoryProps {
   onChange: (selectedOption: any) => void
@@ -22,7 +23,7 @@ export const SelectCategory: React.FC<SelectCategoryProps> = ({
 
   return (
     <>
-      {!note.trash && note.text !== '' && filteredCategories.length > 0 && (
+      {!note.trash && !isDraftNote(note) && filteredCategories.length > 0 && (
         <select
           data-testid={TestID.MOVE_TO_CATEGORY}
           defaultValue=""

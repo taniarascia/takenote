@@ -11,90 +11,40 @@
     }
   }
 
-  .navigation {
-    width: 100%;
-    height: 80px;
-    display: flex;
-    align-items: center;
-    border-bottom: 1px solid $note-sidebar-color;
+  p,
+  ul,
+  li {
+    color: #404040;
+    line-height: 1.6;
+    font-size: 1.1rem;
+  }
 
-    .container {
-      width: 100%;
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-
-      .brand-icon {
-        max-width: 30px;
-        margin-right: 1rem;
-
-        @include small-breakpoint {
-          max-width: 40px;
-        }
-      }
-
-      span {
-        font-weight: 700;
-        font-size: 1.1rem;
-
-        @include small-breakpoint {
-          font-size: 1.2rem;
-        }
-      }
-    }
-
-    .menu {
-      display: flex;
-      align-items: center;
-
-      a {
-        display: flex;
-        font-size: 1.1rem;
-        color: rgba(0, 0, 0, 0.5);
-        font-weight: 500;
-        text-decoration: none;
-        &:first-of-type {
-          display: none;
-
-          @include small-breakpoint {
-            display: block;
-            margin-right: 1.5rem;
-          }
-        }
-
-        &:hover {
-          color: rgba(0, 0, 0, 0.6);
-        }
-      }
-    }
+  .new-signup {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 0.3rem;
+    border: 1px solid $note-sidebar-color;
+    margin: 2rem 0;
   }
 
   .content {
-    padding: 2rem 0;
+    padding: 1rem 0;
     background: lighten($note-sidebar-color, 5%);
-    border-bottom: 1px solid $note-sidebar-color;
-
-    @include small-breakpoint {
-      padding: 4rem 0;
-    }
 
     .lead {
       text-align: center;
     }
 
     h1 {
-      margin-top: 0;
+      margin-top: 2rem;
       font-weight: 700;
       font-size: 2rem;
       line-height: 1.1;
       letter-spacing: -0.03rem;
+      margin-bottom: 0;
 
       @include small-breakpoint {
-        font-size: 3.5rem;
+        font-size: 3rem;
       }
     }
 
@@ -107,10 +57,6 @@
       @include small-breakpoint {
         font-size: 1.4rem;
       }
-    }
-
-    .cta {
-      margin-bottom: 2rem;
     }
   }
 
@@ -130,36 +76,10 @@
     height: auto;
   }
 
-  .features {
-    display: flex;
-    flex-wrap: wrap;
-
-    div {
-      flex: 0 0 100%;
-
-      @include small-breakpoint {
-        padding: 0 1.5rem;
-        flex: 0 0 50%;
-      }
-    }
-
-    h2 {
-      font-weight: 700;
-      font-size: 1.4rem;
-
-      @include small-breakpoint {
-        font-size: 2rem;
-      }
-    }
-
-    p {
-      line-height: 1.6;
-      color: lighten($font-color, 15%);
-      font-size: 1.1rem;
-
-      @include small-breakpoint {
-        font-size: 1.3rem;
-      }
+  h2 {
+    font-size: 1.6rem;
+    @include small-breakpoint {
+      font-size: 2rem;
     }
   }
 
@@ -168,6 +88,10 @@
     padding: 2rem 0;
     text-align: center;
     color: white;
+
+    p {
+      color: white;
+    }
 
     @include small-breakpoint {
       padding: 4rem 0;
