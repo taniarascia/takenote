@@ -2,6 +2,7 @@
 export enum TestID {
   ADD_CATEGORY_BUTTON = 'add-category-button',
   CATEGORY_EDIT = 'category-edit',
+  CATEGORY_COLLAPSE_BUTTON = 'category-collapse-button',
   CATEGORY_LIST_DIV = 'category-list-div',
   CATEGORY_OPTIONS_NAV = 'category-options-nav',
   CATEGORY_OPTION_RENAME = 'category-options-rename',
