@@ -1,0 +1,67 @@
+apiVersion: v1
+data:
+  client_id: // base64 encoded string
+  client_secret: // base64 encoded string
+kind: Secret
+metadata:
+  name: takenote-pwd
+  labels:
+    app: takenote
+    component: server
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: takenote
+  labels:
+    app: takenote
+    component: server  
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: takenote
+      component: server
+  template:
+    metadata:
+      labels:
+        app: takenote
+        component: server
+    spec:
+      containers:
+      - image: <your_alias/takenote:latest> 
+        name: takenote         
+        env:
+        - name: CLIENT_ID
+          valueFrom:
+            secretKeyRef:
+              name: takenote-pwd
+              key: client_id
+        - name: CLIENT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: takenote-pwd
+              key: client_secret
+        - name: NODE_ENV
+          value: development
+        ports:
+        - containerPort: 5000
+          name: web
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: takenote
+  labels:
+    app: takenote
+    component: server
+spec:
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 5000
+      name: web
+  selector:
+    app: takenote
+    component: server
+  type: ClusterIP

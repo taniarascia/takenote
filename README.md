@@ -239,12 +239,12 @@ Thanks goes to these wonderful people:
     <td align="center"><a href="https://about.me/ronan696"><img src="https://avatars1.githubusercontent.com/u/13074003?v=4" width="50px;" alt=""/><br /><sub><b>Ronan D'Souza</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=ronan696" title="Code">💻</a></td>
     <td align="center"><a href="http://modprog.de"><img src="https://avatars0.githubusercontent.com/u/11978847?v=4" width="50px;" alt=""/><br /><sub><b>Roland Fredenhagen</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=ModProg" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/PranjaliPatil14"><img src="https://avatars2.githubusercontent.com/u/31987627?v=4" width="50px;" alt=""/><br /><sub><b>Pranjali Pramod Patil</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=PranjaliPatil14" title="Tests">⚠️</a></td>
+    <td align="center"><a href="https://cbrgm.net"><img src="https://avatars1.githubusercontent.com/u/24737434?v=4" width="50px;" alt=""/><br /><sub><b>Chris Bargmann</b></sub></a><br /><a href="#ideas-cbrgm" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/taniarascia/takenote/commits?author=cbrgm" title="Code">💻</a></td>
   </tr>
 </table>
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
-
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 ## Acknowledgements
