@@ -40,4 +40,6 @@ export enum TestID {
   ACTIVE_LINE_HIGHLIGHT_TOGGLE = 'active-line-highlight-toggle',
   DISPLAY_LINE_NUMS_TOGGLE = 'display-line-nums-toggle',
   SCROLL_PAST_END_TOGGLE = 'scroll-past-end-toggle',
+  SORT_BY_DROPDOWN = 'sort-by-dropdown',
+  TEXT_DIRECTION_DROPDOWN = 'text-direction-dropdown',
 }

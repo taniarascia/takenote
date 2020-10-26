@@ -181,6 +181,7 @@ export const SettingsModal: React.FC = () => {
                 onChange={updateNotesSortStrategyHandler}
                 options={notesSortOptions}
                 selectedValue={notesSortKey}
+                testId={TestID.SORT_BY_DROPDOWN}
               />
               <SelectOptions
                 title="Text direction"
@@ -188,6 +189,7 @@ export const SettingsModal: React.FC = () => {
                 onChange={updateNotesDirectionHandler}
                 options={directionTextOptions}
                 selectedValue={codeMirrorOptions.direction}
+                testId={TestID.TEXT_DIRECTION_DROPDOWN}
               />
             </TabPanel>
             <TabPanel label="Keyboard shortcuts" icon={Command}>

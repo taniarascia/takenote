@@ -1,49 +1,15 @@
 // settings.test.ts
 // Tests for functionality available in the settings menu
 
-import { LabelText } from '@resources/LabelText'
-import { TestID } from '@resources/TestID'
-
+import { defaultInit, assertNoteContainsText } from '../utils/testHelperUtils'
 import {
-  defaultInit,
-  getNoteCount,
-  navigateToNotes,
-  navigateToFavorites,
-  navigateToTrash,
-  testIDShouldContain,
-  testIDShouldNotExist,
-} from '../utils/testHelperUtils'
-import {
-  assertNewNoteCreated,
-  assertNoteEditorCharacterCount,
-  assertNoteEditorLineCount,
-  assertNoteListLengthEquals,
-  assertNoteListLengthGTE,
-  assertNoteListTitleAtIndex,
-  assertNoteOptionsOpened,
-  assertNotesSelected,
   clickCreateNewNote,
   createXUniqueNotes,
-  clickEmptyTrash,
-  clickNoteOptionDeleteNotePermanently,
   clickNoteOptionFavorite,
-  clickNoteOptionRestoreFromTrash,
-  clickNoteOptionTrash,
-  clickNoteOptions,
-  clickSyncNotes,
   typeNoteEditor,
-  typeNoteSearch,
-  clearNoteSearch,
   openNoteContextMenu,
   holdKeyAndClickNoteAtIndex,
-  trashAllNotes,
-  dragAndDrop,
 } from '../utils/testNotesHelperUtils'
-import {
-  addCategory,
-  selectMoveToCategoryOption,
-  navigateToCategory,
-} from '../utils/testCategoryHelperUtils'
 import {
   navigateToSettings,
   assertSettingsMenuIsOpen,
@@ -53,14 +19,17 @@ import {
   toggleDarkMode,
   toggleMarkdownPreview,
   toggleLineNumbers,
+  toggleLineHighlight,
   assertDarkModeActive,
   assertDarkModeInactive,
   assertMarkdownPreviewActive,
   assertMarkdownPreviewInactive,
   assertLineNumbersActive,
   assertLineNumbersInactive,
+  selectOptionInSortByDropdown,
+  assertLineHighlightActive,
+  assertLineHighlightInactive,
 } from '../utils/testSettingsUtils'
-import { dynamicTimeCategoryName } from '../utils/testHelperEnums'
 
 describe('Settings', () => {
   defaultInit()
@@ -74,6 +43,23 @@ describe('Settings', () => {
   afterEach(() => {
     closeSettingsByClickingOutsideWindow()
   })
+
+  const generateAndConfigureSomeNotes = () => {
+    const noteTitle = 'note 10'
+    const noteTitleAbc = 'B'
+
+    createXUniqueNotes(5)
+    holdKeyAndClickNoteAtIndex(0, 'meta')
+    holdKeyAndClickNoteAtIndex(1, 'meta')
+    openNoteContextMenu()
+    clickNoteOptionFavorite()
+
+    clickCreateNewNote()
+    typeNoteEditor(noteTitleAbc)
+
+    clickCreateNewNote()
+    typeNoteEditor(noteTitle)
+  }
 
   it('should open settings menu', () => {
     assertSettingsMenuIsOpen()
@@ -91,7 +77,19 @@ describe('Settings', () => {
     navigateToSettings()
   })
 
-  it.skip('should toggle preferences: active line height', () => {})
+  it('should toggle preferences: active line highlight [off]', () => {
+    toggleLineHighlight()
+    closeSettingsByClickingOutsideWindow()
+    assertLineHighlightInactive()
+    navigateToSettings()
+  })
+
+  it('should toggle preferences: active line highlight [on]', () => {
+    toggleLineHighlight()
+    closeSettingsByClickingOutsideWindow()
+    assertLineHighlightActive()
+    navigateToSettings()
+  })
 
   it('should toggle preferences: dark mode [on]', () => {
     toggleDarkMode()
@@ -121,10 +119,36 @@ describe('Settings', () => {
   it('should toggle preferences: line numbers [off]', () => {
     toggleLineNumbers()
     assertLineNumbersInactive()
+    closeSettingsByClickingX()
+    generateAndConfigureSomeNotes()
+    navigateToSettings()
   })
 
-  it.skip('should change sort order: last updated', () => {})
-  it.skip('should change sort order: favorites', () => {})
-  it.skip('should change sort order: title (alphabetical)', () => {})
-  it.skip('should change sort order: date created', () => {})
+  it('should change sort order: favorites', () => {
+    selectOptionInSortByDropdown('Favorites')
+    closeSettingsByClickingX()
+    assertNoteContainsText('note-list-item-0', 'note 3')
+    navigateToSettings()
+  })
+
+  it('should change sort order: last updated', () => {
+    selectOptionInSortByDropdown('Last Updated')
+    closeSettingsByClickingX()
+    assertNoteContainsText('note-list-item-0', 'note 10')
+    navigateToSettings()
+  })
+
+  it('should change sort order: title (alphabetical)', () => {
+    selectOptionInSortByDropdown('Title')
+    closeSettingsByClickingX()
+    assertNoteContainsText('note-list-item-0', 'B')
+    navigateToSettings()
+  })
+
+  it('should change sort order: date created', () => {
+    selectOptionInSortByDropdown('Date Created')
+    closeSettingsByClickingX()
+    assertNoteContainsText('note-list-item-0', 'note 10')
+    navigateToSettings()
+  })
 })

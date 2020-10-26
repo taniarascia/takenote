@@ -1,11 +1,9 @@
 // testHelperUtils.ts
 // Utility functions for use in settings tests
 
-import { LabelText } from '@resources/LabelText'
 import { TestID } from '@resources/TestID'
 
-import { clickTestID } from './testHelperUtils'
-import { entryPoint } from './testHelperEnums'
+import { clickTestID, selectOptionTestID } from './testHelperUtils'
 
 const navigateToSettings = () => {
   clickTestID(TestID.SETTINGS_MENU)
@@ -39,6 +37,14 @@ const toggleLineNumbers = () => {
   clickTestID(TestID.DISPLAY_LINE_NUMS_TOGGLE)
 }
 
+const toggleLineHighlight = () => {
+  clickTestID(TestID.ACTIVE_LINE_HIGHLIGHT_TOGGLE)
+}
+
+const selectOptionInSortByDropdown = (text: string) => {
+  selectOptionTestID(TestID.SORT_BY_DROPDOWN, text)
+}
+
 const assertDarkModeActive = () => {
   cy.get('.settings-modal').should('have.css', 'background-color', 'rgb(51, 51, 51)')
 }
@@ -67,6 +73,14 @@ const assertLineNumbersInactive = () => {
   )
 }
 
+const assertLineHighlightActive = () => {
+  cy.get('div.CodeMirror-activeline').should('exist')
+}
+
+const assertLineHighlightInactive = () => {
+  cy.get('div.CodeMirror-activeline').should('not.exist')
+}
+
 export {
   navigateToSettings,
   assertSettingsMenuIsOpen,
@@ -76,10 +90,14 @@ export {
   toggleDarkMode,
   toggleMarkdownPreview,
   toggleLineNumbers,
+  toggleLineHighlight,
   assertDarkModeActive,
   assertDarkModeInactive,
   assertMarkdownPreviewActive,
   assertMarkdownPreviewInactive,
   assertLineNumbersActive,
   assertLineNumbersInactive,
+  selectOptionInSortByDropdown,
+  assertLineHighlightActive,
+  assertLineHighlightInactive,
 }

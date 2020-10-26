@@ -8,6 +8,7 @@ describe('<Switch />', () => {
     const enabledProps: SwitchProps = {
       toggle: jest.fn(),
       checked: false,
+      testId: 'fake-test-id-for-testing',
     }
 
     const component = render(<Switch {...enabledProps} />)
