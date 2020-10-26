@@ -60,9 +60,7 @@
 }
 
 .subtitle-mobile {
-  color: $primary;
-  line-height: 1.6;
-  font-size: 1.2rem;
+  color: $primary !important;
   font-weight: 600;
   margin: 1rem auto 1.5rem;
 }

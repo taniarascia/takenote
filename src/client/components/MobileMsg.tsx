@@ -3,34 +3,20 @@ import React from 'react'
 import lightScreen from '@resources/assets/screenshot-light.png'
 import darkScreen from '@resources/assets/screenshot-dark.png'
 import squareLogo from '@resources/assets/logo-square-white.svg'
-import icon from '@resources/assets/logo-square-color.svg'
+import logo from '@resources/assets/logo-square-color.svg'
 
 export const MobileMsg: React.FC = () => {
   return (
     <section className="landing-page">
-      <nav className="navigation">
-        <div className="container">
-          <div className="brand">
-            <img src={icon} alt="TakeNote App" className="brand-icon" />
-            <span>TakeNote</span>
-          </div>
-          <div className="menu">
-            <a href="https://github.com/taniarascia/takenote">Source</a>
-          </div>
-        </div>
-      </nav>
-
       <section className="content">
         <div className="container-small">
           <div className="lead">
+            <img src={logo} height="200" width="200" alt="TakeNote" />
             <h1>
               The Note Taking App
               <br /> for Developers
             </h1>
-            <p className="subtitle">
-              A free, open-source notes app for the web. All the features you need without all the
-              fluff.
-            </p>
+            <p className="subtitle">A free, open-source notes app for the web.</p>
             <p className="subtitle-mobile">
               TakeNote is not currently supported for mobile devices.
             </p>
@@ -42,36 +28,28 @@ export const MobileMsg: React.FC = () => {
       </section>
 
       <section className="content">
-        <div className="container">
+        <div className="container-small">
           <div className="features">
-            <div>
-              <h2>Fast and simple</h2>
-              <p>
-                {`What you paste is what you see. No WYSIWIG, no formatting applied from the web, and no
-              features you don't need or want.`}
-              </p>
-            </div>
-            <div>
-              <h2>Intuitive</h2>
-              <p>
-                Drag-and-drop notes into categories, instantly search through notes, and pin your
-                favorites to the top.
-              </p>
-            </div>
-            <div>
-              <h2>Available anywhere</h2>
-              <p>
-                TakeNote is made for the web, so you can use it anywhere without downloading
-                anything.
-              </p>
-            </div>
-            <div>
-              <h2>Beautiful</h2>
-              <p>
-                Enjoy a beautiful, clean design reminiscent of your IDE with light and dark themes.
-              </p>
-            </div>
+            <h2 className="text-center">Features</h2>
+            <ul>
+              <li>Plain text notes</li>
+              <li>Markdown preview</li>
+              <li>Syntax highlighting</li>
+              <li>Keyboard shortcuts</li>
+              <li>Drag and drop</li>
+              <li>Favorites and categories</li>
+              <li>Multi-note actions</li>
+              <li>Multi-cursor editing</li>
+              <li>Light/dark theme</li>
+              <li>Search notes</li>
+              <li>Prettify notes</li>
+              <li>No WYSIWYG</li>
+              <li>No database</li>
+              <li>No tracking or analytics</li>
+            </ul>
           </div>
+        </div>
+        <div className="container">
           <img src={darkScreen} alt="TakeNote App" className="screenshot" />
         </div>
       </section>
