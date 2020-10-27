@@ -13,6 +13,7 @@ import { useTempState } from '@/contexts/TempStateContext'
 import { setCategoryEdit, updateCategory, addCategory } from '@/slices/category'
 import { AddCategoryForm } from '@/components/AppSidebar/AddCategoryForm'
 import { AddCategoryButton } from '@/components/AppSidebar/AddCategoryButton'
+import { CollapseCategoryListButton } from '@/components/AppSidebar/CollapseCategoryButton'
 
 export const CategoryList: React.FC = () => {
   // ===========================================================================
@@ -47,6 +48,7 @@ export const CategoryList: React.FC = () => {
 
   const [optionsId, setOptionsId] = useState('')
   const [optionsPosition, setOptionsPosition] = useState({ x: 0, y: 0 })
+  const [isCategoryListOpen, setCategoryListOpen] = useState(true)
 
   // ===========================================================================
   // Context
@@ -57,6 +59,11 @@ export const CategoryList: React.FC = () => {
   // ===========================================================================
   // Handlers
   // ===========================================================================
+
+  const onAddCategory = (adding: boolean) => {
+    setCategoryListOpen(true)
+    setAddingTempCategory(adding)
+  }
 
   const handleCategoryMenuClick = (
     event: React.MouseEvent<HTMLDivElement, MouseEvent> | ReactMouseEvent,
@@ -135,48 +142,57 @@ export const CategoryList: React.FC = () => {
   return (
     <>
       <div className="category-title">
-        <h2>Categories</h2>
+        <CollapseCategoryListButton
+          dataTestID={TestID.CATEGORY_COLLAPSE_BUTTON}
+          handler={() => setCategoryListOpen(!isCategoryListOpen)}
+          label={LabelText.COLLAPSE_CATEGORY}
+          isCategoryListOpen={isCategoryListOpen}
+        />
         <AddCategoryButton
           dataTestID={TestID.ADD_CATEGORY_BUTTON}
-          handler={setAddingTempCategory}
+          handler={onAddCategory}
           label={LabelText.ADD_CATEGORY}
         />
       </div>
-      <Droppable type="CATEGORY" droppableId="Category list">
-        {(droppableProvided) => (
-          <div
-            {...droppableProvided.droppableProps}
-            ref={droppableProvided.innerRef}
-            className="category-list"
-            aria-label="Category list"
-          >
-            {categories.map((category, index) => (
-              <CategoryOption
-                key={category.id}
-                index={index}
-                category={category}
-                contextMenuRef={contextMenuRef}
-                handleCategoryMenuClick={handleCategoryMenuClick}
-                handleCategoryRightClick={handleCategoryRightClick}
-                onSubmitUpdateCategory={onSubmitUpdateCategory}
-                optionsId={optionsId}
-                setOptionsId={setOptionsId}
-                optionsPosition={optionsPosition}
-              />
-            ))}
-            {droppableProvided.placeholder}
-          </div>
-        )}
-      </Droppable>
-      {addingTempCategory && (
-        <AddCategoryForm
-          dataTestID={TestID.NEW_CATEGORY_FORM}
-          submitHandler={onSubmitNewCategory}
-          changeHandler={_setCategoryEdit}
-          resetHandler={resetTempCategory}
-          editingCategoryId={editingCategoryId}
-          tempCategoryName={tempCategoryName}
-        />
+      {isCategoryListOpen && (
+        <>
+          <Droppable type="CATEGORY" droppableId="Category list">
+            {(droppableProvided) => (
+              <div
+                {...droppableProvided.droppableProps}
+                ref={droppableProvided.innerRef}
+                className="category-list"
+                aria-label="Category list"
+              >
+                {categories.map((category, index) => (
+                  <CategoryOption
+                    key={category.id}
+                    index={index}
+                    category={category}
+                    contextMenuRef={contextMenuRef}
+                    handleCategoryMenuClick={handleCategoryMenuClick}
+                    handleCategoryRightClick={handleCategoryRightClick}
+                    onSubmitUpdateCategory={onSubmitUpdateCategory}
+                    optionsId={optionsId}
+                    setOptionsId={setOptionsId}
+                    optionsPosition={optionsPosition}
+                  />
+                ))}
+                {droppableProvided.placeholder}
+              </div>
+            )}
+          </Droppable>
+          {addingTempCategory && (
+            <AddCategoryForm
+              dataTestID={TestID.NEW_CATEGORY_FORM}
+              submitHandler={onSubmitNewCategory}
+              changeHandler={_setCategoryEdit}
+              resetHandler={resetTempCategory}
+              editingCategoryId={editingCategoryId}
+              tempCategoryName={tempCategoryName}
+            />
+          )}
+        </>
       )}
     </>
   )
