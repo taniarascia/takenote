@@ -147,30 +147,35 @@ export const SettingsModal: React.FC = () => {
                 description="Controls whether the editor should highlight the active line"
                 toggle={toggleLineHighlight}
                 checked={codeMirrorOptions.styleActiveLine}
+                testId={TestID.ACTIVE_LINE_HIGHLIGHT_TOGGLE}
               />
               <Option
                 title="Display line numbers"
                 description="Controls whether the editor should display line numbers"
                 toggle={toggleLineNumbersHandler}
                 checked={codeMirrorOptions.lineNumbers}
+                testId={TestID.DISPLAY_LINE_NUMS_TOGGLE}
               />
               <Option
                 title="Scroll past end"
                 description="Controls whether the editor will add blank space to the end of all files"
                 toggle={toggleScrollPastEnd}
                 checked={codeMirrorOptions.scrollPastEnd}
+                testId={TestID.SCROLL_PAST_END_TOGGLE}
               />
               <Option
                 title="Markdown preview"
                 description="Controls whether markdown preview mode is enabled"
                 toggle={togglePreviewMarkdownHandler}
                 checked={previewMarkdown}
+                testId={TestID.MARKDOWN_PREVIEW_TOGGLE}
               />
               <Option
                 title="Dark mode"
                 description="Controls the theme of the application and editor"
                 toggle={toggleDarkThemeHandler}
                 checked={darkTheme}
+                testId={TestID.DARK_MODE_TOGGLE}
               />
               <SelectOptions
                 title="Sort By"
@@ -178,6 +183,7 @@ export const SettingsModal: React.FC = () => {
                 onChange={updateNotesSortStrategyHandler}
                 options={notesSortOptions}
                 selectedValue={notesSortKey}
+                testId={TestID.SORT_BY_DROPDOWN}
               />
               <SelectOptions
                 title="Text direction"
@@ -185,6 +191,7 @@ export const SettingsModal: React.FC = () => {
                 onChange={updateNotesDirectionHandler}
                 options={directionTextOptions}
                 selectedValue={codeMirrorOptions.direction}
+                testId={TestID.TEXT_DIRECTION_DROPDOWN}
               />
             </TabPanel>
             <TabPanel label="Keyboard shortcuts" icon={Command}>
