@@ -10,6 +10,8 @@ Refactoring.
 - Fix bugs and code smells
 - Fix #422 /app redirect
 - Add demo environment variable
+- Add compression
+- Remove prettier and associated massive Webpack bundle
 
 ## v0.7.1 10/25/2020
 
