@@ -5,7 +5,5 @@
   "supportFile": "tests/e2e/support/index.js",
   "fixturesFolder": "tests/e2e/fixtures",
   "videosFolder": "tests/e2e/videos",
-  "video": false,
-  "viewportWidth": 1440,
-  "viewportHeight": 900
+  "video": false
 }
