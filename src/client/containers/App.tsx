@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Switch, Redirect } from 'react-router-dom'
 import { Helmet, HelmetProvider } from 'react-helmet-async'
+import { isMobile } from 'react-device-detect'
 
 import { LandingPage } from '@/components/LandingPage'
 import { TakeNoteApp } from '@/containers/TakeNoteApp'
@@ -10,7 +11,6 @@ import { PublicRoute } from '@/router/PublicRoute'
 import { PrivateRoute } from '@/router/PrivateRoute'
 import { getAuth } from '@/selectors'
 import { login } from '@/slices/auth'
-import { useViewport } from '@/utils/hooks'
 
 export const App: React.FC = () => {
   // ===========================================================================
@@ -18,8 +18,6 @@ export const App: React.FC = () => {
   // ===========================================================================
 
   const { loading } = useSelector(getAuth)
-
-  const { width } = useViewport()
 
   // ===========================================================================
   // Dispatch
@@ -49,7 +47,7 @@ export const App: React.FC = () => {
     )
   }
 
-  return width <= 1024 ? (
+  return isMobile ? (
     <MobileMsg />
   ) : (
     <HelmetProvider>

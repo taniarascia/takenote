@@ -1,5 +1,5 @@
 import mousetrap from 'mousetrap'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 
 import 'mousetrap-global-bind'
 
@@ -78,21 +78,4 @@ export function useBeforeUnload(handler: Function = () => {}) {
       window.removeEventListener('beforeunload', handleBeforeunload)
     }
   }, [])
-}
-
-export function useViewport() {
-  const [width, setWidth] = useState(window.innerWidth)
-
-  useEffect(() => {
-    const handleWindowResize = () => setWidth(window.innerWidth)
-
-    window.addEventListener('resize', handleWindowResize)
-
-    return () => {
-      window.removeEventListener('resize', handleWindowResize)
-    }
-  }, [])
-
-  // Return the width so we can use it in our components
-  return { width }
 }

@@ -74,6 +74,7 @@
     "react": "^16.14.0",
     "react-beautiful-dnd": "^13.0.0",
     "react-codemirror2": "^7.2.1",
+    "react-device-detect": "^1.14.0",
     "react-dom": "^16.14.0",
     "react-feather": "^2.0.8",
     "react-helmet-async": "^1.0.7",
