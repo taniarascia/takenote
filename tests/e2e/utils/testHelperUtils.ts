@@ -10,6 +10,10 @@ const assertCurrentFolderOrCategory = (folderOrCategoryName: string) => {
   cy.get('.active').should('have.text', folderOrCategoryName)
 }
 
+const assertNoteContainsText = (testID: string, text: string) => {
+  cy.get(wrapWithTestIDTag(testID)).click().should('contain.text', text)
+}
+
 // takes a built string instead of a TestID .. prefer clickTestID() when possible
 const clickDynamicTestID = (dynamicTestID: string) => {
   cy.get(wrapWithTestIDTag(dynamicTestID)).click()
@@ -18,6 +22,10 @@ const clickDynamicTestID = (dynamicTestID: string) => {
 // optional second parameter to click at supported areas (e.g. 'right' 'left') default is 'center'
 const clickTestID = (testIDEnum: TestID) => {
   cy.get(wrapWithTestIDTag(testIDEnum)).click()
+}
+
+const selectOptionTestID = (testIDEnum: TestID, text: string) => {
+  cy.get(wrapWithTestIDTag(testIDEnum)).select(text)
 }
 
 const defaultInit = () => {
@@ -88,4 +96,6 @@ export {
   testIDShouldNotExist,
   wrapWithTestIDTag,
   assertCurrentFolderOrCategory,
+  selectOptionTestID,
+  assertNoteContainsText,
 }

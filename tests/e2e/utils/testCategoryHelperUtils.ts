@@ -3,7 +3,13 @@
 
 import { TestID } from '@resources/TestID'
 
-import { getTestID, wrapWithTestIDTag, testIDShouldExist, clickTestID } from './testHelperUtils'
+import {
+  getTestID,
+  wrapWithTestIDTag,
+  testIDShouldExist,
+  clickTestID,
+  testIDShouldNotExist,
+} from './testHelperUtils'
 
 const addCategory = (categoryName: string) => {
   getTestID(TestID.ADD_CATEGORY_BUTTON).click()
@@ -13,12 +19,24 @@ const addCategory = (categoryName: string) => {
   cy.contains(categoryName)
 }
 
+const collapseCategoryList = () => {
+  getTestID(TestID.CATEGORY_COLLAPSE_BUTTON).click()
+}
+
 const assertCategoryDoesNotExist = (categoryName: string) => {
   cy.findByText(categoryName).should('not.exist')
 }
 
 const assertCategoryExists = (categoryName: string) => {
   cy.contains(wrapWithTestIDTag(TestID.CATEGORY_LIST_DIV), categoryName).should('exist')
+}
+
+const assertCategoryListExists = () => {
+  testIDShouldExist(TestID.CATEGORY_LIST_DIV)
+}
+
+const assertCategoryListDoesNotExists = () => {
+  testIDShouldNotExist(TestID.CATEGORY_LIST_DIV)
 }
 
 const assertCategoryOrder = (categoryName: string, position: number) => {
@@ -87,4 +105,7 @@ export {
   openCategoryContextMenu,
   clickCategoryOptionRename,
   clickCategoryOptionDelete,
+  collapseCategoryList,
+  assertCategoryListExists,
+  assertCategoryListDoesNotExists,
 }
