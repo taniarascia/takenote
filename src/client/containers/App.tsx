@@ -2,11 +2,9 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Switch, Redirect } from 'react-router-dom'
 import { Helmet, HelmetProvider } from 'react-helmet-async'
-import { isMobile } from 'react-device-detect'
 
 import { LandingPage } from '@/components/LandingPage'
 import { TakeNoteApp } from '@/containers/TakeNoteApp'
-import { MobileMsg } from '@/components/MobileMsg'
 import { PublicRoute } from '@/router/PublicRoute'
 import { PrivateRoute } from '@/router/PrivateRoute'
 import { getAuth } from '@/selectors'
@@ -47,9 +45,7 @@ export const App: React.FC = () => {
     )
   }
 
-  return isMobile ? (
-    <MobileMsg />
-  ) : (
+  return (
     <HelmetProvider>
       <Helmet>
         <meta charSet="utf-8" />
