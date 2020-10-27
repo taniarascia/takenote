@@ -88,6 +88,29 @@ export const downloadNotes = (notes: NoteItem[], categories: CategoryItem[]): vo
   }
 }
 
+export const backupNotes = (notes: NoteItem[], categories: CategoryItem[]) => {
+  const pom = document.createElement('a')
+
+  pom.setAttribute(
+    'href',
+    `data:application/json;charset=utf-8,${encodeURIComponent(
+      JSON.stringify({ notes, categories })
+    )}`
+  )
+  const date = new Date()
+  const backupDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
+
+  pom.setAttribute('download', `takenote-backup-${backupDate}.json`)
+
+  if (document.createEvent) {
+    const event = document.createEvent('MouseEvents')
+    event.initEvent('click', true, true)
+    pom.dispatchEvent(event)
+  } else {
+    pom.click()
+  }
+}
+
 const newNote = (categoryId?: string, folder?: Folder): NoteItem => ({
   id: uuid(),
   text: '',
