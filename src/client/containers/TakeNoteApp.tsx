@@ -64,11 +64,11 @@ export const TakeNoteApp: React.FC = () => {
     const { destination, source } = result
 
     if (!destination) return
+
     if (destination.droppableId === source.droppableId && destination.index === source.index) return
 
-    switch (result.type) {
-      case 'CATEGORY':
-        _swapCategories(source.index, destination.index)
+    if (result.type === 'CATEGORY') {
+      _swapCategories(source.index, destination.index)
     }
   }
 

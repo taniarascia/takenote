@@ -3,6 +3,7 @@ const { merge } = require('webpack-merge')
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const TerserJSPlugin = require('terser-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const CompressionPlugin = require('compression-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 
 const common = require('./webpack.common.js')
@@ -52,22 +53,24 @@ module.exports = merge(common, {
     new webpack.SourceMapDevToolPlugin({
       exclude: ['/node_modules/'],
     }),
+    new CompressionPlugin(),
   ],
   performance: {
-    hints: false,
+    hints: 'warning',
     maxEntrypointSize: 512000,
     maxAssetSize: 512000,
   },
   optimization: {
     minimizer: [new TerserJSPlugin(), new OptimizeCSSAssetsPlugin()],
-    runtimeChunk: 'single',
+    runtimeChunk: 'multiple',
     splitChunks: {
       // Cache vendors since this code won't change very often
       cacheGroups: {
         vendor: {
-          test: /[\\/]node_modules[\\/](react|react-dom|axios)[\\/]/,
+          test: /[\\/]node_modules[\\/](react|react-dom|axios|redux|react-redux)[\\/]/,
           name: 'vendors',
           chunks: 'all',
+          enforce: true,
         },
       },
     },

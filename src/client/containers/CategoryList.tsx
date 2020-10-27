@@ -82,8 +82,7 @@ export const CategoryList: React.FC = () => {
 
     event.stopPropagation()
 
-    if (contextMenuRef?.current?.contains(clicked as HTMLDivElement)) {
-    } else {
+    if (!contextMenuRef?.current?.contains(clicked as HTMLDivElement)) {
       setOptionsId(!optionsId || optionsId !== categoryId ? categoryId : '')
     }
   }

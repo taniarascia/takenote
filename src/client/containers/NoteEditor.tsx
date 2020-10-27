@@ -45,10 +45,11 @@ export const NoteEditor: React.FC = () => {
       return <div className="empty-editor v-center">Loading...</div>
     } else if (!activeNote) {
       return <EmptyEditor />
-    } else if (previewMarkdown)
+    } else if (previewMarkdown) {
       return (
         <PreviewEditor directionText={codeMirrorOptions.direction} noteText={activeNote.text} />
       )
+    }
 
     return (
       <CodeMirror

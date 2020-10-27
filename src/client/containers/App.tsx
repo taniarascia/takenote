@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Switch, Redirect } from 'react-router-dom'
+import { Route, Switch, Redirect } from 'react-router-dom'
 import { Helmet, HelmetProvider } from 'react-helmet-async'
 
 import { LandingPage } from '@/components/LandingPage'
@@ -9,6 +9,8 @@ import { PublicRoute } from '@/router/PublicRoute'
 import { PrivateRoute } from '@/router/PrivateRoute'
 import { getAuth } from '@/selectors'
 import { login } from '@/slices/auth'
+
+const isDemo = process.env.DEMO
 
 export const App: React.FC = () => {
   // ===========================================================================
@@ -54,8 +56,18 @@ export const App: React.FC = () => {
       </Helmet>
 
       <Switch>
-        <PublicRoute exact path="/" component={LandingPage} />
-        <PrivateRoute path="/app" component={TakeNoteApp} />
+        {isDemo ? (
+          <>
+            <Route exact path="/" component={LandingPage} />
+            <Route path="/app" component={TakeNoteApp} />
+          </>
+        ) : (
+          <>
+            <PublicRoute exact path="/" component={LandingPage} />
+            <PrivateRoute path="/app" component={TakeNoteApp} />
+          </>
+        )}
+
         <Redirect to="/" />
       </Switch>
     </HelmetProvider>

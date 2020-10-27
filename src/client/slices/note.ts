@@ -108,7 +108,7 @@ const noteSlice = createSlice({
     ) => {
       state.activeNoteId = multiSelect
         ? state.notes.filter(({ id }) => state.selectedNotesIds.includes(id)).slice(-1)[0].id
-        : noteId!
+        : noteId
     },
 
     updateActiveCategoryId: (state, { payload }: PayloadAction<string>) => {

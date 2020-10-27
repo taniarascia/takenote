@@ -10,7 +10,7 @@ import {
   updateNotesSortStrategy,
 } from '@/slices/settings'
 import { logout } from '@/slices/auth'
-import { shortcutMap, notesSortOptions, directionTextOptions, iconColor } from '@/utils/constants'
+import { shortcutMap, notesSortOptions, directionTextOptions } from '@/utils/constants'
 import { ReactMouseEvent } from '@/types'
 import { getSettings, getAuth, getNotes, getCategories } from '@/selectors'
 import { Option } from '@/components/SettingsModal/Option'
