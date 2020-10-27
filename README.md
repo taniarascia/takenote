@@ -69,7 +69,7 @@ Run a development server.
 npm run client
 ```
 
-## Full Application Development
+## Full Application Development (self-hosted)
 
 In `src/client/sagas/index.ts` and `src/client/components/LandingPage.tsx`, change `isDemo` to false.
 
