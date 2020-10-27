@@ -39,8 +39,8 @@ module.exports = merge(common, {
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: 'styles/[name].[fullhash].css',
-      chunkFilename: 'styles/[name].[id].[fullhash].css',
+      filename: 'styles/[name].[contenthash].css',
+      chunkFilename: 'styles/[name].[id].[contenthash].css',
       ignoreOrder: false,
     }),
     new HtmlWebpackPlugin({

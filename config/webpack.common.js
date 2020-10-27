@@ -80,7 +80,6 @@ module.exports = {
       patterns: [
         {
           from: path.resolve(__dirname, '../public'),
-          to: 'assets',
           globOptions: {
             ignore: ['*.DS_Store', 'favicon.ico', 'template.html'],
           },
