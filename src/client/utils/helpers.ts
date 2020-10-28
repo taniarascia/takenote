@@ -91,15 +91,12 @@ export const downloadNotes = (notes: NoteItem[], categories: CategoryItem[]): vo
 export const backupNotes = (notes: NoteItem[], categories: CategoryItem[]) => {
   const pom = document.createElement('a')
 
-  const date = new Date()
-  const backupDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
-
   const json = JSON.stringify({ notes, categories })
   const blob = new Blob([json], { type: 'application/json' })
 
   const downloadUrl = window.URL.createObjectURL(blob)
   pom.href = downloadUrl
-  pom.download = `takenote-backup-${new Date().toISOString()}.json`
+  pom.download = `takenote-backup-${dayjs().format('YYYY-MM-DD')}.json`
   document.body.appendChild(pom)
 
   // @ts-ignore
