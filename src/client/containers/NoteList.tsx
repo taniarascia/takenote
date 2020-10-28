@@ -106,7 +106,7 @@ export const NoteList: React.FC = () => {
 
     event.stopPropagation()
 
-    if (!contextMenuRef.current || contextMenuRef.current.contains(clicked as HTMLDivElement)) {
+    if (!contextMenuRef.current || !contextMenuRef.current.contains(clicked as HTMLDivElement)) {
       setOptionsId(!optionsId || optionsId !== noteId ? noteId : '')
     }
   }
