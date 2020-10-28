@@ -23,5 +23,7 @@ export enum LabelText {
   RENAME = 'Rename category',
   ADD_CONTENT_NOTE = 'Please add content to this new note to access the menu options.',
   DOWNLOAD_ALL_NOTES = 'Download all notes',
+  BACKUP_ALL_NOTES = 'Backup all notes',
+  IMPORT_BACKUP = 'Import backup',
   TOGGLE_FAVORITE = 'Toggle favorite',
 }

@@ -4,7 +4,7 @@ import { Icon } from 'react-feather'
 import { iconColor } from '@/utils/constants'
 
 export interface IconButtonProps {
-  dataTestID: string
+  dataTestID?: string
   disabled?: boolean
   handler: MouseEventHandler
   icon: Icon

@@ -93,12 +93,10 @@ export const NoteMenuBar = () => {
         <button className="note-menu-bar-button" onClick={toggleDarkThemeHandler}>
           {darkTheme ? <Sun size={18} /> : <Moon size={18} />}
         </button>
-        <button
-          className="note-menu-bar-button"
-          onClick={settingsHandler}
-          data-testid={TestID.SETTINGS_MENU}
-        >
-          <Settings size={18} />
+
+        <button className="note-menu-bar-button" onClick={settingsHandler}>
+          <Settings aria-hidden size={18} />
+          <span className="sr-only">Settings</span>
         </button>
       </nav>
     </section>

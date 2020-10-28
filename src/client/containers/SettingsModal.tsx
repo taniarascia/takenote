@@ -1,6 +1,15 @@
 import React, { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { X, Command, Settings, Archive, Layers, Download } from 'react-feather'
+import {
+  X,
+  Command,
+  Settings,
+  Archive,
+  Layers,
+  Download,
+  DownloadCloud,
+  UploadCloud,
+} from 'react-feather'
 
 import {
   toggleSettingsModal,
@@ -10,19 +19,22 @@ import {
   updateNotesSortStrategy,
 } from '@/slices/settings'
 import { logout } from '@/slices/auth'
+import { importCategories } from '@/slices/category'
+import { importNotes } from '@/slices/note'
 import { shortcutMap, notesSortOptions, directionTextOptions } from '@/utils/constants'
-import { ReactMouseEvent } from '@/types'
+import { CategoryItem, NoteItem, ReactMouseEvent } from '@/types'
 import { getSettings, getAuth, getNotes, getCategories } from '@/selectors'
 import { Option } from '@/components/SettingsModal/Option'
 import { Shortcut } from '@/components/SettingsModal/Shortcut'
 import { SelectOptions } from '@/components/SettingsModal/SelectOptions'
 import { IconButton } from '@/components/SettingsModal/IconButton'
 import { NotesSortKey } from '@/utils/enums'
-import { downloadNotes } from '@/utils/helpers'
+import { backupNotes, downloadNotes } from '@/utils/helpers'
 import { Tabs } from '@/components/Tabs/Tabs'
 import { TabPanel } from '@/components/Tabs/TabPanel'
 import { LabelText } from '@resources/LabelText'
 import { TestID } from '@resources/TestID'
+import { IconButtonUploader } from '@/components/SettingsModal/IconButtonUploader'
 
 export const SettingsModal: React.FC = () => {
   // ===========================================================================
@@ -50,6 +62,10 @@ export const SettingsModal: React.FC = () => {
     dispatch(updateNotesSortStrategy(sortBy))
   const _updateCodeMirrorOption = (key: string, value: any) =>
     dispatch(updateCodeMirrorOption({ key, value }))
+  const _importBackup = (notes: NoteItem[], categories: CategoryItem[]) => {
+    dispatch(importNotes(notes))
+    dispatch(importCategories(categories))
+  }
 
   // ===========================================================================
   // Refs
@@ -94,6 +110,18 @@ export const SettingsModal: React.FC = () => {
     _updateCodeMirrorOption('direction', selectedOption.value)
   }
   const downloadNotesHandler = () => downloadNotes(notes, categories)
+  const backupHandler = () => backupNotes(notes, categories)
+  const importBackupHandler = async (json: File) => {
+    const content = await json.text()
+    const { notes, categories } = JSON.parse(content) as {
+      notes: NoteItem[]
+      categories: CategoryItem[]
+    }
+
+    if (!notes || !categories) return
+
+    _importBackup(notes, categories)
+  }
   // ===========================================================================
   // Hooks
   // ===========================================================================
@@ -205,6 +233,18 @@ export const SettingsModal: React.FC = () => {
                 handler={downloadNotesHandler}
                 icon={Download}
                 text={LabelText.DOWNLOAD_ALL_NOTES}
+              />
+              <IconButton
+                handler={backupHandler}
+                icon={DownloadCloud}
+                text={LabelText.BACKUP_ALL_NOTES}
+              />
+              <IconButtonUploader
+                dataTestID={TestID.UPLOAD_SETTINGS_BACKUP}
+                accept=".json"
+                handler={importBackupHandler}
+                icon={UploadCloud}
+                text={LabelText.IMPORT_BACKUP}
               />
             </TabPanel>
             <TabPanel label="About TakeNote" icon={Layers}>

@@ -5,8 +5,12 @@ import { TestID } from '@resources/TestID'
 
 import { clickTestID, selectOptionTestID } from './testHelperUtils'
 
+const clickSettingsTab = (name: string) => {
+  cy.findByRole('button', { name: new RegExp(name, 'i') }).click()
+}
+
 const navigateToSettings = () => {
-  clickTestID(TestID.SETTINGS_MENU)
+  cy.findByRole('button', { name: /settings/i }).click()
 }
 
 const assertSettingsMenuIsOpen = () => {
@@ -81,6 +85,33 @@ const assertLineHighlightInactive = () => {
   cy.get('div.CodeMirror-activeline').should('not.exist')
 }
 
+const getDownloadedBackup = () => {
+  return cy.get('a[download]:last-child').then(
+    (anchor) =>
+      new Cypress.Promise((resolve) => {
+        // Use XHR to get the blob that corresponds to the object URL.
+        const xhr = new XMLHttpRequest()
+        xhr.open('GET', anchor.prop('href'), true)
+        xhr.responseType = 'blob'
+
+        // Once loaded, use FileReader to get the string back from the blob.
+        xhr.onload = () => {
+          if (xhr.status === 200) {
+            const blob = xhr.response
+            const reader = new FileReader()
+            reader.onload = () => {
+              // Once we have a string, resolve the promise to let
+              // the Cypress chain continue, e.g. to assert on the result.
+              resolve(reader.result)
+            }
+            reader.readAsText(blob)
+          }
+        }
+        xhr.send()
+      })
+  )
+}
+
 export {
   navigateToSettings,
   assertSettingsMenuIsOpen,
@@ -100,4 +131,6 @@ export {
   selectOptionInSortByDropdown,
   assertLineHighlightActive,
   assertLineHighlightInactive,
+  clickSettingsTab,
+  getDownloadedBackup,
 }
