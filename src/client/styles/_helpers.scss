@@ -147,6 +147,8 @@ kbd {
   display: block;
   font-size: 0;
   color: $primary;
+  width: 54px;
+  height: 18px;
 }
 
 .la-ball-beat.la-dark {
@@ -158,14 +160,6 @@ kbd {
   float: none;
   background-color: currentColor;
   border: 0 solid currentColor;
-}
-
-.la-ball-beat {
-  width: 54px;
-  height: 18px;
-}
-
-.la-ball-beat > div {
   width: 10px;
   height: 10px;
   margin: 4px;

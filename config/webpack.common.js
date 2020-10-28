@@ -18,10 +18,14 @@ if (getEnvFromDotEnvFile.error) {
   console.log('Getting environment variables from build args for production') // eslint-disable-line
   envKeys = {
     'process.env.CLIENT_ID': JSON.stringify(process.env.CLIENT_ID),
+    'process.env.DEMO': JSON.stringify(process.env.DEMO),
     'process.env.NODE_ENV': JSON.stringify('production'),
   }
 } else {
-  envKeys = { 'process.env.CLIENT_ID': JSON.stringify(getEnvFromDotEnvFile.parsed['CLIENT_ID']) }
+  envKeys = {
+    'process.env.CLIENT_ID': JSON.stringify(getEnvFromDotEnvFile.parsed['CLIENT_ID']),
+    'process.env.DEMO': JSON.stringify(getEnvFromDotEnvFile.parsed['DEMO']),
+  }
 }
 
 module.exports = {

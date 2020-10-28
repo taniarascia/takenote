@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file.
 
+## v0.7.2 10/27/2020
+
+Refactoring.
+
+- Add SonarQube via SonarCloud (https://sonarcloud.io/dashboard?id=taniarascia_takenote)
+- Fix bugs and code smells
+- Fix #422 /app redirect
+- Add demo environment variable
+- Add compression
+- Remove prettier and associated massive Webpack bundle
+
 ## v0.7.1 10/25/2020
 
 Add GitHub integration.

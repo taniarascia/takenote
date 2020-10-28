@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { ArrowUp, Download, Star, Trash, X, Edit2, AlertTriangle } from 'react-feather'
+import { ArrowUp, Download, Star, Trash, X, Edit2 } from 'react-feather'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { LabelText } from '@resources/LabelText'

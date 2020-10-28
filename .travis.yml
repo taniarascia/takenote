@@ -30,8 +30,8 @@ install:
 
 before_script:
   # Start server and client for tests
-  - echo -e "CLIENT_ID=abc" > .env
-  - npm run dev:test &
+  - echo -e "CLIENT_ID=abc\nDEMO=true" > .env
+  - npm run client &
 
 script:
   # Run unit, component, and e2e tests
