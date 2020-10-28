@@ -1,8 +1,8 @@
 import visit from 'unist-util-visit'
 
-const noteUuidRegexp = /^#[a-z0-9]{6}$/
+const noteUuidRegexp = /#[a-z0-9]{6}/
 
-const extractText = (string: any, start: any, end: any) => {
+const extractText = (string: string, start: number, end: number) => {
   const startLine = string.slice(0, start).split('\n')
   const endLine = string.slice(0, end).split('\n')
 
@@ -50,6 +50,7 @@ export const uuidPlugin = () => {
         definition.push(text)
       }
 
+      if (!parent) return
       const last = parent.children.slice(position + 1)
       parent.children = parent.children.slice(0, position)
       parent.children = parent.children.concat(definition)
