@@ -4,7 +4,6 @@
 
 <p align="center">
  <img src="https://img.shields.io/badge/License-MIT-blue.svg">
-   <a href="https://travis-ci.org/taniarascia/takenote"><img src="https://travis-ci.org/taniarascia/takenote.svg?branch=master"></a>
    <a href="https://app.netlify.com/sites/tnote/deploys"><img src="https://api.netlify.com/api/v1/badges/a0e055de-cab8-4217-80dd-5bd769b7d478/deploy-status"></a>
    <a href='https://coveralls.io/github/taniarascia/takenote'><img src='https://coveralls.io/repos/github/taniarascia/takenote/badge.svg' alt='Coverage Status' /></a>
  </p>
@@ -73,8 +72,6 @@ npm run client
 ```
 
 ## Full Application Development (self-hosted)
-
-In `src/client/sagas/index.ts` and `src/client/components/LandingPage.tsx`, change `isDemo` to false.
 
 ### Pre-Installation
 
