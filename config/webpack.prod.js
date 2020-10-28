@@ -52,7 +52,6 @@ module.exports = merge(common, {
     new webpack.SourceMapDevToolPlugin({
       exclude: ['/node_modules/'],
     }),
-    new CompressionPlugin(),
   ],
   performance: {
     hints: 'warning',
