@@ -241,6 +241,9 @@ Thanks goes to these wonderful people:
     <td align="center"><a href="https://github.com/PranjaliPatil14"><img src="https://avatars2.githubusercontent.com/u/31987627?v=4" width="50px;" alt=""/><br /><sub><b>Pranjali Pramod Patil</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=PranjaliPatil14" title="Tests">⚠️</a></td>
     <td align="center"><a href="https://cbrgm.net"><img src="https://avatars1.githubusercontent.com/u/24737434?v=4" width="50px;" alt=""/><br /><sub><b>Chris Bargmann</b></sub></a><br /><a href="#ideas-cbrgm" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/taniarascia/takenote/commits?author=cbrgm" title="Code">💻</a></td>
   </tr>
+  <tr>
+    <td align="center"><a href="https://www.linkedin.com/in/jadhielv"><img src="https://avatars3.githubusercontent.com/u/24376900?v=4" width="50px;" alt=""/><br /><sub><b>Jadhiel Vélez</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=Jadhielv" title="Code">💻</a> <a href="https://github.com/taniarascia/takenote/issues?q=author%3AJadhielv" title="Bug reports">🐛</a></td>
+  </tr>
 </table>
 
 <!-- markdownlint-enable -->
