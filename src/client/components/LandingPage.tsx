@@ -32,23 +32,24 @@ export const LandingPage: React.FC = () => {
               <br /> for Developers
             </h1>
             <p className="subtitle">A free, open-source notes app for the web.</p>
-            {isMobile && (
+            {isMobile ? (
               <p className="p-mobile">TakeNote is not currently supported for mobile devices.</p>
-            )}
-            <div className="new-signup">
-              {isDemo && !isMobile ? (
-                <div>
-                  <p>
-                    TakeNote is only available as a demo. Your notes will be saved to local storage
-                    and <b>not</b> persisted in any database or cloud.
-                  </p>
-                  <a className="button" href="/app">
-                    View Demo
-                  </a>
-                </div>
-              ) : (
-                [
-                  !isMobile ? (
+            ) : (
+              [
+                isDemo ? (
+                  <div className="new-signup">
+                    <div>
+                      <p>
+                        TakeNote is only available as a demo. Your notes will be saved to local and{' '}
+                        and <b>not</b> persisted in any database or cloud.
+                      </p>
+                      <a className="button" href="/app">
+                        View Demo
+                      </a>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="new-signup">
                     <div>
                       <p>
                         TakeNote does not have a database or users. It simply links with your GitHub
@@ -57,10 +58,10 @@ export const LandingPage: React.FC = () => {
                       </p>
                       <div className="cta">{loginButton('Sign Up with GitHub')}</div>
                     </div>
-                  ) : null,
-                ]
-              )}
-            </div>
+                  </div>
+                ),
+              ]
+            )}
           </div>
         </div>
         <div className="container">
