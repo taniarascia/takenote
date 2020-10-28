@@ -113,8 +113,6 @@
 
   // Code block styling
   pre {
-    border: 0;
-    border-radius: 0;
     background: lighten($note-sidebar-color, 8%);
     padding: 1rem;
     tab-size: 2;
@@ -188,7 +186,6 @@
   color: $font-color;
   top: 0;
   right: 1rem;
-  box-shadow: none;
   border: none;
   background-color: $note-sidebar-color;
   font-weight: 500;

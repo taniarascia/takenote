@@ -12,7 +12,7 @@ GIT_VERSION=$(git describe --always --abbrev --tags --long)
 # Build and tag new Docker image and push up to Docker Hub
 echo "Building and tagging new Docker image: ${IMAGE}:${GIT_VERSION}"
 
-docker build --build-arg CLIENT_ID=${CLIENT_ID} -t ${IMAGE}:${GIT_VERSION} .
+docker build --build-arg DEMO=true CLIENT_ID=${CLIENT_ID} -t ${IMAGE}:${GIT_VERSION} .
 docker tag ${IMAGE}:${GIT_VERSION} ${IMAGE}:latest
 
 # Login to Docker Hub and push newest build
@@ -37,6 +37,6 @@ echo "Stopping container name current and starting ${IMAGE}:${GIT_VERSION}"
 doctl compute ssh ${DROPLET} --ssh-key-path deploy_key --ssh-command "docker pull ${IMAGE}:${GIT_VERSION} && 
 docker stop current && 
 docker rm current && 
-docker run --name=current --restart unless-stopped -e CLIENT_ID=${CLIENT_ID} -e CLIENT_SECRET=${CLIENT_SECRET} -d -p 80:5000 ${IMAGE}:${GIT_VERSION} &&
+docker run --name=current --restart unless-stopped -e DEMO=true CLIENT_ID=${CLIENT_ID} -e CLIENT_SECRET=${CLIENT_SECRET} -d -p 80:5000 ${IMAGE}:${GIT_VERSION} &&
 docker system prune -a -f &&
 docker image prune -a -f"

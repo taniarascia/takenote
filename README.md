@@ -5,6 +5,14 @@
 <p align="center">
  <img src="https://img.shields.io/badge/License-MIT-blue.svg">
    <a href="https://travis-ci.org/taniarascia/takenote"><img src="https://travis-ci.org/taniarascia/takenote.svg?branch=master"></a>
+   <a href="https://app.netlify.com/sites/tnote/deploys"><img src="https://api.netlify.com/api/v1/badges/a0e055de-cab8-4217-80dd-5bd769b7d478/deploy-status"></a>
+   <a href='https://coveralls.io/github/taniarascia/takenote'><img src='https://coveralls.io/repos/github/taniarascia/takenote/badge.svg' alt='Coverage Status' /></a>
+ </p>
+ <p align="center">
+   <a href="https://sonarcloud.io/dashboard?id=taniarascia_takenote"><img src="https://sonarcloud.io/api/project_badges/measure?project=taniarascia_takenote&metric=sqale_rating"></a>
+   <a href="https://sonarcloud.io/dashboard?id=taniarascia_takenote"><img src="https://sonarcloud.io/api/project_badges/measure?project=taniarascia_takenote&metric=reliability_rating"></a>
+   <a href="https://sonarcloud.io/api/project_badges/measure?project=taniarascia_takenote&metric=security_rating"><img src="https://sonarcloud.io/api/project_badges/measure?project=taniarascia_takenote&metric=security_rating"></a>
+   
 </p>
 
 <p align="center">A free, open-source notes app for the web. (Demo only)</p>
@@ -64,7 +72,7 @@ Run a development server.
 npm run client
 ```
 
-## Full Application Development
+## Full Application Development (self-hosted)
 
 In `src/client/sagas/index.ts` and `src/client/components/LandingPage.tsx`, change `isDemo` to false.
 
@@ -241,10 +249,14 @@ Thanks goes to these wonderful people:
     <td align="center"><a href="https://github.com/PranjaliPatil14"><img src="https://avatars2.githubusercontent.com/u/31987627?v=4" width="50px;" alt=""/><br /><sub><b>Pranjali Pramod Patil</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=PranjaliPatil14" title="Tests">⚠️</a></td>
     <td align="center"><a href="https://cbrgm.net"><img src="https://avatars1.githubusercontent.com/u/24737434?v=4" width="50px;" alt=""/><br /><sub><b>Chris Bargmann</b></sub></a><br /><a href="#ideas-cbrgm" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/taniarascia/takenote/commits?author=cbrgm" title="Code">💻</a></td>
   </tr>
+  <tr>
+    <td align="center"><a href="https://www.linkedin.com/in/jadhielv"><img src="https://avatars3.githubusercontent.com/u/24376900?v=4" width="50px;" alt=""/><br /><sub><b>Jadhiel Vélez</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=Jadhielv" title="Code">💻</a> <a href="https://github.com/taniarascia/takenote/issues?q=author%3AJadhielv" title="Bug reports">🐛</a></td>
+  </tr>
 </table>
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 ## Acknowledgements

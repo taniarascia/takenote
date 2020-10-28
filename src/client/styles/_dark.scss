@@ -223,6 +223,9 @@ $dark-editor: #3f3f3f;
   .settings-modal {
     background: $dark-sidebar;
     color: $light-font-color;
+    .subtitle {
+      color: darken($light-font-color, 20%);
+    }
     .settings-option {
       border-color: darken($dark-sidebar, 5%);
       h3 {
@@ -264,12 +267,6 @@ $dark-editor: #3f3f3f;
 
   .cache {
     border: 1px solid black;
-  }
-
-  .settings-modal {
-    .subtitle {
-      color: darken($light-font-color, 20%);
-    }
   }
 
   ::-webkit-scrollbar {

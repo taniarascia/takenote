@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { isMobile } from 'react-device-detect'
 
 import lightScreen from '@resources/assets/screenshot-light.png'
 import darkScreen from '@resources/assets/screenshot-dark.png'
@@ -8,7 +8,7 @@ import logo from '@resources/assets/logo-square-color.svg'
 import githubLogo from '@resources/assets/github-logo.png'
 
 const clientId = process.env.CLIENT_ID
-const isDemo = true
+const isDemo = process.env.DEMO
 
 const loginButton = (text: string) => (
   <a
@@ -32,8 +32,11 @@ export const LandingPage: React.FC = () => {
               <br /> for Developers
             </h1>
             <p className="subtitle">A free, open-source notes app for the web.</p>
+            {isMobile && (
+              <p className="p-mobile">TakeNote is not currently supported for mobile devices.</p>
+            )}
             <div className="new-signup">
-              {isDemo ? (
+              {isDemo && !isMobile ? (
                 <div>
                   <p>
                     TakeNote is only available as a demo. Your notes will be saved to local storage

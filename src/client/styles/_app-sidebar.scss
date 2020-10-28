@@ -142,7 +142,6 @@
       background: $primary;
       outline: none;
 
-      .action-button-icon,
       .action-button-icon {
         stroke: white;
       }
@@ -279,7 +278,6 @@
       -webkit-appearance: none;
       display: flex;
       align-items: center;
-      padding: 0;
       color: darken($light-font-color, 25%);
       background: transparent;
       font-size: 0.8rem;
