@@ -47,14 +47,18 @@ export const LandingPage: React.FC = () => {
                   </a>
                 </div>
               ) : (
-                <div>
-                  <p>
-                    TakeNote does not have a database or users. It simply links with your GitHub
-                    account for authentication, and stores the data in a private{' '}
-                    <code>takenotes-data</code> repo.
-                  </p>
-                  <div className="cta">{loginButton('Sign Up with GitHub')}</div>
-                </div>
+                [
+                  !isMobile ? (
+                    <div>
+                      <p>
+                        TakeNote does not have a database or users. It simply links with your GitHub
+                        account for authentication, and stores the data in a private{' '}
+                        <code>takenotes-data</code> repo.
+                      </p>
+                      <div className="cta">{loginButton('Sign Up with GitHub')}</div>
+                    </div>
+                  ) : null,
+                ]
               )}
             </div>
           </div>
