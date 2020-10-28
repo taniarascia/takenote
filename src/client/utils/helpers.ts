@@ -11,6 +11,12 @@ import { NoteItem, CategoryItem, WithPayload } from '@/types'
 export const getActiveNote = (notes: NoteItem[], activeNoteId: string) =>
   notes.find((note) => note.id === activeNoteId)
 
+export const getActiveNoteFromShortUuid = (notes: NoteItem[], shortUuid: string) => {
+  const uuidWithoutHash = shortUuid.replace('#', '')
+
+  return notes.find((note) => note.id.startsWith(uuidWithoutHash))
+}
+
 export const getActiveCategory = (categories: CategoryItem[], activeCategoryId: string) =>
   categories.find(({ id }) => id === activeCategoryId)
 
