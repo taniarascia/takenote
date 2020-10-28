@@ -35,7 +35,6 @@ export enum TestID {
   SCRATCHPAD = 'scratchpad',
   NOTE_OPTION_ADD_CONTENT_NOTE = 'note-option-add-content-note',
   SETTINGS_MODAL_DOWNLOAD_NOTES = 'settings-modal-download-notes',
-  SETTINGS_MENU = 'settings-menu',
   DARK_MODE_TOGGLE = 'dark-mode-toggle',
   MARKDOWN_PREVIEW_TOGGLE = 'markdown-preview-toggle',
   ACTIVE_LINE_HIGHLIGHT_TOGGLE = 'active-line-highlight-toggle',
@@ -43,4 +42,5 @@ export enum TestID {
   SCROLL_PAST_END_TOGGLE = 'scroll-past-end-toggle',
   SORT_BY_DROPDOWN = 'sort-by-dropdown',
   TEXT_DIRECTION_DROPDOWN = 'text-direction-dropdown',
+  UPLOAD_SETTINGS_BACKUP = 'upload-settings-backup',
 }

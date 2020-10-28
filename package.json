@@ -123,6 +123,7 @@
     "cross-env": "^7.0.2",
     "css-loader": "^5.0.0",
     "cypress": "^5.4.0",
+    "cypress-file-upload": "^4.1.1",
     "dotenv": "^8.2.0",
     "eslint": "^7.11.0",
     "eslint-config-prettier": "^6.13.0",

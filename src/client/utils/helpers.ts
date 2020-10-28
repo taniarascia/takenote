@@ -88,6 +88,24 @@ export const downloadNotes = (notes: NoteItem[], categories: CategoryItem[]): vo
   }
 }
 
+export const backupNotes = (notes: NoteItem[], categories: CategoryItem[]) => {
+  const pom = document.createElement('a')
+
+  const json = JSON.stringify({ notes, categories })
+  const blob = new Blob([json], { type: 'application/json' })
+
+  const downloadUrl = window.URL.createObjectURL(blob)
+  pom.href = downloadUrl
+  pom.download = `takenote-backup-${dayjs().format('YYYY-MM-DD')}.json`
+  document.body.appendChild(pom)
+
+  // @ts-ignore
+  if (!window.Cypress) {
+    pom.click()
+    URL.revokeObjectURL(downloadUrl)
+  }
+}
+
 const newNote = (categoryId?: string, folder?: Folder): NoteItem => ({
   id: uuid(),
   text: '',

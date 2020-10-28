@@ -28,6 +28,16 @@ const categorySlice = createSlice({
       state.categories.push(payload)
     },
 
+    importCategories: (state, { payload }: PayloadAction<CategoryItem[]>) => {
+      const categoryNames = new Map<string, string>()
+      state.categories.forEach(({ name }) => categoryNames.set(name, name))
+
+      // Make sure duplicate category is not added
+      const toAdd = payload.filter(({ name }) => !categoryNames.has(name))
+
+      state.categories.push(...toAdd)
+    },
+
     updateCategory: (state, { payload }: PayloadAction<CategoryItem>) => {
       state.categories = state.categories.map((category) =>
         category.id === payload.id ? { ...category, name: payload.name } : category
@@ -92,6 +102,7 @@ export const {
   loadCategoriesSuccess,
   updateCategory,
   setCategoryEdit,
+  importCategories,
 } = categorySlice.actions
 
 export default categorySlice.reducer

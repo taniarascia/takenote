@@ -9,6 +9,11 @@ const webpackOptions = {
       '@': path.resolve(__dirname, '../../../src/client'),
       '@resources': path.resolve(__dirname, '../../../src/resources'),
     },
+    // Polyfills
+    fallback: {
+      path: require.resolve('path-browserify'), // Needed for cypress-file-upload
+      stream: require.resolve('stream-browserify'), // Needed to import utils from client folder
+    },
   },
   module: {
     rules: [

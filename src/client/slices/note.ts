@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { v4 as uuid } from 'uuid'
 
 import { Folder } from '@/utils/enums'
 import { NoteItem, NoteState } from '@/types'
@@ -57,6 +58,16 @@ const noteSlice = createSlice({
       if (!draftNote) {
         state.notes.push(payload)
       }
+    },
+
+    importNotes: (state, { payload }: PayloadAction<NoteItem[]>) => {
+      const toAdd = payload.map((note) => {
+        note.id = uuid()
+
+        return note
+      })
+
+      state.notes.push(...toAdd)
     },
 
     updateNote: (state, { payload }: PayloadAction<NoteItem>) => {
@@ -269,6 +280,7 @@ export const {
   loadNotes,
   loadNotesError,
   loadNotesSuccess,
+  importNotes,
 } = noteSlice.actions
 
 export default noteSlice.reducer
