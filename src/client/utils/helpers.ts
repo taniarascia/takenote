@@ -91,23 +91,21 @@ export const downloadNotes = (notes: NoteItem[], categories: CategoryItem[]): vo
 export const backupNotes = (notes: NoteItem[], categories: CategoryItem[]) => {
   const pom = document.createElement('a')
 
-  pom.setAttribute(
-    'href',
-    `data:application/json;charset=utf-8,${encodeURIComponent(
-      JSON.stringify({ notes, categories })
-    )}`
-  )
   const date = new Date()
   const backupDate = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
 
-  pom.setAttribute('download', `takenote-backup-${backupDate}.json`)
+  const json = JSON.stringify({ notes, categories })
+  const blob = new Blob([json], { type: 'application/json' })
 
-  if (document.createEvent) {
-    const event = document.createEvent('MouseEvents')
-    event.initEvent('click', true, true)
-    pom.dispatchEvent(event)
-  } else {
+  const downloadUrl = window.URL.createObjectURL(blob)
+  pom.href = downloadUrl
+  pom.download = `takenote-backup-${new Date().toISOString()}.json`
+  document.body.appendChild(pom)
+
+  // @ts-ignore
+  if (!window.Cypress) {
     pom.click()
+    URL.revokeObjectURL(downloadUrl)
   }
 }
 

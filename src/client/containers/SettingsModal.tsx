@@ -34,7 +34,7 @@ import { Tabs } from '@/components/Tabs/Tabs'
 import { TabPanel } from '@/components/Tabs/TabPanel'
 import { LabelText } from '@resources/LabelText'
 import { TestID } from '@resources/TestID'
-import { IconUploader } from '@/components/SettingsModal/IconUploader'
+import { IconButtonUploader } from '@/components/SettingsModal/IconButtonUploader'
 
 export const SettingsModal: React.FC = () => {
   // ===========================================================================
@@ -239,7 +239,8 @@ export const SettingsModal: React.FC = () => {
                 icon={DownloadCloud}
                 text={LabelText.BACKUP_ALL_NOTES}
               />
-              <IconUploader
+              <IconButtonUploader
+                dataTestID={TestID.UPLOAD_SETTINGS_BACKUP}
                 accept=".json"
                 handler={importBackupHandler}
                 icon={UploadCloud}

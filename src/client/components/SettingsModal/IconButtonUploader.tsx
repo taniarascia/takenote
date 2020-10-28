@@ -3,7 +3,8 @@ import { Icon } from 'react-feather'
 
 import { iconColor } from '@/utils/constants'
 
-export interface IconButtonProps {
+export interface IconButtonUploaderProps {
+  dataTestID?: string
   disabled?: boolean
   handler: (file: File) => void
   icon: Icon
@@ -11,7 +12,8 @@ export interface IconButtonProps {
   accept: string
 }
 
-export const IconUploader: React.FC<IconButtonProps> = ({
+export const IconButtonUploader: React.FC<IconButtonUploaderProps> = ({
+  dataTestID,
   disabled = false,
   handler,
   icon: IconCmp,
@@ -35,6 +37,7 @@ export const IconUploader: React.FC<IconButtonProps> = ({
   return (
     <div>
       <input
+        data-testid={dataTestID}
         accept={accept}
         tabIndex={-1}
         autoComplete="off"
