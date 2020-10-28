@@ -37,7 +37,7 @@ export const LandingPage: React.FC = () => {
               <p className="p-mobile">TakeNote is not currently supported for mobile devices.</p>
             )}
             <div className="new-signup">
-              {isDemo ? (
+              {isDemo && !isMobile ? (
                 <div>
                   <p>
                     TakeNote is only available as a demo. Your notes will be saved to local storage
