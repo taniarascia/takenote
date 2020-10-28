@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { isMobile } from 'react-device-detect'
 
 import lightScreen from '@resources/assets/screenshot-light.png'
 import darkScreen from '@resources/assets/screenshot-dark.png'
@@ -32,8 +33,11 @@ export const LandingPage: React.FC = () => {
               <br /> for Developers
             </h1>
             <p className="subtitle">A free, open-source notes app for the web.</p>
+            {isMobile && (
+              <p className="p-mobile">TakeNote is not currently supported for mobile devices.</p>
+            )}
             <div className="new-signup">
-              {isDemo ? (
+              {isDemo && !isMobile ? (
                 <div>
                   <p>
                     TakeNote is only available as a demo. Your notes will be saved to local storage

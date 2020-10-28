@@ -27,6 +27,12 @@
     margin: 2rem 0;
   }
 
+  .p-mobile {
+    color: $primary !important;
+    font-weight: 600;
+    margin: 1rem auto 1.5rem;
+  }
+
   .content {
     padding: 1rem 0;
     background: lighten($note-sidebar-color, 5%);
