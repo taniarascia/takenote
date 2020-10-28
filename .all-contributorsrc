@@ -478,6 +478,16 @@
         "ideas",
         "code"
       ]
+    },
+    {
+      "login": "Jadhielv",
+      "name": "Jadhiel Vélez",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/24376900?v=4",
+      "profile": "https://www.linkedin.com/in/jadhielv",
+      "contributions": [
+        "code",
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
