@@ -31,16 +31,18 @@ install:
 before_script:
   # Start server and client for tests
   - echo -e "CLIENT_ID=abc\nDEMO=true" > .env
-  - npm run dev:test &
+  - npm run client &
 
 script:
   # Run unit, component, and e2e tests
   - npm run test:coverage:ci && npm run test:e2e
 
-deploy:
-  # Build Docker container and push to Docker Hub
-  # Pull into DigitalOcean container and start
-  provider: script
-  script: bash deploy.sh
-  on:
-    branch: master
+# Commenting out the deploy phase as the demo is static and no longer requires a server
+# So Travis is currently only being used for running tests, not deploying
+# deploy:
+#   # Build Docker container and push to Docker Hub
+#   # Pull into DigitalOcean container and start
+#   provider: script
+#   script: bash deploy.sh
+#   on:
+#     branch: master
