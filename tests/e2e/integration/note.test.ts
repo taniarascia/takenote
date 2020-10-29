@@ -65,7 +65,7 @@ describe('Manage notes test', () => {
     createXUniqueNotes(1)
   })
 
-  it.skip('should try to create a few new notes', () => {
+  it('should try to create a few new notes', () => {
     clickCreateNewNote()
     assertNoteListLengthEquals(2)
     assertNewNoteCreated()
@@ -85,7 +85,6 @@ describe('Manage notes test', () => {
 
     cy.get(wrapWithTestIDTag(TestID.UUID_MENU_BAR_TEXT)).then((el) => {
       const id = el.text().split('Note ID: ')[1]
-
       clickCreateNewNote()
       cy.get('.CodeMirror textarea').invoke('val', `test (#${id})`)
       clickDynamicTestID(TestID.PREVIEW_MODE)
