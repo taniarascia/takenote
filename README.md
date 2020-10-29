@@ -85,7 +85,7 @@ Click the **New OAuth App** button.
 - **Homepage URL**: `http://localhost:3000`
 - **Authorization callback URL**: `http://localhost:3000/api/auth/callback`
 
-Create a `.env` file in the root of the project, and add the app's client ID and secret. You will also need to add a boolean value for the demo property. When demo mode is active the GitHub integration is turned off. If demo is set to false GitHub integrations will be active.
+Create a `.env` file in the root of the project, and add the app's client ID and secret. Set `DEMO` to false to enable GitHub integration.
 
 ```bash
 CLIENT_ID=xxx
