@@ -8,6 +8,7 @@ import {
   clickDynamicTestID,
   clickTestID,
   getDynamicTestID,
+  wrapWithTestIDTag,
   getTestID,
   testIDShouldExist,
   navigateToTrash,

@@ -11,6 +11,10 @@ import { NoteItem, CategoryItem, WithPayload } from '@/types'
 export const getActiveNote = (notes: NoteItem[], activeNoteId: string) =>
   notes.find((note) => note.id === activeNoteId)
 
+export const getShortUuid = (uuid: string) => {
+  return uuid.substr(0, 6)
+}
+
 export const getActiveNoteFromShortUuid = (notes: NoteItem[], shortUuid: string) => {
   const uuidWithoutHash = shortUuid.replace('#', '')
 

@@ -1,6 +1,7 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Eye, Star, Trash2, Download, RefreshCw, Loader, Settings, Sun, Moon } from 'react-feather'
+import * as clipboard from 'clipboard-polyfill/text'
 
 import { TestID } from '@resources/TestID'
 import { LastSyncedNotification } from '@/components/LastSyncedNotification'
@@ -13,7 +14,7 @@ import {
 } from '@/slices/settings'
 import { toggleFavoriteNotes, toggleTrashNotes } from '@/slices/note'
 import { getCategories, getNotes, getSync, getSettings } from '@/selectors'
-import { downloadNotes, isDraftNote } from '@/utils/helpers'
+import { downloadNotes, isDraftNote, getShortUuid } from '@/utils/helpers'
 import { sync } from '@/slices/sync'
 
 export const NoteMenuBar = () => {
@@ -26,6 +27,29 @@ export const NoteMenuBar = () => {
   const { syncing, lastSynced, pendingSync } = useSelector(getSync)
   const { darkTheme } = useSelector(getSettings)
   const activeNote = notes.find((note) => note.id === activeNoteId)!
+  const shortNoteUuid = getShortUuid(activeNoteId)
+
+  // ===========================================================================
+  // State
+  // ===========================================================================
+
+  const [uuidText, setUuidText] = useState<string>()
+
+  // ===========================================================================
+  // Hooks
+  // ===========================================================================
+
+  useEffect(() => {
+    if (uuidText === 'Copied!') {
+      const timer = setTimeout(() => {
+        setUuidText(shortNoteUuid)
+      }, 3000)
+
+      return () => clearTimeout(timer)
+    }
+
+    return setUuidText(shortNoteUuid)
+  }, [uuidText, shortNoteUuid])
 
   // ===========================================================================
   // Dispatch
@@ -61,7 +85,11 @@ export const NoteMenuBar = () => {
     <section className="note-menu-bar">
       {activeNote && !isDraftNote(activeNote) ? (
         <nav>
-          <button className="note-menu-bar-button" onClick={_togglePreviewMarkdown}>
+          <button
+            className="note-menu-bar-button"
+            onClick={_togglePreviewMarkdown}
+            data-testid={TestID.PREVIEW_MODE}
+          >
             <Eye size={18} />
           </button>
           {!activeNote.scratchpad && (
@@ -77,6 +105,16 @@ export const NoteMenuBar = () => {
           <button className="note-menu-bar-button">
             <Download size={18} onClick={downloadNotesHandler} />
           </button>
+          <div
+            className="uuid-menu-bar"
+            onClick={() => {
+              clipboard.writeText(shortNoteUuid)
+              setUuidText('Copied!')
+            }}
+            data-testid={TestID.UUID_MENU_BAR_TEXT}
+          >
+            {`Note ID: ${uuidText}`}
+          </div>
         </nav>
       ) : (
         <div />

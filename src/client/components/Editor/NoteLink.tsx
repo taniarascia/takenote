@@ -15,7 +15,7 @@ export interface NoteLinkProps {
 const NoteLink: React.FC<NoteLinkProps> = ({ notes, uuid, handleNoteLinkClick }) => {
   const note = getActiveNoteFromShortUuid(notes, uuid)
   const title = note !== undefined ? getNoteTitle(note.text) : null
-  const notFoundErrorMsg = '<invalid note uuid provided>'
+  const notFoundErrorMsg = '<invalid note id provided>'
 
   if (note && title) return <a onClick={() => handleNoteLinkClick(note)}>{title}</a>
 
