@@ -2,7 +2,7 @@ import visit from 'unist-util-visit'
 
 // This regexp will match any string starting with a # followed by 6 alphanumeric chars
 // #k5b4m3, #j4n7k3, etc (substring of a note's UUID)
-const noteUuidRegexp = /#[a-z0-9]{6}/
+const noteUuidRegexp = /\{\{[a-z0-9]{6}\}\}/
 
 const extractText = (string: string, start: number, end: number) => {
   const startLine = string.slice(0, start).split('\n')

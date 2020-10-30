@@ -2,7 +2,8 @@ import React from 'react'
 import ReactMarkdown from 'react-markdown'
 import { useDispatch } from 'react-redux'
 
-import { updateActiveNote, updateSelectedNotes, pruneNotes } from '@/slices/note'
+import { Folder } from '@/utils/enums'
+import { updateActiveNote, updateSelectedNotes, pruneNotes, swapFolder } from '@/slices/note'
 import { NoteItem } from '@/types'
 
 import { uuidPlugin } from '../../utils/reactMarkdownPlugins'
@@ -30,15 +31,25 @@ export const PreviewEditor: React.FC<PreviewEditorProps> = ({ noteText, directio
 
   const _pruneNotes = () => dispatch(pruneNotes())
 
+  const _swapFolder = (folder: Folder) => dispatch(swapFolder(folder))
+
   // ===========================================================================
   // Handlers
   // ===========================================================================
 
-  const handleNoteLinkClick = (note: NoteItem) => {
+  const handleNoteLinkClick = (e: React.SyntheticEvent, note: NoteItem) => {
+    e.preventDefault()
+
     if (note) {
       _updateActiveNote(note.id, false)
       _updateSelectedNotes(note.id, false)
       _pruneNotes()
+
+      if (note?.favorite) return _swapFolder(Folder.FAVORITES)
+      if (note?.scratchpad) return _swapFolder(Folder.SCRATCHPAD)
+      if (note?.trash) return _swapFolder(Folder.TRASH)
+
+      return _swapFolder(Folder.ALL)
     }
   }
 

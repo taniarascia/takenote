@@ -118,6 +118,10 @@ const clickNoteOptionTrash = () => {
   clickTestID(TestID.NOTE_OPTION_TRASH)
 }
 
+const clickNoteOptionCopyLinkedNoteMarkdown = () => {
+  clickTestID(TestID.COPY_LINKED_NOTE_MARKDOWN)
+}
+
 const clickSyncNotes = () => {
   clickTestID(TestID.TOPBAR_ACTION_SYNC_NOTES)
 }
@@ -160,6 +164,7 @@ export {
   clickNoteOptionRestoreFromTrash,
   clickNoteOptionTrash,
   clickNoteOptions,
+  clickNoteOptionCopyLinkedNoteMarkdown,
   clickSyncNotes,
   typeNoteEditor,
   typeNoteSearch,

@@ -33,3 +33,7 @@ export enum DirectionText {
   LEFT_TO_RIGHT = 'ltr',
   RIGHT_TO_LEFT = 'rtl',
 }
+
+export enum Errors {
+  INVALID_LINKED_NOTE_ID = '<invalid note id provided>',
+}

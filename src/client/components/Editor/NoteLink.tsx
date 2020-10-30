@@ -1,25 +1,23 @@
 import React from 'react'
-import { useDispatch } from 'react-redux'
 
 import { NoteItem } from '@/types'
-import { updateActiveNote, updateSelectedNotes, pruneNotes } from '@/slices/note'
+import { Errors } from '@/utils/enums'
 
 import { getNoteTitle, getActiveNoteFromShortUuid } from '../../utils/helpers'
 
 export interface NoteLinkProps {
   uuid: string
   notes: NoteItem[]
-  handleNoteLinkClick: (note: NoteItem) => void
+  handleNoteLinkClick: (e: React.SyntheticEvent, note: NoteItem) => void
 }
 
 const NoteLink: React.FC<NoteLinkProps> = ({ notes, uuid, handleNoteLinkClick }) => {
   const note = getActiveNoteFromShortUuid(notes, uuid)
   const title = note !== undefined ? getNoteTitle(note.text) : null
-  const notFoundErrorMsg = '<invalid note id provided>'
 
-  if (note && title) return <a onClick={() => handleNoteLinkClick(note)}>{title}</a>
+  if (note && title) return <a onClick={(e) => handleNoteLinkClick(e, note)}>{title}</a>
 
-  return <span className="error">{notFoundErrorMsg}</span>
+  return <span className="error">{Errors.INVALID_LINKED_NOTE_ID}</span>
 }
 
 export default NoteLink

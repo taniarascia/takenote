@@ -3,6 +3,7 @@
 
 import { LabelText } from '@resources/LabelText'
 import { TestID } from '@resources/TestID'
+import { Errors } from '@/utils/enums'
 
 import {
   defaultInit,
@@ -12,7 +13,6 @@ import {
   navigateToTrash,
   testIDShouldContain,
   testIDShouldNotExist,
-  wrapWithTestIDTag,
   clickDynamicTestID,
 } from '../utils/testHelperUtils'
 import {
@@ -32,6 +32,7 @@ import {
   clickNoteOptionRestoreFromTrash,
   clickNoteOptionTrash,
   clickNoteOptions,
+  clickNoteOptionCopyLinkedNoteMarkdown,
   clickSyncNotes,
   typeNoteEditor,
   typeNoteSearch,
@@ -51,11 +52,11 @@ import { dynamicTimeCategoryName } from '../utils/testHelperEnums'
 describe('Manage notes test', () => {
   defaultInit()
 
-  // before(() => {
-  //   // Delete welcome note
-  //   clickNoteOptions()
-  //   clickNoteOptionTrash()
-  // })
+  before(() => {
+    // Delete welcome note
+    clickNoteOptions()
+    clickNoteOptionTrash()
+  })
 
   beforeEach(() => {
     navigateToNotes()
@@ -83,25 +84,34 @@ describe('Manage notes test', () => {
     createXUniqueNotes(3)
     holdKeyAndClickNoteAtIndex(1, 'meta')
 
-    cy.get(wrapWithTestIDTag(TestID.UUID_MENU_BAR_TEXT)).then((el) => {
-      const id = el.text().split('Note ID: ')[1]
-      clickCreateNewNote()
-      cy.get('.CodeMirror textarea').invoke('val', `test (#${id})`)
-      clickDynamicTestID(TestID.PREVIEW_MODE)
-      cy.get('a').should('exist')
-    })
+    clickDynamicTestID(TestID.UUID_MENU_BAR_COPY_ICON)
+    const id = cy.task('getClipboard')
+
+    clickCreateNewNote()
+    cy.get('.CodeMirror textarea').invoke('val', `test ${id}`)
+
+    clickDynamicTestID(TestID.PREVIEW_MODE)
+    cy.get('a').should('exist')
   })
 
   it('should not link to another vote if an invalid uuid is provided', () => {
     createXUniqueNotes(3)
     holdKeyAndClickNoteAtIndex(1, 'meta')
 
-    cy.get(wrapWithTestIDTag(TestID.UUID_MENU_BAR_TEXT)).then((el) => {
-      clickCreateNewNote()
-      cy.get('.CodeMirror textarea').invoke('val', 'test (#z1x2c3)')
-      clickDynamicTestID(TestID.PREVIEW_MODE)
-      cy.get('a').should('not.exist')
-    })
+    clickCreateNewNote()
+    cy.get('.CodeMirror textarea').invoke('val', 'test {{z1x2c3}}')
+
+    clickDynamicTestID(TestID.PREVIEW_MODE)
+    cy.get('span.error').should('contain', Errors.INVALID_LINKED_NOTE_ID)
+  })
+
+  it('should copy note linking syntax from context menu', () => {
+    createXUniqueNotes(1)
+    holdKeyAndClickNoteAtIndex(0, 'meta')
+    openNoteContextMenu()
+    clickNoteOptionCopyLinkedNoteMarkdown()
+
+    cy.task('getClipboard').should('match', /\{\{[a-z0-9]{6}\}\}/)
   })
 
   it('should update a note', () => {
