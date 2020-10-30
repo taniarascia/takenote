@@ -1,7 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { v4 as uuid } from 'uuid'
 
 import { Folder } from '@/utils/enums'
 import { NoteItem, NoteState } from '@/types'
+import { isDraftNote } from '@/utils/helpers'
 
 const getNewActiveNoteId = (
   notes: NoteItem[],
@@ -35,7 +37,7 @@ export const getFirstNoteId = (folder: Folder, notes: NoteItem[], categoryId?: s
   return firstNote ? firstNote.id : ''
 }
 
-const initialState: NoteState = {
+export const initialState: NoteState = {
   notes: [],
   activeCategoryId: '',
   activeFolder: Folder.ALL,
@@ -51,7 +53,21 @@ const noteSlice = createSlice({
   initialState,
   reducers: {
     addNote: (state, { payload }: PayloadAction<NoteItem>) => {
-      state.notes.push(payload)
+      const draftNote = state.notes.find((note) => isDraftNote(note))
+
+      if (!draftNote) {
+        state.notes.push(payload)
+      }
+    },
+
+    importNotes: (state, { payload }: PayloadAction<NoteItem[]>) => {
+      const toAdd = payload.map((note) => {
+        note.id = uuid()
+
+        return note
+      })
+
+      state.notes.push(...toAdd)
     },
 
     updateNote: (state, { payload }: PayloadAction<NoteItem>) => {
@@ -120,7 +136,7 @@ const noteSlice = createSlice({
     ) => {
       state.activeNoteId = multiSelect
         ? state.notes.filter(({ id }) => state.selectedNotesIds.includes(id)).slice(-1)[0].id
-        : noteId!
+        : noteId
     },
 
     updateActiveCategoryId: (state, { payload }: PayloadAction<string>) => {
@@ -128,6 +144,7 @@ const noteSlice = createSlice({
       state.activeFolder = Folder.CATEGORY
       state.activeNoteId = getFirstNoteId(Folder.CATEGORY, state.notes, payload)
       state.selectedNotesIds = [getFirstNoteId(Folder.CATEGORY, state.notes, payload)]
+      state.notes = state.notes.filter((note) => note.text !== '')
     },
 
     swapFolder: (state, { payload }: PayloadAction<Folder>) => {
@@ -135,6 +152,7 @@ const noteSlice = createSlice({
       state.activeCategoryId = ''
       state.activeNoteId = getFirstNoteId(payload, state.notes)
       state.selectedNotesIds = [getFirstNoteId(payload, state.notes)]
+      state.notes = state.notes.filter((note) => note.scratchpad || note.text !== '')
     },
 
     assignFavoriteToNotes: (state, { payload }: PayloadAction<string>) => {
@@ -233,7 +251,7 @@ const noteSlice = createSlice({
 
     pruneNotes: (state) => {
       state.notes = state.notes.filter(
-        (note) => note.text !== '' || state.selectedNotesIds.includes(note.id)
+        (note) => note.scratchpad || note.text !== '' || state.selectedNotesIds.includes(note.id)
       )
     },
 
@@ -280,6 +298,7 @@ export const {
   loadNotes,
   loadNotesError,
   loadNotesSuccess,
+  importNotes,
 } = noteSlice.actions
 
 export default noteSlice.reducer

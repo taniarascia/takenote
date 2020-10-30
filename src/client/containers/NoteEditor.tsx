@@ -9,7 +9,7 @@ import { NoteItem } from '@/types'
 import { NoteMenuBar } from '@/containers/NoteMenuBar'
 import { EmptyEditor } from '@/components/Editor/EmptyEditor'
 import { PreviewEditor } from '@/components/Editor/PreviewEditor'
-import { getSettings, getNotes } from '@/selectors'
+import { getSync, getSettings, getNotes } from '@/selectors'
 import { setPendingSync } from '@/slices/sync'
 
 import 'codemirror/lib/codemirror.css'
@@ -23,6 +23,7 @@ export const NoteEditor: React.FC = () => {
   // Selectors
   // ===========================================================================
 
+  const { pendingSync } = useSelector(getSync)
   const { activeNoteId, loading, notes } = useSelector(getNotes)
   const { codeMirrorOptions, previewMarkdown } = useSelector(getSettings)
 
@@ -35,7 +36,7 @@ export const NoteEditor: React.FC = () => {
   const dispatch = useDispatch()
 
   const _updateNote = (note: NoteItem) => {
-    dispatch(setPendingSync())
+    !pendingSync && dispatch(setPendingSync())
     dispatch(updateNote(note))
   }
 
@@ -44,59 +45,59 @@ export const NoteEditor: React.FC = () => {
       return <div className="empty-editor v-center">Loading...</div>
     } else if (!activeNote) {
       return <EmptyEditor />
-    } else if (previewMarkdown)
+    } else if (previewMarkdown) {
       return (
-        <>
-          <NoteMenuBar />
-          <PreviewEditor directionText={codeMirrorOptions.direction} noteText={activeNote.text} />
-        </>
+        <PreviewEditor directionText={codeMirrorOptions.direction} noteText={activeNote.text} />
       )
+    }
 
     return (
-      <>
-        <NoteMenuBar />
-        <CodeMirror
-          data-testid="codemirror-editor"
-          className="editor mousetrap"
-          value={activeNote.text}
-          options={codeMirrorOptions}
-          editorDidMount={(editor) => {
-            setTimeout(() => {
-              editor.focus()
-            }, 0)
-            editor.setCursor(0)
-          }}
-          onBeforeChange={(editor, data, value) => {
-            _updateNote({
-              id: activeNote.id,
-              text: value,
-              created: activeNote.created,
-              lastUpdated: dayjs().format(),
+      <CodeMirror
+        data-testid="codemirror-editor"
+        className="editor mousetrap"
+        value={activeNote.text}
+        options={codeMirrorOptions}
+        editorDidMount={(editor) => {
+          setTimeout(() => {
+            editor.focus()
+          }, 0)
+          editor.setCursor(0)
+        }}
+        onBeforeChange={(editor, data, value) => {
+          _updateNote({
+            id: activeNote.id,
+            text: value,
+            created: activeNote.created,
+            lastUpdated: dayjs().format(),
+          })
+        }}
+        onChange={(editor, data, value) => {
+          if (!value) {
+            editor.focus()
+          }
+        }}
+        onPaste={(editor, event: any) => {
+          // Get around pasting issue
+          // https://github.com/scniro/react-codemirror2/issues/77
+          if (!event.clipboardData || !event.clipboardData.items || !event.clipboardData.items[0])
+            return
+          event.clipboardData.items[0].getAsString((pasted: any) => {
+            if (editor.getSelection() !== pasted) return
+            const { anchor, head } = editor.listSelections()[0]
+            editor.setCursor({
+              line: Math.max(anchor.line, head.line),
+              ch: Math.max(anchor.ch, head.ch),
             })
-          }}
-          onChange={(editor, data, value) => {
-            if (!value) {
-              editor.focus()
-            }
-          }}
-          onPaste={(editor, event: any) => {
-            // Get around pasting issue
-            // https://github.com/scniro/react-codemirror2/issues/77
-            if (!event.clipboardData || !event.clipboardData.items || !event.clipboardData.items[0])
-              return
-            event.clipboardData.items[0].getAsString((pasted: any) => {
-              if (editor.getSelection() !== pasted) return
-              const { anchor, head } = editor.listSelections()[0]
-              editor.setCursor({
-                line: Math.max(anchor.line, head.line),
-                ch: Math.max(anchor.ch, head.ch),
-              })
-            })
-          }}
-        />
-      </>
+          })
+        }}
+      />
     )
   }
 
-  return <main className="note-editor">{renderEditor()}</main>
+  return (
+    <main className="note-editor">
+      <NoteMenuBar />
+      {renderEditor()}
+    </main>
+  )
 }

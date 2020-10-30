@@ -26,7 +26,6 @@ export const notesSortOptions = [
   { value: NotesSortKey.TITLE, label: 'Title' },
   { value: NotesSortKey.CREATED_DATE, label: 'Date Created' },
   { value: NotesSortKey.LAST_UPDATED, label: 'Last Updated' },
-  { value: NotesSortKey.FAVORITES, label: 'Favorites' },
 ]
 
 export const directionTextOptions = [

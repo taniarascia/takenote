@@ -1,12 +1,12 @@
 .note-menu-bar {
-  height: 49px;
-  border-bottom: 1px solid darken($note-sidebar-color, 5%);
+  height: 39px;
+  border-top: 1px solid darken($note-sidebar-color, 5%);
   background: $note-sidebar-color;
   display: flex;
   align-items: center;
   justify-content: space-between;
   position: absolute;
-  top: 0;
+  bottom: 0;
   left: 0;
   width: 100%;
   z-index: 99;
@@ -29,8 +29,13 @@
     border: none;
     border-radius: 0;
     color: lighten($font-color, 15%);
-    padding: 0 1rem;
+    padding: 0 0.75rem;
     margin: 0;
+    &.trash {
+      &:hover {
+        color: darken($error, 20%);
+      }
+    }
     &:hover {
       color: $font-color;
       background: darken($note-sidebar-color, 5%);

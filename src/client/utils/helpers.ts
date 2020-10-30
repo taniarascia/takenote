@@ -18,7 +18,7 @@ export const getNoteTitle = (text: string): string => {
   // Remove whitespace from both ends
   // Get the first n characters
   // Remove # from the title in the case of using markdown headers in your title
-  const noteText = text.trim().match(/[^#]{1,38}/)
+  const noteText = text.trim().match(/[^#]{1,45}/)
 
   // Get the first line of text after any newlines
   // In the future, this should break on a full word
@@ -62,7 +62,7 @@ export const downloadNotes = (notes: NoteItem[], categories: CategoryItem[]): vo
     const zip = new JSZip()
     notes.forEach((note) =>
       zip.file(
-        `${getNoteTitle(note.text)}.md`,
+        `${getNoteTitle(note.text)} (${note.id.substring(0, 6)}).md`,
         noteWithFrontmatter(
           note,
           categories.find((category: CategoryItem) => category.id === note.category)
@@ -85,6 +85,24 @@ export const downloadNotes = (notes: NoteItem[], categories: CategoryItem[]): vo
         // Generate a popup?
       }
     )
+  }
+}
+
+export const backupNotes = (notes: NoteItem[], categories: CategoryItem[]) => {
+  const pom = document.createElement('a')
+
+  const json = JSON.stringify({ notes, categories })
+  const blob = new Blob([json], { type: 'application/json' })
+
+  const downloadUrl = window.URL.createObjectURL(blob)
+  pom.href = downloadUrl
+  pom.download = `takenote-backup-${dayjs().format('YYYY-MM-DD')}.json`
+  document.body.appendChild(pom)
+
+  // @ts-ignore
+  if (!window.Cypress) {
+    pom.click()
+    URL.revokeObjectURL(downloadUrl)
   }
 }
 
@@ -213,4 +231,49 @@ export const debounceEvent = <T extends Function>(cb: T, wait = 20) => {
   }
 
   return <T>(<any>callable)
+}
+
+export const isDraftNote = (note: NoteItem) => {
+  return !note.scratchpad && note.text === ''
+}
+
+export const getDayJsLocale = (languagetoken: string): string => {
+  try {
+    require('dayjs/locale/' + languagetoken + '.js')
+
+    return languagetoken
+  } catch (error) {
+    if (languagetoken.includes('-'))
+      return getDayJsLocale(languagetoken.substring(0, languagetoken.lastIndexOf('-')))
+
+    return 'en'
+  }
+}
+
+export const getNoteBarConf = (
+  activeFolder: Folder
+): {
+  minSize?: number
+  maxSize?: number
+  defaultSize?: number
+  allowResize?: boolean
+  resizerStyle?: React.CSSProperties
+} => {
+  switch (activeFolder) {
+    case Folder.SCRATCHPAD:
+      return {
+        minSize: 0,
+        maxSize: 0,
+        defaultSize: 0,
+        allowResize: false,
+        resizerStyle: { display: 'none' },
+      }
+
+    default:
+      return {
+        minSize: 200,
+        maxSize: 600,
+        defaultSize: 330,
+      }
+  }
 }

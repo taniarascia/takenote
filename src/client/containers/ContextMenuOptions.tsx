@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { LabelText } from '@resources/LabelText'
 import { TestID } from '@resources/TestID'
 import { ContextMenuOption } from '@/components/NoteList/ContextMenuOption'
-import { downloadNotes } from '@/utils/helpers'
+import { downloadNotes, isDraftNote } from '@/utils/helpers'
 import {
   deleteNotes,
   toggleFavoriteNotes,
@@ -99,6 +99,11 @@ const NotesOptions: React.FC<NotesOptionsProps> = ({ clickedNote }) => {
   const { selectedNotesIds, notes } = useSelector(getNotes)
   const { categories } = useSelector(getCategories)
 
+  const selectedNotes = notes.filter((note) => selectedNotesIds.includes(note.id))
+  const isSelectedNotesDiffFavor = Boolean(
+    selectedNotes.find((note) => note.favorite) && selectedNotes.find((note) => !note.favorite)
+  )
+
   // ===========================================================================
   // Dispatch
   // ===========================================================================
@@ -120,9 +125,7 @@ const NotesOptions: React.FC<NotesOptionsProps> = ({ clickedNote }) => {
   const deleteNotesHandler = () => _deleteNotes(selectedNotesIds)
   const downloadNotesHandler = () =>
     downloadNotes(
-      selectedNotesIds.includes(clickedNote.id)
-        ? notes.filter((note) => selectedNotesIds.includes(note.id))
-        : [clickedNote],
+      selectedNotesIds.includes(clickedNote.id) ? selectedNotes : [clickedNote],
       categories
     )
   const favoriteNoteHandler = () => _toggleFavoriteNotes(clickedNote.id)
@@ -132,30 +135,10 @@ const NotesOptions: React.FC<NotesOptionsProps> = ({ clickedNote }) => {
     _updateActiveNote(clickedNote.id, false)
   }
 
-  return (
+  return !isDraftNote(clickedNote) ? (
     <nav className="options-nav" data-testid={TestID.NOTE_OPTIONS_NAV}>
-      <ContextMenuOption
-        dataTestID={TestID.NOTE_OPTION_DOWNLOAD}
-        handler={downloadNotesHandler}
-        icon={Download}
-        text={LabelText.DOWNLOAD}
-      />
-      {clickedNote.category && !clickedNote.trash && (
-        <ContextMenuOption
-          dataTestID={TestID.NOTE_OPTION_REMOVE_CATEGORY}
-          handler={removeCategoryFromNoteHandler}
-          icon={X}
-          text={LabelText.REMOVE_CATEGORY}
-        />
-      )}
-      {clickedNote.trash ? (
+      {clickedNote.trash && (
         <>
-          <ContextMenuOption
-            dataTestID={TestID.NOTE_OPTION_RESTORE_FROM_TRASH}
-            handler={trashNoteHandler}
-            icon={ArrowUp}
-            text={LabelText.RESTORE_FROM_TRASH}
-          />
           <ContextMenuOption
             dataTestID={TestID.NOTE_OPTION_DELETE_PERMANENTLY}
             handler={deleteNotesHandler}
@@ -163,14 +146,27 @@ const NotesOptions: React.FC<NotesOptionsProps> = ({ clickedNote }) => {
             text={LabelText.DELETE_PERMANENTLY}
             optionType="delete"
           />
+          <ContextMenuOption
+            dataTestID={TestID.NOTE_OPTION_RESTORE_FROM_TRASH}
+            handler={trashNoteHandler}
+            icon={ArrowUp}
+            text={LabelText.RESTORE_FROM_TRASH}
+          />
         </>
-      ) : clickedNote.scratchpad ? null : (
+      )}
+      {!clickedNote.scratchpad && !clickedNote.trash && (
         <>
           <ContextMenuOption
             dataTestID={TestID.NOTE_OPTION_FAVORITE}
             handler={favoriteNoteHandler}
             icon={Star}
-            text={clickedNote.favorite ? LabelText.REMOVE_FAVORITE : LabelText.MARK_AS_FAVORITE}
+            text={
+              isSelectedNotesDiffFavor
+                ? LabelText.TOGGLE_FAVORITE
+                : clickedNote.favorite
+                ? LabelText.REMOVE_FAVORITE
+                : LabelText.MARK_AS_FAVORITE
+            }
           />
           <ContextMenuOption
             dataTestID={TestID.NOTE_OPTION_TRASH}
@@ -181,6 +177,20 @@ const NotesOptions: React.FC<NotesOptionsProps> = ({ clickedNote }) => {
           />
         </>
       )}
+      {clickedNote.category && !clickedNote.trash && (
+        <ContextMenuOption
+          dataTestID={TestID.NOTE_OPTION_REMOVE_CATEGORY}
+          handler={removeCategoryFromNoteHandler}
+          icon={X}
+          text={LabelText.REMOVE_CATEGORY}
+        />
+      )}
+      <ContextMenuOption
+        dataTestID={TestID.NOTE_OPTION_DOWNLOAD}
+        handler={downloadNotesHandler}
+        icon={Download}
+        text={LabelText.DOWNLOAD}
+      />
     </nav>
-  )
+  ) : null
 }

@@ -50,13 +50,9 @@
   }
   .editor,
   .previewer {
-    padding-top: 48px;
+    padding-bottom: 38px;
     height: 100vh;
   }
-}
-
-.previewer > * {
-  margin-top: 1.5rem !important;
 }
 
 .empty-editor {

@@ -3,6 +3,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Helmet, HelmetProvider } from 'react-helmet-async'
 import { DragDropContext, DropResult } from 'react-beautiful-dnd'
 import SplitPane from 'react-split-pane'
+import dayjs from 'dayjs'
+import localizedFormat from 'dayjs/plugin/localizedFormat'
 
 import { AppSidebar } from '@/containers/AppSidebar'
 import { KeyboardShortcuts } from '@/containers/KeyboardShortcuts'
@@ -11,13 +13,22 @@ import { NoteList } from '@/containers/NoteList'
 import { SettingsModal } from '@/containers/SettingsModal'
 import { TempStateProvider } from '@/contexts/TempStateContext'
 import { useInterval, useBeforeUnload } from '@/utils/hooks'
-import { getWebsiteTitle, determineAppClass, getActiveCategory } from '@/utils/helpers'
+import {
+  getWebsiteTitle,
+  determineAppClass,
+  getActiveCategory,
+  getDayJsLocale,
+  getNoteBarConf,
+} from '@/utils/helpers'
 import { loadCategories, swapCategories } from '@/slices/category'
-import { loadNotes } from '@/slices/note'
 import { sync } from '@/slices/sync'
-import { loadSettings } from '@/slices/settings'
 import { NoteItem, CategoryItem } from '@/types'
+import { loadNotes } from '@/slices/note'
+import { loadSettings } from '@/slices/settings'
 import { getSettings, getNotes, getCategories, getSync } from '@/selectors'
+
+dayjs.extend(localizedFormat)
+dayjs.locale(getDayJsLocale(navigator.language))
 
 export const TakeNoteApp: React.FC = () => {
   // ===========================================================================
@@ -53,11 +64,11 @@ export const TakeNoteApp: React.FC = () => {
     const { destination, source } = result
 
     if (!destination) return
+
     if (destination.droppableId === source.droppableId && destination.index === source.index) return
 
-    switch (result.type) {
-      case 'CATEGORY':
-        _swapCategories(source.index, destination.index)
+    if (result.type === 'CATEGORY') {
+      _swapCategories(source.index, destination.index)
     }
   }
 
@@ -73,7 +84,7 @@ export const TakeNoteApp: React.FC = () => {
 
   useInterval(() => {
     _sync(notes, categories)
-  }, 20000)
+  }, 50000)
 
   useBeforeUnload((event: BeforeUnloadEvent) => (pendingSync ? event.preventDefault() : null))
 
@@ -88,9 +99,9 @@ export const TakeNoteApp: React.FC = () => {
       <TempStateProvider>
         <div className={determineAppClass(darkTheme, sidebarVisible, activeFolder)}>
           <DragDropContext onDragEnd={onDragEnd}>
-            <SplitPane split="vertical" minSize={150} maxSize={500} defaultSize={230}>
+            <SplitPane split="vertical" minSize={150} maxSize={500} defaultSize={240}>
               <AppSidebar />
-              <SplitPane split="vertical" minSize={200} maxSize={600} defaultSize={330}>
+              <SplitPane split="vertical" {...getNoteBarConf(activeFolder)}>
                 <NoteList />
                 <NoteEditor />
               </SplitPane>

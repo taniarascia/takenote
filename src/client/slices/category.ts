@@ -10,7 +10,7 @@ const _swapCategories = (categories: CategoryItem[], categoryId: number, destina
   return newCategories
 }
 
-const initialState: CategoryState = {
+export const initialState: CategoryState = {
   categories: [],
   editingCategory: {
     id: '',
@@ -26,6 +26,16 @@ const categorySlice = createSlice({
   reducers: {
     addCategory: (state, { payload }: PayloadAction<CategoryItem>) => {
       state.categories.push(payload)
+    },
+
+    importCategories: (state, { payload }: PayloadAction<CategoryItem[]>) => {
+      const categoryNames = new Map<string, string>()
+      state.categories.forEach(({ name }) => categoryNames.set(name, name))
+
+      // Make sure duplicate category is not added
+      const toAdd = payload.filter(({ name }) => !categoryNames.has(name))
+
+      state.categories.push(...toAdd)
     },
 
     updateCategory: (state, { payload }: PayloadAction<CategoryItem>) => {
@@ -92,6 +102,7 @@ export const {
   loadCategoriesSuccess,
   updateCategory,
   setCategoryEdit,
+  importCategories,
 } = categorySlice.actions
 
 export default categorySlice.reducer

@@ -1,3 +1,19 @@
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+.hidden {
+  display: none;
+}
+
 .icon {
   color: rgba(255, 255, 255, 0.7);
 }
@@ -49,11 +65,11 @@
     height: 0;
 
     &:checked + .slider {
-      background: $primary;
+      background: #72ce6e;
     }
 
     &:focus + .slider {
-      box-shadow: 0 0 1px $primary;
+      box-shadow: 0 0 1px #72ce6e;
     }
 
     &:checked + .slider:before {
@@ -76,13 +92,14 @@
   &:before {
     position: absolute;
     content: '';
-    height: 16px;
-    width: 16px;
-    left: 4px;
-    bottom: 4px;
+    height: 20px;
+    width: 20px;
+    left: 2px;
+    bottom: 2px;
     background: white;
     transition: 0.4s;
     border-radius: 50%;
+    box-shadow: 2px 3px 5px rgba(0, 0, 0, 0.07), 2px 3px 2px rgba(0, 0, 0, 0.2);
   }
 }
 
@@ -146,6 +163,8 @@ kbd {
   display: block;
   font-size: 0;
   color: $primary;
+  width: 54px;
+  height: 18px;
 }
 
 .la-ball-beat.la-dark {
@@ -157,18 +176,10 @@ kbd {
   float: none;
   background-color: currentColor;
   border: 0 solid currentColor;
-}
-
-.la-ball-beat {
-  width: 54px;
-  height: 18px;
-}
-
-.la-ball-beat > div {
   width: 10px;
   height: 10px;
   margin: 4px;
-  border-radius: 0;
+  border-radius: 50%;
   animation: ball-beat 0.7s -0.15s infinite linear;
 }
 
@@ -218,5 +229,22 @@ kbd {
   100% {
     opacity: 1;
     transform: scale(1);
+  }
+}
+
+.rotating-svg {
+  animation-name: rotating;
+  animation-duration: 15.5s;
+  animation-iteration-count: infinite;
+  transform-origin: 50% 50%;
+  display: inline-block;
+}
+
+@keyframes rotating {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }

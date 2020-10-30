@@ -16,6 +16,9 @@ import {
   openCategoryContextMenu,
   clickCategoryOptionRename,
   clickCategoryOptionDelete,
+  collapseCategoryList,
+  assertCategoryListExists,
+  assertCategoryListDoesNotExists,
 } from '../utils/testCategoryHelperUtils'
 import { dynamicTimeCategoryName } from '../utils/testHelperEnums'
 import {
@@ -27,10 +30,27 @@ import {
   assertNoteListLengthEquals,
   clickCreateNewNote,
   clickNoteOptions,
+  createXUniqueNotes,
 } from '../utils/testNotesHelperUtils'
 
 describe('Categories', () => {
   defaultInit()
+
+  it('should hide the category list on click of category', () => {
+    addCategory(dynamicTimeCategoryName)
+
+    collapseCategoryList()
+
+    assertCategoryListDoesNotExists()
+  })
+
+  it('should show category list on add new category', () => {
+    collapseCategoryList()
+
+    addCategory(dynamicTimeCategoryName)
+
+    assertCategoryListExists()
+  })
 
   it('creates a new category with the current time', () => {
     // Skipping for now due to
@@ -43,7 +63,7 @@ describe('Categories', () => {
 
     // navigate back to All Notes create a new note, and move it to that category
     navigateToNotes()
-    clickCreateNewNote()
+    createXUniqueNotes(1)
     clickNoteOptions()
     selectMoveToCategoryOption(dynamicTimeCategoryName)
 

@@ -95,7 +95,7 @@
   &-main {
     flex: 1;
     position: relative;
-    padding-bottom: 4rem;
+    padding-bottom: 1rem;
 
     p {
       padding: 0 0.5rem;
@@ -142,7 +142,6 @@
       background: $primary;
       outline: none;
 
-      .action-button-icon,
       .action-button-icon {
         stroke: white;
       }
@@ -162,6 +161,32 @@
       justify-content: space-between;
       margin-top: 1rem;
       padding: 0.5rem 0 0.5rem 1rem;
+
+      .collapse-button {
+        cursor: pointer;
+        -webkit-appearance: none;
+        display: flex;
+        align-items: center;
+        padding: 0;
+        color: darken($light-font-color, 25%);
+        background: transparent;
+        font-size: 0.8rem;
+        border: none;
+        line-height: 1;
+        margin: 0;
+
+        &:hover {
+          color: white;
+
+          svg {
+            stroke: white;
+          }
+        }
+
+        h2 {
+          padding-left: 0.75rem;
+        }
+      }
     }
 
     &-error-message {
@@ -253,7 +278,6 @@
       -webkit-appearance: none;
       display: flex;
       align-items: center;
-      padding: 0;
       color: darken($light-font-color, 25%);
       background: transparent;
       font-size: 0.8rem;

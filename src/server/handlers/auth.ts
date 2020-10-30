@@ -1,8 +1,12 @@
-import { Request, Response, NextFunction } from 'express'
+import { Request, Response } from 'express'
 import axios from 'axios'
 import * as dotenv from 'dotenv'
 
+import { welcomeNote } from '../utils/data/welcomeNote'
+import { scratchpadNote } from '../utils/data/scratchpadNote'
 import { thirtyDayCookie } from '../utils/constants'
+import { SDK } from '../utils/helpers'
+import { Method } from '../utils/enums'
 
 dotenv.config()
 
@@ -54,7 +58,7 @@ export default {
       const accessToken = data.access_token
 
       // Set cookie
-      response.cookie('accessTokenGH', accessToken, thirtyDayCookie)
+      response.cookie('githubAccessToken', accessToken, thirtyDayCookie)
 
       // Redirect to the app when logged in
       response.redirect('/app')
@@ -71,16 +75,23 @@ export default {
    * If an access token cookie exists, attempt to determine the currently logged
    * in user. If the access token is in some way incorrect, expired, etc., throw
    * an error.
+   *
+   * After successful login, check if it's the first time logging in by seeing if a repo
+   * named `takenote-data` exists. If it doesn't, create it.
    */
-  login: async (request: Request, response: Response, next: NextFunction) => {
+  login: async (request: Request, response: Response) => {
     const { accessToken } = response.locals
 
     try {
-      const { data } = await axios('https://api.github.com/user', {
-        headers: {
-          Authorization: `token ${accessToken}`,
-        },
-      })
+      const { data } = await SDK(Method.GET, '/user', accessToken)
+      const username = data.login
+
+      const isFirstTimeLoggingIn = await firstTimeLoginCheck(username, accessToken)
+
+      if (isFirstTimeLoggingIn) {
+        await createTakeNoteDataRepo(username, accessToken)
+        await createInitialCommit(username, accessToken)
+      }
 
       response.status(200).send(data)
     } catch (error) {
@@ -89,8 +100,59 @@ export default {
   },
 
   logout: async (request: Request, response: Response) => {
-    response.clearCookie('accessTokenGH')
+    response.clearCookie('githubAccessToken')
 
     response.status(200).send({ message: 'Logged out' })
   },
+}
+
+async function firstTimeLoginCheck(username: string, accessToken: string): Promise<boolean> {
+  try {
+    await SDK(Method.GET, `/repos/${username}/takenote-data`, accessToken)
+
+    // If repo already exists, we assume it's the takenote data repo and can move on
+    return false
+  } catch (error) {
+    // If repo doesn't exist, we'll try to create it
+    return true
+  }
+}
+
+async function createTakeNoteDataRepo(username: string, accessToken: string): Promise<void> {
+  const takenoteDataRepo = {
+    name: 'takenote-data',
+    description: 'Database of notes for TakeNote',
+    private: true,
+    visibility: 'private',
+    has_issues: false,
+    has_projects: false,
+    has_wiki: false,
+    is_template: false,
+    auto_init: false,
+    allow_squash_merge: false,
+    allow_rebase_merge: false,
+  }
+  try {
+    await SDK(Method.POST, `/user/repos`, accessToken, takenoteDataRepo)
+  } catch (error) {
+    throw new Error(error)
+  }
+}
+
+async function createInitialCommit(username: string, accessToken: string): Promise<void> {
+  const noteCommit = {
+    message: 'Initial commit',
+    content: Buffer.from(JSON.stringify([scratchpadNote, welcomeNote], null, 2)).toString('base64'),
+    branch: 'master',
+  }
+  try {
+    await SDK(
+      Method.PUT,
+      `/repos/${username}/takenote-data/contents/notes.json`,
+      accessToken,
+      noteCommit
+    )
+  } catch (error) {
+    throw new Error(error)
+  }
 }

@@ -4,36 +4,74 @@
 
 <p align="center">
  <img src="https://img.shields.io/badge/License-MIT-blue.svg">
-   <a href="https://travis-ci.org/taniarascia/takenote"><img src="https://travis-ci.org/taniarascia/takenote.svg?branch=master"></a>
+   <a href="https://app.netlify.com/sites/tnote/deploys"><img src="https://api.netlify.com/api/v1/badges/a0e055de-cab8-4217-80dd-5bd769b7d478/deploy-status"></a>
+   <a href='https://coveralls.io/github/taniarascia/takenote'><img src='https://coveralls.io/repos/github/taniarascia/takenote/badge.svg' alt='Coverage Status' /></a>
+ </p>
+ <p align="center">
+   <a href="https://sonarcloud.io/dashboard?id=taniarascia_takenote"><img src="https://sonarcloud.io/api/project_badges/measure?project=taniarascia_takenote&metric=sqale_rating"></a>
+   <a href="https://sonarcloud.io/dashboard?id=taniarascia_takenote"><img src="https://sonarcloud.io/api/project_badges/measure?project=taniarascia_takenote&metric=reliability_rating"></a>
+   <a href="https://sonarcloud.io/api/project_badges/measure?project=taniarascia_takenote&metric=security_rating"><img src="https://sonarcloud.io/api/project_badges/measure?project=taniarascia_takenote&metric=security_rating"></a>
+   
 </p>
 
-<p align="center">A free, open-source notes app for the web. (WIP)</p>
+<p align="center">A free, open-source notes app for the web. (Demo only)</p>
 
-> **Warning**: TakeNote is in active development. You can visit [takenote.dev](https://takenote.dev) to see the work in progress, but your account and the notes you create are **temporary** will not be persisted. All data will be lost once GitHub integration is complete.
+> **Note**: TakeNote is available as a demo only. You can use the app at [takenote.dev](https://takenote.dev) but the notes are only persisted in temporary local storage. However, you can download all notes as a zip.
 
 ![Screenshot](./assets/takenote-light.png)
 
-### Fast and simple
+TakeNote is a note-taking app for the web. You can use the demo app at [takenote.dev](https://takenote.dev). It is a static site without a database and does not sync your notes to the cloud. The notes are persisted temporarily in local storage, but you can download all notes in markdown format as a zip.
 
-TakeNote was made by developers for developers - a simple, plain-text note-taking app for the web with Markdown support. What you see is what you paste. No WYSIWIG, no formatting pasted from the web, and no features you don't need or want.
+Hidden within the code is an alternate version that contain a Node/Express server and integration with GitHub. This version involves creating an OAuth application for GitHub and signing up to it with private repository permissions. Instead of backing up to local storage, your notes will back up to a private repository in your account called `takenote-data`. Due to the following reasons I'm choosing not to deploy or maintain this portion of the application:
 
-### Intuitive
+- I do not want to maintain a free app with users alongside my career and other commitments
+- I do not want to request private repository permissions from users
+- I do not want to maintain an active server
+- I do not want to worry about GitHub rate limiting from the server
+- There is no way to batch create many files from the GitHub API, leading to a suboptimal GitHub storage solution
 
-Drag-and-drop notes into categories, instantly search through notes, and pin your favorites to the top.
+However, I'm leaving the code available so you can feel free to host your own TakeNote instance or study the code for learning purposes. I do not provide support or guidance for these purposes.
 
-### Beautiful
+TakeNote was created with TypeScript, React, Redux, Node, Express, Codemirror, Webpack, Jest, Cypress, Feather Icons, ESLint, and Mousetrap, among other awesome open-source software.
 
-Enjoy a beautiful, clean design reminiscent of your IDE with light and dark themes.
+## Features
 
-### Sync to GitHub
-
-In progress!
+- Plain text notes
+- Markdown preview
+- Syntax highlighting
+- Keyboard shortcuts
+- Drag and drop
+- Favorites and categories
+- Multi-note actions
+- Multi-cursor editing
+- Light/dark theme
+- Search notes
+- Prettify notes
+- No WYSIWYG
+- No database
+- No tracking or analytics
 
 ## Reviews
 
 > _"I think the lack of extra crap is a feature."_ — Craig Lam
 
-## Setup
+## Demo Development
+
+Clone and install.
+
+```bash
+git clone git@github.com:taniarascia/takenote
+cd takenote
+npm i
+```
+
+Run a development server.
+
+```bash
+npm run client
+```
+
+## Full Application Development (self-hosted)
 
 ### Pre-Installation
 
@@ -202,6 +240,14 @@ Thanks goes to these wonderful people:
   <tr>
     <td align="center"><a href="https://github.com/G-Milevski"><img src="https://avatars2.githubusercontent.com/u/25174255?v=4" width="50px;" alt=""/><br /><sub><b>G-Milevski</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=G-Milevski" title="Code">💻</a></td>
     <td align="center"><a href="https://kodyclemens.com"><img src="https://avatars0.githubusercontent.com/u/43357615?v=4" width="50px;" alt=""/><br /><sub><b>Kody Clemens</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=kodyclemens" title="Code">💻</a> <a href="https://github.com/taniarascia/takenote/commits?author=kodyclemens" title="Tests">⚠️</a> <a href="https://github.com/taniarascia/takenote/issues?q=author%3Akodyclemens" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://github.com/qpeela"><img src="https://avatars3.githubusercontent.com/u/5824914?v=4" width="50px;" alt=""/><br /><sub><b>Vladimir Yamshikov</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=qpeela" title="Code">💻</a> <a href="https://github.com/taniarascia/takenote/issues?q=author%3Aqpeela" title="Bug reports">🐛</a></td>
+    <td align="center"><a href="https://about.me/ronan696"><img src="https://avatars1.githubusercontent.com/u/13074003?v=4" width="50px;" alt=""/><br /><sub><b>Ronan D'Souza</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=ronan696" title="Code">💻</a></td>
+    <td align="center"><a href="http://modprog.de"><img src="https://avatars0.githubusercontent.com/u/11978847?v=4" width="50px;" alt=""/><br /><sub><b>Roland Fredenhagen</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=ModProg" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/PranjaliPatil14"><img src="https://avatars2.githubusercontent.com/u/31987627?v=4" width="50px;" alt=""/><br /><sub><b>Pranjali Pramod Patil</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=PranjaliPatil14" title="Tests">⚠️</a></td>
+    <td align="center"><a href="https://cbrgm.net"><img src="https://avatars1.githubusercontent.com/u/24737434?v=4" width="50px;" alt=""/><br /><sub><b>Chris Bargmann</b></sub></a><br /><a href="#ideas-cbrgm" title="Ideas, Planning, & Feedback">🤔</a> <a href="https://github.com/taniarascia/takenote/commits?author=cbrgm" title="Code">💻</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://www.linkedin.com/in/jadhielv"><img src="https://avatars3.githubusercontent.com/u/24376900?v=4" width="50px;" alt=""/><br /><sub><b>Jadhiel Vélez</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=Jadhielv" title="Code">💻</a> <a href="https://github.com/taniarascia/takenote/issues?q=author%3AJadhielv" title="Bug reports">🐛</a></td>
   </tr>
 </table>
 

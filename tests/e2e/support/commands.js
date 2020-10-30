@@ -1,4 +1,5 @@
 import '@testing-library/cypress/add-commands'
+import 'cypress-file-upload'
 
 Cypress.Commands.add('dragAndDrop', { prevSubject: 'element' }, (subject, target) => {
   Cypress.log({

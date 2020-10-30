@@ -2,6 +2,7 @@
 export enum TestID {
   ADD_CATEGORY_BUTTON = 'add-category-button',
   CATEGORY_EDIT = 'category-edit',
+  CATEGORY_COLLAPSE_BUTTON = 'category-collapse-button',
   CATEGORY_LIST_DIV = 'category-list-div',
   CATEGORY_OPTIONS_NAV = 'category-options-nav',
   CATEGORY_OPTION_RENAME = 'category-options-rename',
@@ -32,4 +33,14 @@ export enum TestID {
   SIDEBAR_ACTION_SETTINGS = 'sidebar-action-settings',
   TOPBAR_ACTION_SYNC_NOTES = 'topbar-action-sync-notes',
   SCRATCHPAD = 'scratchpad',
+  NOTE_OPTION_ADD_CONTENT_NOTE = 'note-option-add-content-note',
+  SETTINGS_MODAL_DOWNLOAD_NOTES = 'settings-modal-download-notes',
+  DARK_MODE_TOGGLE = 'dark-mode-toggle',
+  MARKDOWN_PREVIEW_TOGGLE = 'markdown-preview-toggle',
+  ACTIVE_LINE_HIGHLIGHT_TOGGLE = 'active-line-highlight-toggle',
+  DISPLAY_LINE_NUMS_TOGGLE = 'display-line-nums-toggle',
+  SCROLL_PAST_END_TOGGLE = 'scroll-past-end-toggle',
+  SORT_BY_DROPDOWN = 'sort-by-dropdown',
+  TEXT_DIRECTION_DROPDOWN = 'text-direction-dropdown',
+  UPLOAD_SETTINGS_BACKUP = 'upload-settings-backup',
 }

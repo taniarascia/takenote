@@ -39,8 +39,8 @@ module.exports = merge(common, {
   },
   plugins: [
     new MiniCssExtractPlugin({
-      filename: 'styles/[name].[fullhash].css',
-      chunkFilename: 'styles/[name].[id].[fullhash].css',
+      filename: 'styles/[name].[contenthash].css',
+      chunkFilename: 'styles/[name].[id].[contenthash].css',
       ignoreOrder: false,
     }),
     new HtmlWebpackPlugin({
@@ -54,20 +54,21 @@ module.exports = merge(common, {
     }),
   ],
   performance: {
-    hints: false,
+    hints: 'warning',
     maxEntrypointSize: 512000,
     maxAssetSize: 512000,
   },
   optimization: {
     minimizer: [new TerserJSPlugin(), new OptimizeCSSAssetsPlugin()],
-    runtimeChunk: 'single',
+    runtimeChunk: 'multiple',
     splitChunks: {
       // Cache vendors since this code won't change very often
       cacheGroups: {
         vendor: {
-          test: /[\\/]node_modules[\\/](react|react-dom|axios)[\\/]/,
+          test: /[\\/]node_modules[\\/](react|react-dom|axios|redux|react-redux)[\\/]/,
           name: 'vendors',
           chunks: 'all',
+          enforce: true,
         },
       },
     },

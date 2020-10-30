@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { Fragment, useState } from 'react'
 
 import { Tab } from './Tab'
 
@@ -31,10 +31,10 @@ export const Tabs: React.FC<TabsProps> = ({ children }) => {
           if (child.props.label !== activeTab) return
 
           return (
-            <>
+            <Fragment key={`${child.props.label}-panel`}>
               <h3>{child.props.label}</h3>
               {child.props.children}
-            </>
+            </Fragment>
           )
         })}
       </div>

@@ -1,6 +1,7 @@
 // Default Labels
 export enum LabelText {
   ADD_CATEGORY = 'Add category',
+  COLLAPSE_CATEGORY = 'Collapse Category List',
   NOTES = 'Notes',
   CREATE_NEW_NOTE = 'Create new note',
   DELETE_PERMANENTLY = 'Delete permanently',
@@ -20,4 +21,9 @@ export enum LabelText {
   TRASH = 'Trash',
   WELCOME_TO_TAKENOTE = 'Welcome to Takenote!',
   RENAME = 'Rename category',
+  ADD_CONTENT_NOTE = 'Please add content to this new note to access the menu options.',
+  DOWNLOAD_ALL_NOTES = 'Download all notes',
+  BACKUP_ALL_NOTES = 'Backup all notes',
+  IMPORT_BACKUP = 'Import backup',
+  TOGGLE_FAVORITE = 'Toggle favorite',
 }

@@ -1,11 +1,11 @@
 import { v4 as uuid } from 'uuid'
 import dayjs from 'dayjs'
 
-import markdown from '@/api/scratchpadNote.md'
-
 export const scratchpadNote = {
   id: uuid(),
-  text: markdown,
+  text: `# Scratchpad
+
+The easiest note to find.`,
   category: '',
   scratchpad: true,
   favorite: false,
