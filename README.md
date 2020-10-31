@@ -85,7 +85,7 @@ Click the **New OAuth App** button.
 - **Homepage URL**: `http://localhost:3000`
 - **Authorization callback URL**: `http://localhost:3000/api/auth/callback`
 
-Create a `.env` file in the root of the project, and add the app's client ID and secret. Set `DEMO` to false to enable GitHub integration.
+Create a `.env` file in the root of the project, and add the app's client ID and secret. Remove `DEMO` variable to enable GitHub integration.
 
 ```bash
 CLIENT_ID=xxx
@@ -163,8 +163,8 @@ npm run test
 Run Cypress end-to-end tests.
 
 ```bash
-# In one window, run the application in test mode
-npm run dev:test
+# In one window, run the application
+npm run client
 
 # In another window, run the end-to-end tests
 npm run test:e2e:open

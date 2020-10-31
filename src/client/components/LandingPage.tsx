@@ -33,7 +33,9 @@ export const LandingPage: React.FC = () => {
             </h1>
             <p className="subtitle">A free, open-source notes app for the web.</p>
             {isMobile ? (
-              <p className="p-mobile">TakeNote is not currently supported for mobile devices.</p>
+              <p className="p-mobile">
+                TakeNote is not currently supported for tablet and mobile devices.
+              </p>
             ) : isDemo ? (
               <div className="new-signup">
                 <div>

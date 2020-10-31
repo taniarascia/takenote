@@ -8,7 +8,6 @@
   "main": "src/server/index.ts",
   "scripts": {
     "dev": "concurrently 'npm run server' 'npm run client'",
-    "dev:test": "cross-env TEST_ENV=true CLIENT_ID='abc' concurrently 'npm run server' 'npm run client'",
     "client": "cross-env NODE_ENV=development webpack serve --config config/webpack.dev.js",
     "server": "nodemon --config config/nodemon.config.json",
     "build": "cross-env NODE_ENV=production webpack --config config/webpack.prod.js",
