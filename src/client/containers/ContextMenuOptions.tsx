@@ -198,10 +198,10 @@ const NotesOptions: React.FC<NotesOptionsProps> = ({ clickedNote }) => {
         text={LabelText.DOWNLOAD}
       />
       <ContextMenuOption
-        dataTestID={TestID.COPY_LINKED_NOTE_MARKDOWN}
+        dataTestID={TestID.COPY_REFERENCE_TO_NOTE}
         handler={(e: React.SyntheticEvent) => copyLinkedNoteMarkdownHandler(e, clickedNote)}
         icon={Clipboard}
-        text={LabelText.COPY_LINKED_NOTE_MARKDOWN}
+        text={LabelText.COPY_REFERENCE_TO_NOTE}
       />
     </nav>
   ) : null

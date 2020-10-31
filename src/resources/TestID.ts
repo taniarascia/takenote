@@ -45,5 +45,5 @@ export enum TestID {
   UPLOAD_SETTINGS_BACKUP = 'upload-settings-backup',
   UUID_MENU_BAR_COPY_ICON = 'uuid-menu-bar-copy-icon',
   PREVIEW_MODE = 'preview-mode',
-  COPY_LINKED_NOTE_MARKDOWN = 'copy-linked-note-markdown',
+  COPY_REFERENCE_TO_NOTE = 'copy-reference-to-note',
 }

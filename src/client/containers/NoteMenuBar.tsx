@@ -41,10 +41,8 @@ export const NoteMenuBar = () => {
   // Other
   // ===========================================================================
 
-  const successfulCopyMessage = 'Copied!'
-  const copyNoteIcon = (
-    <ClipboardCmp size={18} className="mr-1" aria-hidden="true" focusable="false" />
-  )
+  const copyNoteIcon = <ClipboardCmp size={18} aria-hidden="true" focusable="false" />
+  const successfulCopyMessage = 'Note copied!'
   const activeNote = notes.find((note) => note.id === activeNoteId)!
   const shortNoteUuid = getShortUuid(activeNoteId)
 
@@ -52,21 +50,21 @@ export const NoteMenuBar = () => {
   // State
   // ===========================================================================
 
-  const [uuidText, setUuidText] = useState<React.ReactElement | string>(copyNoteIcon)
+  const [uuidCopiedText, setUuidCopiedText] = useState<string>('')
 
   // ===========================================================================
   // Hooks
   // ===========================================================================
 
   useEffect(() => {
-    if (uuidText === successfulCopyMessage) {
+    if (uuidCopiedText === successfulCopyMessage) {
       const timer = setTimeout(() => {
-        setUuidText(copyNoteIcon)
+        setUuidCopiedText('')
       }, 3000)
 
       return () => clearTimeout(timer)
     }
-  }, [uuidText])
+  }, [uuidCopiedText])
 
   // ===========================================================================
   // Dispatch
@@ -122,16 +120,17 @@ export const NoteMenuBar = () => {
           <button className="note-menu-bar-button">
             <Download size={18} onClick={downloadNotesHandler} />
           </button>
-          <div
-            className="uuid-menu-bar"
+          <button
+            className="note-menu-bar-button uuid"
             onClick={() => {
               copyToClipboard(`{{${shortNoteUuid}}}`)
-              setUuidText(successfulCopyMessage)
+              setUuidCopiedText(successfulCopyMessage)
             }}
             data-testid={TestID.UUID_MENU_BAR_COPY_ICON}
           >
-            {uuidText}
-          </div>
+            {copyNoteIcon}
+            {uuidCopiedText && <span className="uuid-copied-text">{uuidCopiedText}</span>}
+          </button>
         </nav>
       ) : (
         <div />

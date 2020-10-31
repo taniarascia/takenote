@@ -119,7 +119,7 @@ const clickNoteOptionTrash = () => {
 }
 
 const clickNoteOptionCopyLinkedNoteMarkdown = () => {
-  clickTestID(TestID.COPY_LINKED_NOTE_MARKDOWN)
+  clickTestID(TestID.COPY_REFERENCE_TO_NOTE)
 }
 
 const clickSyncNotes = () => {
