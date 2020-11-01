@@ -1,9 +1,10 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { v4 as uuid } from 'uuid'
 
-import { Folder } from '@/utils/enums'
+import { Folder, NotesSortKey } from '@/utils/enums'
 import { NoteItem, NoteState } from '@/types'
 import { isDraftNote } from '@/utils/helpers'
+import { getNotesSorter } from '@/utils/notesSortStrategies'
 
 const getNewActiveNoteId = (
   notes: NoteItem[],
@@ -23,8 +24,15 @@ const getNewActiveNoteId = (
   return ''
 }
 
-export const getFirstNoteId = (folder: Folder, notes: NoteItem[], categoryId?: string): string => {
-  const availableNotes = notes.filter((note) => !note.trash)
+export const getFirstNoteId = (
+  folder: Folder,
+  notes: NoteItem[],
+  categoryId?: string,
+  sortOrderKey?: NotesSortKey
+): string => {
+  const availableNotes = sortOrderKey
+    ? notes.filter((note) => !note.trash).sort(getNotesSorter(sortOrderKey))
+    : notes.filter((note) => !note.trash)
 
   const firstNote = {
     [Folder.ALL]: () => availableNotes.find((note) => !note.scratchpad),
@@ -268,10 +276,20 @@ const noteSlice = createSlice({
       state.error = payload
     },
 
-    loadNotesSuccess: (state, { payload }: PayloadAction<NoteItem[]>) => {
-      state.notes = payload
-      state.activeNoteId = getFirstNoteId(Folder.ALL, payload)
-      state.selectedNotesIds = [getFirstNoteId(Folder.ALL, payload)]
+    loadNotesSuccess: (
+      state,
+      { payload }: PayloadAction<{ notes: NoteItem[]; sortOrderKey?: NotesSortKey }>
+    ) => {
+      state.notes = payload.notes
+      state.activeNoteId = getFirstNoteId(
+        Folder.ALL,
+        payload.notes,
+        undefined,
+        payload.sortOrderKey
+      )
+      state.selectedNotesIds = [
+        getFirstNoteId(Folder.ALL, payload.notes, undefined, payload.sortOrderKey),
+      ]
       state.loading = false
     },
   },

@@ -765,7 +765,7 @@ describe('noteSlice', () => {
       activeNoteId: '2',
       selectedNotesIds: ['2'],
     }
-    const result = reducer(initialState, loadNotesSuccess(payload))
+    const result = reducer(initialState, loadNotesSuccess({ notes: payload }))
 
     expect(result).toEqual(nextState)
   })
