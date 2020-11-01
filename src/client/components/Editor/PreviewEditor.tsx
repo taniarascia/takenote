@@ -31,7 +31,7 @@ export const PreviewEditor: React.FC<PreviewEditorProps> = ({ noteText, directio
 
   const _pruneNotes = () => dispatch(pruneNotes())
 
-  const _swapFolder = (folder: Folder) => dispatch(swapFolder(folder))
+  const _swapFolder = (folder: Folder) => dispatch(swapFolder({ folder }))
 
   // ===========================================================================
   // Handlers
