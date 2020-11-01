@@ -25,6 +25,10 @@
     }
   }
 
+  .error {
+    color: $error;
+  }
+
   p,
   ol,
   ul,
@@ -200,5 +204,9 @@
     border: none;
     color: darken($font-color, 10%);
     background-color: darken($note-sidebar-color, 5%);
+  }
+
+  .invalid-note-uuid {
+    color: green;
   }
 }

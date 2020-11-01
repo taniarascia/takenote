@@ -2,6 +2,7 @@ import dayjs from 'dayjs'
 import { v4 as uuid } from 'uuid'
 import JSZip from 'jszip'
 import { Action } from 'redux'
+import * as clipboard from 'clipboard-polyfill/text'
 
 import { LabelText } from '@resources/LabelText'
 import { Folder } from '@/utils/enums'
@@ -10,6 +11,16 @@ import { NoteItem, CategoryItem, WithPayload } from '@/types'
 
 export const getActiveNote = (notes: NoteItem[], activeNoteId: string) =>
   notes.find((note) => note.id === activeNoteId)
+
+export const getShortUuid = (uuid: string) => {
+  return uuid.substr(0, 6)
+}
+
+export const getActiveNoteFromShortUuid = (notes: NoteItem[], shortUuid: string) => {
+  const uuidWithoutHash = shortUuid.replace('{{', '').replace('}}', '')
+
+  return notes.find((note) => note.id.startsWith(uuidWithoutHash))
+}
 
 export const getActiveCategory = (categories: CategoryItem[], activeCategoryId: string) =>
   categories.find(({ id }) => id === activeCategoryId)
@@ -276,4 +287,8 @@ export const getNoteBarConf = (
         defaultSize: 330,
       }
   }
+}
+
+export const copyToClipboard = (text: string) => {
+  clipboard.writeText(text)
 }

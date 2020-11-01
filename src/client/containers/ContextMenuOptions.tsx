@@ -1,11 +1,11 @@
 import React, { useContext } from 'react'
-import { ArrowUp, Download, Star, Trash, X, Edit2 } from 'react-feather'
+import { ArrowUp, Download, Star, Trash, X, Edit2, Clipboard } from 'react-feather'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { LabelText } from '@resources/LabelText'
 import { TestID } from '@resources/TestID'
 import { ContextMenuOption } from '@/components/NoteList/ContextMenuOption'
-import { downloadNotes, isDraftNote } from '@/utils/helpers'
+import { downloadNotes, isDraftNote, getShortUuid, copyToClipboard } from '@/utils/helpers'
 import {
   deleteNotes,
   toggleFavoriteNotes,
@@ -134,6 +134,12 @@ const NotesOptions: React.FC<NotesOptionsProps> = ({ clickedNote }) => {
     _addCategoryToNote('', clickedNote.id)
     _updateActiveNote(clickedNote.id, false)
   }
+  const copyLinkedNoteMarkdownHandler = (e: React.SyntheticEvent, note: NoteItem) => {
+    e.preventDefault()
+
+    const shortNoteUuid = getShortUuid(note.id)
+    copyToClipboard(`{{${shortNoteUuid}}}`)
+  }
 
   return !isDraftNote(clickedNote) ? (
     <nav className="options-nav" data-testid={TestID.NOTE_OPTIONS_NAV}>
@@ -190,6 +196,12 @@ const NotesOptions: React.FC<NotesOptionsProps> = ({ clickedNote }) => {
         handler={downloadNotesHandler}
         icon={Download}
         text={LabelText.DOWNLOAD}
+      />
+      <ContextMenuOption
+        dataTestID={TestID.COPY_REFERENCE_TO_NOTE}
+        handler={(e: React.SyntheticEvent) => copyLinkedNoteMarkdownHandler(e, clickedNote)}
+        icon={Clipboard}
+        text={LabelText.COPY_REFERENCE_TO_NOTE}
       />
     </nav>
   ) : null

@@ -8,6 +8,7 @@ import {
   clickDynamicTestID,
   clickTestID,
   getDynamicTestID,
+  wrapWithTestIDTag,
   getTestID,
   testIDShouldExist,
   navigateToTrash,
@@ -117,6 +118,10 @@ const clickNoteOptionTrash = () => {
   clickTestID(TestID.NOTE_OPTION_TRASH)
 }
 
+const clickNoteOptionCopyLinkedNoteMarkdown = () => {
+  clickTestID(TestID.COPY_REFERENCE_TO_NOTE)
+}
+
 const clickSyncNotes = () => {
   clickTestID(TestID.TOPBAR_ACTION_SYNC_NOTES)
 }
@@ -159,6 +164,7 @@ export {
   clickNoteOptionRestoreFromTrash,
   clickNoteOptionTrash,
   clickNoteOptions,
+  clickNoteOptionCopyLinkedNoteMarkdown,
   clickSyncNotes,
   typeNoteEditor,
   typeNoteSearch,

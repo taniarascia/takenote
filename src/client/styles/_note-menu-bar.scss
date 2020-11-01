@@ -18,6 +18,12 @@
     align-self: stretch;
   }
 
+  .uuid-menu-bar {
+    font-size: 0.7rem;
+    padding: 0 0.5rem;
+    align-self: center;
+  }
+
   .last-synced {
     font-size: 0.7rem;
     padding: 0 0.5rem;
@@ -43,5 +49,13 @@
     &:active svg {
       transform: scale(1.1);
     }
+    &.uuid {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  .uuid-copied-text {
+    padding-left: 0.5rem;
   }
 }
