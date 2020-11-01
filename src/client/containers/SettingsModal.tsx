@@ -5,7 +5,7 @@ import {
   Command,
   Settings,
   Archive,
-  Layers,
+  Edit2,
   Download,
   DownloadCloud,
   UploadCloud,
@@ -139,24 +139,26 @@ export const SettingsModal: React.FC = () => {
   return isOpen ? (
     <div className="dimmer">
       <aside ref={node} className="settings-modal">
-        <div
-          className="close-button"
-          onClick={() => {
-            if (isOpen) _toggleSettingsModal()
-          }}
-        >
-          <X size={20} />
-        </div>
-
-        <section className="profile flex">
-          <div>
-            {currentUser.avatar_url && (
-              <img src={currentUser.avatar_url} alt="Profile" className="profile-picture" />
-            )}
+        <header className="settings-modal-header">
+          <div
+            className="close-button"
+            onClick={() => {
+              if (isOpen) _toggleSettingsModal()
+            }}
+          >
+            <X size={20} />
           </div>
-          <div className="profile-details">
-            <h3>{currentUser.name}</h3>
-            <div className="subtitle">{currentUser.bio}</div>
+
+          <section className="profile flex">
+            <div>
+              {currentUser.avatar_url && (
+                <img src={currentUser.avatar_url} alt="Profile" className="profile-picture" />
+              )}
+            </div>
+            <div className="profile-details">
+              <h3>{currentUser.name}</h3>
+              <div className="subtitle">{currentUser.bio}</div>
+            </div>
             <button
               onClick={() => {
                 _logout()
@@ -164,10 +166,10 @@ export const SettingsModal: React.FC = () => {
             >
               Log out
             </button>
-          </div>
-        </section>
+          </section>
+        </header>
 
-        <section className="settings-section">
+        <section className="settings-content">
           <Tabs>
             <TabPanel label="Preferences" icon={Settings}>
               <Option
@@ -228,17 +230,20 @@ export const SettingsModal: React.FC = () => {
               ))}
             </TabPanel>
             <TabPanel label="Data management" icon={Archive}>
+              <p>Download all notes as Markdown files in a zip.</p>
               <IconButton
                 dataTestID={TestID.SETTINGS_MODAL_DOWNLOAD_NOTES}
                 handler={downloadNotesHandler}
                 icon={Download}
                 text={LabelText.DOWNLOAD_ALL_NOTES}
               />
+              <p>Export TakeNote data as JSON.</p>
               <IconButton
                 handler={backupHandler}
                 icon={DownloadCloud}
                 text={LabelText.BACKUP_ALL_NOTES}
               />
+              <p>Import TakeNote JSON file.</p>
               <IconButtonUploader
                 dataTestID={TestID.UPLOAD_SETTINGS_BACKUP}
                 accept=".json"
@@ -247,14 +252,14 @@ export const SettingsModal: React.FC = () => {
                 text={LabelText.IMPORT_BACKUP}
               />
             </TabPanel>
-            <TabPanel label="About TakeNote" icon={Layers}>
+            <TabPanel label="About TakeNote" icon={Edit2}>
               <p>
-                TakeNote is a minimalist note-taking app for developers. Write in plain text and
-                have your notes accessible from the web.
+                TakeNote is a minimalist note-taking web app for developers. Write in plain text or
+                Markdown in an IDE-like environment.
               </p>
               <p>
                 This app has no tracking or analytics and does not retain any user data. Notes are
-                persisted in local storage and can be downloaded as markdown files from the data
+                persisted in local storage and can be downloaded as Markdown files from the data
                 management tab.
               </p>
               <p>

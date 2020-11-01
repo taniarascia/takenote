@@ -1,11 +1,12 @@
 import React from 'react'
-import { ChevronDown, ChevronRight } from 'react-feather'
+import { ChevronDown, ChevronRight, Layers } from 'react-feather'
 
 export interface CollapseCategoryListButton {
   dataTestID: string
   handler: () => void
   label: string
   isCategoryListOpen: boolean
+  showIcon: boolean
 }
 
 export const CollapseCategoryListButton: React.FC<CollapseCategoryListButton> = ({
@@ -13,6 +14,7 @@ export const CollapseCategoryListButton: React.FC<CollapseCategoryListButton> = 
   handler,
   label,
   isCategoryListOpen,
+  showIcon,
 }) => {
   return (
     <button
@@ -21,7 +23,15 @@ export const CollapseCategoryListButton: React.FC<CollapseCategoryListButton> = 
       onClick={handler}
       aria-label={label}
     >
-      {isCategoryListOpen ? <ChevronDown size={16} /> : <ChevronRight size={16} />}
+      {showIcon ? (
+        isCategoryListOpen ? (
+          <ChevronDown size={16} />
+        ) : (
+          <ChevronRight size={16} />
+        )
+      ) : (
+        <Layers size={16} />
+      )}
       <h2>Categories</h2>
     </button>
   )

@@ -20,6 +20,24 @@
 
 ![Screenshot](./assets/takenote-light.png)
 
+## Features
+
+- **Plain text notes** - take notes in an IDE-like environment that makes no assumptions
+- **Markdown preview** - view rendered HTML
+- **Linked notes** - Use `{{uuid}}` syntax to link to notes within other notes
+- **Syntax highlighting** - light and dark mode available (based on the beautiful [New Moon theme](https://taniarascia.github.io/new-moon/))
+- **Keyboard shortcuts** - use the keyboard for all common tasks - creating notes and categories, toggling settings, and other options
+- **Drag and drop** - drag a note or multiple notes to categories, favorites, or trash
+- **Multi-cursor editing** - supports multiple cursors and other [Codemirror](https://codemirror.net/) options
+- **Search notes** - easily search all notes, or notes within a category
+- **Prettify notes** - use Prettier on the fly for your Markdown
+- **No WYSIWYG** - made for developers, by developers
+- **No database** - notes are only stored in the browser's local storage and are available for download and export to you alone
+- **No tracking or analytics** - 'nuff said
+- **GitHub integration** - self-hosted option is available for auto-syncing to a GitHub repository (not available in the demo)
+
+## About
+
 TakeNote is a note-taking app for the web. You can use the demo app at [takenote.dev](https://takenote.dev). It is a static site without a database and does not sync your notes to the cloud. The notes are persisted temporarily in local storage, but you can download all notes in markdown format as a zip.
 
 Hidden within the code is an alternate version that contain a Node/Express server and integration with GitHub. This version involves creating an OAuth application for GitHub and signing up to it with private repository permissions. Instead of backing up to local storage, your notes will back up to a private repository in your account called `takenote-data`. Due to the following reasons I'm choosing not to deploy or maintain this portion of the application:
@@ -32,24 +50,7 @@ Hidden within the code is an alternate version that contain a Node/Express serve
 
 However, I'm leaving the code available so you can feel free to host your own TakeNote instance or study the code for learning purposes. I do not provide support or guidance for these purposes.
 
-TakeNote was created with TypeScript, React, Redux, Node, Express, Codemirror, Webpack, Jest, Cypress, Feather Icons, ESLint, and Mousetrap, among other awesome open-source software.
-
-## Features
-
-- Plain text notes
-- Markdown preview
-- Syntax highlighting
-- Keyboard shortcuts
-- Drag and drop
-- Favorites and categories
-- Multi-note actions
-- Multi-cursor editing
-- Light/dark theme
-- Search notes
-- Prettify notes
-- No WYSIWYG
-- No database
-- No tracking or analytics
+TakeNote was created with TypeScript, React, Redux, Node, Express, Codemirror, Webpack, Jest, Cypress, Feather Icons, ESLint, and Mousetrap, among other awesome open-source software.L
 
 ## Reviews
 

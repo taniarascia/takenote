@@ -223,6 +223,9 @@ $dark-editor: #3f3f3f;
   .settings-modal {
     background: $dark-sidebar;
     color: $light-font-color;
+    .settings-modal-header {
+      border-color: darken($dark-sidebar, 5%);
+    }
     .subtitle {
       color: darken($light-font-color, 20%);
     }
@@ -237,8 +240,6 @@ $dark-editor: #3f3f3f;
     }
 
     .close-button {
-      background: darken($dark-sidebar, 3%);
-
       &:hover,
       &:active {
         background: darken($dark-sidebar, 5%);

@@ -10,4 +10,5 @@ The easiest note to find.`,
   scratchpad: true,
   favorite: false,
   created: dayjs().format(),
+  lastUpdated: dayjs().format(),
 }

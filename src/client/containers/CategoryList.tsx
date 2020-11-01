@@ -146,6 +146,7 @@ export const CategoryList: React.FC = () => {
           handler={() => setCategoryListOpen(!isCategoryListOpen)}
           label={LabelText.COLLAPSE_CATEGORY}
           isCategoryListOpen={isCategoryListOpen}
+          showIcon={categories.length > 0}
         />
         <AddCategoryButton
           dataTestID={TestID.ADD_CATEGORY_BUTTON}
