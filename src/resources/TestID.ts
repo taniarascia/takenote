@@ -43,4 +43,7 @@ export enum TestID {
   SORT_BY_DROPDOWN = 'sort-by-dropdown',
   TEXT_DIRECTION_DROPDOWN = 'text-direction-dropdown',
   UPLOAD_SETTINGS_BACKUP = 'upload-settings-backup',
+  UUID_MENU_BAR_COPY_ICON = 'uuid-menu-bar-copy-icon',
+  PREVIEW_MODE = 'preview-mode',
+  COPY_REFERENCE_TO_NOTE = 'copy-reference-to-note',
 }
