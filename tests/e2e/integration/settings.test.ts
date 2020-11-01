@@ -171,7 +171,7 @@ describe('Settings', () => {
     })
 
     it('should download backup', () => {
-      cy.findByRole('button', { name: /backup all notes/i }).click()
+      cy.findByRole('button', { name: /export backup/i }).click()
 
       getDownloadedBackup().then((result) => {
         const data = JSON.parse(result as string)
@@ -191,7 +191,7 @@ describe('Settings', () => {
       })
       navigateToSettings()
       clickSettingsTab('data management')
-      cy.findByRole('button', { name: /backup all notes/i }).click()
+      cy.findByRole('button', { name: /export backup/i }).click()
 
       getDownloadedBackup().then((result) => {
         closeSettingsByClickingOutsideWindow()
