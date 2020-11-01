@@ -23,9 +23,9 @@ View the source on [Github](https://github.com/taniarascia/takenote).
 
 ## Features
 
-- **Plain text notes** - take notes in an IDE-like environment that does not hijack
+- **Plain text notes** - take notes in an IDE-like environment that makes no assumptions
 - **Markdown preview** - view rendered HTML
-- **Linked notes** - Use \`{{uuid}}\` syntax to link to notes within other notes (like Vimwiki)
+- **Linked notes** - Use \`{{uuid}}\` syntax to link to notes within other notes
 - **Syntax highlighting** - light and dark mode available (based on the beautiful [New Moon theme](https://taniarascia.github.io/new-moon/))
 - **Keyboard shortcuts** - use the keyboard for all common tasks - creating notes and categories, toggling settings, and other options
 - **Drag and drop** - drag a note or multiple notes to categories, favorites, or trash

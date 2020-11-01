@@ -73,15 +73,15 @@ export const LandingPage: React.FC = () => {
             <h2 className="text-center">Features</h2>
             <ul>
               <li>
-                <strong>Plain text notes</strong> - take notes in an IDE-like environment that does
-                not hijack
+                <strong>Plain text notes</strong> - take notes in an IDE-like environment that makes
+                no assumptions
               </li>
               <li>
                 <strong>Markdown preview</strong> - view rendered HTML
               </li>
               <li>
-                <strong>Linked notes</strong> - Use <code>{{ uuid }}</code> syntax to link to notes
-                within other notes (like Vimwiki)
+                <strong>Linked notes</strong> - Use <code>{`{{uuid}}`}</code> syntax to link to
+                notes within other notes
               </li>
               <li>
                 <strong>Syntax highlighting</strong> - light and dark mode available (based on the
