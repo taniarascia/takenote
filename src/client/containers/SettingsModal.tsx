@@ -18,16 +18,14 @@ import {
   toggleDarkTheme,
   updateNotesSortStrategy,
 } from '@/slices/settings'
-import { updateNotes } from '@/slices/note'
+import { updateNotes, importNotes } from '@/slices/note'
 import { logout } from '@/slices/auth'
 import { importCategories } from '@/slices/category'
-import { importNotes } from '@/slices/note'
 import { shortcutMap, notesSortOptions, directionTextOptions } from '@/utils/constants'
 import { CategoryItem, NoteItem, ReactMouseEvent } from '@/types'
 import { getSettings, getAuth, getNotes, getCategories } from '@/selectors'
 import { Option } from '@/components/SettingsModal/Option'
 import { Shortcut } from '@/components/SettingsModal/Shortcut'
-import { getNotesSorter } from '@/utils/notesSortStrategies'
 import { SelectOptions } from '@/components/SettingsModal/SelectOptions'
 import { IconButton } from '@/components/SettingsModal/IconButton'
 import { NotesSortKey } from '@/utils/enums'
@@ -64,8 +62,8 @@ export const SettingsModal: React.FC = () => {
     dispatch(updateNotesSortStrategy(sortBy))
   const _updateCodeMirrorOption = (key: string, value: any) =>
     dispatch(updateCodeMirrorOption({ key, value }))
-  const _sortAndUpdateNotes = (compareFn: (a: NoteItem, b: NoteItem) => number) =>
-    dispatch(updateNotes({ notes: [...notes].sort(compareFn), activeFolder, activeCategoryId }))
+  const _updateNotes = (sortOrderKey: NotesSortKey) =>
+    dispatch(updateNotes({ notes, activeFolder, activeCategoryId, sortOrderKey }))
   const _importBackup = (notes: NoteItem[], categories: CategoryItem[]) => {
     dispatch(importNotes(notes))
     dispatch(importCategories(categories))
@@ -109,7 +107,7 @@ export const SettingsModal: React.FC = () => {
   }
   const updateNotesSortStrategyHandler = (selectedOption: any) => {
     _updateNotesSortStrategy(selectedOption.value)
-    _sortAndUpdateNotes(getNotesSorter(selectedOption.value))
+    _updateNotes(selectedOption.value)
   }
   const updateNotesDirectionHandler = (selectedOption: any) => {
     _updateCodeMirrorOption('direction', selectedOption.value)

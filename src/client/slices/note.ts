@@ -30,9 +30,9 @@ export const getFirstNoteId = (
   categoryId?: string,
   sortOrderKey?: NotesSortKey
 ): string => {
-  const availableNotes = sortOrderKey
-    ? notes.filter((note) => !note.trash).sort(getNotesSorter(sortOrderKey))
-    : notes.filter((note) => !note.trash)
+  const availableNotes = !sortOrderKey
+    ? notes.filter((note) => !note.trash)
+    : notes.filter((note) => !note.trash).sort(getNotesSorter(sortOrderKey))
 
   const firstNote = {
     [Folder.ALL]: () => availableNotes.find((note) => !note.scratchpad),
@@ -90,16 +90,27 @@ const noteSlice = createSlice({
       state,
       {
         payload,
-      }: PayloadAction<{ notes: NoteItem[]; activeFolder: Folder; activeCategoryId?: string }>
+      }: PayloadAction<{
+        notes: NoteItem[]
+        activeFolder: Folder
+        activeCategoryId?: string
+        sortOrderKey?: NotesSortKey
+      }>
     ) => {
       state.notes = payload.notes
       state.activeNoteId = getFirstNoteId(
         payload.activeFolder,
         payload.notes,
-        payload.activeCategoryId
+        payload.activeCategoryId,
+        payload.sortOrderKey
       )
       state.selectedNotesIds = [
-        getFirstNoteId(payload.activeFolder, payload.notes, payload.activeCategoryId),
+        getFirstNoteId(
+          payload.activeFolder,
+          payload.notes,
+          payload.activeCategoryId,
+          payload.sortOrderKey
+        ),
       ]
     },
 
