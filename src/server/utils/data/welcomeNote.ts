@@ -30,4 +30,5 @@ export const welcomeNote = {
   category: '',
   favorite: false,
   created: dayjs().format(),
+  lastUpdated: dayjs().format(),
 }

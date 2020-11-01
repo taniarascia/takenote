@@ -12,6 +12,7 @@ The easiest note to find.`,
   scratchpad: true,
   favorite: false,
   created: dayjs().format(),
+  lastUpdated: dayjs().format(),
 }
 
 const markdown = `# Welcome to Takenote!
@@ -43,6 +44,7 @@ const welcomeNote = {
   category: '',
   favorite: false,
   created: dayjs().format(),
+  lastUpdated: dayjs().format(),
 }
 
 type PromiseCallback = (value?: any) => void
