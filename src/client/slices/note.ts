@@ -155,11 +155,21 @@ const noteSlice = createSlice({
       state.notes = state.notes.filter((note) => note.text !== '')
     },
 
-    swapFolder: (state, { payload }: PayloadAction<Folder>) => {
-      state.activeFolder = payload
+    swapFolder: (
+      state,
+      { payload }: PayloadAction<{ folder: Folder; sortOrderKey?: NotesSortKey }>
+    ) => {
+      state.activeFolder = payload.folder
       state.activeCategoryId = ''
-      state.activeNoteId = getFirstNoteId(payload, state.notes)
-      state.selectedNotesIds = [getFirstNoteId(payload, state.notes)]
+      state.activeNoteId = getFirstNoteId(
+        payload.folder,
+        state.notes,
+        undefined,
+        payload.sortOrderKey
+      )
+      state.selectedNotesIds = [
+        getFirstNoteId(payload.folder, state.notes, undefined, payload.sortOrderKey),
+      ]
       state.notes = state.notes.filter((note) => note.scratchpad || note.text !== '')
     },
 

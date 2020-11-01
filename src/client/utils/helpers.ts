@@ -4,7 +4,7 @@ import JSZip from 'jszip'
 import { Action } from 'redux'
 
 import { LabelText } from '@resources/LabelText'
-import { Folder } from '@/utils/enums'
+import { Folder, NotesSortKey } from '@/utils/enums'
 import { folderMap } from '@/utils/constants'
 import { NoteItem, CategoryItem, WithPayload } from '@/types'
 
@@ -120,7 +120,9 @@ export const newNoteHandlerHelper = (
   previewMarkdown: boolean,
   activeNote: NoteItem | undefined,
   activeCategoryId: string,
-  swapFolder: (folder: Folder) => WithPayload<string, Action<string>>,
+  swapFolder: (
+    folder: Folder
+  ) => WithPayload<{ folder: string; sortOrderKey?: NotesSortKey }, Action<string>>,
   togglePreviewMarkdown: () => WithPayload<undefined, Action<string>>,
   addNote: (note: NoteItem) => WithPayload<NoteItem, Action<string>>,
   updateActiveNote: (
