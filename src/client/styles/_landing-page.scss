@@ -9,6 +9,9 @@
       margin: 0;
       font-weight: 600;
     }
+    &:hover {
+      color: darken($primary, 15%);
+    }
   }
 
   p,
@@ -17,6 +20,11 @@
     color: #404040;
     line-height: 1.6;
     font-size: 1.1rem;
+  }
+
+  code {
+    font-size: 0.9rem;
+    background: #f0f0f0;
   }
 
   .new-signup {
@@ -73,7 +81,7 @@
     padding: 0 1.5rem;
     &-small {
       @extend .container;
-      max-width: 600px;
+      max-width: 800px;
     }
   }
 
@@ -83,6 +91,7 @@
   }
 
   h2 {
+    margin-top: 0;
     font-size: 1.6rem;
     @include small-breakpoint {
       font-size: 2rem;

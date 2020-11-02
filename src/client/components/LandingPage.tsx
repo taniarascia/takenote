@@ -72,20 +72,53 @@ export const LandingPage: React.FC = () => {
           <div className="features">
             <h2 className="text-center">Features</h2>
             <ul>
-              <li>Plain text notes</li>
-              <li>Markdown preview</li>
-              <li>Syntax highlighting</li>
-              <li>Keyboard shortcuts</li>
-              <li>Drag and drop</li>
-              <li>Favorites and categories</li>
-              <li>Multi-note actions</li>
-              <li>Multi-cursor editing</li>
-              <li>Light/dark theme</li>
-              <li>Search notes</li>
-              <li>Prettify notes</li>
-              <li>No WYSIWYG</li>
-              <li>No database</li>
-              <li>No tracking or analytics</li>
+              <li>
+                <strong>Plain text notes</strong> - take notes in an IDE-like environment that makes
+                no assumptions
+              </li>
+              <li>
+                <strong>Markdown preview</strong> - view rendered HTML
+              </li>
+              <li>
+                <strong>Linked notes</strong> - Use <code>{`{{uuid}}`}</code> syntax to link to
+                notes within other notes
+              </li>
+              <li>
+                <strong>Syntax highlighting</strong> - light and dark mode available (based on the
+                beautiful <a href="https://taniarascia.github.io/new-moon/">New Moon theme</a>)
+              </li>
+              <li>
+                <strong>Keyboard shortcuts</strong> - use the keyboard for all common tasks -
+                creating notes and categories, toggling settings, and other options
+              </li>
+              <li>
+                <strong>Drag and drop</strong> - drag a note or multiple notes to categories,
+                favorites, or trash
+              </li>
+              <li>
+                <strong>Multi-cursor editing</strong> - supports multiple cursors and other{' '}
+                <a href="https://codemirror.net/">Codemirror</a> options
+              </li>
+              <li>
+                <strong>Search notes</strong> - easily search all notes, or notes within a category
+              </li>
+              <li>
+                <strong>Prettify notes</strong> - use Prettier on the fly for your Markdown
+              </li>
+              <li>
+                <strong>No WYSIWYG</strong> - made for developers, by developers
+              </li>
+              <li>
+                <strong>No database</strong> - notes are only stored in the browser&#39;s local
+                storage and are available for download and export to you alone
+              </li>
+              <li>
+                <strong>No tracking or analytics</strong> - &#39;nuff said
+              </li>
+              <li>
+                <strong>GitHub integration</strong> - self-hosted option is available for
+                auto-syncing to a GitHub repository (not available in the demo)
+              </li>
             </ul>
           </div>
         </div>
