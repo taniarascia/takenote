@@ -266,7 +266,10 @@ describe('noteSlice', () => {
         selectedNotesIds: ['2'],
         notes: [notes[0], notes[1], notes[3]],
       }
-      const result = reducer(initialStateBeforeUpdatingActiveFolder, swapFolder(payload))
+      const result = reducer(
+        initialStateBeforeUpdatingActiveFolder,
+        swapFolder({ folder: payload })
+      )
 
       expect(result).toEqual(nextState)
     })
@@ -291,7 +294,10 @@ describe('noteSlice', () => {
         selectedNotesIds: ['2'],
         notes: [notes[0], notes[1], notes[3]],
       }
-      const result = reducer(initialStateBeforeUpdatingActiveFolder, swapFolder(payload))
+      const result = reducer(
+        initialStateBeforeUpdatingActiveFolder,
+        swapFolder({ folder: payload })
+      )
 
       expect(result).toEqual(nextState)
     })
@@ -316,7 +322,10 @@ describe('noteSlice', () => {
         selectedNotesIds: ['2'],
         notes: [notes[0], notes[1], notes[3]],
       }
-      const result = reducer(initialStateBeforeUpdatingActiveFolder, swapFolder(payload))
+      const result = reducer(
+        initialStateBeforeUpdatingActiveFolder,
+        swapFolder({ folder: payload })
+      )
 
       expect(result).toEqual(nextState)
     })
@@ -765,7 +774,7 @@ describe('noteSlice', () => {
       activeNoteId: '2',
       selectedNotesIds: ['2'],
     }
-    const result = reducer(initialState, loadNotesSuccess(payload))
+    const result = reducer(initialState, loadNotesSuccess({ notes: payload }))
 
     expect(result).toEqual(nextState)
   })

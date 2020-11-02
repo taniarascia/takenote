@@ -45,7 +45,7 @@ const CategoryOptions: React.FC<CategoryOptionsProps> = ({ clickedCategory }) =>
   const dispatch = useDispatch()
 
   const _deleteCategory = (categoryId: string) => dispatch(deleteCategory(categoryId))
-  const _swapFolder = (categoryId: string) => dispatch(swapFolder(Folder.ALL))
+  const _swapFolder = (folder: Folder) => dispatch(swapFolder({ folder }))
   const _setCategoryEdit = (categoryId: string, tempName: string) =>
     dispatch(setCategoryEdit({ id: categoryId, tempName }))
 
@@ -65,7 +65,7 @@ const CategoryOptions: React.FC<CategoryOptionsProps> = ({ clickedCategory }) =>
   }
   const removeCategoryHandler = () => {
     _deleteCategory(clickedCategory.id)
-    _swapFolder('')
+    _swapFolder(Folder.ALL)
   }
 
   return (

@@ -61,8 +61,9 @@ function* fetchNotes() {
     } else {
       data = (yield axios('/api/sync/notes')).data
     }
+    const { notesSortKey } = yield select(getSettings)
 
-    yield put(loadNotesSuccess(data))
+    yield put(loadNotesSuccess({ notes: data, sortOrderKey: notesSortKey }))
   } catch (error) {
     yield put(loadNotesError(error.message))
   }

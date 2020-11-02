@@ -447,7 +447,6 @@ describe('Manage notes test', () => {
     assertNoteListLengthEquals(2)
 
     holdKeyAndClickNoteAtIndex(1, 'meta')
-    holdKeyAndClickNoteAtIndex(0, 'meta')
 
     openNoteContextMenu()
     clickNoteOptionFavorite()
