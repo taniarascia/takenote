@@ -80,7 +80,7 @@ export const LandingPage: React.FC = () => {
                 <strong>Markdown preview</strong> - view rendered HTML
               </li>
               <li>
-                <strong>Linked notes</strong> - Use <code>{`{{uuid}}`}</code> syntax to link to
+                <strong>Linked notes</strong> - use <code>{`{{uuid}}`}</code> syntax to link to
                 notes within other notes
               </li>
               <li>

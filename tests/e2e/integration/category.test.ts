@@ -28,7 +28,6 @@ import {
 } from '../utils/testHelperUtils'
 import {
   assertNoteListLengthEquals,
-  clickCreateNewNote,
   clickNoteOptions,
   createXUniqueNotes,
 } from '../utils/testNotesHelperUtils'
