@@ -16,8 +16,6 @@
 
 <p align="center">A free, open-source notes app for the web. (Demo only)</p>
 
-> **Note**: TakeNote is available as a demo only. You can use the app at [takenote.dev](https://takenote.dev) but the notes are only persisted in temporary local storage. However, you can download all notes as a zip.
-
 ![Screenshot](./assets/takenote-light.png)
 
 ## Features
