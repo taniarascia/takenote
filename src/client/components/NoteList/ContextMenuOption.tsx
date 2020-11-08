@@ -5,7 +5,7 @@ import { MenuUtilitiesContext } from '@/containers/ContextMenu'
 
 export interface ContextMenuOptionProps {
   dataTestID: string
-  handler: MouseEventHandler | KeyboardEventHandler
+  handler: MouseEventHandler & KeyboardEventHandler
   icon: Icon
   text: string
   optionType?: string
