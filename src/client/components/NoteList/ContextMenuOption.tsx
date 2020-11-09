@@ -1,5 +1,7 @@
-import React, { KeyboardEventHandler, MouseEventHandler } from 'react'
+import React, { KeyboardEventHandler, MouseEventHandler, useContext } from 'react'
 import { Icon } from 'react-feather'
+
+import { MenuUtilitiesContext } from '@/containers/ContextMenu'
 
 export interface ContextMenuOptionProps {
   dataTestID: string
@@ -17,13 +19,30 @@ export const ContextMenuOption: React.FC<ContextMenuOptionProps> = ({
   text,
   ...rest
 }) => {
+  // ===========================================================================
+  // Context
+  // ===========================================================================
+
+  const { setOptionsId } = useContext(MenuUtilitiesContext)
+
+  // ===========================================================================
+  // Handlers
+  // ===========================================================================
+
+  const optionHandler: MouseEventHandler & KeyboardEventHandler = (
+    event: React.MouseEvent<Element, MouseEvent> & React.KeyboardEvent<Element>
+  ) => {
+    handler(event)
+    setOptionsId('')
+  }
+
   return (
     <div
       data-testid={dataTestID}
       className={optionType === 'delete' ? 'nav-item delete-option' : 'nav-item'}
       role="button"
-      onClick={handler}
-      onKeyPress={handler}
+      onClick={optionHandler}
+      onKeyPress={optionHandler}
       tabIndex={0}
       {...rest}
     >
