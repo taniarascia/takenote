@@ -249,6 +249,7 @@ Thanks goes to these wonderful people:
   <tr>
     <td align="center"><a href="https://www.linkedin.com/in/jadhielv"><img src="https://avatars3.githubusercontent.com/u/24376900?v=4" width="50px;" alt=""/><br /><sub><b>Jadhiel Vélez</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=Jadhielv" title="Code">💻</a> <a href="https://github.com/taniarascia/takenote/issues?q=author%3AJadhielv" title="Bug reports">🐛</a></td>
     <td align="center"><a href="https://github.com/machadolucasvp"><img src="https://avatars0.githubusercontent.com/u/44952113?v=4" width="50px;" alt=""/><br /><sub><b>Lucas Machado</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=machadolucasvp" title="Code">💻</a> <a href="https://github.com/taniarascia/takenote/issues?q=author%3Amachadolucasvp" title="Bug reports">🐛</a> <a href="https://github.com/taniarascia/takenote/commits?author=machadolucasvp" title="Tests">⚠️</a></td>
+    <td align="center"><a href="https://github.com/xsteadybcgo"><img src="https://avatars3.githubusercontent.com/u/19681921?v=4" width="50px;" alt=""/><br /><sub><b>xsteadybcgo</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/issues?q=author%3Axsteadybcgo" title="Bug reports">🐛</a></td>
   </tr>
 </table>
 
