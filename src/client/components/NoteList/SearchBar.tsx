@@ -18,6 +18,9 @@ export const SearchBar: React.FC<SearchBarProps> = ({ searchRef, searchNotes }) 
         searchNotes(event.target.value)
       }}
       placeholder="Search for notes"
+      onDragOver={(e) => {
+        e.preventDefault()
+      }}
     />
   )
 }
