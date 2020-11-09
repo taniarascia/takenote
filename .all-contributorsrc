@@ -499,6 +499,15 @@
         "bug",
         "test"
       ]
+    },
+    {
+      "login": "xsteadybcgo",
+      "name": "xsteadybcgo",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/19681921?v=4",
+      "profile": "https://github.com/xsteadybcgo",
+      "contributions": [
+        "bug"
+      ]
     }
   ],
   "contributorsPerLine": 7,
