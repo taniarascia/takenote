@@ -1,9 +1,8 @@
 const webpack = require('webpack')
 const { merge } = require('webpack-merge')
-const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin')
-const TerserJSPlugin = require('terser-webpack-plugin')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin')
 
 const common = require('./webpack.common.js')
 
@@ -59,7 +58,7 @@ module.exports = merge(common, {
     maxAssetSize: 512000,
   },
   optimization: {
-    minimizer: [new TerserJSPlugin(), new OptimizeCSSAssetsPlugin()],
+    minimizer: [new CssMinimizerPlugin(), '...'],
     runtimeChunk: 'multiple',
     splitChunks: {
       // Cache vendors since this code won't change very often

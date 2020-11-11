@@ -14,7 +14,7 @@
    
 </p>
 
-<p align="center">A free, open-source notes app for the web. (Demo only)</p>
+<p align="center">A web-based notes app for developers. (Demo only)</p>
 
 ![Screenshot](./assets/takenote-light.png)
 
@@ -255,6 +255,7 @@ Thanks goes to these wonderful people:
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
+
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 ## Acknowledgements

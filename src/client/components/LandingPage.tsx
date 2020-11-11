@@ -31,7 +31,7 @@ export const LandingPage: React.FC = () => {
               The Note Taking App
               <br /> for Developers
             </h1>
-            <p className="subtitle">A free, open-source notes app for the web.</p>
+            <p className="subtitle">A web-based notes app for developers.</p>
             {isMobile ? (
               <p className="p-mobile">
                 TakeNote is not currently supported for tablet and mobile devices.
