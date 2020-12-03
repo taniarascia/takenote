@@ -1,5 +1,6 @@
 // data-testid
 export enum TestID {
+  ACTION_BUTTON = 'action-button',
   ADD_CATEGORY_BUTTON = 'add-category-button',
   CATEGORY_EDIT = 'category-edit',
   CATEGORY_COLLAPSE_BUTTON = 'category-collapse-button',
