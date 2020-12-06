@@ -10,6 +10,7 @@ module.exports = {
   setupFilesAfterEnv: ['@testing-library/jest-dom', 'jest-extended'],
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
   moduleNameMapper: {
+    '^[@./a-zA-Z0-9$_-]+\\.(png|svg|gif)$': '<rootDir>/tests/__mocks__/styleMock.ts',
     // Allow `@/` to map to `src/client/` in Jest tests
     '@/(.*)$': '<rootDir>/src/client/$1',
     '@resources/(.*)$': '<rootDir>/src/resources/$1',
