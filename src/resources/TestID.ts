@@ -46,4 +46,6 @@ export enum TestID {
   UUID_MENU_BAR_COPY_ICON = 'uuid-menu-bar-copy-icon',
   PREVIEW_MODE = 'preview-mode',
   COPY_REFERENCE_TO_NOTE = 'copy-reference-to-note',
+  ICON_BUTTON = 'icon-button',
+  ICON_BUTTON_UPLOADER = 'icon-button-uploader',
 }
