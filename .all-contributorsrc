@@ -508,6 +508,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "marcosspn",
+      "name": "Marcos Spanholi",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/2171424?v=4",
+      "profile": "https://github.com/marcosspn",
+      "contributions": [
+        "test"
+      ]
     }
   ],
   "contributorsPerLine": 7,
