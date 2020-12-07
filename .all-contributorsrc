@@ -517,6 +517,15 @@
       "contributions": [
         "test"
       ]
+    },
+    {
+      "login": "roshanrajeev",
+      "name": "Roshan Rajeev",
+      "avatar_url": "https://avatars2.githubusercontent.com/u/52269241?v=4",
+      "profile": "http://roshanrajeev.xyz",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
