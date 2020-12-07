@@ -508,6 +508,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "maximeish",
+      "name": "Maxime Ishimwe",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/54126307?v=4",
+      "profile": "https://github.com/maximeish",
+      "contributions": [
+        "test"
+      ]
     }
   ],
   "contributorsPerLine": 7,
