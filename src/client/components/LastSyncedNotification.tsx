@@ -1,6 +1,8 @@
 import React from 'react'
 import dayjs from 'dayjs'
 
+import { TestID } from '@resources/TestID'
+
 export interface LastSyncedNotificationProps {
   datetime: string
   pending: boolean
@@ -14,15 +16,19 @@ export const LastSyncedNotification: React.FC<LastSyncedNotificationProps> = ({
 }) => {
   const renderLastSynced = () => {
     if (syncing) {
-      return <i>Syncing...</i>
+      return <i data-testid={TestID.LAST_SYNCED_NOTIFICATION_SYNCING}>Syncing...</i>
     }
 
     if (pending) {
-      return <i>Unsaved changes</i>
+      return <i data-testid={TestID.LAST_SYNCED_NOTIFICATION_UNSAVED}>Unsaved changes</i>
     }
 
     if (datetime) {
-      return <span>{dayjs(datetime).format('LT on L')}</span>
+      return (
+        <span data-testid={TestID.LAST_SYNCED_NOTIFICATION_DATE}>
+          {dayjs(datetime).format('LT on L')}
+        </span>
+      )
     }
   }
 
