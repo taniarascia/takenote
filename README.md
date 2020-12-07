@@ -254,7 +254,10 @@ Thanks goes to these wonderful people:
     <td align="center"><a href="https://github.com/Isaackomeza"><img src="https://avatars1.githubusercontent.com/u/66563235?v=4" width="50px;" alt=""/><br /><sub><b>Isaac Komezusenge</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=Isaackomeza" title="Tests">⚠️</a></td>
     <td align="center"><a href="https://github.com/maximeish"><img src="https://avatars0.githubusercontent.com/u/54126307?v=4" width="50px;" alt=""/><br /><sub><b>Maxime Ishimwe</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=maximeish" title="Tests">⚠️</a></td>
     <td align="center"><a href="https://github.com/marcosspn"><img src="https://avatars3.githubusercontent.com/u/2171424?v=4" width="50px;" alt=""/><br /><sub><b>Marcos Spanholi</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=marcosspn" title="Tests">⚠️</a></td>
+  </tr>
+  <tr>
     <td align="center"><a href="http://roshanrajeev.xyz"><img src="https://avatars2.githubusercontent.com/u/52269241?v=4" width="50px;" alt=""/><br /><sub><b>Roshan Rajeev</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=roshanrajeev" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/fistonhn"><img src="https://avatars0.githubusercontent.com/u/55746279?v=4" width="50px;" alt=""/><br /><sub><b>fistonhn</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=fistonhn" title="Tests">⚠️</a></td>
   </tr>
 </table>
 
