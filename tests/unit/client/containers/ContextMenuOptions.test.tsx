@@ -1,11 +1,10 @@
 import React from 'react'
 
 import { TestID } from '@resources/TestID'
-
-import { renderWithRouter } from '../testHelpers'
-
 import { ContextMenuOptions, ContextMenuOptionsProps } from '@/containers/ContextMenuOptions'
 import { ContextMenuEnum } from '@/utils/enums'
+
+import { renderWithRouter } from '../testHelpers'
 
 const wrap = (props: ContextMenuOptionsProps) => renderWithRouter(<ContextMenuOptions {...props} />)
 
