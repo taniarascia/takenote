@@ -251,6 +251,7 @@ Thanks goes to these wonderful people:
     <td align="center"><a href="https://github.com/machadolucasvp"><img src="https://avatars0.githubusercontent.com/u/44952113?v=4" width="50px;" alt=""/><br /><sub><b>Lucas Machado</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=machadolucasvp" title="Code">💻</a> <a href="https://github.com/taniarascia/takenote/issues?q=author%3Amachadolucasvp" title="Bug reports">🐛</a> <a href="https://github.com/taniarascia/takenote/commits?author=machadolucasvp" title="Tests">⚠️</a></td>
     <td align="center"><a href="https://github.com/xsteadybcgo"><img src="https://avatars3.githubusercontent.com/u/19681921?v=4" width="50px;" alt=""/><br /><sub><b>xsteadybcgo</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/issues?q=author%3Axsteadybcgo" title="Bug reports">🐛</a></td>
     <td align="center"><a href="https://github.com/marcosspn"><img src="https://avatars3.githubusercontent.com/u/2171424?v=4" width="50px;" alt=""/><br /><sub><b>Marcos Spanholi</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=marcosspn" title="Tests">⚠️</a></td>
+    <td align="center"><a href="http://roshanrajeev.xyz"><img src="https://avatars2.githubusercontent.com/u/52269241?v=4" width="50px;" alt=""/><br /><sub><b>Roshan Rajeev</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=roshanrajeev" title="Code">💻</a></td>
   </tr>
 </table>
 
