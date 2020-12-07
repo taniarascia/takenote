@@ -15,6 +15,8 @@ export enum TestID {
   NEW_CATEGORY_FORM = 'new-category-form',
   NEW_CATEGORY_INPUT = 'new-category-label',
   NOTE_LIST = 'note-list',
+  NOTE_LINK_ERROR = 'note-link-error',
+  NOTE_LINK_SUCCESS = 'note-link-success',
   NOTE_LIST_ITEM = 'note-list-item-',
   NOTE_OPTIONS_DIV = 'note-options-div-',
   NOTE_OPTIONS_NAV = 'note-options-nav',
@@ -46,4 +48,5 @@ export enum TestID {
   UUID_MENU_BAR_COPY_ICON = 'uuid-menu-bar-copy-icon',
   PREVIEW_MODE = 'preview-mode',
   COPY_REFERENCE_TO_NOTE = 'copy-reference-to-note',
+  EMPTY_EDITOR = 'empty-editor',
 }
