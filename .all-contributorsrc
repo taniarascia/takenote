@@ -517,8 +517,8 @@
       "contributions": [
         "test"
       ]
-     },
-     {
+    },
+    {
       "login": "Isaackomeza",
       "name": "Isaac Komezusenge",
       "avatar_url": "https://avatars1.githubusercontent.com/u/66563235?v=4",
@@ -526,8 +526,8 @@
       "contributions": [
         "test"
       ]
-     },
-     {
+    },
+    {
       "login": "maximeish",
       "name": "Maxime Ishimwe",
       "avatar_url": "https://avatars0.githubusercontent.com/u/54126307?v=4",
@@ -552,6 +552,15 @@
       "profile": "http://roshanrajeev.xyz",
       "contributions": [
         "code"
+      ]
+    },
+    {
+      "login": "fistonhn",
+      "name": "fistonhn",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/55746279?v=4",
+      "profile": "https://github.com/fistonhn",
+      "contributions": [
+        "test"
       ]
     }
   ],
