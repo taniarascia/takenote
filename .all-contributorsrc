@@ -508,6 +508,15 @@
       "contributions": [
         "bug"
       ]
+    },
+    {
+      "login": "Isaackomeza",
+      "name": "Isaac Komezusenge",
+      "avatar_url": "https://avatars1.githubusercontent.com/u/66563235?v=4",
+      "profile": "https://github.com/Isaackomeza",
+      "contributions": [
+        "test"
+      ]
     }
   ],
   "contributorsPerLine": 7,
