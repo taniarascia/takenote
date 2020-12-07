@@ -46,4 +46,7 @@ export enum TestID {
   UUID_MENU_BAR_COPY_ICON = 'uuid-menu-bar-copy-icon',
   PREVIEW_MODE = 'preview-mode',
   COPY_REFERENCE_TO_NOTE = 'copy-reference-to-note',
+  LAST_SYNCED_NOTIFICATION_SYNCING = 'last-synced-notification-syncing',
+  LAST_SYNCED_NOTIFICATION_UNSAVED = 'last-synced-notification-unsaved',
+  LAST_SYNCED_NOTIFICATION_DATE = 'last-synced-notification-date',
 }
