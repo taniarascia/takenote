@@ -1,5 +1,8 @@
-import { getNoteTitle, getWebsiteTitle } from '@/utils/helpers'
+import dayjs from 'dayjs'
+
+import { getNoteTitle, getWebsiteTitle, getActiveNoteFromShortUuid } from '@/utils/helpers'
 import { Folder } from '@/utils/enums'
+import { NoteItem, CategoryItem } from '@/types'
 
 describe('Utilities', () => {
   describe('getNoteTitle', () => {
@@ -52,6 +55,56 @@ describe('Utilities', () => {
       }
 
       expect(getWebsiteTitle(Folder.CATEGORY, category)).toEqual(`Recipes | TakeNote`)
+    })
+  })
+
+  const newNote = (id: string): NoteItem => ({
+    id: id,
+    text: '',
+    created: dayjs().format(),
+    lastUpdated: dayjs().format(),
+  })
+  describe('getActiveNoteFromShortUuid', () => {
+    test(`should get active note from short`, () => {
+      const activeNoteId = '6ec0bd7f-11c0-43da-975e-2a8ad9ebae0b'
+      const shortActiveNoteId = '6ec0bd'
+      const othernoteId = '710b962e-041c-11e1-9234-0123456789ab'
+
+      const activenote: NoteItem = newNote(activeNoteId)
+
+      const othernote: NoteItem = newNote(othernoteId)
+
+      const notes = [activenote, othernote]
+
+      expect(getActiveNoteFromShortUuid(notes, shortActiveNoteId)).toEqual(activenote)
+    })
+
+    test(`should get active note from short with braces`, () => {
+      const activeNoteId = '6ec0bd7f-11c0-43da-975e-2a8ad9ebae0b'
+      const shortActiveNoteId = '{{6ec0bd}}'
+      const otherNoteId = '710b962e-041c-11e1-9234-0123456789ab'
+
+      const activeNote: NoteItem = newNote(activeNoteId)
+
+      const otherNote: NoteItem = newNote(otherNoteId)
+
+      const notes = [activeNote, otherNote]
+
+      expect(getActiveNoteFromShortUuid(notes, shortActiveNoteId)).toEqual(activeNote)
+    })
+
+    test(`should not get active note if not present`, () => {
+      const shortActiveNoteId = '6ec0bd'
+      const oneNoteId = '109156be-c4fb-41ea-b1b4-efe1671c5836'
+      const otherNoteId = '710b962e-041c-11e1-9234-0123456789ab'
+
+      const oneNote: NoteItem = newNote(oneNoteId)
+
+      const otherNote: NoteItem = newNote(otherNoteId)
+
+      const notes = [oneNote, otherNote]
+
+      expect(getActiveNoteFromShortUuid(notes, shortActiveNoteId)).toEqual(undefined)
     })
   })
 })
