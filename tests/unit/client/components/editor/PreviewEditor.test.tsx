@@ -48,7 +48,6 @@ describe('<PreviewEditor />', () => {
     expect(component).toBeTruthy()
 
     const { getByTestId } = component
-    const invalidNoteError = Errors.INVALID_LINKED_NOTE_ID
 
     expect(getByTestId(TestID.NOTE_LINK_SUCCESS).innerHTML).toMatch(noteItemProps.text)
   })
@@ -75,7 +74,6 @@ describe('<PreviewEditor />', () => {
     expect(component).toBeTruthy()
 
     const { getByTestId } = component
-    const invalidNoteError = Errors.INVALID_LINKED_NOTE_ID
 
     expect(getByTestId(TestID.NOTE_LINK_ERROR).innerHTML).toMatch(
       '&lt;invalid note id provided&gt;'

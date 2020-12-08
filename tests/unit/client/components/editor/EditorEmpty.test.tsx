@@ -16,9 +16,9 @@ describe('<EmptyEditor />', () => {
   it('renders the EmptyEditor component and its texts', () => {
     const component = render(<EmptyEditor />)
 
-    const createNotText = component.queryByTestId(TestID.EMPTY_EDITOR)
+    const createNoteText = component.queryByTestId(TestID.EMPTY_EDITOR)
 
-    expect(createNotText).toBeValid()
+    expect(createNoteText).toBeValid()
     expect(component.getByText('Create a note')).toBeInstanceOf(Node)
     expect(component.getByText('CTRL')).toBeInstanceOf(Node)
     expect(component.getByText('ALT')).toBeInstanceOf(Node)

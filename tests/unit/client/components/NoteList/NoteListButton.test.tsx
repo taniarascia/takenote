@@ -4,7 +4,6 @@ import '@testing-library/jest-dom'
 import 'jest-extended'
 
 import { TestID } from '@resources/TestID'
-
 import { NoteListButton, NoteListButtonProps } from '@/components/NoteList/NoteListButton'
 
 describe('<NoteListButton />', () => {
