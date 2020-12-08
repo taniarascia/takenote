@@ -1,6 +1,8 @@
 import React from 'react'
 import { Icon } from 'react-feather'
 
+import { TestID } from '@resources/TestID'
+
 export interface TabProps {
   label: string
   activeTab: string
@@ -12,7 +14,13 @@ export const Tab: React.FC<TabProps> = ({ activeTab, label, icon: IconCmp, onCli
   const className = activeTab === label ? 'tab active' : 'tab'
 
   return (
-    <div role="button" key={label} className={className} onClick={() => onClick(label)}>
+    <div
+      data-testid={TestID.TAB}
+      role="button"
+      key={label}
+      className={className}
+      onClick={() => onClick(label)}
+    >
       <IconCmp size={18} className="mr-1" aria-hidden="true" focusable="false" /> {label}
     </div>
   )
