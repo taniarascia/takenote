@@ -144,7 +144,11 @@ export const NoteMenuBar = () => {
         >
           {syncing ? <Loader size={18} className="rotating-svg" /> : <RefreshCw size={18} />}
         </button>
-        <button className="note-menu-bar-button" onClick={toggleDarkThemeHandler}>
+        <button
+          className="note-menu-bar-button"
+          onClick={toggleDarkThemeHandler}
+          data-testid={TestID.DARK_MODE_TOGGLE}
+        >
           {darkTheme ? <Sun size={18} /> : <Moon size={18} />}
         </button>
 
