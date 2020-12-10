@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   Eye,
+  Edit,
   Star,
   Trash2,
   Download,
@@ -51,6 +52,7 @@ export const NoteMenuBar = () => {
   // ===========================================================================
 
   const [uuidCopiedText, setUuidCopiedText] = useState<string>('')
+  const [isToggled, togglePreviewIcon] = useState<boolean>(false)
 
   // ===========================================================================
   // Hooks
@@ -95,6 +97,10 @@ export const NoteMenuBar = () => {
     _toggleDarkTheme()
     _updateCodeMirrorOption('theme', darkTheme ? 'base16-light' : 'new-moon')
   }
+  const togglePreviewHandler = () => {
+    togglePreviewIcon(!isToggled)
+    _togglePreviewMarkdown()
+  }
 
   return (
     <section className="note-menu-bar">
@@ -102,10 +108,10 @@ export const NoteMenuBar = () => {
         <nav>
           <button
             className="note-menu-bar-button"
-            onClick={_togglePreviewMarkdown}
+            onClick={togglePreviewHandler}
             data-testid={TestID.PREVIEW_MODE}
           >
-            <Eye size={18} />
+            {isToggled ? <Edit size={18} /> : <Eye size={18} />}
           </button>
           {!activeNote.scratchpad && (
             <>

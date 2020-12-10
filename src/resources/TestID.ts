@@ -1,5 +1,6 @@
 // data-testid
 export enum TestID {
+  ACTION_BUTTON = 'action-button',
   ADD_CATEGORY_BUTTON = 'add-category-button',
   CATEGORY_EDIT = 'category-edit',
   CATEGORY_COLLAPSE_BUTTON = 'category-collapse-button',
@@ -46,4 +47,9 @@ export enum TestID {
   UUID_MENU_BAR_COPY_ICON = 'uuid-menu-bar-copy-icon',
   PREVIEW_MODE = 'preview-mode',
   COPY_REFERENCE_TO_NOTE = 'copy-reference-to-note',
+  ICON_BUTTON = 'icon-button',
+  ICON_BUTTON_UPLOADER = 'icon-button-uploader',
+  LAST_SYNCED_NOTIFICATION_SYNCING = 'last-synced-notification-syncing',
+  LAST_SYNCED_NOTIFICATION_UNSAVED = 'last-synced-notification-unsaved',
+  LAST_SYNCED_NOTIFICATION_DATE = 'last-synced-notification-date',
 }
