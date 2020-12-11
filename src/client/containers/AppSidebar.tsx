@@ -77,7 +77,7 @@ export const AppSidebar: React.FC = () => {
         handler={newNoteHandler}
         icon={Plus}
         label={LabelText.CREATE_NEW_NOTE}
-        text="New note"
+        text={LabelText.NEW_NOTE}
       />
       <section className="app-sidebar-main">
         <ScratchpadOption
