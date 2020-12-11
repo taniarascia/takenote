@@ -29,4 +29,4 @@ RUN npm run build
 EXPOSE $PORT
 
 # Start Node server
-ENTRYPOINT npm run start
+ENTRYPOINT npm run prod
