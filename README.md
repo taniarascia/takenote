@@ -259,12 +259,12 @@ Thanks goes to these wonderful people:
     <td align="center"><a href="http://roshanrajeev.xyz"><img src="https://avatars2.githubusercontent.com/u/52269241?v=4" width="50px;" alt=""/><br /><sub><b>Roshan Rajeev</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=roshanrajeev" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/fistonhn"><img src="https://avatars0.githubusercontent.com/u/55746279?v=4" width="50px;" alt=""/><br /><sub><b>fistonhn</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=fistonhn" title="Tests">⚠️</a></td>
     <td align="center"><a href="https://github.com/raffaeleferri"><img src="https://avatars0.githubusercontent.com/u/75796924?v=4" width="50px;" alt=""/><br /><sub><b>Raffaele Ferri</b></sub></a><br /><a href="#maintenance-raffaeleferri" title="Maintenance">🚧</a></td>
+    <td align="center"><a href="https://github.com/joshwambere"><img src="https://avatars2.githubusercontent.com/u/59834399?v=4" width="50px;" alt=""/><br /><sub><b>Dusabe Johnson</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=joshwambere" title="Tests">⚠️</a></td>
   </tr>
 </table>
 
 <!-- markdownlint-enable -->
 <!-- prettier-ignore-end -->
-
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 ## Acknowledgements
