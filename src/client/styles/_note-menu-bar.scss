@@ -37,6 +37,11 @@
     color: lighten($font-color, 15%);
     padding: 0 0.75rem;
     margin: 0;
+    &.star {
+      &:hover {
+        color: darken($warning, 8%);
+      }
+    }
     &.trash {
       &:hover {
         color: darken($error, 20%);
