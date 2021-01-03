@@ -2,7 +2,6 @@ import path from 'path'
 
 import express, { Router } from 'express'
 import cookieParser from 'cookie-parser'
-import bodyParser from 'body-parser'
 import cors from 'cors'
 import helmet from 'helmet'
 import compression from 'compression'
@@ -14,8 +13,7 @@ export default function initializeServer(router: Router) {
 
   app.set('trust proxy', 1)
   app.use(bodyParser.urlencoded({ extended: false }))
-  app.use(bodyParser.json())
-  app.use(cookieParser())
+  app.use(express.json())
   app.use(cors(origin))
   app.use(helmet())
   app.use(compression())
