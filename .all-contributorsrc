@@ -580,6 +580,15 @@
       "contributions": [
         "test"
       ]
+    },
+    {
+      "login": "hkhattabii",
+      "name": "hkhattabii",
+      "avatar_url": "https://avatars.githubusercontent.com/u/54418529?v=4",
+      "profile": "https://github.com/hkhattabii",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
