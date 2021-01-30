@@ -18,7 +18,7 @@ import {
   updateSelectedNotes,
   unassignTrashFromNotes,
 } from '@/slices/note'
-import { toggleSettingsModal, togglePreviewMarkdown } from '@/slices/settings'
+import { togglePreviewMarkdown } from '@/slices/settings'
 import { getSettings, getNotes } from '@/selectors'
 import { NoteItem } from '@/types'
 import { newNoteHandlerHelper, getActiveNote } from '@/utils/helpers'
