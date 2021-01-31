@@ -46,7 +46,6 @@ export const AppSidebar: React.FC = () => {
     dispatch(updateSelectedNotes({ noteId, multiSelect }))
   const _swapFolder = (sortOrderKey: NotesSortKey) => (folder: Folder) =>
     dispatch(swapFolder({ folder, sortOrderKey }))
-  const _toggleSettingsModal = () => dispatch(toggleSettingsModal())
   const _togglePreviewMarkdown = () => dispatch(togglePreviewMarkdown())
   const _assignTrashToNotes = (noteId: string) => dispatch(assignTrashToNotes(noteId))
   const _unassignTrashFromNotes = (noteId: string) => dispatch(unassignTrashFromNotes(noteId))
