@@ -38,6 +38,7 @@ describe('<TakeNoteApp />', () => {
         isOpen: false,
         loading: false,
         previewMarkdown: false,
+        linkInNewTab: false,
         darkTheme: false,
         sidebarVisible: true,
         notesSortKey: NotesSortKey.LAST_UPDATED,

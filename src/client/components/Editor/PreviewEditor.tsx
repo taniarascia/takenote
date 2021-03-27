@@ -11,12 +11,18 @@ import { uuidPlugin } from '../../utils/reactMarkdownPlugins'
 import NoteLink from './NoteLink'
 
 export interface PreviewEditorProps {
+  linkInNewTab: boolean
   noteText: string
   directionText: string
   notes: NoteItem[]
 }
 
-export const PreviewEditor: React.FC<PreviewEditorProps> = ({ noteText, directionText, notes }) => {
+export const PreviewEditor: React.FC<PreviewEditorProps> = ({
+  linkInNewTab,
+  noteText,
+  directionText,
+  notes,
+}) => {
   // ===========================================================================
   // Dispatch
   // ===========================================================================
@@ -63,6 +69,7 @@ export const PreviewEditor: React.FC<PreviewEditorProps> = ({ noteText, directio
       renderers={{
         uuid: ({ value }) => returnNoteLink(value),
       }}
+      linkTarget={linkInNewTab ? '_blank' : undefined}
       className={`previewer previewer_direction-${directionText}`}
       source={noteText}
     />

@@ -17,6 +17,7 @@ const wrap = (props: PreviewEditorProps) => renderWithRouter(<PreviewEditor {...
 describe('<PreviewEditor />', () => {
   it('renders the PreviewEditor component', () => {
     const props: PreviewEditorProps = {
+      linkInNewTab: false,
       noteText: 'texts for testing',
       directionText: 'testing',
       notes: [],

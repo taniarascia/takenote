@@ -66,6 +66,7 @@ export interface NoteState {
 export interface SettingsState {
   isOpen: boolean
   previewMarkdown: boolean
+  linkInNewTab: boolean
   loading: boolean
   darkTheme: boolean
   sidebarVisible: boolean

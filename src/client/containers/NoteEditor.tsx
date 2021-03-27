@@ -25,7 +25,7 @@ export const NoteEditor: React.FC = () => {
 
   const { pendingSync } = useSelector(getSync)
   const { activeNoteId, loading, notes } = useSelector(getNotes)
-  const { codeMirrorOptions, previewMarkdown } = useSelector(getSettings)
+  const { codeMirrorOptions, previewMarkdown, linkInNewTab } = useSelector(getSettings)
 
   const activeNote = getActiveNote(notes, activeNoteId)
 
@@ -48,6 +48,7 @@ export const NoteEditor: React.FC = () => {
     } else if (previewMarkdown) {
       return (
         <PreviewEditor
+          linkInNewTab={linkInNewTab}
           directionText={codeMirrorOptions.direction}
           noteText={activeNote.text}
           notes={notes}

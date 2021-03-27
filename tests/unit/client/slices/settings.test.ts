@@ -4,6 +4,7 @@ import reducer, {
   initialState,
   toggleSettingsModal,
   togglePreviewMarkdown,
+  toggleLinkInNewTab,
   updateCodeMirrorOption,
   toggleDarkTheme,
 } from '@/slices/settings'
@@ -41,6 +42,13 @@ describe('settings slice', () => {
   it('should toggle preview markdown state', () => {
     const nextState = { ...initialState, previewMarkdown: !initialState.previewMarkdown }
     const result = reducer(initialState, togglePreviewMarkdown())
+
+    expect(result).toEqual(nextState)
+  })
+
+  it('should toggle link in new tab state', () => {
+    const nextState = { ...initialState, linkInNewTab: !initialState.linkInNewTab }
+    const result = reducer(initialState, toggleLinkInNewTab())
 
     expect(result).toEqual(nextState)
   })
