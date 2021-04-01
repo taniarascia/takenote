@@ -57,7 +57,7 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^1.4.0",
-    "axios": "^0.20.0",
+    "axios": "^0.21.1",
     "clipboard-polyfill": "^3.0.1",
     "codemirror": "^5.58.1",
     "compression": "^1.7.4",
