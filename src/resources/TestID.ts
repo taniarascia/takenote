@@ -40,7 +40,6 @@ export enum TestID {
   SETTINGS_MODAL_DOWNLOAD_NOTES = 'settings-modal-download-notes',
   DARK_MODE_TOGGLE = 'dark-mode-toggle',
   MARKDOWN_PREVIEW_TOGGLE = 'markdown-preview-toggle',
-  LINKS_IN_NEW_TAB_TOGGLE = 'links-in-new-tab-toggle',
   ACTIVE_LINE_HIGHLIGHT_TOGGLE = 'active-line-highlight-toggle',
   DISPLAY_LINE_NUMS_TOGGLE = 'display-line-nums-toggle',
   SCROLL_PAST_END_TOGGLE = 'scroll-past-end-toggle',

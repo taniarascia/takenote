@@ -15,7 +15,6 @@ import {
   toggleSettingsModal,
   updateCodeMirrorOption,
   togglePreviewMarkdown,
-  toggleLinkInNewTab,
   toggleDarkTheme,
   updateNotesSortStrategy,
 } from '@/slices/settings'
@@ -42,14 +41,9 @@ export const SettingsModal: React.FC = () => {
   // Selectors
   // ===========================================================================
 
-  const {
-    codeMirrorOptions,
-    isOpen,
-    previewMarkdown,
-    linkInNewTab,
-    darkTheme,
-    notesSortKey,
-  } = useSelector(getSettings)
+  const { codeMirrorOptions, isOpen, previewMarkdown, darkTheme, notesSortKey } = useSelector(
+    getSettings
+  )
   const { currentUser } = useSelector(getAuth)
   const { notes, activeFolder, activeCategoryId } = useSelector(getNotes)
   const { categories } = useSelector(getCategories)
@@ -63,7 +57,6 @@ export const SettingsModal: React.FC = () => {
   const _logout = () => dispatch(logout())
   const _toggleSettingsModal = () => dispatch(toggleSettingsModal())
   const _togglePreviewMarkdown = () => dispatch(togglePreviewMarkdown())
-  const _toggleLinkInNewTab = () => dispatch(toggleLinkInNewTab())
   const _toggleDarkTheme = () => dispatch(toggleDarkTheme())
   const _updateNotesSortStrategy = (sortBy: NotesSortKey) =>
     dispatch(updateNotesSortStrategy(sortBy))
@@ -96,7 +89,6 @@ export const SettingsModal: React.FC = () => {
   }
 
   const togglePreviewMarkdownHandler = () => _togglePreviewMarkdown()
-  const toggleLinkInNewTabHandler = () => _toggleLinkInNewTab()
   const toggleDarkThemeHandler = () => {
     _toggleDarkTheme()
     _updateCodeMirrorOption('theme', darkTheme ? 'base16-light' : 'new-moon')
@@ -210,13 +202,6 @@ export const SettingsModal: React.FC = () => {
                 toggle={togglePreviewMarkdownHandler}
                 checked={previewMarkdown}
                 testId={TestID.MARKDOWN_PREVIEW_TOGGLE}
-              />
-              <Option
-                title="Links in new tab"
-                description="Controls whether markdown preview should open in a new tab or not"
-                toggle={toggleLinkInNewTabHandler}
-                checked={linkInNewTab}
-                testId={TestID.LINKS_IN_NEW_TAB_TOGGLE}
               />
               <Option
                 title="Dark mode"

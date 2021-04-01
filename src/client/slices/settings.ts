@@ -6,7 +6,6 @@ import { NotesSortKey, DirectionText } from '@/utils/enums'
 export const initialState: SettingsState = {
   previewMarkdown: false,
   darkTheme: false,
-  linkInNewTab: false,
   sidebarVisible: true,
   notesSortKey: NotesSortKey.LAST_UPDATED,
   codeMirrorOptions: {
@@ -41,10 +40,6 @@ const settingsSlice = createSlice({
       state.previewMarkdown = !state.previewMarkdown
     },
 
-    toggleLinkInNewTab: (state) => {
-      state.linkInNewTab = !state.linkInNewTab
-    },
-
     toggleDarkTheme: (state) => {
       state.darkTheme = !state.darkTheme
     },
@@ -72,7 +67,6 @@ export const {
   updateCodeMirrorOption,
   toggleDarkTheme,
   togglePreviewMarkdown,
-  toggleLinkInNewTab,
   updateNotesSortStrategy,
   loadSettings,
   loadSettingsError,
