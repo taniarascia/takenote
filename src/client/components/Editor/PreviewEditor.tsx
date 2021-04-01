@@ -63,6 +63,7 @@ export const PreviewEditor: React.FC<PreviewEditorProps> = ({ noteText, directio
       renderers={{
         uuid: ({ value }) => returnNoteLink(value),
       }}
+      linkTarget="_blank"
       className={`previewer previewer_direction-${directionText}`}
       source={noteText}
     />
