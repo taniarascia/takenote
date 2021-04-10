@@ -110,20 +110,29 @@ export const NoteMenuBar = () => {
             className="note-menu-bar-button"
             onClick={togglePreviewHandler}
             data-testid={TestID.PREVIEW_MODE}
+            title="Markdown Preview"
           >
             {isToggled ? <Edit size={18} /> : <Eye size={18} />}
           </button>
           {!activeNote.scratchpad && (
             <>
-              <button className="note-menu-bar-button" onClick={favoriteNoteHandler}>
+              <button
+                className="note-menu-bar-button"
+                onClick={favoriteNoteHandler}
+                title="Favorite Note"
+              >
                 <Star size={18} />
               </button>
-              <button className="note-menu-bar-button trash" onClick={trashNoteHandler}>
+              <button
+                className="note-menu-bar-button trash"
+                onClick={trashNoteHandler}
+                title="Trash Note"
+              >
                 <Trash2 size={18} />
               </button>
             </>
           )}
-          <button className="note-menu-bar-button">
+          <button className="note-menu-bar-button" title="Download Note">
             <Download size={18} onClick={downloadNotesHandler} />
           </button>
           <button
@@ -133,6 +142,7 @@ export const NoteMenuBar = () => {
               setUuidCopiedText(successfulCopyMessage)
             }}
             data-testid={TestID.UUID_MENU_BAR_COPY_ICON}
+            title="Copy Note To Clipboard"
           >
             {copyNoteIcon}
             {uuidCopiedText && <span className="uuid-copied-text">{uuidCopiedText}</span>}
@@ -147,14 +157,19 @@ export const NoteMenuBar = () => {
           className="note-menu-bar-button"
           onClick={syncNotesHandler}
           data-testid={TestID.TOPBAR_ACTION_SYNC_NOTES}
+          title="Sync Notes"
         >
           {syncing ? <Loader size={18} className="rotating-svg" /> : <RefreshCw size={18} />}
         </button>
-        <button className="note-menu-bar-button" onClick={toggleDarkThemeHandler}>
+        <button
+          className="note-menu-bar-button"
+          onClick={toggleDarkThemeHandler}
+          title="Change Theme"
+        >
           {darkTheme ? <Sun size={18} /> : <Moon size={18} />}
         </button>
 
-        <button className="note-menu-bar-button" onClick={settingsHandler}>
+        <button className="note-menu-bar-button" onClick={settingsHandler} title="Settings">
           <Settings aria-hidden size={18} />
           <span className="sr-only">Settings</span>
         </button>
