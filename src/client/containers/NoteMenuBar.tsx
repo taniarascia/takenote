@@ -115,7 +115,7 @@ export const NoteMenuBar = () => {
           </button>
           {!activeNote.scratchpad && (
             <>
-              <button className="note-menu-bar-button" onClick={favoriteNoteHandler}>
+              <button className="note-menu-bar-button star" onClick={favoriteNoteHandler}>
                 <Star size={18} />
               </button>
               <button className="note-menu-bar-button trash" onClick={trashNoteHandler}>
