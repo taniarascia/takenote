@@ -23,9 +23,15 @@ import {
   toggleDarkTheme,
   updateCodeMirrorOption,
 } from '@/slices/settings'
-import { toggleFavoriteNotes, toggleTrashNotes } from '@/slices/note'
+import { toggleFavoriteNotes, toggleTrashNotes, downloadPDFNotes } from '@/slices/note'
 import { getCategories, getNotes, getSync, getSettings } from '@/selectors'
-import { downloadNotes, isDraftNote, getShortUuid, copyToClipboard } from '@/utils/helpers'
+import {
+  downloadNotesAsPDF,
+  downloadNotes,
+  isDraftNote,
+  getShortUuid,
+  copyToClipboard,
+} from '@/utils/helpers'
 import { sync } from '@/slices/sync'
 
 export const NoteMenuBar = () => {
@@ -89,6 +95,8 @@ export const NoteMenuBar = () => {
   // ===========================================================================
 
   const downloadNotesHandler = () => downloadNotes([activeNote], categories)
+  const downloadNotesPDFHandler = () =>
+    dispatch(downloadPDFNotes({ notes: [activeNote], categories }))
   const favoriteNoteHandler = () => _toggleFavoriteNotes(activeNoteId)
   const trashNoteHandler = () => _toggleTrashNotes(activeNoteId)
   const syncNotesHandler = () => _sync(notes, categories)
@@ -125,6 +133,9 @@ export const NoteMenuBar = () => {
           )}
           <button className="note-menu-bar-button">
             <Download size={18} onClick={downloadNotesHandler} />
+          </button>
+          <button className="note-menu-bar-button">
+            <Download size={18} onClick={downloadNotesPDFHandler} />
           </button>
           <button
             className="note-menu-bar-button uuid"
