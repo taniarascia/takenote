@@ -3,7 +3,6 @@ import { v4 as uuid } from 'uuid'
 import JSZip from 'jszip'
 import { Action } from 'redux'
 import * as clipboard from 'clipboard-polyfill/text'
-import marked from 'marked'
 
 import { LabelText } from '@resources/LabelText'
 import { Folder, NotesSortKey } from '@/utils/enums'
@@ -70,78 +69,6 @@ export const downloadNotes = (notes: NoteItem[], categories: CategoryItem[]): vo
     } else {
       pom.click()
     }
-  } else {
-    const zip = new JSZip()
-    notes.forEach((note) =>
-      zip.file(
-        `${getNoteTitle(note.text)} (${note.id.substring(0, 6)}).md`,
-        noteWithFrontmatter(
-          note,
-          categories.find((category: CategoryItem) => category.id === note.category)
-        )
-      )
-    )
-
-    zip.generateAsync({ type: 'blob' }).then(
-      (content) => {
-        var downloadUrl = window.URL.createObjectURL(content)
-        var a = document.createElement('a')
-        a.href = downloadUrl
-        a.download = 'notes.zip'
-        document.body.appendChild(a)
-        a.click()
-        URL.revokeObjectURL(downloadUrl)
-      },
-      (err) => {
-        // TODO: error generating zip file.
-        // Generate a popup?
-      }
-    )
-  }
-}
-
-export const downloadNotesAsPDF = (notes: NoteItem[], categories: CategoryItem[]): void => {
-  if (notes.length === 1) {
-    const pom = document.createElement('a')
-    console.log(notes[0])
-    const element = marked(notes[0].text)
-    // const browser = puppeteer.launch({ args: ['--no-sandbox'] }).then((res) => {
-    //   res.newPage().then((page) => {
-    //     page.setContent(element)
-    //     page
-    //       .pdf({
-    //         printBackground: true,
-    //         margin: {
-    //           left: '0px',
-    //           top: '0px',
-    //           right: '0px',
-    //           bottom: '0px',
-    //         },
-    //       })
-    //       .then((buffer) => {
-    //         browser.close()
-    //       })
-    //   })
-    // })
-    console.log(element)
-    // pom.setAttribute(
-    //   'href',
-    //   `data:text/plain;charset=utf-8,${encodeURIComponent(
-    //     noteWithFrontmatter(
-    //       notes[0],
-    //       categories.find((category: CategoryItem) => category.id === notes[0].category)
-    //     )
-    //   )}`
-    // )
-    // pom.setAttribute('download', `${getNoteTitle(notes[0].text)}.md`)
-
-    // if (document.createEvent) {
-    //   const event = document.createEvent('MouseEvents')
-    //   event.initEvent('click', true, true)
-    //   pom.dispatchEvent(event)
-    // } else {
-    //   pom.click()
-    // }
   } else {
     const zip = new JSZip()
     notes.forEach((note) =>

@@ -11,6 +11,7 @@ import {
   Settings,
   Sun,
   Moon,
+  FileText,
   Clipboard as ClipboardCmp,
 } from 'react-feather'
 
@@ -25,13 +26,7 @@ import {
 } from '@/slices/settings'
 import { toggleFavoriteNotes, toggleTrashNotes, downloadPDFNotes } from '@/slices/note'
 import { getCategories, getNotes, getSync, getSettings } from '@/selectors'
-import {
-  downloadNotesAsPDF,
-  downloadNotes,
-  isDraftNote,
-  getShortUuid,
-  copyToClipboard,
-} from '@/utils/helpers'
+import { downloadNotes, isDraftNote, getShortUuid, copyToClipboard } from '@/utils/helpers'
 import { sync } from '@/slices/sync'
 
 export const NoteMenuBar = () => {
@@ -135,7 +130,7 @@ export const NoteMenuBar = () => {
             <Download size={18} onClick={downloadNotesHandler} />
           </button>
           <button className="note-menu-bar-button">
-            <Download size={18} onClick={downloadNotesPDFHandler} />
+            <FileText size={18} onClick={downloadNotesPDFHandler} />
           </button>
           <button
             className="note-menu-bar-button uuid"

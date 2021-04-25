@@ -7,6 +7,7 @@ import getUser from '../middleware/getUser'
 const router = express.Router()
 
 router.post('/download', noteHandler.download)
+router.post('/downloadAll', noteHandler.downloadAll)
 router.post('/health', (req, res) => {
   res.send(200)
 })

@@ -1,7 +1,6 @@
 import { all, put, takeLatest, select } from 'redux-saga/effects'
 import dayjs from 'dayjs'
 import axios from 'axios'
-import { saveAs } from 'file-saver'
 
 import { LabelText } from '@resources/LabelText'
 import { requestCategories, requestNotes, requestSettings, saveState, saveSettings } from '@/api'
@@ -147,27 +146,49 @@ function* downloadAsPDF({ payload }: DownloadPDFAction) {
     const headers = {
       'Content-Type': 'application/pdf',
     }
-
-    yield axios({
-      method: 'POST',
-      url: '/api/note/download',
-      data: payload,
-      responseType: 'blob',
-    }).then((res) => {
-      const file = new Blob([res.data], { type: 'application/pdf' })
-      const link = document.createElement('a')
-      const fileURL = URL.createObjectURL(file)
-      link.href = fileURL
-      link.setAttribute('download', `${getNoteTitle(notes[0].text)}.pdf`)
-      document.body.appendChild(link)
-      if (document.createEvent) {
-        const event = document.createEvent('MouseEvents')
-        event.initEvent('click', true, true)
-        link.dispatchEvent(event)
-      } else {
-        link.click()
-      }
-    })
+    if (notes.length === 1) {
+      yield axios({
+        method: 'POST',
+        url: '/api/note/download',
+        data: payload,
+        responseType: 'blob',
+      }).then((res) => {
+        const file = new Blob([res.data], { type: 'application/pdf' })
+        const link = document.createElement('a')
+        const fileURL = URL.createObjectURL(file)
+        link.href = fileURL
+        link.setAttribute('download', `${getNoteTitle(notes[0].text)}.pdf`)
+        document.body.appendChild(link)
+        if (document.createEvent) {
+          const event = document.createEvent('MouseEvents')
+          event.initEvent('click', true, true)
+          link.dispatchEvent(event)
+        } else {
+          link.click()
+        }
+      })
+    } else {
+      yield axios({
+        method: 'POST',
+        url: '/api/note/downloadAll',
+        data: payload,
+        responseType: 'blob',
+      }).then((res) => {
+        const file = new Blob([res.data], { type: 'application/zip' })
+        const link = document.createElement('a')
+        const fileURL = URL.createObjectURL(file)
+        link.href = fileURL
+        link.setAttribute('download', `notesPDF.zip`)
+        document.body.appendChild(link)
+        if (document.createEvent) {
+          const event = document.createEvent('MouseEvents')
+          event.initEvent('click', true, true)
+          link.dispatchEvent(event)
+        } else {
+          link.click()
+        }
+      })
+    }
   } catch (error) {
     yield put(loadCategoriesError(error.message))
   }
