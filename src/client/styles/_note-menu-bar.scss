@@ -1,15 +1,15 @@
 .note-menu-bar {
   height: 39px;
-  border-top: 1px solid darken($note-sidebar-color, 5%);
+  border-bottom: 1px solid darken($note-sidebar-color, 5%);
   background: $note-sidebar-color;
   display: flex;
   align-items: center;
   justify-content: space-between;
   position: absolute;
-  bottom: 0;
   left: 0;
   width: 100%;
   z-index: 99;
+  height: 49px;
 
   nav {
     display: flex;

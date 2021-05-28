@@ -107,6 +107,7 @@ export const NoteMenuBar = () => {
       {activeNote && !isDraftNote(activeNote) ? (
         <nav>
           <button
+            title="Preview mode"
             className="note-menu-bar-button"
             onClick={togglePreviewHandler}
             data-testid={TestID.PREVIEW_MODE}
@@ -123,11 +124,12 @@ export const NoteMenuBar = () => {
               </button>
             </>
           )}
-          <button className="note-menu-bar-button">
+          <button className="note-menu-bar-button" title="Download note">
             <Download size={18} onClick={downloadNotesHandler} />
           </button>
           <button
             className="note-menu-bar-button uuid"
+            title="Copy text"
             onClick={() => {
               copyToClipboard(`{{${shortNoteUuid}}}`)
               setUuidCopiedText(successfulCopyMessage)
@@ -145,16 +147,17 @@ export const NoteMenuBar = () => {
         <LastSyncedNotification datetime={lastSynced} pending={pendingSync} syncing={syncing} />
         <button
           className="note-menu-bar-button"
+          title="Sync notes"
           onClick={syncNotesHandler}
           data-testid={TestID.TOPBAR_ACTION_SYNC_NOTES}
         >
           {syncing ? <Loader size={18} className="rotating-svg" /> : <RefreshCw size={18} />}
         </button>
-        <button className="note-menu-bar-button" onClick={toggleDarkThemeHandler}>
+        <button className="note-menu-bar-button" title="Dark mode" onClick={toggleDarkThemeHandler}>
           {darkTheme ? <Sun size={18} /> : <Moon size={18} />}
         </button>
 
-        <button className="note-menu-bar-button" onClick={settingsHandler}>
+        <button className="note-menu-bar-button" title="Settings" onClick={settingsHandler}>
           <Settings aria-hidden size={18} />
           <span className="sr-only">Settings</span>
         </button>
