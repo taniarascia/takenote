@@ -54,6 +54,32 @@
     }
   }
 
+  &-wrapper {
+    background-color: transparent;
+    border: 0 none;
+    padding: 0;
+    width: 100%;
+    font-family: inherit;
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: inherit;
+    color: inherit;
+
+    &:hover,
+    &:focus {
+      border: 0 none;
+    }
+
+    &:focus {
+      background: lighten($app-sidebar-color, 5%);
+      color: white;
+
+      svg {
+        stroke: darken($light-font-color, 10%);
+      }
+    }
+  }
+
   &-link {
     display: flex;
     align-items: center;

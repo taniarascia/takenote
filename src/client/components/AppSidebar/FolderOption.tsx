@@ -63,21 +63,25 @@ export const FolderOption: React.FC<FolderOptionProps> = ({
   }
 
   return (
-    <div
-      data-testid={dataTestID}
-      className={determineClass()}
+    <button
       onClick={() => {
         swapFolder(folder)
       }}
-      onDrop={noteHandler}
-      onDragOver={(event: ReactDragEvent) => {
-        event.preventDefault()
-      }}
-      onDragEnter={dragEnterHandler}
-      onDragLeave={dragLeaveHandler}
+      className="app-sidebar-wrapper"
     >
-      {renderIcon()}
-      {text}
-    </div>
+      <div
+        data-testid={dataTestID}
+        className={determineClass()}
+        onDrop={noteHandler}
+        onDragOver={(event: ReactDragEvent) => {
+          event.preventDefault()
+        }}
+        onDragEnter={dragEnterHandler}
+        onDragLeave={dragLeaveHandler}
+      >
+        {renderIcon()}
+        {text}
+      </div>
+    </button>
   )
 }
