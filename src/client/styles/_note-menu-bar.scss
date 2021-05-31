@@ -53,6 +53,16 @@
       display: flex;
       align-items: center;
     }
+    &.star {
+      &:hover {
+        color: $yellow;
+      }
+    }
+    &.icon-hover {
+      &:hover {
+        color: darken($primary, 20%);
+      }
+    }
   }
 
   .uuid-copied-text {
