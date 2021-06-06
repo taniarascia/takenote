@@ -32,3 +32,9 @@ export const directionTextOptions = [
   { value: DirectionText.LEFT_TO_RIGHT, label: 'Left to right' },
   { value: DirectionText.RIGHT_TO_LEFT, label: 'Right to left' },
 ]
+
+export const urlElementConstants = {
+  className: 'cm-url',
+  tooltip: 'Follow link (ctrl + click)',
+  urlRegex: /\bhttps?:\/\/\S+/gi,
+}

@@ -11,12 +11,12 @@ import { EmptyEditor } from '@/components/Editor/EmptyEditor'
 import { PreviewEditor } from '@/components/Editor/PreviewEditor'
 import { getSync, getSettings, getNotes } from '@/selectors'
 import { setPendingSync } from '@/slices/sync'
-
 import 'codemirror/lib/codemirror.css'
 import 'codemirror/theme/base16-light.css'
 import 'codemirror/mode/gfm/gfm'
 import 'codemirror/addon/selection/active-line'
 import 'codemirror/addon/scroll/scrollpastend'
+import { urlElementConstants } from '@/utils/constants'
 
 export const NoteEditor: React.FC = () => {
   // ===========================================================================
@@ -38,6 +38,42 @@ export const NoteEditor: React.FC = () => {
   const _updateNote = (note: NoteItem) => {
     !pendingSync && dispatch(setPendingSync())
     dispatch(updateNote(note))
+    addUrlElementListener()
+  }
+
+  const addUrlElementListener = () => {
+    const urlElements: any = document.getElementsByClassName(urlElementConstants.className) || []
+    for (const urlElement of urlElements) {
+      urlElement.addEventListener('mouseover', (e: any) => {
+        urlElement.style.textDecoration = 'underline'
+        urlElement.title = urlElementConstants.tooltip
+        if (e.ctrlKey) {
+          urlElement.style.cursor = 'pointer'
+        } else {
+          urlElement.style.cursor = 'inherit'
+        }
+      })
+      urlElement.addEventListener('mouseleave', () => {
+        urlElement.style.textDecoration = 'none'
+        urlElement.style.cursor = 'inherit'
+      })
+      urlElement.addEventListener('mousedown', (e: any) => {
+        if (!e.ctrlKey) {
+          return
+        }
+        const [url] = e.target.innerText.match(urlElementConstants.urlRegex) || []
+        if (url) window.open(url.replace(')', ''), '_blank')
+      })
+    }
+  }
+
+  const removeUrlElementListener = () => {
+    const urlElements: any = document.getElementsByClassName(urlElementConstants.className) || []
+    for (const urlElement of urlElements) {
+      urlElement.removeEventListener('mouseover')
+      urlElement.removeEventListener('mouseleave')
+      urlElement.removeEventListener('click')
+    }
   }
 
   const renderEditor = () => {
@@ -61,11 +97,13 @@ export const NoteEditor: React.FC = () => {
         className="editor mousetrap"
         value={activeNote.text}
         options={codeMirrorOptions}
+        editorWillUnmount={removeUrlElementListener}
         editorDidMount={(editor) => {
           setTimeout(() => {
             editor.focus()
           }, 0)
           editor.setCursor(0)
+          addUrlElementListener()
         }}
         onBeforeChange={(editor, data, value) => {
           _updateNote({
