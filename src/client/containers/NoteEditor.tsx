@@ -35,15 +35,15 @@ export const NoteEditor: React.FC = () => {
 
   const dispatch = useDispatch()
 
-  const _updateNote = (note: NoteItem) => {
-    !pendingSync && dispatch(setPendingSync())
-    dispatch(updateNote(note))
-    addUrlElementListener()
-  }
-
   const addUrlElementListener = () => {
     const urlElements: any = document.getElementsByClassName(urlElementConstants.className) || []
+    if (!urlElements || !urlElements.length) {
+      return
+    }
     for (const urlElement of urlElements) {
+      if (!urlElement) {
+        return
+      }
       urlElement.addEventListener('mouseover', (e: any) => {
         urlElement.style.textDecoration = 'underline'
         urlElement.title = urlElementConstants.tooltip
@@ -67,9 +67,21 @@ export const NoteEditor: React.FC = () => {
     }
   }
 
+  const _updateNote = (note: NoteItem) => {
+    !pendingSync && dispatch(setPendingSync())
+    dispatch(updateNote(note))
+    addUrlElementListener()
+  }
+
   const removeUrlElementListener = () => {
     const urlElements: any = document.getElementsByClassName(urlElementConstants.className) || []
+    if (!urlElements || !urlElements.length) {
+      return
+    }
     for (const urlElement of urlElements) {
+      if (!urlElement) {
+        return
+      }
       urlElement.removeEventListener('mouseover')
       urlElement.removeEventListener('mouseleave')
       urlElement.removeEventListener('click')
