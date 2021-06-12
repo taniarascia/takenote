@@ -1,5 +1,5 @@
 import dayjs from 'dayjs'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Controlled as CodeMirror } from 'react-codemirror2'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -67,6 +67,11 @@ export const NoteEditor: React.FC = () => {
     }
   }
 
+  useEffect(() => {
+    return () => {
+      removeUrlElementListener()
+    }
+  }, [])
   const _updateNote = (note: NoteItem) => {
     !pendingSync && dispatch(setPendingSync())
     dispatch(updateNote(note))
@@ -109,9 +114,6 @@ export const NoteEditor: React.FC = () => {
         className="editor mousetrap"
         value={activeNote.text}
         options={codeMirrorOptions}
-        editorWillUnmount={() => {
-          removeUrlElementListener()
-        }}
         editorDidMount={(editor) => {
           setTimeout(() => {
             editor.focus()
