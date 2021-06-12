@@ -109,7 +109,9 @@ export const NoteEditor: React.FC = () => {
         className="editor mousetrap"
         value={activeNote.text}
         options={codeMirrorOptions}
-        editorWillUnmount={removeUrlElementListener}
+        editorWillUnmount={() => {
+          removeUrlElementListener()
+        }}
         editorDidMount={(editor) => {
           setTimeout(() => {
             editor.focus()
