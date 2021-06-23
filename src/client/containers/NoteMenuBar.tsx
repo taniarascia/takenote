@@ -107,7 +107,7 @@ export const NoteMenuBar = () => {
       {activeNote && !isDraftNote(activeNote) ? (
         <nav>
           <button
-            className="note-menu-bar-button icon-hover"
+            className="note-menu-bar-button eye"
             onClick={togglePreviewHandler}
             data-testid={TestID.PREVIEW_MODE}
           >
@@ -123,7 +123,7 @@ export const NoteMenuBar = () => {
               </button>
             </>
           )}
-          <button className="note-menu-bar-button icon-hover">
+          <button className="note-menu-bar-button download">
             <Download size={18} onClick={downloadNotesHandler} />
           </button>
           <button
@@ -144,17 +144,17 @@ export const NoteMenuBar = () => {
       <nav>
         <LastSyncedNotification datetime={lastSynced} pending={pendingSync} syncing={syncing} />
         <button
-          className="note-menu-bar-button icon-hover"
+          className="note-menu-bar-button reload"
           onClick={syncNotesHandler}
           data-testid={TestID.TOPBAR_ACTION_SYNC_NOTES}
         >
           {syncing ? <Loader size={18} className="rotating-svg" /> : <RefreshCw size={18} />}
         </button>
-        <button className="note-menu-bar-button icon-hover" onClick={toggleDarkThemeHandler}>
+        <button className="note-menu-bar-button moon" onClick={toggleDarkThemeHandler}>
           {darkTheme ? <Sun size={18} /> : <Moon size={18} />}
         </button>
 
-        <button className="note-menu-bar-button icon-hover" onClick={settingsHandler}>
+        <button className="note-menu-bar-button setting" onClick={settingsHandler}>
           <Settings aria-hidden size={18} />
           <span className="sr-only">Settings</span>
         </button>
