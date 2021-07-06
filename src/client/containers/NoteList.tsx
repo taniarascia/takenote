@@ -26,9 +26,8 @@ export const NoteList: React.FC = () => {
   // ===========================================================================
 
   const { notesSortKey } = useSelector(getSettings)
-  const { activeCategoryId, activeFolder, selectedNotesIds, notes, searchValue } = useSelector(
-    getNotes
-  )
+  const { activeCategoryId, activeFolder, selectedNotesIds, notes, searchValue } =
+    useSelector(getNotes)
   const { categories } = useSelector(getCategories)
 
   // ===========================================================================
@@ -215,9 +214,10 @@ export const NoteList: React.FC = () => {
                   {note.favorite ? (
                     <>
                       <div className="icon">
-                        <Star className="note-favorite" size={12} />
+                        <Star aria-hidden="true" className="note-favorite" size={12} />
+                        <span className="sr-only">Favorite note</span>
                       </div>
-                      <div className="truncate-text"> {noteTitle}</div>
+                      <div className="truncate-text">{noteTitle}</div>
                     </>
                   ) : (
                     <>
@@ -233,7 +233,8 @@ export const NoteList: React.FC = () => {
                     className={optionsId === note.id ? 'note-options selected' : 'note-options'}
                     onClick={(event) => handleNoteOptionsClick(event, note.id)}
                   >
-                    <MoreHorizontal size={15} className="context-menu-action" />
+                    <MoreHorizontal aria-hidden="true" size={15} className="context-menu-action" />
+                    <span className="sr-only">Note options</span>
                   </div>
                 ) : (
                   <div className="note-options">&nbsp;</div>
