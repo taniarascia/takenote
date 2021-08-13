@@ -13,11 +13,12 @@ import {
   addCategoryToNote,
   updateActiveNote,
   swapFolder,
+  removeCategoryFromNotes,
 } from '@/slices/note'
 import { getCategories, getNotes } from '@/selectors'
 import { Folder, ContextMenuEnum } from '@/utils/enums'
 import { CategoryItem, NoteItem } from '@/types'
-import { setCategoryEdit, deleteCategory } from '@/slices/category'
+import category, { setCategoryEdit, deleteCategory } from '@/slices/category'
 import { MenuUtilitiesContext } from '@/containers/ContextMenu'
 
 export interface ContextMenuOptionsProps {
@@ -45,6 +46,8 @@ const CategoryOptions: React.FC<CategoryOptionsProps> = ({ clickedCategory }) =>
   const dispatch = useDispatch()
 
   const _deleteCategory = (categoryId: string) => dispatch(deleteCategory(categoryId))
+  const _removeCategoryFromNotes = (categoryId: string) =>
+    dispatch(removeCategoryFromNotes(categoryId))
   const _swapFolder = (folder: Folder) => dispatch(swapFolder({ folder }))
   const _setCategoryEdit = (categoryId: string, tempName: string) =>
     dispatch(setCategoryEdit({ id: categoryId, tempName }))
@@ -65,6 +68,7 @@ const CategoryOptions: React.FC<CategoryOptionsProps> = ({ clickedCategory }) =>
   }
   const removeCategoryHandler = () => {
     _deleteCategory(clickedCategory.id)
+    _removeCategoryFromNotes(clickedCategory.id)
     _swapFolder(Folder.ALL)
   }
 
