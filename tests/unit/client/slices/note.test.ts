@@ -218,37 +218,6 @@ describe('noteSlice', () => {
 
       expect(result).toEqual(nextState)
     })
-
-    test('should add Category to the requested note and selected notes', () => {
-      const payload = {
-        categoryId: '3',
-        noteId: '2',
-      }
-      const notes = [createNote({ id: '1' }), createNote({ id: '2' }), createNote({ id: '3' })]
-      const initialStateBeforeAddingCategoryToNote = {
-        ...initialState,
-        notes,
-        selectedNotesIds: ['1', '2'],
-      }
-
-      const nextState = {
-        ...initialStateBeforeAddingCategoryToNote,
-        notes: [
-          {
-            ...notes[0],
-            category: '3',
-          },
-          {
-            ...notes[1],
-            category: '3',
-          },
-          notes[2],
-        ],
-      }
-      const result = reducer(initialStateBeforeAddingCategoryToNote, addCategoryToNote(payload))
-
-      expect(result).toEqual(nextState)
-    })
   })
 
   describe('updateActiveNote', () => {
