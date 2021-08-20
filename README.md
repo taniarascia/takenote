@@ -263,8 +263,11 @@ Thanks goes to these wonderful people:
     <td align="center"><a href="https://github.com/tomasvn"><img src="https://avatars.githubusercontent.com/u/17225564?v=4?s=50" width="50px;" alt=""/><br /><sub><b>tomasvn</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=tomasvn" title="Code">💻</a></td>
     <td align="center"><a href="http://www.lucasribeiro.dev"><img src="https://avatars.githubusercontent.com/u/12684816?v=4?s=50" width="50px;" alt=""/><br /><sub><b>Lucas Ribeiro</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=lucasvribeiro" title="Code">💻</a> <a href="https://github.com/taniarascia/takenote/commits?author=lucasvribeiro" title="Tests">⚠️</a></td>
     <td align="center"><a href="http://bartek532.github.io/portfolio"><img src="https://avatars.githubusercontent.com/u/57185551?v=4?s=50" width="50px;" alt=""/><br /><sub><b>Bartosz Zagrodzki</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=Bartek532" title="Code">💻</a></td>
+  </tr>
+  <tr>
     <td align="center"><a href="https://www.linkedin.com/in/mookkiah/"><img src="https://avatars.githubusercontent.com/u/8975264?v=4?s=50" width="50px;" alt=""/><br /><sub><b>Mahendran Mookkiah</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=mookkiah" title="Code">💻</a></td>
     <td align="center"><a href="https://github.com/hkhattabii"><img src="https://avatars.githubusercontent.com/u/54418529?v=4?s=50" width="50px;" alt=""/><br /><sub><b>hkhattabii</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=hkhattabii" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/Federico-Pomponii"><img src="https://avatars.githubusercontent.com/u/6978411?v=4?s=50" width="50px;" alt=""/><br /><sub><b>Federico Pomponii</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=Federico-Pomponii" title="Code">💻</a></td>
   </tr>
 </table>
 
