@@ -2,6 +2,7 @@ import dayjs from 'dayjs'
 import React from 'react'
 import { Controlled as CodeMirror } from 'react-codemirror2'
 import { useDispatch, useSelector } from 'react-redux'
+import { Editor } from 'codemirror'
 
 import { getActiveNote } from '@/utils/helpers'
 import { updateNote } from '@/slices/note'
@@ -9,7 +10,7 @@ import { NoteItem } from '@/types'
 import { NoteMenuBar } from '@/containers/NoteMenuBar'
 import { EmptyEditor } from '@/components/Editor/EmptyEditor'
 import { PreviewEditor } from '@/components/Editor/PreviewEditor'
-import { getSync, getSettings, getNotes } from '@/selectors'
+import { getNotes, getSettings, getSync } from '@/selectors'
 import { setPendingSync } from '@/slices/sync'
 
 import 'codemirror/lib/codemirror.css'
@@ -40,6 +41,25 @@ export const NoteEditor: React.FC = () => {
     dispatch(updateNote(note))
   }
 
+  const setEditorOverlay = (editor: Editor) => {
+    const query = /\{\{[^}]*}}/g
+    editor.addOverlay({
+      token: function (stream: any) {
+        query.lastIndex = stream.pos
+        var match = query.exec(stream.string)
+        if (match && match.index == stream.pos) {
+          stream.pos += match[0].length || 1
+
+          return 'notelink'
+        } else if (match) {
+          stream.pos = match.index
+        } else {
+          stream.skipToEnd()
+        }
+      },
+    })
+  }
+
   const renderEditor = () => {
     if (loading) {
       return <div className="empty-editor v-center">Loading...</div>
@@ -66,6 +86,7 @@ export const NoteEditor: React.FC = () => {
             editor.focus()
           }, 0)
           editor.setCursor(0)
+          setEditorOverlay(editor)
         }}
         onBeforeChange={(editor, data, value) => {
           _updateNote({
