@@ -262,6 +262,8 @@ Thanks goes to these wonderful people:
     <td align="center"><a href="https://github.com/joshwambere"><img src="https://avatars2.githubusercontent.com/u/59834399?v=4?s=50" width="50px;" alt=""/><br /><sub><b>Dusabe Johnson</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=joshwambere" title="Tests">⚠️</a></td>
     <td align="center"><a href="https://github.com/tomasvn"><img src="https://avatars.githubusercontent.com/u/17225564?v=4?s=50" width="50px;" alt=""/><br /><sub><b>tomasvn</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=tomasvn" title="Code">💻</a></td>
     <td align="center"><a href="http://www.lucasribeiro.dev"><img src="https://avatars.githubusercontent.com/u/12684816?v=4?s=50" width="50px;" alt=""/><br /><sub><b>Lucas Ribeiro</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=lucasvribeiro" title="Code">💻</a> <a href="https://github.com/taniarascia/takenote/commits?author=lucasvribeiro" title="Tests">⚠️</a></td>
+    <td align="center"><a href="https://www.linkedin.com/in/mookkiah/"><img src="https://avatars.githubusercontent.com/u/8975264?v=4?s=50" width="50px;" alt=""/><br /><sub><b>Mahendran Mookkiah</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=mookkiah" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/hkhattabii"><img src="https://avatars.githubusercontent.com/u/54418529?v=4?s=50" width="50px;" alt=""/><br /><sub><b>hkhattabii</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=hkhattabii" title="Code">💻</a></td>
   </tr>
 </table>
 
