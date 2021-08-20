@@ -261,6 +261,7 @@ Thanks goes to these wonderful people:
     <td align="center"><a href="https://github.com/raffaeleferri"><img src="https://avatars0.githubusercontent.com/u/75796924?v=4?s=50" width="50px;" alt=""/><br /><sub><b>Raffaele Ferri</b></sub></a><br /><a href="#maintenance-raffaeleferri" title="Maintenance">🚧</a></td>
     <td align="center"><a href="https://github.com/joshwambere"><img src="https://avatars2.githubusercontent.com/u/59834399?v=4?s=50" width="50px;" alt=""/><br /><sub><b>Dusabe Johnson</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=joshwambere" title="Tests">⚠️</a></td>
     <td align="center"><a href="https://github.com/tomasvn"><img src="https://avatars.githubusercontent.com/u/17225564?v=4?s=50" width="50px;" alt=""/><br /><sub><b>tomasvn</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=tomasvn" title="Code">💻</a></td>
+    <td align="center"><a href="http://www.lucasribeiro.dev"><img src="https://avatars.githubusercontent.com/u/12684816?v=4?s=50" width="50px;" alt=""/><br /><sub><b>Lucas Ribeiro</b></sub></a><br /><a href="https://github.com/taniarascia/takenote/commits?author=lucasvribeiro" title="Code">💻</a> <a href="https://github.com/taniarascia/takenote/commits?author=lucasvribeiro" title="Tests">⚠️</a></td>
   </tr>
 </table>
 
