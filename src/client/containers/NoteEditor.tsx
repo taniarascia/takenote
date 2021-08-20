@@ -1,5 +1,5 @@
 import dayjs from 'dayjs'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Controlled as CodeMirror } from 'react-codemirror2'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -11,12 +11,12 @@ import { EmptyEditor } from '@/components/Editor/EmptyEditor'
 import { PreviewEditor } from '@/components/Editor/PreviewEditor'
 import { getSync, getSettings, getNotes } from '@/selectors'
 import { setPendingSync } from '@/slices/sync'
-
 import 'codemirror/lib/codemirror.css'
 import 'codemirror/theme/base16-light.css'
 import 'codemirror/mode/gfm/gfm'
 import 'codemirror/addon/selection/active-line'
 import 'codemirror/addon/scroll/scrollpastend'
+import { urlElementConstants } from '@/utils/constants'
 
 export const NoteEditor: React.FC = () => {
   // ===========================================================================
@@ -35,9 +35,62 @@ export const NoteEditor: React.FC = () => {
 
   const dispatch = useDispatch()
 
+  const addUrlElementListener = () => {
+    const urlElements: any = document.getElementsByClassName(urlElementConstants.className) || []
+    if (!urlElements || !urlElements.length) {
+      return
+    }
+    for (const urlElement of urlElements) {
+      if (!urlElement) {
+        return
+      }
+      urlElement.addEventListener('mouseover', (e: any) => {
+        urlElement.style.textDecoration = 'underline'
+        urlElement.title = urlElementConstants.tooltip
+        if (e.ctrlKey) {
+          urlElement.style.cursor = 'pointer'
+        } else {
+          urlElement.style.cursor = 'inherit'
+        }
+      })
+      urlElement.addEventListener('mouseleave', () => {
+        urlElement.style.textDecoration = 'none'
+        urlElement.style.cursor = 'inherit'
+      })
+      urlElement.addEventListener('mousedown', (e: any) => {
+        if (!e.ctrlKey) {
+          return
+        }
+        const [url] = e.target.innerText.match(urlElementConstants.urlRegex) || []
+        if (url) window.open(url.replace(')', ''), '_blank')
+      })
+    }
+  }
+
+  useEffect(() => {
+    return () => {
+      removeUrlElementListener()
+    }
+  }, [])
   const _updateNote = (note: NoteItem) => {
     !pendingSync && dispatch(setPendingSync())
     dispatch(updateNote(note))
+    addUrlElementListener()
+  }
+
+  const removeUrlElementListener = () => {
+    const urlElements: any = document.getElementsByClassName(urlElementConstants.className) || []
+    if (!urlElements || !urlElements.length) {
+      return
+    }
+    for (const urlElement of urlElements) {
+      if (!urlElement) {
+        return
+      }
+      urlElement.removeEventListener('mouseover')
+      urlElement.removeEventListener('mouseleave')
+      urlElement.removeEventListener('click')
+    }
   }
 
   const renderEditor = () => {
@@ -66,6 +119,7 @@ export const NoteEditor: React.FC = () => {
             editor.focus()
           }, 0)
           editor.setCursor(0)
+          addUrlElementListener()
         }}
         onBeforeChange={(editor, data, value) => {
           _updateNote({
