@@ -27,6 +27,7 @@ import { toggleFavoriteNotes, toggleTrashNotes } from '@/slices/note'
 import { getCategories, getNotes, getSync, getSettings } from '@/selectors'
 import { downloadNotes, isDraftNote, getShortUuid, copyToClipboard } from '@/utils/helpers'
 import { sync } from '@/slices/sync'
+import { TTSBar } from './TTSBar'
 
 export const NoteMenuBar = () => {
   // ===========================================================================
@@ -146,6 +147,8 @@ export const NoteMenuBar = () => {
             {uuidCopiedText && <span className="uuid-copied-text">{uuidCopiedText}</span>}
             <span className="sr-only">Copy note</span>
           </button>
+
+          <TTSBar text={activeNote.text}></TTSBar>
         </nav>
       ) : (
         <div />
