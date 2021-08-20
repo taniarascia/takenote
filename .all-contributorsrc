@@ -580,6 +580,15 @@
       "contributions": [
         "test"
       ]
+    },
+    {
+      "login": "tomasvn",
+      "name": "tomasvn",
+      "avatar_url": "https://avatars.githubusercontent.com/u/17225564?v=4",
+      "profile": "https://github.com/tomasvn",
+      "contributions": [
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
