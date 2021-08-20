@@ -600,7 +600,16 @@
         "test"
       ]
     },
-     {
+    {
+      "login": "Bartek532",
+      "name": "Bartosz Zagrodzki",
+      "avatar_url": "https://avatars.githubusercontent.com/u/57185551?v=4",
+      "profile": "http://bartek532.github.io/portfolio",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
       "login": "mookkiah",
       "name": "Mahendran Mookkiah",
       "avatar_url": "https://avatars.githubusercontent.com/u/8975264?v=4",

@@ -13,15 +13,16 @@ export interface ScratchpadOptionProps {
 
 export const ScratchpadOption: React.FC<ScratchpadOptionProps> = ({ active, swapFolder }) => {
   return (
-    <div
-      data-testid={TestID.SCRATCHPAD}
-      className={`app-sidebar-link ${active ? 'active' : ''}`}
+    <button
       onClick={() => {
         swapFolder(Folder.SCRATCHPAD)
       }}
+      className="app-sidebar-wrapper"
     >
-      <Edit size={15} className="app-sidebar-icon" color={iconColor} />
-      {LabelText.SCRATCHPAD}
-    </div>
+      <div data-testid={TestID.SCRATCHPAD} className={`app-sidebar-link ${active ? 'active' : ''}`}>
+        <Edit size={15} className="app-sidebar-icon" color={iconColor} />
+        {LabelText.SCRATCHPAD}
+      </div>
+    </button>
   )
 }
