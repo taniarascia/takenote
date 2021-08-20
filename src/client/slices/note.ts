@@ -149,6 +149,14 @@ const noteSlice = createSlice({
           )
     },
 
+    removeCategoryFromNotes: (state, { payload }: PayloadAction<string>) => {
+      state.notes.map((note) => {
+        if (note.category === payload) {
+          note.category = ''
+        }
+      })
+    },
+
     updateActiveNote: (
       state,
       { payload: { noteId, multiSelect } }: PayloadAction<{ noteId: string; multiSelect: boolean }>
@@ -322,6 +330,7 @@ export const {
   updateNotes,
   deleteNotes,
   addCategoryToNote,
+  removeCategoryFromNotes,
   updateActiveNote,
   updateActiveCategoryId,
   swapFolder,

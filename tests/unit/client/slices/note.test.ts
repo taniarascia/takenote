@@ -7,6 +7,7 @@ import reducer, {
   updateNote,
   deleteNotes,
   addCategoryToNote,
+  removeCategoryFromNotes,
   updateActiveNote,
   updateActiveCategoryId,
   swapFolder,
@@ -177,6 +178,43 @@ describe('noteSlice', () => {
         ],
       }
       const result = reducer(initialStateBeforeAddingCategoryToNote, addCategoryToNote(payload))
+
+      expect(result).toEqual(nextState)
+    })
+  })
+
+  describe('removeCategory', () => {
+    test('should remove Category from the notes', () => {
+      const payload = '1'
+      const notes = [
+        createNote({ id: '1', category: '1' }),
+        createNote({ id: '2', category: '1' }),
+        createNote({ id: '3', category: '2' }),
+        createNote({ id: '4', category: '3' }),
+      ]
+      const initialStateBeforeRemovingCategoryFromNotes = {
+        ...initialState,
+        notes: notes,
+      }
+      const nextState = {
+        ...initialStateBeforeRemovingCategoryFromNotes,
+        notes: [
+          {
+            ...notes[0],
+            category: '',
+          },
+          {
+            ...notes[1],
+            category: '',
+          },
+          notes[2],
+          notes[3],
+        ],
+      }
+      const result = reducer(
+        initialStateBeforeRemovingCategoryFromNotes,
+        removeCategoryFromNotes(payload)
+      )
 
       expect(result).toEqual(nextState)
     })
