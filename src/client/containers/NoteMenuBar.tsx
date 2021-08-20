@@ -111,20 +111,28 @@ export const NoteMenuBar = () => {
             onClick={togglePreviewHandler}
             data-testid={TestID.PREVIEW_MODE}
           >
-            {isToggled ? <Edit size={18} /> : <Eye size={18} />}
+            {isToggled ? (
+              <Edit aria-hidden="true" size={18} />
+            ) : (
+              <Eye aria-hidden="true" size={18} />
+            )}
+            <span className="sr-only">{isToggled ? 'Edit note' : 'Preview note'}</span>
           </button>
           {!activeNote.scratchpad && (
             <>
               <button className="note-menu-bar-button" onClick={favoriteNoteHandler}>
-                <Star size={18} />
+                <Star aria-hidden="true" size={18} />
+                <span className="sr-only">Add note to favorites</span>
               </button>
               <button className="note-menu-bar-button trash" onClick={trashNoteHandler}>
-                <Trash2 size={18} />
+                <Trash2 aria-hidden="true" size={18} />
+                <span className="sr-only">Delete note</span>
               </button>
             </>
           )}
           <button className="note-menu-bar-button">
-            <Download size={18} onClick={downloadNotesHandler} />
+            <Download aria-hidden="true" size={18} onClick={downloadNotesHandler} />
+            <span className="sr-only">Download note</span>
           </button>
           <button
             className="note-menu-bar-button uuid"
@@ -136,6 +144,7 @@ export const NoteMenuBar = () => {
           >
             {copyNoteIcon}
             {uuidCopiedText && <span className="uuid-copied-text">{uuidCopiedText}</span>}
+            <span className="sr-only">Copy note</span>
           </button>
         </nav>
       ) : (
@@ -148,14 +157,20 @@ export const NoteMenuBar = () => {
           onClick={syncNotesHandler}
           data-testid={TestID.TOPBAR_ACTION_SYNC_NOTES}
         >
-          {syncing ? <Loader size={18} className="rotating-svg" /> : <RefreshCw size={18} />}
+          {syncing ? (
+            <Loader aria-hidden="true" size={18} className="rotating-svg" />
+          ) : (
+            <RefreshCw aria-hidden="true" size={18} />
+          )}
+          <span className="sr-only">Sync notes</span>
         </button>
         <button className="note-menu-bar-button" onClick={toggleDarkThemeHandler}>
-          {darkTheme ? <Sun size={18} /> : <Moon size={18} />}
+          {darkTheme ? <Sun aria-hidden="true" size={18} /> : <Moon aria-hidden="true" size={18} />}
+          <span className="sr-only">Themes</span>
         </button>
 
         <button className="note-menu-bar-button" onClick={settingsHandler}>
-          <Settings aria-hidden size={18} />
+          <Settings aria-hidden="true" size={18} />
           <span className="sr-only">Settings</span>
         </button>
       </nav>
