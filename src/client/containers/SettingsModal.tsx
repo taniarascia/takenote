@@ -18,7 +18,7 @@ import {
   toggleDarkTheme,
   updateNotesSortStrategy,
 } from '@/slices/settings'
-import { updateNotes, importNotes } from '@/slices/note'
+import { updateNotes, importNotes, downloadPDFNotes } from '@/slices/note'
 import { logout } from '@/slices/auth'
 import { importCategories } from '@/slices/category'
 import { shortcutMap, notesSortOptions, directionTextOptions } from '@/utils/constants'
@@ -113,6 +113,7 @@ export const SettingsModal: React.FC = () => {
     _updateCodeMirrorOption('direction', selectedOption.value)
   }
   const downloadNotesHandler = () => downloadNotes(notes, categories)
+  const downloadNotesPDFHandler = () => dispatch(downloadPDFNotes({ notes, categories }))
   const backupHandler = () => backupNotes(notes, categories)
   const importBackupHandler = async (json: File) => {
     const content = await json.text()
@@ -233,12 +234,18 @@ export const SettingsModal: React.FC = () => {
               ))}
             </TabPanel>
             <TabPanel label="Data management" icon={Archive}>
-              <p>Download all notes as Markdown files in a zip.</p>
+              <p>Download all notes as files in a zip.</p>
               <IconButton
                 dataTestID={TestID.SETTINGS_MODAL_DOWNLOAD_NOTES}
                 handler={downloadNotesHandler}
                 icon={Download}
                 text={LabelText.DOWNLOAD_ALL_NOTES}
+              />
+              <IconButton
+                dataTestID={TestID.SETTINGS_MODAL_DOWNLOAD_NOTES}
+                handler={downloadNotesPDFHandler}
+                icon={Download}
+                text={LabelText.DOWNLOAD_ALL_NOTES_PDF}
               />
               <p>Export TakeNote data as JSON.</p>
               <IconButton

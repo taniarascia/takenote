@@ -2,9 +2,10 @@ import { all, put, takeLatest, select } from 'redux-saga/effects'
 import dayjs from 'dayjs'
 import axios from 'axios'
 
+import { LabelText } from '@resources/LabelText'
 import { requestCategories, requestNotes, requestSettings, saveState, saveSettings } from '@/api'
 import { loadCategories, loadCategoriesError, loadCategoriesSuccess } from '@/slices/category'
-import { loadNotes, loadNotesError, loadNotesSuccess } from '@/slices/note'
+import { loadNotes, loadNotesError, loadNotesSuccess, downloadPDFNotes } from '@/slices/note'
 import { sync, syncError, syncSuccess } from '@/slices/sync'
 import { login, loginSuccess, loginError, logout, logoutSuccess } from '@/slices/auth'
 import {
@@ -17,7 +18,7 @@ import {
   toggleSettingsModal,
   updateNotesSortStrategy,
 } from '@/slices/settings'
-import { SyncAction } from '@/types'
+import { SyncAction, DownloadPDFAction, NoteItem, CategoryItem } from '@/types'
 import { getSettings } from '@/selectors'
 
 const isDemo = process.env.DEMO
@@ -118,12 +119,88 @@ function* syncSettings() {
   } catch (error) {}
 }
 
+export const getNoteTitle = (text: string): string => {
+  // Remove whitespace from both ends
+  // Get the first n characters
+  // Remove # from the title in the case of using markdown headers in your title
+  const noteText = text.trim().match(/[^#]{1,45}/)
+
+  // Get the first line of text after any newlines
+  // In the future, this should break on a full word
+  return noteText ? noteText[0].trim().split(/\r?\n/)[0] : LabelText.NEW_NOTE
+}
+
+export const noteWithFrontmatter = (note: NoteItem, category?: CategoryItem): string =>
+  `---
+title: ${getNoteTitle(note.text)}
+created: ${note.created}
+lastUpdated: ${note.lastUpdated}
+category: ${category?.name ?? ''}
+---
+
+${note.text}`
+
+function* downloadAsPDF({ payload }: DownloadPDFAction) {
+  try {
+    const { notes } = payload
+    const headers = {
+      'Content-Type': 'application/pdf',
+    }
+    if (notes.length === 1) {
+      yield axios({
+        method: 'POST',
+        url: '/api/note/download',
+        data: payload,
+        responseType: 'blob',
+      }).then((res) => {
+        const file = new Blob([res.data], { type: 'application/pdf' })
+        const link = document.createElement('a')
+        const fileURL = URL.createObjectURL(file)
+        link.href = fileURL
+        link.setAttribute('download', `${getNoteTitle(notes[0].text)}.pdf`)
+        document.body.appendChild(link)
+        if (document.createEvent) {
+          const event = document.createEvent('MouseEvents')
+          event.initEvent('click', true, true)
+          link.dispatchEvent(event)
+        } else {
+          link.click()
+        }
+      })
+    } else {
+      yield axios({
+        method: 'POST',
+        url: '/api/note/downloadAll',
+        data: payload,
+        responseType: 'blob',
+      }).then((res) => {
+        const file = new Blob([res.data], { type: 'application/zip' })
+        const link = document.createElement('a')
+        const fileURL = URL.createObjectURL(file)
+        link.href = fileURL
+        link.setAttribute('download', `notesPDF.zip`)
+        document.body.appendChild(link)
+        if (document.createEvent) {
+          const event = document.createEvent('MouseEvents')
+          event.initEvent('click', true, true)
+          link.dispatchEvent(event)
+        } else {
+          link.click()
+        }
+      })
+    }
+  } catch (error) {
+    yield put(loadCategoriesError(error.message))
+  }
+}
+
 // If any of these functions are dispatched, invoke the appropriate saga
 function* rootSaga() {
   yield all([
     takeLatest(login.type, loginUser),
     takeLatest(logout.type, logoutUser),
     takeLatest(loadNotes.type, fetchNotes),
+    takeLatest(downloadPDFNotes.type, downloadAsPDF),
     takeLatest(loadCategories.type, fetchCategories),
     takeLatest(loadSettings.type, fetchSettings),
     takeLatest(sync.type, syncData),

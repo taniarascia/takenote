@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { v4 as uuid } from 'uuid'
 
 import { Folder, NotesSortKey } from '@/utils/enums'
-import { NoteItem, NoteState } from '@/types'
+import { NoteItem, NoteState, CategoryItem } from '@/types'
 import { isDraftNote } from '@/utils/helpers'
 import { getNotesSorter } from '@/utils/notesSortStrategies'
 
@@ -321,6 +321,12 @@ const noteSlice = createSlice({
       ]
       state.loading = false
     },
+    downloadPDFNotes: (
+      state,
+      { payload }: PayloadAction<{ notes: NoteItem[]; categories: CategoryItem[] }>
+    ) => {
+      state.loading = false
+    },
   },
 })
 
@@ -347,6 +353,7 @@ export const {
   loadNotesError,
   loadNotesSuccess,
   importNotes,
+  downloadPDFNotes,
 } = noteSlice.actions
 
 export default noteSlice.reducer

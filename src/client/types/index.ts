@@ -102,6 +102,11 @@ export interface SyncAction {
   payload: SyncPayload
 }
 
+export interface DownloadPDFAction {
+  type: typeof sync.type
+  payload: SyncPayload
+}
+
 //==============================================================================
 // Events
 //==============================================================================
