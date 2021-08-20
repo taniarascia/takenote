@@ -618,11 +618,20 @@
         "code"
       ]
     },
-     {
+    {
       "login": "hkhattabii",
       "name": "hkhattabii",
       "avatar_url": "https://avatars.githubusercontent.com/u/54418529?v=4",
       "profile": "https://github.com/hkhattabii",
+      "contributions": [
+        "code"
+      ]
+    },
+    {
+      "login": "Federico-Pomponii",
+      "name": "Federico Pomponii",
+      "avatar_url": "https://avatars.githubusercontent.com/u/6978411?v=4",
+      "profile": "https://github.com/Federico-Pomponii",
       "contributions": [
         "code"
       ]
