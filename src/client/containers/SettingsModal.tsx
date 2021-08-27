@@ -41,9 +41,8 @@ export const SettingsModal: React.FC = () => {
   // Selectors
   // ===========================================================================
 
-  const { codeMirrorOptions, isOpen, previewMarkdown, darkTheme, notesSortKey } = useSelector(
-    getSettings
-  )
+  const { codeMirrorOptions, isOpen, previewMarkdown, darkTheme, notesSortKey } =
+    useSelector(getSettings)
   const { currentUser } = useSelector(getAuth)
   const { notes, activeFolder, activeCategoryId } = useSelector(getNotes)
   const { categories } = useSelector(getCategories)
@@ -143,14 +142,15 @@ export const SettingsModal: React.FC = () => {
     <div className="dimmer">
       <aside ref={node} className="settings-modal">
         <header className="settings-modal-header">
-          <div
+          <button
             className="close-button"
             onClick={() => {
               if (isOpen) _toggleSettingsModal()
             }}
           >
-            <X size={20} />
-          </div>
+            <X size={20} aria-hidden="true" />
+            <span className="sr-only">Close modal</span>
+          </button>
 
           <section className="profile flex">
             <div>

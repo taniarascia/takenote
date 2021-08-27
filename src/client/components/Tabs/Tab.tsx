@@ -12,8 +12,8 @@ export const Tab: React.FC<TabProps> = ({ activeTab, label, icon: IconCmp, onCli
   const className = activeTab === label ? 'tab active' : 'tab'
 
   return (
-    <div role="button" key={label} className={className} onClick={() => onClick(label)}>
+    <button key={label} className={className} onClick={() => onClick(label)}>
       <IconCmp size={18} className="mr-1" aria-hidden="true" focusable="false" /> {label}
-    </div>
+    </button>
   )
 }
