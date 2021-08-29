@@ -44,6 +44,7 @@ export const NoteMenuBar = () => {
 
   const copyNoteIcon = <ClipboardCmp size={18} aria-hidden="true" focusable="false" />
   const successfulCopyMessage = 'Note copied!'
+  const successfulFavouriteMessage='Added to Favourites!'
   const activeNote = notes.find((note) => note.id === activeNoteId)!
   const shortNoteUuid = getShortUuid(activeNoteId)
 
@@ -121,7 +122,7 @@ export const NoteMenuBar = () => {
           {!activeNote.scratchpad && (
             <>
               <button className="note-menu-bar-button" onClick={favoriteNoteHandler}>
-                <Star aria-hidden="true" size={18} />
+                <Star aria-hidden="true" size={18} fill={activeNote.favorite?"currentcolor":""} />
                 <span className="sr-only">Add note to favorites</span>
               </button>
               <button className="note-menu-bar-button trash" onClick={trashNoteHandler}>

@@ -212,12 +212,17 @@ export const NoteList: React.FC = () => {
               <div className="note-list-outer">
                 <div data-testid={'note-title-' + index} className="note-title">
                   {note.favorite ? (
-                    <>
+                    <>                     
                       <div className="icon">
-                        <Star aria-hidden="true" className="note-favorite" size={12} />
+                        <Star aria-hidden="true" className="note-favorite" size={12} fill="currentColor"/>
+                        
                         <span className="sr-only">Favorite note</span>
                       </div>
+                      {/* <div className='overlay'>
+                        <span className='note-favourite-text'>Favourited!</span>
+                      </div>  */}
                       <div className="truncate-text">{noteTitle}</div>
+                      
                     </>
                   ) : (
                     <>
