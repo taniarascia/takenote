@@ -6,7 +6,6 @@
   &:hover {
     overflow-y: auto;
   }
-
   &-header {
     display: flex;
     align-items: center;
@@ -62,7 +61,6 @@
       .highlighted {
         color: #3e64ff;
       }
-
       .note-category {
         display: flex;
         align-items: center;
@@ -95,7 +93,6 @@
           text-overflow: clip;
         }
       }
-
       &:hover {
         background: darken($note-sidebar-color, 5%);
 
@@ -112,6 +109,19 @@
         .note-category {
           color: rgba(255, 255, 255, 0.6);
         }
+
+        // .overlay {
+        //   // position: relative;
+        //   // background-color: #008cba;
+        //   overflow: hidden;
+        //   width: 0%;
+        //   height: 100%;
+        //   transition: 0.5s ease;
+        // }
+
+        // &:hover .overlay {
+        //   width: 50%;
+        // }
 
         &:hover {
           .note-options {
