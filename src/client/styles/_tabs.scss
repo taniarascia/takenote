@@ -22,6 +22,8 @@
   padding-right: 1rem;
   margin-right: 1rem;
   border-right: 1px solid $note-sidebar-color;
+  position: sticky;
+  top: 25px;
 }
 
 .tab {
