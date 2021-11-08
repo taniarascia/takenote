@@ -27,6 +27,7 @@ import { toggleFavoriteNotes, toggleTrashNotes } from '@/slices/note'
 import { getCategories, getNotes, getSync, getSettings } from '@/selectors'
 import { downloadNotes, isDraftNote, getShortUuid, copyToClipboard } from '@/utils/helpers'
 import { sync } from '@/slices/sync'
+import Tooltip from '@/components/Tooltip'
 
 export const NoteMenuBar = () => {
   // ===========================================================================
@@ -111,27 +112,44 @@ export const NoteMenuBar = () => {
             onClick={togglePreviewHandler}
             data-testid={TestID.PREVIEW_MODE}
           >
+          <Tooltip 
+              content={isToggled ? 'Edit note' : 'Preview note'}
+          >
             {isToggled ? (
               <Edit aria-hidden="true" size={18} />
             ) : (
               <Eye aria-hidden="true" size={18} />
             )}
+               </Tooltip>
             <span className="sr-only">{isToggled ? 'Edit note' : 'Preview note'}</span>
           </button>
           {!activeNote.scratchpad && (
             <>
               <button className="note-menu-bar-button" onClick={favoriteNoteHandler}>
+              <Tooltip
+                content="Add to favorites"
+              >
                 <Star aria-hidden="true" size={18} />
+                </Tooltip>
                 <span className="sr-only">Add note to favorites</span>
               </button>
+
               <button className="note-menu-bar-button trash" onClick={trashNoteHandler}>
+              <Tooltip 
+                content="Delete note"
+              >
                 <Trash2 aria-hidden="true" size={18} />
+              </Tooltip>
                 <span className="sr-only">Delete note</span>
               </button>
             </>
           )}
           <button className="note-menu-bar-button">
+          <Tooltip
+            content="Download note"
+          >
             <Download aria-hidden="true" size={18} onClick={downloadNotesHandler} />
+          </Tooltip>
             <span className="sr-only">Download note</span>
           </button>
           <button
@@ -142,9 +160,13 @@ export const NoteMenuBar = () => {
             }}
             data-testid={TestID.UUID_MENU_BAR_COPY_ICON}
           >
+            <Tooltip 
+              content="Download note"
+            >
             {copyNoteIcon}
             {uuidCopiedText && <span className="uuid-copied-text">{uuidCopiedText}</span>}
             <span className="sr-only">Copy note</span>
+            </Tooltip>
           </button>
         </nav>
       ) : (
@@ -157,21 +179,29 @@ export const NoteMenuBar = () => {
           onClick={syncNotesHandler}
           data-testid={TestID.TOPBAR_ACTION_SYNC_NOTES}
         >
+          <Tooltip
+                content={syncing?"Syncing":"Refresh"}
+                >
           {syncing ? (
             <Loader aria-hidden="true" size={18} className="rotating-svg" />
           ) : (
             <RefreshCw aria-hidden="true" size={18} />
           )}
+          </Tooltip>
           <span className="sr-only">Sync notes</span>
         </button>
         <button className="note-menu-bar-button" onClick={toggleDarkThemeHandler}>
+          <Tooltip content="Change Theme">
           {darkTheme ? <Sun aria-hidden="true" size={18} /> : <Moon aria-hidden="true" size={18} />}
           <span className="sr-only">Themes</span>
+          </Tooltip>
         </button>
 
         <button className="note-menu-bar-button" onClick={settingsHandler}>
+        <Tooltip content="Setting">
           <Settings aria-hidden="true" size={18} />
           <span className="sr-only">Settings</span>
+        </Tooltip>
         </button>
       </nav>
     </section>
