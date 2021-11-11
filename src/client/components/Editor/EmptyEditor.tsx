@@ -1,4 +1,5 @@
 import React from 'react'
+import { isMacOs } from 'react-device-detect'
 
 export const EmptyEditor: React.FC = () => {
   return (
@@ -8,7 +9,7 @@ export const EmptyEditor: React.FC = () => {
           <strong>Create a note</strong>
         </p>
         <p>
-          <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>N</kbd>
+          <kbd>{isMacOs ? '⌃' : 'CTRL'}</kbd> + <kbd>{isMacOs ? '⌥' : 'ALT'}</kbd> + <kbd>N</kbd>
         </p>
       </div>
     </div>

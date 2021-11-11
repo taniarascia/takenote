@@ -11,6 +11,7 @@ import rootReducer from '@/slices'
 import history from '@/utils/history'
 
 import '@/styles/index.scss'
+import { toggleDarkTheme, updateCodeMirrorOption } from './slices/settings'
 
 const sagaMiddleware = createSagaMiddleware()
 const store = configureStore({
@@ -18,6 +19,17 @@ const store = configureStore({
   middleware: [sagaMiddleware, ...getDefaultMiddleware({ thunk: false })],
   devTools: process.env.NODE_ENV !== 'production',
 })
+
+const { darkTheme } = store.getState().settingsState
+
+if (!darkTheme) {
+  if (typeof window !== 'undefined') {
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      store.dispatch(toggleDarkTheme())
+      store.dispatch(updateCodeMirrorOption({ key: 'theme', value: 'new-moon' }))
+    }
+  }
+}
 
 sagaMiddleware.run(rootSaga)
 

@@ -1,4 +1,5 @@
 import React from 'react'
+import { isMacOs } from 'react-device-detect'
 
 export interface ShortcutProps {
   action: string
@@ -10,7 +11,8 @@ export const Shortcut: React.FC<ShortcutProps> = ({ action, letter }) => {
     <div className="settings-shortcut">
       <div>{action}</div>
       <div className="keys">
-        <kbd>CTRL</kbd> + <kbd>ALT</kbd> + <kbd>{letter}</kbd>
+        <kbd>{isMacOs ? '⌃' : 'CTRL'}</kbd> + <kbd>{isMacOs ? '⌥' : 'ALT'}</kbd> +{' '}
+        <kbd>{letter}</kbd>
       </div>
     </div>
   )
