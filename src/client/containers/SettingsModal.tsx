@@ -152,7 +152,7 @@ export const SettingsModal: React.FC = () => {
             <X size={20} />
           </div>
 
-          <section className="profile flex">
+          <section className="profile">
             <div>
               {currentUser.avatar_url && (
                 <img src={currentUser.avatar_url} alt="Profile" className="profile-picture" />
