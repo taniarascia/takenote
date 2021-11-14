@@ -85,7 +85,7 @@ const CategoryOptions: React.FC<CategoryOptionsProps> = ({ clickedCategory }) =>
         handler={removeCategoryHandler}
         icon={X}
         text={LabelText.DELETE_PERMANENTLY}
-        optionType="delete"
+        className="nav-item delete-option"
       />
     </nav>
   )
@@ -154,7 +154,7 @@ const NotesOptions: React.FC<NotesOptionsProps> = ({ clickedNote }) => {
             handler={deleteNotesHandler}
             icon={X}
             text={LabelText.DELETE_PERMANENTLY}
-            optionType="delete"
+            className="nav-item delete-option"
           />
           <ContextMenuOption
             dataTestID={TestID.NOTE_OPTION_RESTORE_FROM_TRASH}
@@ -169,6 +169,7 @@ const NotesOptions: React.FC<NotesOptionsProps> = ({ clickedNote }) => {
           <ContextMenuOption
             dataTestID={TestID.NOTE_OPTION_FAVORITE}
             handler={favoriteNoteHandler}
+            className={clickedNote.favorite ? 'nav-item favorite-option' : 'nav-item'}
             icon={Star}
             text={
               isSelectedNotesDiffFavor
@@ -183,7 +184,7 @@ const NotesOptions: React.FC<NotesOptionsProps> = ({ clickedNote }) => {
             handler={trashNoteHandler}
             icon={Trash}
             text={LabelText.MOVE_TO_TRASH}
-            optionType="delete"
+            className="nav-item delete-option"
           />
         </>
       )}
