@@ -17,6 +17,8 @@
 }
 
 .tab-list {
+  position: sticky;
+  top: 25px;
   flex: 0 0 220px;
   height: 100%;
   padding-right: 1rem;
