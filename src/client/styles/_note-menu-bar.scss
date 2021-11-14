@@ -49,6 +49,11 @@
     &:active svg {
       transform: scale(1.1);
     }
+
+    &.favorite svg {
+      fill: $attribute;
+    }
+
     &.uuid {
       display: flex;
       align-items: center;

@@ -8,13 +8,13 @@ export interface ContextMenuOptionProps {
   handler: MouseEventHandler & KeyboardEventHandler
   icon: Icon
   text: string
-  optionType?: string
+  className?: string
 }
 
 export const ContextMenuOption: React.FC<ContextMenuOptionProps> = ({
   dataTestID,
   handler,
-  optionType,
+  className = 'nav-item',
   icon: IconCmp,
   text,
   ...rest
@@ -39,7 +39,7 @@ export const ContextMenuOption: React.FC<ContextMenuOptionProps> = ({
   return (
     <div
       data-testid={dataTestID}
-      className={optionType === 'delete' ? 'nav-item delete-option' : 'nav-item'}
+      className={className}
       role="button"
       onClick={optionHandler}
       onKeyPress={optionHandler}

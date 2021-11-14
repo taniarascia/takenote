@@ -102,6 +102,14 @@ export const NoteMenuBar = () => {
     _togglePreviewMarkdown()
   }
 
+  const determineStarButtonClass = () => {
+    if (activeNote.favorite) {
+      return 'note-menu-bar-button favorite'
+    } else {
+      return 'note-menu-bar-button'
+    }
+  }
+
   return (
     <section className="note-menu-bar">
       {activeNote && !isDraftNote(activeNote) ? (
@@ -120,7 +128,7 @@ export const NoteMenuBar = () => {
           </button>
           {!activeNote.scratchpad && (
             <>
-              <button className="note-menu-bar-button" onClick={favoriteNoteHandler}>
+              <button className={determineStarButtonClass()} onClick={favoriteNoteHandler}>
                 <Star aria-hidden="true" size={18} />
                 <span className="sr-only">Add note to favorites</span>
               </button>

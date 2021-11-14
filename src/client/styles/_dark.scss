@@ -149,6 +149,9 @@ $dark-editor: #3f3f3f;
           color: white;
         }
       }
+      &.favorite-option svg {
+        fill: $attribute;
+      }
     }
   }
 

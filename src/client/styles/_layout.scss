@@ -110,6 +110,10 @@
       }
     }
 
+    &.favorite-option svg {
+      fill: $attribute;
+    }
+
     &.delete-option {
       &:hover {
         background: $error;
