@@ -2,7 +2,7 @@ import dayjs from 'dayjs'
 
 import { getNoteTitle, getWebsiteTitle, getActiveNoteFromShortUuid } from '@/utils/helpers'
 import { Folder } from '@/utils/enums'
-import { NoteItem, CategoryItem } from '@/types'
+import { NoteItem } from '@/types'
 
 describe('Utilities', () => {
   describe('getNoteTitle', () => {
