@@ -6,7 +6,6 @@ import 'jest-extended'
 import { PreviewEditor, PreviewEditorProps } from '@/components/Editor/PreviewEditor'
 import NoteLink, { NoteLinkProps } from '@/components/Editor/NoteLink'
 import { NoteItem } from '@/types'
-import { Errors } from '@/utils/enums'
 import { TestID } from '@resources/TestID'
 import { TempStateProvider } from '@/contexts/TempStateContext'
 
