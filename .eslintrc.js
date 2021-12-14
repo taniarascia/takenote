@@ -33,7 +33,6 @@ module.exports = {
     'newline-before-return': 1,
     'no-useless-return': 1,
     'prefer-const': 1,
-    'no-useless-return': 1,
     'no-unused-vars': 0,
   },
   settings: {
