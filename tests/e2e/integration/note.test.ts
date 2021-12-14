@@ -130,13 +130,6 @@ describe('Manage notes test', () => {
     typeNoteEditor('{backspace}{backspace}{backspace}{backspace}')
     assertNoteEditorLineCount(1)
     assertNoteEditorCharacterCount(sampleText.length)
-
-    // // clean up state
-    // clickNoteOptions()
-    // clickNoteOptionTrash()
-    // clickCreateNewNote()
-    // navigateToTrash()
-    // clickEmptyTrash()
   })
 
   it('should open options', () => {
