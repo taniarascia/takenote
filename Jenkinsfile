@@ -13,7 +13,7 @@ pipeline {
             steps {
                 echo 'SonarQube...'
                 withSonarQubeEnv('SonarQube') {
-                    bat "sonar-scanner.bat"
+                    bat "C:\\sonar\\sonar-scanner\\bin\\sonar-scanner.bat"
                 }
             }
         }
