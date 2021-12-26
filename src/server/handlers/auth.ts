@@ -1,14 +1,11 @@
 import { Request, Response } from 'express'
 import axios from 'axios'
-import * as dotenv from 'dotenv'
 
 import { welcomeNote } from '../utils/data/welcomeNote'
 import { scratchpadNote } from '../utils/data/scratchpadNote'
 import { thirtyDayCookie } from '../utils/constants'
 import { SDK } from '../utils/helpers'
 import { Method } from '../utils/enums'
-
-dotenv.config()
 
 const clientId = process.env.CLIENT_ID
 const clientSecret = process.env.CLIENT_SECRET

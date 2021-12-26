@@ -1,6 +1,10 @@
+import * as dotenv from 'dotenv'
+
 import initializeServer from './initializeServer'
 import router from './router'
 
-const app = initializeServer(router)
+dotenv.config()
 
-app.listen(5000, () => console.log(`Listening on port ${5000}`)) // eslint-disable-line
+const app = initializeServer(router)
+const PORT = process.env.PORT
+app.listen(PORT, () => console.log(`Listening on port ${PORT}`)) // eslint-disable-line

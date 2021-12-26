@@ -91,6 +91,7 @@
   },
   "devDependencies": {
     "@cypress/webpack-preprocessor": "^5.4.8",
+    "@swc/core": "^1.2.122",
     "@testing-library/cypress": "^7.0.1",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
@@ -146,8 +147,10 @@
     "mini-css-extract-plugin": "^1.0.0",
     "node-sass": "^4.14.1",
     "nodemon": "^2.0.5",
+    "progress-bar-webpack-plugin": "^2.1.0",
     "sass-loader": "^10.0.3",
     "style-loader": "^2.0.0",
+    "swc-loader": "^0.1.15",
     "ts-jest": "^26.4.1",
     "ts-loader": "^8.0.5",
     "ts-node": "^9.0.0",
