@@ -4,16 +4,16 @@ pipeline {
         stage('Construcción') {
             steps {
                 echo "Instalando dependencias..."
-                powershell "npm install"
-                echo "Compilando la aplicación..."
-                powershell "npm run build"
+                //powershell "npm install"
+                echo "Compilando la aplicacion..."
+                //powershell "npm run build"
             }
         }
-        stage('Análisis estatico') {
+        stage('Analisis estatico') {
             steps {
                 echo 'SonarQube...'
                 whitSonarQubeEnv('SonarQube'){
-                    powershell "sonar-scanner.bat"
+                    bat "sonar-scanner.bat"
                 }
             }
         }
