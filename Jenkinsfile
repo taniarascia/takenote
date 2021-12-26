@@ -9,12 +9,12 @@ pipeline {
                 powershell "npm run build"
             }
         }
-        stage('Análisis estático') {
+        stage('Análisis estatico') {
             steps {
                 echo 'SonarQube...'
-                    whitSonarQubeEnv('SonarQube'){
-                        powershell "C:\\sonar\\sonar-scanner\\bin\\sonar-scanner.bat"
-                    }
+                whitSonarQubeEnv('SonarQube'){
+                    powershell "sonar-scanner.bat"
+                }
             }
         }
         stage('Pruebas unitarias') {
