@@ -25,6 +25,7 @@ pipeline {
         stage('Pruebas funcionales') {
             steps {
                 echo "Functional Tests"
+                powershell "npm run test:e2e"
             }
         }
         stage('Pruebas de seguridad') {
