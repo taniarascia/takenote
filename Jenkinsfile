@@ -12,9 +12,9 @@ pipeline {
         stage('Analisis estatico') {
             steps {
                 echo 'SonarQube...'
-                withSonarQubeEnv('SonarQube') {
-                    bat "C:\\sonar\\sonar-scanner\\bin\\sonar-scanner.bat"
-                }
+                //withSonarQubeEnv('SonarQube') {
+                    //bat "C:\\sonar\\sonar-scanner\\bin\\sonar-scanner.bat"
+                //}
             }
         }
         stage('Pruebas unitarias') {
