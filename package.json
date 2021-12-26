@@ -2,7 +2,7 @@
   "name": "takenote",
   "version": "0.7.2",
   "description": "A web-based notes app for developers.",
-  "author": "Tania Rascia",
+  "author": "Pocho's Inc.",
   "license": "MIT",
   "private": false,
   "main": "src/server/index.ts",
@@ -23,7 +23,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/taniarascia/takenote"
+    "url": "git+https://github.com/reqhiem/takenote"
   },
   "keywords": [
     "notes",
@@ -39,7 +39,7 @@
     "github"
   ],
   "bugs": {
-    "url": "https://github.com/taniarascia/takenote/issues"
+    "url": "Jira: https://reqhiem.atlassian.net/projects/REQHIEM/issues"
   },
   "homepage": "https://takenote.dev",
   "husky": {
