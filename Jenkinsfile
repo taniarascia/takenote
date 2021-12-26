@@ -12,7 +12,7 @@ pipeline {
         stage('Analisis estatico') {
             steps {
                 echo 'SonarQube...'
-                whithSonarQubeEnv('SonarQube'){
+                withSonarQubeEnv(){
                     bat "sonar-scanner.bat"
                 }
             }
