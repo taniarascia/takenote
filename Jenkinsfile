@@ -1,7 +1,7 @@
 pipeline {
     agent any
     stages {
-        stage('Construcción') {
+        stage('Construccion') {
             steps {
                 echo "Instalando dependencias..."
                 //powershell "npm install"
@@ -26,12 +26,13 @@ pipeline {
         stage('Pruebas funcionales') {
             steps {
                 echo 'Ejecutando pruebas funcionales...'
-                powershell "npm run test:e2e"
+                //powershell "npm run test:e2e"
             }
         }
         stage('Pruebas de seguridad') {
             steps {
                 echo "OWASP Security Tests"
+                powershell "cd E:\\dev\\is\\ZAP; ./zap.bat -cmd -quickurl https://dvwa.co.uk/ -quickout E:\\dev\\is\\test\\reportForDVWA.html"
             }
         }
         stage('Pruebas de Performance') {
