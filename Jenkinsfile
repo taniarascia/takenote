@@ -4,7 +4,7 @@ pipeline {
         stage('Construccion') {
             steps {
                 echo "Instalando dependencias..."
-                //powershell "npm install"
+                powershell "npm install"
                 echo "Compilando la aplicacion..."
                 //powershell "npm run build"
             }
