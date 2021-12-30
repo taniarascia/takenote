@@ -18,6 +18,21 @@ pipeline {
                 }
             }
         }
+        stage('Pruebas unitarias') {
+            steps {
+                echo 'Ejecutando pruebas unitarias...'
+                powershell "npm run test"
+                echo "Generando reporte de pruebas..."
+                echo "Publicando reporte de pruebas..."
+                publishHTML (target: [
+                    allowMissing: false,
+                    alwaysLinkToLastBuild: false,
+                    keepAll: true,
+                    reportDir: 'reports/jest',
+                    reportFiles: 'test-report.html',
+                    reportName: "Reporte de pruebas unitarias",
+                ])
+            }
+        }
     }
 }
-
