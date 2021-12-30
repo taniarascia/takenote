@@ -27,7 +27,7 @@ pipeline {
                     allowMissing: false,
                     alwaysLinkToLastBuild: false,
                     keepAll: true,
-                    reportDir: '../reports/jest/',
+                    reportDir: 'coverage',
                     reportFiles: 'test-report.html',
                     reportName: "Reporte de pruebas unitarias",
                 ])

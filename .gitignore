@@ -17,3 +17,5 @@ tests/e2e/videos
 mochawesome-report/
 test-report-combined.json
 cypress-combined-report.json
+reports/
+test-report.html
