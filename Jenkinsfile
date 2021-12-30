@@ -82,5 +82,14 @@ pipeline {
                 
             }
         }
+        stage('Despliegue') {
+            steps {
+                echo "Building Docker Image..."
+                powershell "docker build --build-arg CLIENT_ID=a7520b5205a31ddb8438 -t reqhiem/takenote:v1 ."
+
+                echo "Deploying Docker Image..."
+                powershell "docker push reqhiem/takenote:v1"
+            }
+        }
     }
 }
