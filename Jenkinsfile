@@ -73,5 +73,14 @@ pipeline {
                 ])
             }
         }
+        stage('Pruebas de Performance') {
+            steps {
+                echo "Performance Tests"
+                bat "C:\\jmeter\\bin\\jmeter -n -t E:\\dev\\is\\test\\takenote_jmeter.jmx -l E:\\dev\\is\\test\\takenote_jmeter_report.jtl"
+
+                perfReport "E:\\dev\\is\\test\\takenote_jmeter_report.jtl"
+                
+            }
+        }
     }
 }
