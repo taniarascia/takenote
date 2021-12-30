@@ -32,12 +32,14 @@ pipeline {
         stage('Pruebas de seguridad') {
             steps {
                 echo "OWASP Security Tests"
-                powershell "cd E:\\dev\\is\\ZAP; ./zap.bat -cmd -quickurl https://dvwa.co.uk/ -quickout E:\\dev\\is\\test\\reportForDVWA.html"
+                //powershell "cd E:\\dev\\is\\ZAP; ./zap.bat -cmd -quickurl https://dvwa.co.uk/ -quickout E:\\dev\\is\\test\\reportForDVWA.html"
             }
         }
         stage('Pruebas de Performance') {
             steps {
                 echo "Performance Tests"
+                powershell "C:\\jmeter\\bin\\jmeter -j jmeter.save.saveservice.output_format=xml -n -t E:\\dev\\is\\test\\takenote_jmeter.jmx -l E:\\dev\\is\\test\\takenote_jmeter_report.jtl"
+                powershell "pwd"
             }
         }
         stage('Despliegue') {
