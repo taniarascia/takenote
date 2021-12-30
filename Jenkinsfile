@@ -40,7 +40,9 @@ pipeline {
                 echo "Performance Tests"
                 powershell "pwd"
 
-                bat "C:\\jmeter\\bin\\jmeter -j jmeter.save.saveservice.output_format=xml -n -t E:\\dev\\is\\test\\takenote_jmeter.jmx -l E:\\dev\\is\\test\\takenote_jmeter_report.jtl"
+                bat "C:\\jmeter\\bin\\jmeter -n -t E:\\dev\\is\\test\\takenote_jmeter.jmx -l E:\\dev\\is\\test\\takenote_jmeter_report.jtl"
+
+                perfReport "E:\\dev\\is\\test\\takenote_jmeter_report.jtl"
                 
             }
         }
