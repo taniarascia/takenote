@@ -31,7 +31,8 @@ pipeline {
                     reportFiles: 'test-report.html',
                     reportName: "Reporte de pruebas unitarias",
                 ])
-                powershell "start msedge '$pwd\\reports\\jest\\test-report.html'"
+                
+                powershell 'start msedge "$pwd\\reports\\jest\\test-report.html"'
             }
         }
         stage('Pruebas funcionales') {
