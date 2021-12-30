@@ -32,7 +32,7 @@ pipeline {
                     reportName: "Reporte de pruebas unitarias",
                 ])
                 
-                powershell 'start msedge Join-Path -Path $pwd -ChildPath "\\reports\\jest\\test-report.html"'
+                powershell 'start msedge Join-Path -Path "$pwd" -ChildPath "\\reports\\jest\\test-report.html"'
             }
         }
         stage('Pruebas funcionales') {
