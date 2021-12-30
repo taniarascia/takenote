@@ -38,8 +38,10 @@ pipeline {
         stage('Pruebas de Performance') {
             steps {
                 echo "Performance Tests"
-                powershell "C:\\jmeter\\bin\\jmeter -j jmeter.save.saveservice.output_format=xml -n -t E:\\dev\\is\\test\\takenote_jmeter.jmx -l E:\\dev\\is\\test\\takenote_jmeter_report.jtl"
                 powershell "pwd"
+                
+                powershell "C:\\jmeter\\bin\\jmeter -j jmeter.save.saveservice.output_format=xml -n -t E:\\dev\\is\\test\\takenote_jmeter.jmx -l E:\\dev\\is\\test\\takenote_jmeter_report.jtl"
+                
             }
         }
         stage('Despliegue') {
