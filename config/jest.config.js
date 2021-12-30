@@ -20,4 +20,14 @@ module.exports = {
       diagnostics: false,
     },
   },
+  reporters: [
+    'default',
+    [
+      './node_modules/jest-html-reporter',
+      {
+        pageTitle: 'Reporte de Pruebas Unitarias',
+        outputPath: 'reports/jest/test-report.html',
+      },
+    ],
+  ],
 }

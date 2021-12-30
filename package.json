@@ -19,7 +19,9 @@
     "test:coverage": "jest --config config/jest.config.js --coverage --watchAll=false",
     "test:coverage:ci": "jest --config config/jest.config.js --ci --coverage --watchAll=false && cat ./coverage/lcov.info | coveralls",
     "format": "prettier --write \"./**/*.{js,jsx,ts,tsx,css,scss,md}\"",
-    "eslint": "eslint src/**/*.{ts,tsx}"
+    "eslint": "eslint src/**/*.{ts,tsx}",
+    "merge:reports": "mochawesome-merge mochawesome-report/*.json > cypress-combined-report.json",
+    "create:html:report": "npm run merge:reports && marge -reportDir TestReport cypress-combined-report.json"
   },
   "repository": {
     "type": "git",
@@ -66,6 +68,7 @@
     "dayjs": "^1.9.3",
     "express": "^4.17.1",
     "helmet": "^4.1.1",
+    "jest-html-reporter": "^3.4.2",
     "jszip": "^3.5.0",
     "mousetrap": "^1.6.5",
     "mousetrap-global-bind": "^1.1.0",
@@ -144,6 +147,10 @@
     "jest-raw-loader": "^1.0.1",
     "lint-staged": "^10.4.1",
     "mini-css-extract-plugin": "^1.0.0",
+    "mocha": "^9.1.3",
+    "mochawesome": "^7.0.1",
+    "mochawesome-merge": "^4.2.1",
+    "mochawesome-report-generator": "^6.0.1",
     "node-sass": "^4.14.1",
     "nodemon": "^2.0.5",
     "sass-loader": "^10.0.3",
