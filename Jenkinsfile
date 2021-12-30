@@ -40,8 +40,8 @@ pipeline {
                 powershell "npm run test:e2e"
                 
                 echo "Generando reporte de pruebas..."
-                powershell "rmdir -r mochawesome-report"
-                powershell "npm run create:html:report"
+                //powershell "rmdir -r mochawesome-report"
+                //powershell "npm run create:html:report"
 
                 echo "Publicando reporte..."
                 publishHTML (target: [
