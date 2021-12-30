@@ -55,7 +55,7 @@ pipeline {
         stage('Pruebas de seguridad') {
             steps {
                 echo "OWASP Security Tests"
-                powershell "cd E:\\dev\\is\\ZAP; ./zap.bat -cmd -quickurl https://dvwa.co.uk/ -quickout E:\\dev\\is\\test\\reportForDVWA.html"
+                //powershell "cd E:\\dev\\is\\ZAP; ./zap.bat -cmd -quickurl https://dvwa.co.uk/ -quickout E:\\dev\\is\\test\\reportForDVWA.html"
 
                 echo "Publicando reporte"
 
