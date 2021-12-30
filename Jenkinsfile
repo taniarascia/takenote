@@ -32,7 +32,7 @@ pipeline {
                     reportName: "Reporte de pruebas unitarias",
                 ])
                 
-                powershell 'start msedge "C:\\Users\\Usuario\\.jenkins\\workspace\\Takenote\020pipeline\\reports\\jest\\test-report.html"'
+                powershell 'start msedge "C:\\Users\\Usuario\\.jenkins\\workspace\\Takenote%2Fpipeline\\reports\\jest\\test-report.html"'
             }
         }
         stage('Pruebas funcionales') {
