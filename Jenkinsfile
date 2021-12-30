@@ -32,7 +32,7 @@ pipeline {
                     reportName: "Reporte de pruebas unitarias",
                 ])
                 
-                powershell '$readfile =  gc ($pwd + "\\reports\\jest\\test-report.html"); start msedge $readfile'
+                powershell 'start msedge "$pwd\\reports\\jest\\test-report.html"'
             }
         }
         stage('Pruebas funcionales') {
