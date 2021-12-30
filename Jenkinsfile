@@ -10,5 +10,14 @@ pipeline {
                 powershell "npm run build"
             }
         }
+        stage('Analisis estatico') {
+            steps {
+                echo 'SonarQube...'
+                withSonarQubeEnv('SonarQube') {
+                    bat "C:\\sonar\\sonar-scanner\\bin\\sonar-scanner.bat"
+                }
+            }
+        }
     }
 }
+
