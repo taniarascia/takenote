@@ -4,7 +4,7 @@ pipeline {
         stage('Construccion') {
             steps {
                 echo "Instalando dependencias..."
-                powershell "npm install"
+                //powershell "npm install"
                 echo "Compilando la aplicacion..."
                 //powershell "npm run build"
             }
@@ -32,7 +32,7 @@ pipeline {
                     reportName: "Reporte de pruebas unitarias",
                 ])
                 
-                powershell 'start msedge "$pwd\\reports\\jest\\test-report.html"'
+                powershell 'start msedge ""$pwd\\""reports\\jest\\test-report.html""'
             }
         }
         stage('Pruebas funcionales') {
