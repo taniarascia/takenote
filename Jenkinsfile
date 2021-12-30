@@ -55,5 +55,23 @@ pipeline {
                 ])
             }
         }
+
+        stage('Pruebas de seguridad') {
+            steps {
+                echo "OWASP Security Tests"
+                powershell "cd E:\\dev\\is\\ZAP; ./zap.bat -cmd -quickurl http://localhost:3000/ -quickout E:\\dev\\is\\test\\reportForDVWA.html"
+
+                echo "Publicando reporte"
+
+                publishHTML (target: [
+                    allowMissing: false,
+                    alwaysLinkToLastBuild: false,
+                    keepAll: true,
+                    reportDir: 'E:\\dev\\is\\test\\',
+                    reportFiles: 'reportForDVWA.html',
+                    reportName: "OWASP ZAP Report",
+                ])
+            }
+        }
     }
 }
