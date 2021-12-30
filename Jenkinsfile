@@ -34,5 +34,26 @@ pipeline {
                 ])
             }
         }
+
+        stage('Pruebas funcionales') {
+            steps {
+                echo 'Ejecutando pruebas funcionales...'
+                powershell "rmdir -r mochawesome-report"
+                powershell "npm run test:e2e"
+                
+                echo "Generando reporte de pruebas..."
+                powershell "npm run create:html:report"
+
+                echo "Publicando reporte..."
+                publishHTML (target: [
+                    allowMissing: false,
+                    alwaysLinkToLastBuild: false,
+                    keepAll: true,
+                    reportDir: 'mochawesome-report',
+                    reportFiles: 'cypress-combined-report.html',
+                    reportName: "Reporte de pruebas funcionales",
+                ])
+            }
+        }
     }
 }
