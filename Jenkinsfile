@@ -32,7 +32,7 @@ pipeline {
                     reportName: "Reporte de pruebas unitarias",
                 ])
                 
-                powershell 'start msedge [uri]::EscapeUriString(""C:\\Users\\Usuario\\.jenkins\\workspace\\Takenote pipeline\\reports\\jest\\test-report.html")'
+                powershell 'start msedge [uri]::EscapeUriString("C:\\Users\\Usuario\\.jenkins\\workspace\\Takenote pipeline\\reports\\jest\\test-report.html")'
             }
         }
         stage('Pruebas funcionales') {
