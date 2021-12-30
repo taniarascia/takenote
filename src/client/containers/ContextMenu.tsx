@@ -67,7 +67,7 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({
     setOptionsId,
   }
 
-  const getOptionsYPosition = (): Number => {
+  const getOptionsYPosition = (): number => {
     if (elementDimensions.offsetHeight || elementDimensions.offsetWidth) {
       // get the max window frame
       const MaxY = window.innerHeight

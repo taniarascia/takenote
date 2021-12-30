@@ -2,7 +2,7 @@
   "name": "takenote",
   "version": "0.7.2",
   "description": "A web-based notes app for developers.",
-  "author": "Tania Rascia",
+  "author": "Pocho's Inc.",
   "license": "MIT",
   "private": false,
   "main": "src/server/index.ts",
@@ -19,11 +19,13 @@
     "test:coverage": "jest --config config/jest.config.js --coverage --watchAll=false",
     "test:coverage:ci": "jest --config config/jest.config.js --ci --coverage --watchAll=false && cat ./coverage/lcov.info | coveralls",
     "format": "prettier --write \"./**/*.{js,jsx,ts,tsx,css,scss,md}\"",
-    "eslint": "eslint src/**/*.{ts,tsx}"
+    "eslint": "eslint src/**/*.{ts,tsx}",
+    "merge:reports": "mochawesome-merge mochawesome-report/*.json > cypress-combined-report.json",
+    "create:html:report": "npm run merge:reports && marge -reportDir TestReport cypress-combined-report.json"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/taniarascia/takenote"
+    "url": "git+https://github.com/reqhiem/takenote"
   },
   "keywords": [
     "notes",
@@ -39,7 +41,7 @@
     "github"
   ],
   "bugs": {
-    "url": "https://github.com/taniarascia/takenote/issues"
+    "url": "Jira: https://reqhiem.atlassian.net/projects/REQHIEM/issues"
   },
   "homepage": "https://takenote.dev",
   "husky": {
@@ -66,6 +68,7 @@
     "dayjs": "^1.9.3",
     "express": "^4.17.1",
     "helmet": "^4.1.1",
+    "jest-html-reporter": "^3.4.2",
     "jszip": "^3.5.0",
     "mousetrap": "^1.6.5",
     "mousetrap-global-bind": "^1.1.0",
@@ -144,6 +147,10 @@
     "jest-raw-loader": "^1.0.1",
     "lint-staged": "^10.4.1",
     "mini-css-extract-plugin": "^1.0.0",
+    "mocha": "^9.1.3",
+    "mochawesome": "^7.0.1",
+    "mochawesome-merge": "^4.2.1",
+    "mochawesome-report-generator": "^6.0.1",
     "node-sass": "^4.14.1",
     "nodemon": "^2.0.5",
     "sass-loader": "^10.0.3",

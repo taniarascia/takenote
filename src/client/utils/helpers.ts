@@ -272,6 +272,7 @@ export const getNoteBarConf = (
   allowResize?: boolean
   resizerStyle?: React.CSSProperties
 } => {
+  /*
   switch (activeFolder) {
     case Folder.SCRATCHPAD:
       return {
@@ -288,6 +289,22 @@ export const getNoteBarConf = (
         maxSize: 600,
         defaultSize: 330,
       }
+  }*/
+
+  if (activeFolder === Folder.SCRATCHPAD) {
+    return {
+      minSize: 0,
+      maxSize: 0,
+      defaultSize: 0,
+      allowResize: false,
+      resizerStyle: { display: 'none' },
+    }
+  } else {
+    return {
+      minSize: 200,
+      maxSize: 600,
+      defaultSize: 330,
+    }
   }
 }
 
