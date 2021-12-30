@@ -26,7 +26,7 @@ module.exports = {
       './node_modules/jest-html-reporter',
       {
         pageTitle: 'Reporte de Pruebas Unitarias',
-        outputPath: '../reports/jest/test-report.html',
+        outputPath: 'reports/jest/test-report.html',
       },
     ],
   ],

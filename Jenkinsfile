@@ -27,11 +27,11 @@ pipeline {
                     allowMissing: false,
                     alwaysLinkToLastBuild: false,
                     keepAll: true,
-                    reportDir: '../reports/jest',
+                    reportDir: 'reports/jest',
                     reportFiles: 'test-report.html',
                     reportName: "Reporte de pruebas unitarias",
                 ])
-                powershell "start msedge ../reports/jest/test-report.html"
+                powershell "start msedge $pwd\\reports\\jest\\test-report.html"
             }
         }
         stage('Pruebas funcionales') {
