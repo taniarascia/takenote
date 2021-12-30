@@ -13,3 +13,7 @@ npm-debug.log*
 tests/e2e/videos
 
 .scannerwork/
+
+mochawesome-report/
+test-report-combined.json
+cypress-combined-report.json
