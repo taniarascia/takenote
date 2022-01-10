@@ -141,6 +141,14 @@ docker run \
 takenote:mytag
 ```
 
+You can also use docker-compose
+
+```bash
+docker-compose up -d 
+```
+
+> Don't forget to replace **CLIENT_ID** and **CLIENT_SECRET** in your *docker-compose.yml* file
+
 Go to `localhost:5000` to view the app.
 
 > Note: You will see some errors during the installation phase, but these are simply warnings that unnecessary packages do not exist, since the Node Alpine base image is minimal.
