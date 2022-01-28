@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from 'react'
+import IconButton from '@material-ui/core/IconButton'
+import Tooltip from '@material-ui/core/Tooltip'
+import DeleteIcon from '@material-ui/icons/Delete'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   Eye,
@@ -112,26 +115,46 @@ export const NoteMenuBar = () => {
             data-testid={TestID.PREVIEW_MODE}
           >
             {isToggled ? (
-              <Edit aria-hidden="true" size={18} />
+              <Tooltip title="Edit">
+                <IconButton>
+                  <Edit aria-hidden="true" size={18} />
+                </IconButton>
+              </Tooltip>
             ) : (
-              <Eye aria-hidden="true" size={18} />
+              <Tooltip title="Preview">
+                <IconButton>
+                  <Eye aria-hidden="true" size={18} />
+                </IconButton>
+              </Tooltip>
             )}
             <span className="sr-only">{isToggled ? 'Edit note' : 'Preview note'}</span>
           </button>
           {!activeNote.scratchpad && (
             <>
               <button className="note-menu-bar-button" onClick={favoriteNoteHandler}>
-                <Star aria-hidden="true" size={18} />
+                <Tooltip title="Favorite">
+                  <IconButton>
+                    <Star aria-hidden="true" size={18} />
+                  </IconButton>
+                </Tooltip>
                 <span className="sr-only">Add note to favorites</span>
               </button>
               <button className="note-menu-bar-button trash" onClick={trashNoteHandler}>
-                <Trash2 aria-hidden="true" size={18} />
+                <Tooltip title="Delete">
+                  <IconButton>
+                    <Trash2 aria-hidden="true" size={18} />
+                  </IconButton>
+                </Tooltip>
                 <span className="sr-only">Delete note</span>
               </button>
             </>
           )}
           <button className="note-menu-bar-button">
-            <Download aria-hidden="true" size={18} onClick={downloadNotesHandler} />
+            <Tooltip title="Download">
+              <IconButton>
+                <Download aria-hidden="true" size={18} onClick={downloadNotesHandler} />
+              </IconButton>
+            </Tooltip>
             <span className="sr-only">Download note</span>
           </button>
           <button
@@ -142,7 +165,14 @@ export const NoteMenuBar = () => {
             }}
             data-testid={TestID.UUID_MENU_BAR_COPY_ICON}
           >
-            {copyNoteIcon}
+            {
+              <Tooltip title="Copy">
+                <IconButton>
+                  <ClipboardCmp size={18} aria-hidden="true" focusable="false" />
+                </IconButton>
+              </Tooltip>
+            }
+
             {uuidCopiedText && <span className="uuid-copied-text">{uuidCopiedText}</span>}
             <span className="sr-only">Copy note</span>
           </button>
@@ -158,19 +188,43 @@ export const NoteMenuBar = () => {
           data-testid={TestID.TOPBAR_ACTION_SYNC_NOTES}
         >
           {syncing ? (
-            <Loader aria-hidden="true" size={18} className="rotating-svg" />
+            <Tooltip title="Syncing">
+              <IconButton>
+                <Loader aria-hidden="true" size={18} className="rotating-svg" />
+              </IconButton>
+            </Tooltip>
           ) : (
-            <RefreshCw aria-hidden="true" size={18} />
+            <Tooltip title="Refresh">
+              <IconButton>
+                <RefreshCw aria-hidden="true" size={18} />
+              </IconButton>
+            </Tooltip>
           )}
           <span className="sr-only">Sync notes</span>
         </button>
         <button className="note-menu-bar-button" onClick={toggleDarkThemeHandler}>
-          {darkTheme ? <Sun aria-hidden="true" size={18} /> : <Moon aria-hidden="true" size={18} />}
+          {darkTheme ? (
+            <Tooltip title="Light Theme">
+              <IconButton>
+                <Sun aria-hidden="true" size={18} />
+              </IconButton>
+            </Tooltip>
+          ) : (
+            <Tooltip title="Dark Theme">
+              <IconButton>
+                <Moon aria-hidden="true" size={18} />
+              </IconButton>
+            </Tooltip>
+          )}
           <span className="sr-only">Themes</span>
         </button>
 
         <button className="note-menu-bar-button" onClick={settingsHandler}>
-          <Settings aria-hidden="true" size={18} />
+          <Tooltip title="Settings">
+            <IconButton>
+              <Settings aria-hidden="true" size={18} />
+            </IconButton>
+          </Tooltip>
           <span className="sr-only">Settings</span>
         </button>
       </nav>
