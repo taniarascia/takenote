@@ -3,6 +3,7 @@ import React from 'react'
 import { TestID } from '@resources/TestID'
 import { ReactSubmitEvent } from '@/types'
 
+//props
 export interface AddCategoryFormProps {
   dataTestID: string
   submitHandler: (event: ReactSubmitEvent) => void
@@ -12,6 +13,7 @@ export interface AddCategoryFormProps {
   tempCategoryName: string
 }
 
+//form
 export const AddCategoryForm: React.FC<AddCategoryFormProps> = ({
   dataTestID,
   submitHandler,

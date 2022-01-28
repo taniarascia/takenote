@@ -9,6 +9,7 @@ export const folderMap: Record<Folder, string> = {
 }
 
 export const iconColor = 'rgba(255, 255, 255, 0.25)'
+export const iconColor2 = 'rgba(255, 255, 255, 0.25)'
 
 export const shortcutMap = [
   { action: 'Create a new note', key: 'N' },
