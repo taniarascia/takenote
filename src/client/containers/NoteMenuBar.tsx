@@ -25,7 +25,13 @@ import {
 } from '@/slices/settings'
 import { toggleFavoriteNotes, toggleTrashNotes } from '@/slices/note'
 import { getCategories, getNotes, getSync, getSettings } from '@/selectors'
-import { downloadNotes, isDraftNote, getShortUuid, copyToClipboard } from '@/utils/helpers'
+import {
+  downloadNotes,
+  uploadFiles,
+  isDraftNote,
+  getShortUuid,
+  copyToClipboard,
+} from '@/utils/helpers'
 import { sync } from '@/slices/sync'
 
 export const NoteMenuBar = () => {

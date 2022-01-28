@@ -177,7 +177,45 @@
     .action-button-icon {
       stroke: white;
       background: $primary;
-      border-radius: 0.3rem;
+      border-radius: 0.2rem;
+    }
+    .action-button-icon {
+      stroke: white;
+      background: $primary;
+      border-radius: 0.2rem;
+    }
+  }
+
+  .action-button2 {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 1rem;
+    margin: 0.5rem 0%;
+    border: none !important;
+    text-align: left;
+    font-size: 0.95rem;
+    border-radius: 0;
+
+    svg {
+      margin-right: 0.75rem;
+    }
+
+    &:hover,
+    &:focus {
+      background: $primary;
+      outline: none;
+
+      .action-button-icon2 {
+        stroke: white;
+      }
+    }
+
+    .action-button-icon2 {
+      stroke: black;
+      background: $primary;
+      border-radius: 0.2rem;
     }
   }
 

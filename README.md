@@ -84,6 +84,18 @@ Click the **New OAuth App** button.
 - **Homepage URL**: `http://localhost:3000`
 - **Authorization callback URL**: `http://localhost:3000/api/auth/callback`
 
+
+For Beginners that has never worked with React or Javascript, things you need:
+1. Download Node.js
+```https://nodejs.org/en/download/```
+2. Download Visual Studio Code
+```https://code.visualstudio.com/download```
+
+If you need extra help look at this --> https://github.com/taniarascia/react-tutorial
+
+
+**This next step performed after you have cloned your repository**
+
 Create a `.env` file in the root of the project, and add the app's client ID and secret. Remove `DEMO` variable to enable GitHub integration.
 
 ```bash
@@ -101,6 +113,8 @@ git clone git@github.com:taniarascia/takenote
 cd takenote
 npm i
 ```
+
+When you install npm you might get an error regarding ```node-sass``` this is because this library had depcrated. Therefore you must first uninstall node-sass ```npm uninstall node-sass``` and install ```sass``` instead ```npm i -D sass```. 
 
 #### Development mode
 
