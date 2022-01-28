@@ -27,6 +27,7 @@ import { toggleFavoriteNotes, toggleTrashNotes } from '@/slices/note'
 import { getCategories, getNotes, getSync, getSettings } from '@/selectors'
 import { downloadNotes, isDraftNote, getShortUuid, copyToClipboard } from '@/utils/helpers'
 import { sync } from '@/slices/sync'
+import { starFillColor } from '@/utils/constants'
 
 export const NoteMenuBar = () => {
   // ===========================================================================
@@ -47,6 +48,7 @@ export const NoteMenuBar = () => {
   const activeNote = notes.find((note) => note.id === activeNoteId)!
   const shortNoteUuid = getShortUuid(activeNoteId)
 
+  const isFavorite = notes.find((note) => note.id === activeNoteId)?.favorite
   // ===========================================================================
   // State
   // ===========================================================================
@@ -121,7 +123,11 @@ export const NoteMenuBar = () => {
           {!activeNote.scratchpad && (
             <>
               <button className="note-menu-bar-button" onClick={favoriteNoteHandler}>
-                <Star aria-hidden="true" size={18} />
+                {isFavorite ? (
+                  <Star aria-hidden="true" size={18} fill={starFillColor} />
+                ) : (
+                  <Star aria-hidden="true" size={18} />
+                )}
                 <span className="sr-only">Add note to favorites</span>
               </button>
               <button className="note-menu-bar-button trash" onClick={trashNoteHandler}>
