@@ -1,6 +1,7 @@
 import React, { KeyboardEventHandler, MouseEventHandler, useContext } from 'react'
 import { Icon } from 'react-feather'
 
+import { starFillColor } from '@/utils/constants'
 import { MenuUtilitiesContext } from '@/containers/ContextMenu'
 
 export interface ContextMenuOptionProps {
@@ -46,7 +47,12 @@ export const ContextMenuOption: React.FC<ContextMenuOptionProps> = ({
       tabIndex={0}
       {...rest}
     >
-      <IconCmp className="nav-item-icon" size={18} />
+      {text.includes('Remove') ? (
+        <IconCmp className="nav-item-icon" fill={starFillColor} size={18} />
+      ) : (
+        <IconCmp className="nav-item-icon" size={18} />
+      )}
+      {/* <IconCmp className="nav-item-icon" size={18} /> */}
       {text}
     </div>
   )

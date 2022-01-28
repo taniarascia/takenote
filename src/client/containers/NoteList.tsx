@@ -19,6 +19,7 @@ import {
 import { NoteItem, ReactDragEvent, ReactMouseEvent } from '@/types'
 import { getNotes, getSettings, getCategories } from '@/selectors'
 import { getNotesSorter } from '@/utils/notesSortStrategies'
+import { starFillColor } from '@/utils/constants'
 
 export const NoteList: React.FC = () => {
   // ===========================================================================
@@ -26,8 +27,9 @@ export const NoteList: React.FC = () => {
   // ===========================================================================
 
   const { notesSortKey } = useSelector(getSettings)
-  const { activeCategoryId, activeFolder, selectedNotesIds, notes, searchValue } =
-    useSelector(getNotes)
+  const { activeCategoryId, activeFolder, selectedNotesIds, notes, searchValue } = useSelector(
+    getNotes
+  )
   const { categories } = useSelector(getCategories)
 
   // ===========================================================================
@@ -214,7 +216,12 @@ export const NoteList: React.FC = () => {
                   {note.favorite ? (
                     <>
                       <div className="icon">
-                        <Star aria-hidden="true" className="note-favorite" size={12} />
+                        <Star
+                          aria-hidden="true"
+                          className="note-favorite"
+                          fill={starFillColor}
+                          size={12}
+                        />
                         <span className="sr-only">Favorite note</span>
                       </div>
                       <div className="truncate-text">{noteTitle}</div>
