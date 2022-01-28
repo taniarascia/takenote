@@ -99,6 +99,8 @@ export const downloadNotes = (notes: NoteItem[], categories: CategoryItem[]): vo
   }
 }
 
+export const uploadFiles = (notes: NoteItem[], categories: CategoryItem[]) => {}
+
 export const backupNotes = (notes: NoteItem[], categories: CategoryItem[]) => {
   const pom = document.createElement('a')
 

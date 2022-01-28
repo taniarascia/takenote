@@ -6,6 +6,7 @@ import SplitPane from 'react-split-pane'
 import dayjs from 'dayjs'
 import localizedFormat from 'dayjs/plugin/localizedFormat'
 
+//store the final set up of the note taking
 import { AppSidebar } from '@/containers/AppSidebar'
 import { KeyboardShortcuts } from '@/containers/KeyboardShortcuts'
 import { NoteEditor } from '@/containers/NoteEditor'

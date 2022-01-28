@@ -78,11 +78,13 @@ export const AppSidebar: React.FC = () => {
         label={LabelText.CREATE_NEW_NOTE}
         text={LabelText.NEW_NOTE}
       />
+      <ScratchpadOption
+        active={activeFolder === Folder.SCRATCHPAD}
+        swapFolder={swapFolderHandler}
+        icon={Plus}
+      />
+
       <section className="app-sidebar-main">
-        <ScratchpadOption
-          active={activeFolder === Folder.SCRATCHPAD}
-          swapFolder={swapFolderHandler}
-        />
         <FolderOption
           active={activeFolder === Folder.ALL}
           swapFolder={swapFolderHandler}
