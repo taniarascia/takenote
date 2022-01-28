@@ -71,17 +71,17 @@ export const AppSidebar: React.FC = () => {
 
   return (
     <aside className="app-sidebar">
+      <ScratchpadOption
+        active={activeFolder === Folder.SCRATCHPAD}
+        swapFolder={swapFolderHandler}
+        icon={Plus}
+      />
       <ActionButton
         dataTestID={TestID.SIDEBAR_ACTION_CREATE_NEW_NOTE}
         handler={newNoteHandler}
         icon={Plus}
         label={LabelText.CREATE_NEW_NOTE}
         text={LabelText.NEW_NOTE}
-      />
-      <ScratchpadOption
-        active={activeFolder === Folder.SCRATCHPAD}
-        swapFolder={swapFolderHandler}
-        icon={Plus}
       />
 
       <section className="app-sidebar-main">
