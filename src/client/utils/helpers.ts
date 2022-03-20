@@ -161,6 +161,7 @@ export const newNoteHandlerHelper = (
     swapFolder(Folder.ALL)
   }
 
+  console.log(previewMarkdown)
   if (previewMarkdown) {
     togglePreviewMarkdown()
   }

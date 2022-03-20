@@ -52,7 +52,10 @@ export const NoteMenuBar = () => {
   // ===========================================================================
 
   const [uuidCopiedText, setUuidCopiedText] = useState<string>('')
-  const [isToggled, togglePreviewIcon] = useState<boolean>(false)
+
+  // not necessory to use another state here as we have previewMarkdown
+  // const [isToggled, togglePreviewIcon] = useState<boolean>(false)
+  const { previewMarkdown } = useSelector(getSettings)
 
   // ===========================================================================
   // Hooks
@@ -98,7 +101,7 @@ export const NoteMenuBar = () => {
     _updateCodeMirrorOption('theme', darkTheme ? 'base16-light' : 'new-moon')
   }
   const togglePreviewHandler = () => {
-    togglePreviewIcon(!isToggled)
+    // togglePreviewIcon(!isToggled)
     _togglePreviewMarkdown()
   }
 
@@ -111,12 +114,12 @@ export const NoteMenuBar = () => {
             onClick={togglePreviewHandler}
             data-testid={TestID.PREVIEW_MODE}
           >
-            {isToggled ? (
+            {previewMarkdown ? (
               <Edit aria-hidden="true" size={18} />
             ) : (
               <Eye aria-hidden="true" size={18} />
             )}
-            <span className="sr-only">{isToggled ? 'Edit note' : 'Preview note'}</span>
+            <span className="sr-only">{previewMarkdown ? 'Edit note' : 'Preview note'}</span>
           </button>
           {!activeNote.scratchpad && (
             <>
