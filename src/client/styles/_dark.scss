@@ -1,5 +1,6 @@
 $dark-sidebar: #333;
 $dark-editor: #3f3f3f;
+$dark-seperator: #777777;
 
 .dark {
   a {
@@ -203,7 +204,7 @@ $dark-editor: #3f3f3f;
     hr {
       height: 0;
       border: 0;
-      border-top: 2px solid darken($dark-editor, 5%);
+      border-top: 2px solid darken($dark-seperator, 5%);
     }
 
     blockquote {
