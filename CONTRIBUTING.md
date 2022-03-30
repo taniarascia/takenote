@@ -21,7 +21,7 @@ Description of the project files and directories.
 │   ├── nodemon.config.json    # Nodemon configuration
 │   ├── webpack.common.js      # Webpack shared configuration
 │   ├── webpack.dev.js         # Webpack development configuration (dev server)
-│   └── webpack.prod.js        # Webpack productuon configuration (dist output)
+│   └── webpack.prod.js        # Webpack production configuration (dist output)
 ├── assets/                    # Supplemental assets
 ├── public/                    # Files that will write to dist on build
 ├── src/                       # All TakeNote app source files
