@@ -220,6 +220,10 @@ $dark-editor: #3f3f3f;
     }
   }
 
+  .previewer > * {
+    color: white;
+  }
+
   .settings-modal {
     background: $dark-sidebar;
     color: $light-font-color;
