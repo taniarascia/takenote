@@ -120,7 +120,7 @@ export const NoteMenuBar = () => {
           </button>
           {!activeNote.scratchpad && (
             <>
-              <button className="note-menu-bar-button" onClick={favoriteNoteHandler}>
+              <button className="note-menu-bar-button star" onClick={favoriteNoteHandler}>
                 <Star aria-hidden="true" size={18} />
                 <span className="sr-only">Add note to favorites</span>
               </button>

@@ -163,6 +163,7 @@ export const SettingsModal: React.FC = () => {
               <div className="subtitle">{currentUser.bio}</div>
             </div>
             <button
+              className="profile-logout-button"
               onClick={() => {
                 _logout()
               }}
