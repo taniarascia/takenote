@@ -78,6 +78,14 @@
       svg {
         stroke: darken($light-font-color, 10%);
       }
+
+      svg.star {
+        stroke: darken($warning, 10%);
+      }
+
+      svg.trash {
+        stroke: darken($error, 10%);
+      }
     }
   }
 
@@ -105,6 +113,14 @@
 
       svg {
         stroke: $primary;
+      }
+      
+      svg.star {
+        stroke: darken($warning, 10%);
+      }
+
+      svg.trash {
+        stroke: darken($error, 10%);
       }
     }
 

@@ -133,6 +133,17 @@
       margin: 0;
       margin-right: 1rem;
     }
+    margin-right: 1rem;
+  }
+
+  .profile-logout-button {
+    background-color: rgb(202, 29, 29);
+    border-color: rgb(202, 29, 29);
+
+    &:hover {
+      background-color: rgb(189, 32, 32);
+      border-color: rgb(189, 32, 32);
+    }
   }
 
   .subtitle {
