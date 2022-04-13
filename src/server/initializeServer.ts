@@ -13,7 +13,6 @@ export default function initializeServer(router: Router) {
 
   app.set('trust proxy', 1)
   app.use(express.json())
-  app.use(cookieParser())
   app.use(cors(origin))
   app.use(helmet())
   app.use(compression())
