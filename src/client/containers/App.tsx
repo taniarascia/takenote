@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Route, Switch, Redirect } from 'react-router-dom'
 import { Helmet, HelmetProvider } from 'react-helmet-async'
+import { useBeforeunload } from 'react-beforeunload'
 
 import { LandingPage } from '@/components/LandingPage'
 import { TakeNoteApp } from '@/containers/TakeNoteApp'
@@ -31,6 +32,7 @@ export const App: React.FC = () => {
   // Hooks
   // ===========================================================================
 
+  useBeforeunload(() => "You may loose your Data if you didn't sync it.")
   useEffect(() => {
     _login()
   }, [])
