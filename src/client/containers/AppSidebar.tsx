@@ -6,6 +6,7 @@ import { LabelText } from '@resources/LabelText'
 import { TestID } from '@resources/TestID'
 import { ActionButton } from '@/components/AppSidebar/ActionButton'
 import { FolderOption } from '@/components/AppSidebar/FolderOption'
+import { LinkToRepo } from '@/components/AppSidebar/LinkToRepo'
 import { ScratchpadOption } from '@/components/AppSidebar/ScratchpadOption'
 import { Folder, NotesSortKey } from '@/utils/enums'
 import { CategoryList } from '@/containers/CategoryList'
@@ -108,6 +109,7 @@ export const AppSidebar: React.FC = () => {
           addNoteType={_assignTrashToNotes}
         />
         <CategoryList />
+        <LinkToRepo label={LabelText.LINKTOREPO} url="https://github.com/taniarascia/takenote" />
       </section>
     </aside>
   )
