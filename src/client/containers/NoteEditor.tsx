@@ -2,6 +2,7 @@ import dayjs from 'dayjs'
 import React from 'react'
 import { Controlled as CodeMirror } from 'react-codemirror2'
 import { useDispatch, useSelector } from 'react-redux'
+import { Dispatch } from 'redux'
 import { Editor } from 'codemirror'
 
 import { getActiveNote } from '@/utils/helpers'
@@ -26,16 +27,31 @@ export const NoteEditor: React.FC = () => {
 
   const { pendingSync } = useSelector(getSync)
   const { activeNoteId, loading, notes } = useSelector(getNotes)
+  return {
+    activeNote: notes.find(note => note.id === activeNoteId),
+    loading,
+    _updateNote: (note: NoteItem) => dispatch(updateNote(note)),
+  }
+}
   const { codeMirrorOptions, previewMarkdown } = useSelector(getSettings)
 
-  const activeNote = getActiveNote(notes, activeNoteId)
-
+  const useSettings = (dispatch: Dispatch) => {
+    const { codeMirrorOptions, vimState } = useSelector((state: RootState) => state.settingsState)
+    return {
+      codeMirrorOptions,
+      vimMode: vimState.mode,
+      _updateVimStateMode: (vimMode: VimModes) => dispatch(updateVimStateMode(vimMode)),
+    }
+  }
   // ===========================================================================
   // Dispatch
   // ===========================================================================
 
+  const NoteEditor: React.FC = () => {
   const dispatch = useDispatch()
 
+  const { activeNote, loading, _updateNote } = useNotes(dispatch)
+  const { codeMirrorOptions, vimMode, _updateVimStateMode } = useSettings(dispatch)
   const _updateNote = (note: NoteItem) => {
     !pendingSync && dispatch(setPendingSync())
     dispatch(updateNote(note))
