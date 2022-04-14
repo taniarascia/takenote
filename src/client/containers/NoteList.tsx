@@ -8,6 +8,7 @@ import { NoteListButton } from '@/components/NoteList/NoteListButton'
 import { SearchBar } from '@/components/NoteList/SearchBar'
 import { ContextMenu } from '@/containers/ContextMenu'
 import { getNoteTitle, shouldOpenContextMenu, debounceEvent, isDraftNote } from '@/utils/helpers'
+import { getNoteTitle, sortByLastUpdated, sortByName } from 'helpers'
 import { useKey } from '@/utils/hooks'
 import {
   permanentlyEmptyTrash,
@@ -75,6 +76,7 @@ export const NoteList: React.FC = () => {
   const filteredNotes: NoteItem[] = notes
     .filter(filter[activeFolder])
     .filter(isMatch)
+    .sort(sortByName)
     .sort(getNotesSorter(notesSortKey))
 
   // ===========================================================================
