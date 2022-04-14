@@ -52,6 +52,39 @@
     &.uuid {
       display: flex;
       align-items: center;
+      &:hover {
+        color: $note-icon-color;
+      }
+    }
+    &.star {
+      &:hover {
+        color: $yellow;
+      }
+    }
+    &.eye {
+      &:hover {
+        color: $primary;
+      }
+    }
+    &.download {
+      &:hover {
+        color: $download-icon-color;
+      }
+    }
+    &.moon {
+      &:hover {
+        color: $moon-icon;
+      }
+    }
+    &.reload {
+      &:hover {
+        color: $reload-icon-color;
+      }
+    }
+    &.setting {
+      &:hover {
+        color: lighten($primary, 10%);
+      }
     }
   }
 
