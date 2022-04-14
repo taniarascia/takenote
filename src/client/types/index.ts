@@ -52,6 +52,11 @@ export interface CategoryState {
   }
 }
 
+export function sortByName(a: CategoryItem, b: CategoryItem) {
+  return a.name.localeCompare(b.name)
+}
+
+
 export interface NoteState {
   notes: NoteItem[]
   activeFolder: Folder

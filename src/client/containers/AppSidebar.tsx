@@ -8,6 +8,7 @@ import { ActionButton } from '@/components/AppSidebar/ActionButton'
 import { FolderOption } from '@/components/AppSidebar/FolderOption'
 import { ScratchpadOption } from '@/components/AppSidebar/ScratchpadOption'
 import { Folder, NotesSortKey } from '@/utils/enums'
+import { newNote, sortByName } from 'helpers'
 import { CategoryList } from '@/containers/CategoryList'
 import {
   addNote,
@@ -69,6 +70,7 @@ export const AppSidebar: React.FC = () => {
     )
   const swapFolderHandler = _swapFolder(notesSortKey)
 
+  {categories.sort(sortByName).map(category => {
   return (
     <aside className="app-sidebar">
       <ActionButton
