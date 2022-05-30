@@ -22,6 +22,6 @@
       "@resources/*": ["./src/resources/*"]
     }
   },
-  "include": ["./src/**/*", "./tests/unit/**/*"],
+  "include": ["./src/**/*", "./tests/unit/**/*", "Editor"],
   "exclude": ["./dist", "node_modules", "./config"]
 }
