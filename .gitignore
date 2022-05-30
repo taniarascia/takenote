@@ -1,4 +1,6 @@
+src/server
 /node_modules
+/server
 /coverage
 /dist
 /cypress
