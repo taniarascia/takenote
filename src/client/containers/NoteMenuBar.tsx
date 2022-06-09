@@ -110,6 +110,7 @@ export const NoteMenuBar = () => {
             className="note-menu-bar-button"
             onClick={togglePreviewHandler}
             data-testid={TestID.PREVIEW_MODE}
+            title={isToggled ? 'Edit note' : 'Preview note'}
           >
             {isToggled ? (
               <Edit aria-hidden="true" size={18} />
@@ -120,17 +121,25 @@ export const NoteMenuBar = () => {
           </button>
           {!activeNote.scratchpad && (
             <>
-              <button className="note-menu-bar-button" onClick={favoriteNoteHandler}>
+              <button
+                className="note-menu-bar-button"
+                onClick={favoriteNoteHandler}
+                title="Add note to favorites"
+              >
                 <Star aria-hidden="true" size={18} />
                 <span className="sr-only">Add note to favorites</span>
               </button>
-              <button className="note-menu-bar-button trash" onClick={trashNoteHandler}>
+              <button
+                className="note-menu-bar-button trash"
+                onClick={trashNoteHandler}
+                title="Delete note"
+              >
                 <Trash2 aria-hidden="true" size={18} />
                 <span className="sr-only">Delete note</span>
               </button>
             </>
           )}
-          <button className="note-menu-bar-button">
+          <button className="note-menu-bar-button" title="Download note">
             <Download aria-hidden="true" size={18} onClick={downloadNotesHandler} />
             <span className="sr-only">Download note</span>
           </button>
@@ -141,6 +150,7 @@ export const NoteMenuBar = () => {
               setUuidCopiedText(successfulCopyMessage)
             }}
             data-testid={TestID.UUID_MENU_BAR_COPY_ICON}
+            title="Copy note"
           >
             {copyNoteIcon}
             {uuidCopiedText && <span className="uuid-copied-text">{uuidCopiedText}</span>}
@@ -156,6 +166,7 @@ export const NoteMenuBar = () => {
           className="note-menu-bar-button"
           onClick={syncNotesHandler}
           data-testid={TestID.TOPBAR_ACTION_SYNC_NOTES}
+          title="Sync notes"
         >
           {syncing ? (
             <Loader aria-hidden="true" size={18} className="rotating-svg" />
@@ -164,12 +175,12 @@ export const NoteMenuBar = () => {
           )}
           <span className="sr-only">Sync notes</span>
         </button>
-        <button className="note-menu-bar-button" onClick={toggleDarkThemeHandler}>
+        <button className="note-menu-bar-button" onClick={toggleDarkThemeHandler} title="Themes">
           {darkTheme ? <Sun aria-hidden="true" size={18} /> : <Moon aria-hidden="true" size={18} />}
           <span className="sr-only">Themes</span>
         </button>
 
-        <button className="note-menu-bar-button" onClick={settingsHandler}>
+        <button className="note-menu-bar-button" onClick={settingsHandler} title="Settings">
           <Settings aria-hidden="true" size={18} />
           <span className="sr-only">Settings</span>
         </button>
