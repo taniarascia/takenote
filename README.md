@@ -38,7 +38,7 @@
 
 TakeNote is a note-taking app for the web. You can use the demo app at [takenote.dev](https://takenote.dev). It is a static site without a database and does not sync your notes to the cloud. The notes are persisted temporarily in local storage, but you can download all notes in markdown format as a zip.
 
-Hidden within the code is an alternate version that contain a Node/Express server and integration with GitHub. This version involves creating an OAuth application for GitHub and signing up to it with private repository permissions. Instead of backing up to local storage, your notes will back up to a private repository in your account called `takenote-data`. Due to the following reasons I'm choosing not to deploy or maintain this portion of the application:
+Hidden within the code is an alternate version that contains a Node/Express server and integration with GitHub. This version involves creating an OAuth application for GitHub and signing up to it with private repository permissions. Instead of backing up to local storage, your notes will back up to a private repository in your account called `take note data`. Due to the following reasons, I'm choosing not to deploy or maintain this portion of the application:
 
 - I do not want to maintain a free app with users alongside my career and other commitments
 - I do not want to request private repository permissions from users
@@ -46,7 +46,7 @@ Hidden within the code is an alternate version that contain a Node/Express serve
 - I do not want to worry about GitHub rate limiting from the server
 - There is no way to batch create many files from the GitHub API, leading to a suboptimal GitHub storage solution
 
-However, I'm leaving the code available so you can feel free to host your own TakeNote instance or study the code for learning purposes. I do not provide support or guidance for these purposes.
+However, I'm leaving the code available so you can feel free to host your TakeNote instance or study the code for learning purposes. I do not provide support or guidance for these purposes.
 
 TakeNote was created with TypeScript, React, Redux, Node, Express, Codemirror, Webpack, Jest, Cypress, Feather Icons, ESLint, and Mousetrap, among other awesome open-source software.
 
@@ -143,7 +143,7 @@ takenote:mytag
 
 Go to `localhost:5000` to view the app.
 
-> Note: You will see some errors during the installation phase, but these are simply warnings that unnecessary packages do not exist, since the Node Alpine base image is minimal.
+> Note: You will see some errors during the installation phase, but these are simply warnings that unnecessary packages do not exist since the Node Alpine base image is minimal.
 
 ### Seed data
 
