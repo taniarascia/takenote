@@ -27,4 +27,5 @@ export enum LabelText {
   IMPORT_BACKUP = 'Import backup',
   TOGGLE_FAVORITE = 'Toggle favorite',
   COPY_REFERENCE_TO_NOTE = 'Copy reference to note',
+  DONT_PANIC = "Don't panic",
 }
