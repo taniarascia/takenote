@@ -14,6 +14,8 @@ const loginButton = (text: string) => (
   <a
     className="button github-button"
     href={`https://github.com/login/oauth/authorize?client_id=${clientId}&scope=repo`}
+    rel="noreferrer"
+    target="_blank"
   >
     <img src={githubLogo} />
     {text}
