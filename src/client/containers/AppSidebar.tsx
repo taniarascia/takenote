@@ -19,18 +19,36 @@ import {
   unassignTrashFromNotes,
 } from '@/slices/note'
 import { togglePreviewMarkdown } from '@/slices/settings'
-import { getSettings, getNotes } from '@/selectors'
 import { NoteItem } from '@/types'
 import { newNoteHandlerHelper, getActiveNote } from '@/utils/helpers'
+import { iconColor } from '@/utils/constants'
 
-export const AppSidebar: React.FC = () => {
-  // ===========================================================================
-  // Selectors
-  // ===========================================================================
+interface AppSidebarProps {
+  activeCategoryId: string
+  activeFolder: Folder
+  activeNoteId: string
+  notes: NoteItem[]
+  previewMarkdown: boolean
+  notesSortKey: NotesSortKey
+}
 
-  const { activeCategoryId, activeFolder, activeNoteId, notes } = useSelector(getNotes)
-  const { previewMarkdown, notesSortKey } = useSelector(getSettings)
-
+export const AppSidebar: React.FC<AppSidebarProps> = ({
+  activeCategoryId,
+  activeFolder,
+  activeNoteId,
+  notes,
+  previewMarkdown,
+  notesSortKey,
+}) => {
+  const componentRef = React.useRef(
+    <Plus
+      size={18}
+      className="action-button-icon"
+      color={iconColor}
+      aria-hidden="true"
+      focusable="false"
+    />
+  )
   const activeNote = getActiveNote(notes, activeNoteId)
 
   // ===========================================================================
@@ -69,15 +87,20 @@ export const AppSidebar: React.FC = () => {
     )
   const swapFolderHandler = _swapFolder(notesSortKey)
 
+  const newNoteHandlerDecorator = React.useCallback(() => {
+    newNoteHandler()
+  }, [])
+
   return (
     <aside className="app-sidebar">
       <ActionButton
         dataTestID={TestID.SIDEBAR_ACTION_CREATE_NEW_NOTE}
-        handler={newNoteHandler}
-        icon={Plus}
+        handler={newNoteHandlerDecorator}
         label={LabelText.CREATE_NEW_NOTE}
         text={LabelText.NEW_NOTE}
-      />
+      >
+        {componentRef.current}
+      </ActionButton>
       <section className="app-sidebar-main">
         <ScratchpadOption
           active={activeFolder === Folder.SCRATCHPAD}

@@ -18,7 +18,6 @@ describe('<ActionButton />', () => {
       label: 'Test',
       dataTestID: TestID.ACTION_BUTTON,
       text: 'text',
-      icon: Camera,
     }
 
     const component = render(<ActionButton {...enabledProps} />)
