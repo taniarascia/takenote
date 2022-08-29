@@ -1,42 +1,32 @@
 import React, { MouseEventHandler } from 'react'
-import { Icon } from 'react-feather'
+import { Icon, Plus } from 'react-feather'
 
-import { iconColor } from '@/utils/constants'
+import { TestID } from '@resources/TestID'
 
 export interface ActionButtonProps {
-  dataTestID: string
+  dataTestID: TestID
   disabled?: boolean
-  handler: MouseEventHandler
-  icon: Icon
   label: string
   text: string
+  handler: MouseEventHandler
 }
 
-export const ActionButton: React.FC<ActionButtonProps> = ({
-  dataTestID,
-  disabled = false,
-  handler,
-  icon: IconCmp,
-  label,
-  text,
-}) => {
-  return (
-    <button
-      data-testid={dataTestID}
-      className="action-button"
-      aria-label={label}
-      onClick={handler}
-      disabled={disabled}
-      title={label}
-    >
-      <IconCmp
-        size={18}
-        className="action-button-icon"
-        color={iconColor}
-        aria-hidden="true"
-        focusable="false"
-      />
-      <span>{text}</span>
-    </button>
-  )
+export class ActionButton extends React.PureComponent<ActionButtonProps> {
+  render(): React.ReactNode {
+    const { dataTestID, disabled, label, text, handler } = this.props
+
+    return (
+      <button
+        data-testid={dataTestID}
+        className="action-button"
+        aria-label={label}
+        onClick={handler}
+        disabled={disabled}
+        title={label}
+      >
+        {this?.props?.children}
+        <span>{text}</span>
+      </button>
+    )
+  }
 }

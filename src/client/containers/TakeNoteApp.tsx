@@ -35,8 +35,8 @@ export const TakeNoteApp: React.FC = () => {
   // Selectors
   // ===========================================================================
 
-  const { darkTheme, sidebarVisible } = useSelector(getSettings)
-  const { activeFolder, activeCategoryId, notes } = useSelector(getNotes)
+  const { darkTheme, sidebarVisible, previewMarkdown, notesSortKey } = useSelector(getSettings)
+  const { activeFolder, activeCategoryId, activeNoteId, notes } = useSelector(getNotes)
   const { categories } = useSelector(getCategories)
   const { pendingSync } = useSelector(getSync)
 
@@ -100,7 +100,16 @@ export const TakeNoteApp: React.FC = () => {
         <div className={determineAppClass(darkTheme, sidebarVisible, activeFolder)}>
           <DragDropContext onDragEnd={onDragEnd}>
             <SplitPane split="vertical" minSize={150} maxSize={500} defaultSize={240}>
-              <AppSidebar />
+              <AppSidebar
+                {...{
+                  activeCategoryId,
+                  activeFolder,
+                  activeNoteId,
+                  notes,
+                  previewMarkdown,
+                  notesSortKey,
+                }}
+              />
               <SplitPane split="vertical" {...getNoteBarConf(activeFolder)}>
                 <NoteList />
                 <NoteEditor />
