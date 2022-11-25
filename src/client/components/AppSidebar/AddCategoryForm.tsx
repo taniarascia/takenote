@@ -30,7 +30,10 @@ export const AddCategoryForm: React.FC<AddCategoryFormProps> = ({
         maxLength={20}
         placeholder="New category..."
         onChange={(event) => {
-          changeHandler(editingCategoryId, event.target.value)
+          changeHandler(
+            editingCategoryId,
+            event.target.value.charAt(0).toUpperCase() + event.target.value.slice(1)
+          )
         }}
         onBlur={(event) => {
           if (!tempCategoryName || tempCategoryName.trim() === '') {
