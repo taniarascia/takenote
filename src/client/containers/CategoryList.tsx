@@ -100,10 +100,17 @@ export const CategoryList: React.FC = () => {
     _setCategoryEdit('', '')
   }
 
+  const capitalizeFirstLetter = (input: string): string =>
+    input.charAt(0).toUpperCase() + input.slice(1)
+
   const onSubmitUpdateCategory = (event: ReactSubmitEvent): void => {
     event.preventDefault()
 
-    const category = { id: editingCategoryId, name: tempCategoryName.trim(), draggedOver: false }
+    const category = {
+      id: editingCategoryId,
+      name: capitalizeFirstLetter(tempCategoryName.trim()),
+      draggedOver: false,
+    }
 
     if (categories.find((cat) => cat.name === category.name) || category.name === '') {
       resetTempCategory()
@@ -116,7 +123,11 @@ export const CategoryList: React.FC = () => {
   const onSubmitNewCategory = (event: ReactSubmitEvent): void => {
     event.preventDefault()
 
-    const category = { id: uuid(), name: tempCategoryName.trim(), draggedOver: false }
+    const category = {
+      id: uuid(),
+      name: capitalizeFirstLetter(tempCategoryName.trim()),
+      draggedOver: false,
+    }
 
     if (categories.find((cat) => cat.name === category.name) || category.name === '') {
       resetTempCategory()
