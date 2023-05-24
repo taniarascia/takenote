@@ -26,9 +26,8 @@ export const KeyboardShortcuts: React.FC = () => {
   // ===========================================================================
 
   const { categories } = useSelector(getCategories)
-  const { activeCategoryId, activeFolder, activeNoteId, notes, selectedNotesIds } = useSelector(
-    getNotes
-  )
+  const { activeCategoryId, activeFolder, activeNoteId, notes, selectedNotesIds } =
+    useSelector(getNotes)
   const { darkTheme, previewMarkdown } = useSelector(getSettings)
 
   const activeNote = getActiveNote(notes, activeNoteId)
@@ -113,6 +112,7 @@ export const KeyboardShortcuts: React.FC = () => {
   // Hooks
   // ===========================================================================
 
+  // useKey(Shortcuts.SAVE_NOTE, () => syncNotesHandler(), true)
   useKey(Shortcuts.NEW_NOTE, () => newNoteHandler())
   useKey(Shortcuts.NEW_CATEGORY, () => newTempCategoryHandler())
   useKey(Shortcuts.DELETE_NOTE, () => trashNoteHandler())

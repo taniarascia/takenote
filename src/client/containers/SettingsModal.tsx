@@ -41,9 +41,8 @@ export const SettingsModal: React.FC = () => {
   // Selectors
   // ===========================================================================
 
-  const { codeMirrorOptions, isOpen, previewMarkdown, darkTheme, notesSortKey } = useSelector(
-    getSettings
-  )
+  const { codeMirrorOptions, isOpen, previewMarkdown, darkTheme, notesSortKey } =
+    useSelector(getSettings)
   const { currentUser } = useSelector(getAuth)
   const { notes, activeFolder, activeCategoryId } = useSelector(getNotes)
   const { categories } = useSelector(getCategories)
@@ -229,7 +228,7 @@ export const SettingsModal: React.FC = () => {
             </TabPanel>
             <TabPanel label="Keyboard shortcuts" icon={Command}>
               {shortcutMap.map((shortcut) => (
-                <Shortcut action={shortcut.action} letter={shortcut.key} key={shortcut.key} />
+                <Shortcut action={shortcut.action} key={shortcut.key} shortcut={shortcut.key} />
               ))}
             </TabPanel>
             <TabPanel label="Data management" icon={Archive}>

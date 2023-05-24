@@ -75,7 +75,7 @@ export default {
     } catch (error) {
       response
         .status(400)
-        .send({ message: error.message || 'Something went wrong while syncing data' })
+        .send({ message: (error as Error).message || 'Something went wrong while syncing data' })
     }
   },
 
@@ -96,14 +96,14 @@ export default {
       try {
         JSON.parse(notes)
       } catch (error) {
-        response.status(400).send({ message: error.message || 'Must be valid JSON.' })
+        response.status(400).send({ message: (error as Error).message || 'Must be valid JSON.' })
       }
 
       response.status(200).send(notes)
     } catch (error) {
-      response
-        .status(400)
-        .send({ message: error.message || 'Something went wrong while fetching note data' })
+      response.status(400).send({
+        message: (error as Error).message || 'Something went wrong while fetching note data',
+      })
     }
   },
 
@@ -124,14 +124,14 @@ export default {
       try {
         JSON.parse(categories)
       } catch (error) {
-        response.status(400).send({ message: error.message || 'Must be valid JSON.' })
+        response.status(400).send({ message: (error as Error).message || 'Must be valid JSON.' })
       }
 
       response.status(200).send(categories)
     } catch (error) {
-      response
-        .status(400)
-        .send({ message: error.message || 'Something went wrong while fetching category data' })
+      response.status(400).send({
+        message: (error as Error).message || 'Something went wrong while fetching category data',
+      })
     }
   },
 }
