@@ -27,6 +27,13 @@ export interface CategoryItem {
   draggedOver: boolean
 }
 
+export interface ShortcutItem {
+  action: string
+  key: string
+  originalKey?: string
+  id: number
+}
+
 export interface GithubUser {
   [anyProp: string]: any
 }
@@ -70,6 +77,7 @@ export interface SettingsState {
   darkTheme: boolean
   sidebarVisible: boolean
   notesSortKey: NotesSortKey
+  shortcuts: ShortcutItem[]
   codeMirrorOptions: { [key: string]: any }
 }
 
@@ -95,6 +103,7 @@ export interface RootState {
 export interface SyncPayload {
   categories: CategoryItem[]
   notes: NoteItem[]
+  shortcuts: ShortcutItem[]
 }
 
 export interface SyncAction {

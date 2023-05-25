@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   X,
@@ -22,7 +22,7 @@ import { updateNotes, importNotes } from '@/slices/note'
 import { logout } from '@/slices/auth'
 import { importCategories } from '@/slices/category'
 import { shortcutMap, notesSortOptions, directionTextOptions } from '@/utils/constants'
-import { CategoryItem, NoteItem, ReactMouseEvent } from '@/types'
+import { CategoryItem, NoteItem, ReactMouseEvent, ShortcutItem } from '@/types'
 import { getSettings, getAuth, getNotes, getCategories } from '@/selectors'
 import { Option } from '@/components/SettingsModal/Option'
 import { Shortcut } from '@/components/SettingsModal/Shortcut'
@@ -41,7 +41,7 @@ export const SettingsModal: React.FC = () => {
   // Selectors
   // ===========================================================================
 
-  const { codeMirrorOptions, isOpen, previewMarkdown, darkTheme, notesSortKey } =
+  const { codeMirrorOptions, isOpen, previewMarkdown, darkTheme, notesSortKey, shortcuts } =
     useSelector(getSettings)
   const { currentUser } = useSelector(getAuth)
   const { notes, activeFolder, activeCategoryId } = useSelector(getNotes)
@@ -137,6 +137,7 @@ export const SettingsModal: React.FC = () => {
       document.removeEventListener('keydown', handleEscPress)
     }
   })
+  // const [currentShortcuts, setCurrentShortcuts] = useState<ShortcutItem[]>(shortcuts)
 
   return isOpen ? (
     <div className="dimmer">
@@ -227,8 +228,13 @@ export const SettingsModal: React.FC = () => {
               />
             </TabPanel>
             <TabPanel label="Keyboard shortcuts" icon={Command}>
-              {shortcutMap.map((shortcut) => (
-                <Shortcut action={shortcut.action} key={shortcut.key} shortcut={shortcut.key} />
+              {shortcuts.map((shortcut, index) => (
+                <Shortcut
+                  action={shortcut.action || ''}
+                  key={shortcut.id}
+                  id={shortcut.id}
+                  shortcut={shortcut.key}
+                />
               ))}
             </TabPanel>
             <TabPanel label="Data management" icon={Archive}>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import prettier from 'prettier/standalone'
 import parserMarkdown from 'prettier/parser-markdown'
@@ -19,6 +19,7 @@ import { sync } from '@/slices/sync'
 import { getCategories, getNotes, getSettings } from '@/selectors'
 import { CategoryItem, NoteItem } from '@/types'
 import { toggleDarkTheme, togglePreviewMarkdown, updateCodeMirrorOption } from '@/slices/settings'
+import { shortcutMap } from '@/utils/constants'
 
 export const KeyboardShortcuts: React.FC = () => {
   // ===========================================================================
@@ -28,7 +29,7 @@ export const KeyboardShortcuts: React.FC = () => {
   const { categories } = useSelector(getCategories)
   const { activeCategoryId, activeFolder, activeNoteId, notes, selectedNotesIds } =
     useSelector(getNotes)
-  const { darkTheme, previewMarkdown } = useSelector(getSettings)
+  const { darkTheme, previewMarkdown, shortcuts } = useSelector(getSettings)
 
   const activeNote = getActiveNote(notes, activeNoteId)
 
@@ -46,7 +47,13 @@ export const KeyboardShortcuts: React.FC = () => {
   const _swapFolder = (folder: Folder) => dispatch(swapFolder({ folder }))
   const _toggleTrashNotes = (noteId: string) => dispatch(toggleTrashNotes(noteId))
   const _sync = (notes: NoteItem[], categories: CategoryItem[]) =>
-    dispatch(sync({ notes, categories }))
+    dispatch(
+      sync({
+        notes,
+        categories,
+        shortcuts,
+      })
+    )
   const _togglePreviewMarkdown = () => dispatch(togglePreviewMarkdown())
   const _toggleDarkTheme = () => dispatch(toggleDarkTheme())
   const _updateCodeMirrorOption = (key: string, value: string) =>
@@ -112,15 +119,18 @@ export const KeyboardShortcuts: React.FC = () => {
   // Hooks
   // ===========================================================================
 
-  // useKey(Shortcuts.SAVE_NOTE, () => syncNotesHandler(), true)
-  useKey(Shortcuts.NEW_NOTE, () => newNoteHandler())
-  useKey(Shortcuts.NEW_CATEGORY, () => newTempCategoryHandler())
-  useKey(Shortcuts.DELETE_NOTE, () => trashNoteHandler())
-  useKey(Shortcuts.SYNC_NOTES, () => syncNotesHandler())
-  useKey(Shortcuts.DOWNLOAD_NOTES, () => downloadNotesHandler())
-  useKey(Shortcuts.PREVIEW, () => togglePreviewMarkdownHandler())
-  useKey(Shortcuts.TOGGLE_THEME, () => toggleDarkThemeHandler())
-  useKey(Shortcuts.PRETTIFY, () => prettifyNoteHandler())
+  const sortedShortcuts = [...shortcuts].sort((a, b) => a.id - b.id)
+
+  useKey(sortedShortcuts[0].key, () => newNoteHandler())
+  useKey(sortedShortcuts[1].key, () => trashNoteHandler())
+  useKey(sortedShortcuts[2].key, () => newTempCategoryHandler())
+  useKey(sortedShortcuts[3].key, () => downloadNotesHandler())
+  useKey(sortedShortcuts[4].key, () => syncNotesHandler())
+  useKey(sortedShortcuts[6].key, () => togglePreviewMarkdownHandler())
+  useKey(sortedShortcuts[7].key, () => toggleDarkThemeHandler())
+  useKey(sortedShortcuts[9].key, () => prettifyNoteHandler())
+
+  // loop through shortcuts and add them to useKey hook
 
   return null
 }
