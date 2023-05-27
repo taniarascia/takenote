@@ -24,38 +24,11 @@ export function useInterval(callback: () => void, delay: number | null) {
   }, [delay])
 }
 
-export function useKey(key: string, action: () => void, overrideBrowserShortcut: boolean = false) {
+export function useKey(key: string, action: () => void) {
   const actionRef = useRef(noop)
   actionRef.current = action
 
   useEffect(() => {
-    if (overrideBrowserShortcut) {
-      document.addEventListener('keydown', (event: KeyboardEvent) => {
-        // event.preventDefault()
-        const eventKey = event.key.toLowerCase().replace('control', 'ctrl')
-        const specialKeys = ['ctrl', 'shift', 'alt', 'tab', 'shift', 'capslock', 'fn']
-        const keys = key.split('+')
-
-        for (const k of keys) {
-          if (specialKeys.includes(eventKey)) {
-            if (!event[(k + 'Key') as keyof KeyboardEvent]) {
-              return
-            }
-          }
-          if (!specialKeys.includes(k)) {
-            if (k !== eventKey) {
-              return
-            }
-          }
-        }
-        event.preventDefault()
-        if (actionRef.current) {
-          actionRef.current()
-        }
-      })
-
-      return document.removeEventListener('keydown', () => {})
-    }
     mousetrap.bindGlobal(key, (event: Event) => {
       event.preventDefault()
       if (actionRef.current) {

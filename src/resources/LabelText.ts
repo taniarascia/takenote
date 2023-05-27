@@ -5,6 +5,7 @@ export enum LabelText {
   NOTES = 'Notes',
   CREATE_NEW_NOTE = 'Create new note',
   DELETE_PERMANENTLY = 'Delete permanently',
+  RESET_ALL_SHORTCUTS = 'Reset all shortcuts',
   DOWNLOAD = 'Download',
   FAVORITES = 'Favorites',
   SCRATCHPAD = 'Scratchpad',

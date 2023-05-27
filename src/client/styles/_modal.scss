@@ -76,8 +76,19 @@
       .keys {
         width: 180px;
         white-space: nowrap;
-        & input {
-          width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+
+        svg {
+          margin-left: auto;
+          &:hover {
+            stroke: lighten($app-sidebar-color, 60%);
+          }
+        }
+
+        .shortcut-edit-input {
+          width: 120px;
           border: none;
           outline: transparent;
           background: transparent;

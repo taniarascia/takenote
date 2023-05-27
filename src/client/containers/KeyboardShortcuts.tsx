@@ -130,7 +130,5 @@ export const KeyboardShortcuts: React.FC = () => {
   useKey(sortedShortcuts[7].key, () => toggleDarkThemeHandler())
   useKey(sortedShortcuts[9].key, () => prettifyNoteHandler())
 
-  // loop through shortcuts and add them to useKey hook
-
   return null
 }

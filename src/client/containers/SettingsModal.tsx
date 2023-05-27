@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   X,
@@ -9,6 +9,7 @@ import {
   Download,
   DownloadCloud,
   UploadCloud,
+  RefreshCw,
 } from 'react-feather'
 
 import {
@@ -17,11 +18,12 @@ import {
   togglePreviewMarkdown,
   toggleDarkTheme,
   updateNotesSortStrategy,
+  resetAllShortcuts,
 } from '@/slices/settings'
 import { updateNotes, importNotes } from '@/slices/note'
 import { logout } from '@/slices/auth'
 import { importCategories } from '@/slices/category'
-import { shortcutMap, notesSortOptions, directionTextOptions } from '@/utils/constants'
+import { notesSortOptions, directionTextOptions } from '@/utils/constants'
 import { CategoryItem, NoteItem, ReactMouseEvent, ShortcutItem } from '@/types'
 import { getSettings, getAuth, getNotes, getCategories } from '@/selectors'
 import { Option } from '@/components/SettingsModal/Option'
@@ -67,6 +69,7 @@ export const SettingsModal: React.FC = () => {
     dispatch(importNotes(notes))
     dispatch(importCategories(categories))
   }
+  const _resetAllShortcuts = () => dispatch(resetAllShortcuts())
 
   // ===========================================================================
   // Refs
@@ -124,6 +127,7 @@ export const SettingsModal: React.FC = () => {
 
     _importBackup(notes, categories)
   }
+
   // ===========================================================================
   // Hooks
   // ===========================================================================
@@ -137,7 +141,6 @@ export const SettingsModal: React.FC = () => {
       document.removeEventListener('keydown', handleEscPress)
     }
   })
-  // const [currentShortcuts, setCurrentShortcuts] = useState<ShortcutItem[]>(shortcuts)
 
   return isOpen ? (
     <div className="dimmer">
@@ -228,14 +231,25 @@ export const SettingsModal: React.FC = () => {
               />
             </TabPanel>
             <TabPanel label="Keyboard shortcuts" icon={Command}>
-              {shortcuts.map((shortcut, index) => (
-                <Shortcut
-                  action={shortcut.action || ''}
-                  key={shortcut.id}
-                  id={shortcut.id}
-                  shortcut={shortcut.key}
-                />
-              ))}
+              <>
+                {shortcuts.map((shortcut, index) => (
+                  <Shortcut
+                    action={shortcut.action || ''}
+                    key={shortcut.id}
+                    id={shortcut.id}
+                    shortcut={shortcut.key}
+                    originalKey={shortcut.originalKey}
+                    shortcuts={shortcuts}
+                  />
+                ))}
+              </>
+              <p>Reset all shortcuts to their original keys.</p>
+              <IconButton
+                dataTestID={TestID.SETTINGS_MODAL_DOWNLOAD_NOTES}
+                handler={_resetAllShortcuts}
+                icon={RefreshCw}
+                text={LabelText.RESET_ALL_SHORTCUTS}
+              />
             </TabPanel>
             <TabPanel label="Data management" icon={Archive}>
               <p>Download all notes as Markdown files in a zip.</p>

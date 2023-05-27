@@ -91,6 +91,13 @@ const settingsSlice = createSlice({
         shortcuts: updatedShortcuts,
       }
     },
+
+    resetAllShortcuts: (state) => {
+      return {
+        ...state,
+        shortcuts: shortcutMap,
+      }
+    },
   },
 })
 
@@ -104,6 +111,7 @@ export const {
   loadSettingsError,
   loadSettingsSuccess,
   updateShortcut,
+  resetAllShortcuts,
 } = settingsSlice.actions
 
 export default settingsSlice.reducer

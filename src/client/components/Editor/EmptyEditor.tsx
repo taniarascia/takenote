@@ -1,6 +1,6 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
-import * as uuid from 'uuid'
+import { v4 as uuid } from 'uuid'
 
 import { getSettings } from '@/selectors'
 
@@ -16,7 +16,7 @@ export const EmptyEditor: React.FC = () => {
         <p>
           {shortcuts[0].key.split('+').map((key, index) => {
             return (
-              <React.Fragment key={uuid.v4()}>
+              <React.Fragment key={uuid()}>
                 <kbd>{key.toUpperCase()}</kbd>
                 {index !== shortcuts[0].key.split('+').length - 1 && <span> + </span>}
               </React.Fragment>

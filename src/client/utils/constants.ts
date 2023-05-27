@@ -17,7 +17,7 @@ export const shortcutMap = [
   { id: 3, action: 'Create a category', key: 'ctrl+alt+c', originalKey: Shortcuts.NEW_CATEGORY },
   { id: 4, action: 'Download a note', key: 'ctrl+alt+o', originalKey: Shortcuts.DOWNLOAD_NOTES },
   { id: 5, action: 'Sync all notes', key: 'ctrl+alt+l', originalKey: Shortcuts.SYNC_NOTES },
-  { id: 6, action: 'Toggle sidebar', key: 'ctrl+alt+s' },
+  { id: 6, action: 'Toggle sidebar', key: 'ctrl+alt+s', originalKey: Shortcuts.TOGGLE_SIDEBAR },
   { id: 7, action: 'Markdown preview', key: 'ctrl+alt+p', originalKey: Shortcuts.PREVIEW },
   { id: 8, action: 'Toggle theme', key: 'ctrl+alt+k', originalKey: Shortcuts.TOGGLE_THEME },
   { id: 9, action: 'Search notes', key: 'ctrl+alt+f', originalKey: Shortcuts.SEARCH },

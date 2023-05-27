@@ -30,7 +30,7 @@ export interface CategoryItem {
 export interface ShortcutItem {
   action: string
   key: string
-  originalKey?: string
+  originalKey: string
   id: number
 }
 
