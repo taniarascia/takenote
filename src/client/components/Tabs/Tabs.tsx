@@ -13,7 +13,7 @@ export const Tabs: React.FC<TabsProps> = ({ children }) => {
     <div className="tabs">
       <nav className="tab-list">
         {children.map((child) => {
-          const { label, icon } = child.props
+          const { label, icon, testId } = child.props
 
           return (
             <Tab
@@ -22,6 +22,7 @@ export const Tabs: React.FC<TabsProps> = ({ children }) => {
               key={label}
               label={label}
               onClick={setActiveTab}
+              testId={testId}
             />
           )
         })}

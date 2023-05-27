@@ -38,12 +38,12 @@ import { LabelText } from '@resources/LabelText'
 import { TestID } from '@resources/TestID'
 import { IconButtonUploader } from '@/components/SettingsModal/IconButtonUploader'
 
-export const SettingsModal: React.FC = () => {
+export const SettingsModal: React.FC = ({ showModal }: { showModal?: boolean }) => {
   // ===========================================================================
   // Selectors
   // ===========================================================================
 
-  const { codeMirrorOptions, isOpen, previewMarkdown, darkTheme, notesSortKey, shortcuts } =
+  let { codeMirrorOptions, isOpen, previewMarkdown, darkTheme, notesSortKey, shortcuts } =
     useSelector(getSettings)
   const { currentUser } = useSelector(getAuth)
   const { notes, activeFolder, activeCategoryId } = useSelector(getNotes)
@@ -141,6 +141,9 @@ export const SettingsModal: React.FC = () => {
       document.removeEventListener('keydown', handleEscPress)
     }
   })
+  if (showModal !== undefined) {
+    isOpen = showModal
+  }
 
   return isOpen ? (
     <div className="dimmer">
@@ -230,7 +233,7 @@ export const SettingsModal: React.FC = () => {
                 testId={TestID.TEXT_DIRECTION_DROPDOWN}
               />
             </TabPanel>
-            <TabPanel label="Keyboard shortcuts" icon={Command}>
+            <TabPanel label="Keyboard shortcuts" icon={Command} testId={'keyboard-shortcuts-tab'}>
               <>
                 {shortcuts.map((shortcut, index) => (
                   <Shortcut
