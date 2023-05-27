@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react'
 import { createMemoryHistory, MemoryHistory } from 'history'
-import React, { ReactNode } from 'react'
+import React from 'react'
 import { Provider } from 'react-redux'
 import { MemoryRouter } from 'react-router-dom'
 import createSagaMiddleware from 'redux-saga'
@@ -15,7 +15,7 @@ interface RenderWithRouterOptions {
 }
 
 export const renderWithRouter = (
-  ui: ReactNode,
+  ui: React.ReactNode,
   {
     route = '/',
     history = createMemoryHistory({ initialEntries: [route] }),

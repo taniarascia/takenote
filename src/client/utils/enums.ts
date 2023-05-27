@@ -12,10 +12,11 @@ export enum Shortcuts {
   DELETE_NOTE = 'ctrl+alt+u',
   SYNC_NOTES = 'ctrl+alt+l',
   DOWNLOAD_NOTES = 'ctrl+alt+o',
-  PREVIEW = 'alt+ctrl+p',
+  PREVIEW = 'ctrl+alt+p',
   TOGGLE_THEME = 'alt+ctrl+k',
   SEARCH = 'alt+ctrl+f',
   PRETTIFY = 'ctrl+alt+i',
+  TOGGLE_SIDEBAR = 'ctrl+alt+s',
 }
 
 export enum ContextMenuEnum {

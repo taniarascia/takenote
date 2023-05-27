@@ -9,6 +9,7 @@ import {
   Download,
   DownloadCloud,
   UploadCloud,
+  RefreshCw,
 } from 'react-feather'
 
 import {
@@ -17,12 +18,13 @@ import {
   togglePreviewMarkdown,
   toggleDarkTheme,
   updateNotesSortStrategy,
+  resetAllShortcuts,
 } from '@/slices/settings'
 import { updateNotes, importNotes } from '@/slices/note'
 import { logout } from '@/slices/auth'
 import { importCategories } from '@/slices/category'
-import { shortcutMap, notesSortOptions, directionTextOptions } from '@/utils/constants'
-import { CategoryItem, NoteItem, ReactMouseEvent } from '@/types'
+import { notesSortOptions, directionTextOptions } from '@/utils/constants'
+import { CategoryItem, NoteItem, ReactMouseEvent, ShortcutItem } from '@/types'
 import { getSettings, getAuth, getNotes, getCategories } from '@/selectors'
 import { Option } from '@/components/SettingsModal/Option'
 import { Shortcut } from '@/components/SettingsModal/Shortcut'
@@ -36,14 +38,13 @@ import { LabelText } from '@resources/LabelText'
 import { TestID } from '@resources/TestID'
 import { IconButtonUploader } from '@/components/SettingsModal/IconButtonUploader'
 
-export const SettingsModal: React.FC = () => {
+export const SettingsModal: React.FC = ({ showModal }: { showModal?: boolean }) => {
   // ===========================================================================
   // Selectors
   // ===========================================================================
 
-  const { codeMirrorOptions, isOpen, previewMarkdown, darkTheme, notesSortKey } = useSelector(
-    getSettings
-  )
+  let { codeMirrorOptions, isOpen, previewMarkdown, darkTheme, notesSortKey, shortcuts } =
+    useSelector(getSettings)
   const { currentUser } = useSelector(getAuth)
   const { notes, activeFolder, activeCategoryId } = useSelector(getNotes)
   const { categories } = useSelector(getCategories)
@@ -68,6 +69,7 @@ export const SettingsModal: React.FC = () => {
     dispatch(importNotes(notes))
     dispatch(importCategories(categories))
   }
+  const _resetAllShortcuts = () => dispatch(resetAllShortcuts())
 
   // ===========================================================================
   // Refs
@@ -125,6 +127,7 @@ export const SettingsModal: React.FC = () => {
 
     _importBackup(notes, categories)
   }
+
   // ===========================================================================
   // Hooks
   // ===========================================================================
@@ -138,6 +141,9 @@ export const SettingsModal: React.FC = () => {
       document.removeEventListener('keydown', handleEscPress)
     }
   })
+  if (showModal !== undefined) {
+    isOpen = showModal
+  }
 
   return isOpen ? (
     <div className="dimmer">
@@ -227,10 +233,30 @@ export const SettingsModal: React.FC = () => {
                 testId={TestID.TEXT_DIRECTION_DROPDOWN}
               />
             </TabPanel>
-            <TabPanel label="Keyboard shortcuts" icon={Command}>
-              {shortcutMap.map((shortcut) => (
-                <Shortcut action={shortcut.action} letter={shortcut.key} key={shortcut.key} />
-              ))}
+            <TabPanel
+              label="Keyboard shortcuts"
+              icon={Command}
+              testId={'settings-modal-shortcut-tab'}
+            >
+              <>
+                {shortcuts.map((shortcut, index) => (
+                  <Shortcut
+                    action={shortcut.action || ''}
+                    key={shortcut.id}
+                    id={shortcut.id}
+                    shortcut={shortcut.key}
+                    originalKey={shortcut.originalKey}
+                    shortcuts={shortcuts}
+                  />
+                ))}
+              </>
+              <p>Reset all shortcuts to their original keys.</p>
+              <IconButton
+                dataTestID={TestID.SETTINGS_MODAL_DOWNLOAD_NOTES}
+                handler={_resetAllShortcuts}
+                icon={RefreshCw}
+                text={LabelText.RESET_ALL_SHORTCUTS}
+              />
             </TabPanel>
             <TabPanel label="Data management" icon={Archive}>
               <p>Download all notes as Markdown files in a zip.</p>

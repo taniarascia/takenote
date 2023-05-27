@@ -16,7 +16,7 @@ import {
 
 import { TestID } from '@resources/TestID'
 import { LastSyncedNotification } from '@/components/LastSyncedNotification'
-import { NoteItem, CategoryItem } from '@/types'
+import { NoteItem, CategoryItem, ShortcutItem } from '@/types'
 import {
   toggleSettingsModal,
   togglePreviewMarkdown,
@@ -36,7 +36,7 @@ export const NoteMenuBar = () => {
   const { notes, activeNoteId } = useSelector(getNotes)
   const { categories } = useSelector(getCategories)
   const { syncing, lastSynced, pendingSync } = useSelector(getSync)
-  const { darkTheme } = useSelector(getSettings)
+  const { darkTheme, shortcuts } = useSelector(getSettings)
 
   // ===========================================================================
   // Other
@@ -77,8 +77,8 @@ export const NoteMenuBar = () => {
   const _togglePreviewMarkdown = () => dispatch(togglePreviewMarkdown())
   const _toggleTrashNotes = (noteId: string) => dispatch(toggleTrashNotes(noteId))
   const _toggleFavoriteNotes = (noteId: string) => dispatch(toggleFavoriteNotes(noteId))
-  const _sync = (notes: NoteItem[], categories: CategoryItem[]) =>
-    dispatch(sync({ notes, categories }))
+  const _sync = (notes: NoteItem[], categories: CategoryItem[], shortcuts: ShortcutItem[]) =>
+    dispatch(sync({ notes, categories, shortcuts }))
   const _toggleSettingsModal = () => dispatch(toggleSettingsModal())
   const _toggleDarkTheme = () => dispatch(toggleDarkTheme())
   const _updateCodeMirrorOption = (key: string, value: any) =>
@@ -91,7 +91,7 @@ export const NoteMenuBar = () => {
   const downloadNotesHandler = () => downloadNotes([activeNote], categories)
   const favoriteNoteHandler = () => _toggleFavoriteNotes(activeNoteId)
   const trashNoteHandler = () => _toggleTrashNotes(activeNoteId)
-  const syncNotesHandler = () => _sync(notes, categories)
+  const syncNotesHandler = () => _sync(notes, categories, shortcuts)
   const settingsHandler = () => _toggleSettingsModal()
   const toggleDarkThemeHandler = () => {
     _toggleDarkTheme()

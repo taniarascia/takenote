@@ -75,6 +75,29 @@
       font-size: 0.95rem;
       .keys {
         width: 180px;
+        white-space: nowrap;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+
+        svg {
+          margin-left: auto;
+          &:hover {
+            stroke: lighten($app-sidebar-color, 60%);
+          }
+        }
+
+        .shortcut-edit-input {
+          width: 120px;
+          border: none;
+          outline: transparent;
+          background: transparent;
+          text-transform: uppercase;
+          font-size: 12px;
+          line-height: 1.4;
+          color: inherit;
+          text-shadow: inherit;
+        }
       }
     }
 

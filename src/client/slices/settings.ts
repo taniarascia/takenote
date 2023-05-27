@@ -1,13 +1,15 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { SettingsState } from '@/types'
+import { SettingsState, ShortcutItem } from '@/types'
 import { NotesSortKey, DirectionText } from '@/utils/enums'
+import { shortcutMap } from '@/utils/constants'
 
 export const initialState: SettingsState = {
   previewMarkdown: false,
   darkTheme: false,
   sidebarVisible: true,
   notesSortKey: NotesSortKey.LAST_UPDATED,
+  shortcuts: shortcutMap,
   codeMirrorOptions: {
     mode: 'gfm',
     theme: 'base16-light',
@@ -59,6 +61,43 @@ const settingsSlice = createSlice({
     loadSettingsSuccess: (state, { payload }: PayloadAction<SettingsState>) => {
       return { ...payload, loading: false }
     },
+    updateShortcut: (
+      state,
+      {
+        payload,
+      }: PayloadAction<
+        ShortcutItem & {
+          newShortcut: string
+        }
+      >
+    ) => {
+      if (!state.shortcuts) {
+        state.shortcuts = shortcutMap
+      }
+
+      const updatedShortcuts = state.shortcuts.map((shortcut) => {
+        if (shortcut.key === payload.key) {
+          return {
+            ...shortcut,
+            key: payload.newShortcut.toLowerCase(),
+          }
+        }
+
+        return shortcut
+      })
+
+      return {
+        ...state,
+        shortcuts: updatedShortcuts,
+      }
+    },
+
+    resetAllShortcuts: (state) => {
+      return {
+        ...state,
+        shortcuts: shortcutMap,
+      }
+    },
   },
 })
 
@@ -71,6 +110,8 @@ export const {
   loadSettings,
   loadSettingsError,
   loadSettingsSuccess,
+  updateShortcut,
+  resetAllShortcuts,
 } = settingsSlice.actions
 
 export default settingsSlice.reducer

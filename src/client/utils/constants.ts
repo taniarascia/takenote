@@ -1,4 +1,5 @@
-import { Folder, NotesSortKey, DirectionText } from '@/utils/enums'
+import { ShortcutItem } from '@/types'
+import { Folder, NotesSortKey, DirectionText, Shortcuts } from '@/utils/enums'
 
 export const folderMap: Record<Folder, string> = {
   [Folder.ALL]: 'All Notes',
@@ -11,15 +12,16 @@ export const folderMap: Record<Folder, string> = {
 export const iconColor = 'rgba(255, 255, 255, 0.25)'
 
 export const shortcutMap = [
-  { action: 'Create a new note', key: 'N' },
-  { action: 'Delete a note', key: 'U' },
-  { action: 'Create a category', key: 'C' },
-  { action: 'Download a note', key: 'O' },
-  { action: 'Sync all notes', key: 'L' },
-  { action: 'Markdown preview', key: 'P' },
-  { action: 'Toggle theme', key: 'K' },
-  { action: 'Search notes', key: 'F' },
-  { action: 'Prettify a note', key: 'I' },
+  { id: 1, action: 'Create a new note', key: 'ctrl+alt+n', originalKey: Shortcuts.NEW_NOTE },
+  { id: 2, action: 'Delete a note', key: 'ctrl+alt+u', originalKey: Shortcuts.DELETE_NOTE },
+  { id: 3, action: 'Create a category', key: 'ctrl+alt+c', originalKey: Shortcuts.NEW_CATEGORY },
+  { id: 4, action: 'Download a note', key: 'ctrl+alt+o', originalKey: Shortcuts.DOWNLOAD_NOTES },
+  { id: 5, action: 'Sync all notes', key: 'ctrl+alt+l', originalKey: Shortcuts.SYNC_NOTES },
+  { id: 6, action: 'Toggle sidebar', key: 'ctrl+alt+s', originalKey: Shortcuts.TOGGLE_SIDEBAR },
+  { id: 7, action: 'Markdown preview', key: 'ctrl+alt+p', originalKey: Shortcuts.PREVIEW },
+  { id: 8, action: 'Toggle theme', key: 'ctrl+alt+k', originalKey: Shortcuts.TOGGLE_THEME },
+  { id: 9, action: 'Search notes', key: 'ctrl+alt+f', originalKey: Shortcuts.SEARCH },
+  { id: 10, action: 'Prettify a note', key: 'ctrl+alt+i', originalKey: Shortcuts.PRETTIFY },
 ]
 
 export const notesSortOptions = [
