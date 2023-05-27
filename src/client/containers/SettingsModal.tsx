@@ -233,7 +233,11 @@ export const SettingsModal: React.FC = ({ showModal }: { showModal?: boolean }) 
                 testId={TestID.TEXT_DIRECTION_DROPDOWN}
               />
             </TabPanel>
-            <TabPanel label="Keyboard shortcuts" icon={Command} testId={'keyboard-shortcuts-tab'}>
+            <TabPanel
+              label="Keyboard shortcuts"
+              icon={Command}
+              testId={'settings-modal-shortcut-tab'}
+            >
               <>
                 {shortcuts.map((shortcut, index) => (
                   <Shortcut

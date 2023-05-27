@@ -7,7 +7,6 @@ import { TestID } from '@resources/TestID'
 import { TempStateProvider } from '@/contexts/TempStateContext'
 import { SettingsModal } from '@/containers/SettingsModal'
 
-import '@/styles/index.scss'
 import { renderWithRouter } from '../../testHelpers'
 
 const wrap = (props: any) =>
@@ -26,7 +25,9 @@ describe('<SettingsModal />', () => {
   })
 
   it('renders the Shortcuts Tab content and its texts', () => {
-    const component = wrap({})
+    const component = wrap({
+      showModal: true,
+    })
     expect(component.getByTestId(TestID.SETTINGS_MODAL_SHORTCUT_TAB)).toBeTruthy()
   })
 })
