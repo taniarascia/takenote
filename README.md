@@ -84,6 +84,8 @@ Click the **New OAuth App** button.
 - **Homepage URL**: `http://localhost:3000`
 - **Authorization callback URL**: `http://localhost:3000/api/auth/callback`
 
+> NOTE: You must git clone the project before proceeding to the next step.
+
 Create a `.env` file in the root of the project, and add the app's client ID and secret. Remove `DEMO` variable to enable GitHub integration.
 
 ```bash
