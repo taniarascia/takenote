@@ -96,6 +96,8 @@ DEMO=true
 
 ### Installation
 
+You need Node 14 to run this app
+
 ```bash
 git clone git@github.com:taniarascia/takenote
 cd takenote
