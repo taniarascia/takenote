@@ -151,7 +151,7 @@ const noteSlice = createSlice({
 
     removeCategoryFromNotes: (state, { payload }: PayloadAction<string>) => {
       state.notes.map((note) => {
-        if (note.category === payload) {
+        if (note.category !== payload) {
           note.category = ''
         }
       })
