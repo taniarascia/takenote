@@ -21,12 +21,18 @@ jobs:
         python-version: ["3.10"]
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v4
-      with:
-        python-version: ${{ matrix.python-version }}
-    
+    # - uses: actions/checkout@v4
+    # - name: Set up Python ${{ matrix.python-version }}
+    #   uses: actions/setup-python@v4
+    #   with:
+    #     python-version: ${{ matrix.python-version }}
+
+    - name: Install python2
+      run: apt update && DEBIAN_FRONTEND=noninteractive apt install -y python2 make g++
+    - name: Test python2
+      run: python2 --version
+ 
+   
     - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
