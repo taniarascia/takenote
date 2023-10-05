@@ -20,6 +20,11 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
+    - name: Setup Python
+    - uses: actions/setup-python@v4.7.1
+      with:
+         python-version: '3.10' 
+    
     - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
