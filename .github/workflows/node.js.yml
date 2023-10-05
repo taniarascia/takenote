@@ -28,7 +28,7 @@ jobs:
     #     python-version: ${{ matrix.python-version }}
 
     - name: Install python2
-      run: apt update && DEBIAN_FRONTEND=noninteractive apt install -y python2 make g++
+      run: sudo apt update && DEBIAN_FRONTEND=noninteractive sudo apt install -y python2 make g++
     - name: Test python2
       run: python2 --version
  
